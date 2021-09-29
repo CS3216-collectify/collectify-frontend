@@ -1,0 +1,7 @@
+{
+  "name": "collectify",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
