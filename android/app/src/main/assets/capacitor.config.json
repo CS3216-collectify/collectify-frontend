@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "collectify",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
