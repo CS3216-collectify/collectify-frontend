@@ -10,6 +10,7 @@ const Home = () => {
  
       <IonContent>
         <IonTitle>LOL</IonTitle>
+        {/* IonGrid fixes its max-width  */}
         <IonGrid fixed>
           <IonRow>
             <IonCol>ion-col</IonCol>
