@@ -7,9 +7,11 @@ import FollowButton from "../components/button/FollowButton";
 import UnfollowButton from "../components/button/UnfollowButton";
 import Toast from "../components/toast/Toast";
 import Toolbar from "../components/toolbar/Toolbar";
+import TextInput from "../components/text-input/TextInput";
 
 const Home = () => {
   const [showToast, setShowToast] = useState(false);
+  const [name, setName] = useState("");
 
   return (
     <IonPage>
@@ -34,7 +36,9 @@ const Home = () => {
         <UnfollowButton />
         <DeleteButton />
 
-        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage="⭐ Favourites updated." />
+        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage="⭐ Favourites updated." color="danger" />
+
+        <TextInput value={name} onChange={setName} type="text" />
       </IonContent>
     </IonPage>
   );

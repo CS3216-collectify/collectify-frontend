@@ -1,9 +1,9 @@
-import { IonToast } from "@ionic/react";
+import { IonToast, CreateAnimation, Animation } from "@ionic/react";
 
 /**
  * React Wrapper for IonToast
  */
-const Toast = ({ showToast, setShowToast, toastMessage, dismissBtnHandler }) => {
+const Toast = ({ showToast, setShowToast, toastMessage, dismissBtnHandler, color }) => {
   const dismissBtn = {
     text: "Okay",
     role: "cancel",
@@ -18,6 +18,7 @@ const Toast = ({ showToast, setShowToast, toastMessage, dismissBtnHandler }) => 
       position={"bottom"}
       duration={2000}
       buttons={[dismissBtn]}
+      color={color}
     />
   );
 };
