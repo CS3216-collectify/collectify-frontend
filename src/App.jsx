@@ -25,7 +25,7 @@ import "./theme/variables.css";
 import "./App.scss";
 
 const App = () => (
-  <IonApp>
+  <IonApp >
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -36,7 +36,7 @@ const App = () => (
             <Redirect to="/home" />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" className="hide">
+        <IonTabBar slot="bottom" className="ion-hide-sm-up">
           <IonTabButton tab="a" href="/a">
             <IonIcon icon={homeOutline} />
             <IonText>Home</IonText>

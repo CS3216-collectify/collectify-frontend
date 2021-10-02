@@ -3,13 +3,12 @@ import "./Home.scss";
 
 const Home = () => {
   return (
-    <IonPage className="page">
-         <IonToolbar>
+    <IonPage>
+         <IonToolbar className="ion-hide-sm-down">
           <IonTitle>Title Only</IonTitle>
         </IonToolbar>
  
-      <IonContent>
-        <IonTitle>LOL</IonTitle>
+      <IonContent  className="ion-padding">
         {/* IonGrid fixes its max-width  */}
         <IonGrid fixed>
           <IonRow>
