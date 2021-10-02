@@ -37,7 +37,7 @@ const App = () => (
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" className="ion-hide-sm-up">
-          <IonTabButton tab="a" href="/a">
+          <IonTabButton tab="a" href="/home">
             <IonIcon icon={homeOutline} />
             <IonText>Home</IonText>
           </IonTabButton>
@@ -49,7 +49,7 @@ const App = () => (
 
           <IonTabButton tab="c" href="/c">
             <IonIcon icon={addCircleOutline} />
-            <IonText>Add Item</IonText>
+            <IonText>Add</IonText>
           </IonTabButton>
 
           <IonTabButton tab="d" href="/d">

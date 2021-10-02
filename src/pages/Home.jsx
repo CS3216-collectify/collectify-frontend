@@ -1,32 +1,19 @@
-import { IonContent, IonPage, IonText, IonTitle, IonHeader, IonToolbar, IonGrid, IonRow, IonCol, IonButtons, IonButton, IonIcon } from "@ionic/react";
+import { useState } from "react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol } from "@ionic/react";
+
 import "./Home.scss";
-import { personCircle, search, helpCircle, star, create, ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
-import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline} from "ionicons/icons";
+import DeleteButton from "../components/button/DeleteButton";
+import FollowButton from "../components/button/FollowButton";
+import UnfollowButton from "../components/button/UnfollowButton";
+import Toast from "../components/toast/Toast";
+import Toolbar from "../components/toolbar/Toolbar";
 
 const Home = () => {
+  const [showToast, setShowToast] = useState(false);
+
   return (
     <IonPage>
-      <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>collectify</IonTitle>
-
-        <IonButtons slot="secondary">
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={search} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
-          </IonButton>
-        </IonButtons>
-      </IonToolbar>
+      <Toolbar />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
@@ -37,8 +24,17 @@ const Home = () => {
             <IonCol>ion-col</IonCol>
             <IonCol>ion-col</IonCol>
             <IonCol>ion-col</IonCol>
+            <IonCol>ion-col</IonCol>
+            <IonCol>ion-col</IonCol>
+            <IonCol>ion-col</IonCol>
+            <IonCol>ion-col</IonCol>
           </IonRow>
         </IonGrid>
+        <FollowButton onClick={() => setShowToast(true)} />
+        <UnfollowButton />
+        <DeleteButton />
+
+        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage="⭐ Favourites updated." />
       </IonContent>
     </IonPage>
   );
