@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar, IonToolbar, IonTitle, IonHeader } from "@ionic/react";
+import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
@@ -24,47 +25,53 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import "./App.scss";
 
-const App = () => (
-  <IonApp >
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom" className="ion-hide-sm-up">
-          <IonTabButton tab="a" href="/home">
-            <IonIcon icon={homeOutline} />
-            <IonText>Home</IonText>
-          </IonTabButton>
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
-          <IonTabButton tab="b" href="/b">
-            <IonIcon icon={searchOutline} />
-            <IonText>Discover</IonText>
-          </IonTabButton>
+const App = () => {
+  useEffect(() => GoogleAuth.init(), []);
 
-          <IonTabButton tab="c" href="/c">
-            <IonIcon icon={addCircleOutline} />
-            <IonText>Add</IonText>
-          </IonTabButton>
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom" className="ion-hide-sm-up">
+            <IonTabButton tab="a" href="/home">
+              <IonIcon icon={homeOutline} />
+              <IonText>Home</IonText>
+            </IonTabButton>
 
-          <IonTabButton tab="d" href="/d">
-            <IonIcon icon={chatbubblesOutline} />
-            <IonText>Chats</IonText>
-          </IonTabButton>
+            <IonTabButton tab="b" href="/b">
+              <IonIcon icon={searchOutline} />
+              <IonText>Discover</IonText>
+            </IonTabButton>
 
-          <IonTabButton tab="e" href="/e">
-            <IonIcon icon={personCircleOutline} />
-            <IonText>Profile</IonText>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+            <IonTabButton tab="c" href="/c">
+              <IonIcon icon={addCircleOutline} />
+              <IonText>Add</IonText>
+            </IonTabButton>
+
+            <IonTabButton tab="d" href="/d">
+              <IonIcon icon={chatbubblesOutline} />
+              <IonText>Chats</IonText>
+            </IonTabButton>
+
+            <IonTabButton tab="e" href="/e">
+              <IonIcon icon={personCircleOutline} />
+              <IonText>Profile</IonText>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

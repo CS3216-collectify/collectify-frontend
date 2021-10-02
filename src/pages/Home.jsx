@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol } from "@ionic/react";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import "./Home.scss";
 import DeleteButton from "../components/button/DeleteButton";
@@ -12,6 +13,27 @@ import TextInput from "../components/text-input/TextInput";
 const Home = () => {
   const [showToast, setShowToast] = useState(false);
   const [name, setName] = useState("");
+
+  const logIn = async () => {
+    const response = await GoogleAuth.signIn();
+    
+    // {
+    //   "email": "...@gmail.com",
+    //   "familyName": "...",
+    //   "givenName": "...",
+    //   "id": "...",
+    //   "imageUrl": "...",
+    //   "name": "...",
+    //   "authentication": {
+    //       "accessToken": "...",
+    //       "idToken": "..."
+    //   },
+    //   "serverAuthCode": "..."
+    // }
+    
+    console.log(response);
+
+  };
 
   return (
     <IonPage>
@@ -33,7 +55,7 @@ const Home = () => {
           </IonRow>
         </IonGrid>
         <FollowButton onClick={() => setShowToast(true)} />
-        <UnfollowButton />
+        <UnfollowButton onClick={() => logIn()} />
         <DeleteButton />
 
         <Toast showToast={showToast} setShowToast={setShowToast} toastMessage="⭐ Favourites updated." color="danger" />

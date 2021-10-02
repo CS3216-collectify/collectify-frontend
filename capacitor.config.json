@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "collectify",
+  "webDir": "build",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "403328714510-aerrnv3uq948tk5hfkhr8ebf1i6j3mfe.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
+}
