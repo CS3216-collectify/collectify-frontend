@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol } from "@ionic/react";
-import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import "./Home.scss";
 import DeleteButton from "../components/button/DeleteButton";
@@ -9,30 +8,15 @@ import UnfollowButton from "../components/button/UnfollowButton";
 import Toast from "../components/toast/Toast";
 import Toolbar from "../components/toolbar/Toolbar";
 import TextInput from "../components/text-input/TextInput";
+import { googleLogin } from "../services/google-auth";
 
 const Home = () => {
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [name, setName] = useState("");
 
-  const logIn = async () => {
-    const response = await GoogleAuth.signIn();
-    
-    // {
-    //   "email": "...@gmail.com",
-    //   "familyName": "...",
-    //   "givenName": "...",
-    //   "id": "...",
-    //   "imageUrl": "...",
-    //   "name": "...",
-    //   "authentication": {
-    //       "accessToken": "...",
-    //       "idToken": "..."
-    //   },
-    //   "serverAuthCode": "..."
-    // }
-    
-    console.log(response);
-
+  const handleLogin = () => {
+    googleLogin();
   };
 
   return (
@@ -55,10 +39,10 @@ const Home = () => {
           </IonRow>
         </IonGrid>
         <FollowButton onClick={() => setShowToast(true)} />
-        <UnfollowButton onClick={() => logIn()} />
+        <UnfollowButton onClick={() => handleLogin()} />
         <DeleteButton />
 
-        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage="⭐ Favourites updated." color="danger" />
+        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color="danger" />
 
         <TextInput value={name} onChange={setName} type="text" />
       </IonContent>

@@ -1,7 +1,6 @@
-import { IonButton, IonIcon, IonLabel } from "@ionic/react";
-import { personAddOutline } from "ionicons/icons";
+import { IonButton, IonLabel } from "@ionic/react";
 
-import './button.scss';
+import "./button.scss";
 
 const UnfollowButton = ({ onClick }) => {
   return (

@@ -1,6 +1,7 @@
-import { IonButton, IonLabel } from "@ionic/react";
+import { IonButton, IonIcon, IonLabel } from "@ionic/react";
+import { logoGoogle } from "ionicons/icons";
 
-import "./button.scss";
+import './button.scss';
 
 const FollowButton = ({ onClick }) => {
   return (
