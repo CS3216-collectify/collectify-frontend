@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
 
 import "./Login.scss";
@@ -9,7 +11,8 @@ import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 const Login = () => {
-  // TODO: conditional Toast color
+  const history = useHistory();
+
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
@@ -20,6 +23,7 @@ const Login = () => {
       setToastMessage("Google authentication successful!");
       setToastColor("success");
       setShowToast(true);
+      history.replace("/home");
     } else {
       // error
       setToastMessage("Google authentication failed. Please try again.");

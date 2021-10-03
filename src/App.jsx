@@ -28,56 +28,70 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import Home from "./pages/Home";
 import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
-
+ 
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          {/* Remember that a user is a guest and don't show this again */}
-          <Route exact path="/login">
-            <Login />
-          </Route>
+          {/* Check Auth status. 
+          If user has clicked "Continue as Guest", store it in a isGuest variable
+          
+          if isLoggedIn, redirect to /home.
+          if not isLoggedIn and isGuest, redirect to /home.
+          if not isLoggedIn and not isGuest, stay here.
+          */}
+          <Switch>
+            <Route exact path="/">
+              <Login />
+            </Route>
 
-          <Route exact path="/">
-            <Login />
-          </Route>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/home">
-                <Home />
-              </Route>
-            </IonRouterOutlet>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/home">
+                  <Home />
+                </Route>
+                <Switch>
+                  <Route exact path="/profile/:username">
+                    <Profile />
+                  </Route>
+                  <Route exact path="/profile">
+                    <Profile />
+                  </Route>
+                </Switch>
+              </IonRouterOutlet>
 
-            <IonTabBar slot="bottom" className="ion-hide-sm-up">
-              <IonTabButton tab="home" href="/home">
-                <IonIcon icon={homeOutline} />
-                <IonText>Home</IonText>
-              </IonTabButton>
+              <IonTabBar slot="bottom" className="ion-hide-sm-up">
+                <IonTabButton tab="home" href="/home">
+                  <IonIcon icon={homeOutline} />
+                  <IonText>Home</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="b" href="/b">
-                <IonIcon icon={searchOutline} />
-                <IonText>Discover</IonText>
-              </IonTabButton>
+                <IonTabButton tab="b" href="/b">
+                  <IonIcon icon={searchOutline} />
+                  <IonText>Discover</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="c" href="/c">
-                <IonIcon icon={addCircleOutline} />
-                <IonText>Add</IonText>
-              </IonTabButton>
+                <IonTabButton tab="c" href="/c">
+                  <IonIcon icon={addCircleOutline} />
+                  <IonText>Add</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="d" href="/d">
-                <IonIcon icon={chatbubblesOutline} />
-                <IonText>Chats</IonText>
-              </IonTabButton>
+                <IonTabButton tab="d" href="/d">
+                  <IonIcon icon={chatbubblesOutline} />
+                  <IonText>Chats</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="e" href="/e">
-                <IonIcon icon={personCircleOutline} />
-                <IonText>Profile</IonText>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
+                <IonTabButton tab="user-profile" href="/profile">
+                  <IonIcon icon={personCircleOutline} />
+                  <IonText>Profile</IonText>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </Switch>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

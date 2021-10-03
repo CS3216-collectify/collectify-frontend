@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <IonPage>
-      <Toolbar />
+      <Toolbar title="Home"/>
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">

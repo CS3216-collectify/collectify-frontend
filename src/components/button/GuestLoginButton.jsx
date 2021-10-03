@@ -4,7 +4,7 @@ import "./button.scss";
 
 const GuestLoginButton = ({ handleGuestLogin }) => {
   return (
-    <IonButton size="small" fill="outline" routerLink="/" className="google-login-button">
+    <IonButton size="small" fill="outline" routerLink="/home" className="google-login-button">
       <IonLabel>Continue as Guest</IonLabel>
     </IonButton>
   );
