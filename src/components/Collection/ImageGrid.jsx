@@ -1,10 +1,7 @@
 import {
   IonCol,
   IonGrid,
-  IonImg,
-  IonList,
   IonRow,
-  IonThumbnail,
 } from "@ionic/react";
 import { useState } from "react";
 import FlexIonImg from "../Image/FlexIonImg"
