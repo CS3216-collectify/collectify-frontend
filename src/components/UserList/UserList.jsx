@@ -1,36 +1,83 @@
-import { IonContent, IonImg, IonItem, IonLabel, IonList, IonThumbnail } from "@ionic/react";
+import {
+  IonAvatar,
+  IonCol,
+  IonContent,
+  IonImg,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonItem,
+  IonLabel,
+  IonList,
+} from "@ionic/react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFollowersByCollectionId } from "../../services/followers";
 
-const UserList = (props) => {
-  const [users, setUsers] = useState([]);
+const LIMIT = 10;
 
-  // TODO: Remove this useEffect, for testing only
-  useEffect(() => {
-    const loadUsers = async () => {
+const UserList = (props) => {
+  const { collectionId = 1 } = props;
+  const [users, setUsers] = useState([]);
+  const [pages, setPages] = useState(-1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const loadUsers = async () => {
+    const nextPage = pages + 1;
+    setTimeout(async () => {
+      // TODO: Remove this timeout
       try {
-        const retrievedUsers = await getFollowersByCollectionId(1, 1, 1);
+        if (!hasMore) {
+          return;
+        }
+        const retrievedUsers = await getFollowersByCollectionId(
+          collectionId,
+          nextPage * LIMIT,
+          LIMIT
+        );
+        console.log(retrievedUsers);
+        if (
+          (retrievedUsers && retrievedUsers.length < LIMIT) ||
+          !retrievedUsers
+        ) {
+          setHasMore(false);
+        }
         setUsers([...users, ...retrievedUsers]);
+        setPages(nextPage);
       } catch (e) {
         console.log(e);
       }
-    };
+    }, 3000);
+  };
+
+  const fetchNextPage = () => {
+    console.log("load next");
+    loadUsers();
+  };
+
+  useEffect(() => {
     loadUsers();
   }, []);
 
-  // TODO: Use IonInfiniteScroll
   return (
-    <IonContent>
+    <IonContent fullscreen>
       <IonList>
-        {users.map((userData) => (
-          <IonItem key={userData.userId}>
-            <IonThumbnail>
+        {/* <IonListHeader>Followers/Likes</IonListHeader> */}
+        {users.map((userData, idx) => (
+          <IonItem key={idx}>
+            <IonAvatar>
               <IonImg src={userData.profilePhotoUrl} />
-            </IonThumbnail>
-            <IonLabel>@{userData.username}</IonLabel>
+            </IonAvatar>
+            <IonCol>
+              <IonLabel>@{userData.username}</IonLabel>
+            </IonCol>
           </IonItem>
         ))}
+        <IonInfiniteScroll
+          disabled={!hasMore}
+          onIonInfinite={fetchNextPage}
+        >
+          <IonInfiniteScrollContent loadingText="Loading..."></IonInfiniteScrollContent>
+        </IonInfiniteScroll>
       </IonList>
     </IonContent>
   );

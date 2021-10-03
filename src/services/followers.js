@@ -13,6 +13,51 @@ const mockFollowers = [
   {
     username: "daniel",
   },
+  {
+    username: "elyse",
+  },
+  {
+    username: "funman",
+  },
+  {
+    username: "gareth",
+  },
+  {
+    username: "hakiem",
+  },
+  {
+    username: "iriana",
+  },
+  {
+    username: "jason",
+  },
+  {
+    username: "kevin",
+  },
+  {
+    username: "leonardo",
+  },
+  {
+    username: "mike",
+  },
+  {
+    username: "nicholas",
+  },
+  {
+    username: "owen",
+  },
+  {
+    username: "peter",
+  },
+  {
+    username: "queen",
+  },
+  {
+    username: "rain",
+  },
+  {
+    username: "samantha",
+  },
 ];
 
 // TODO: Cache results?
@@ -21,5 +66,5 @@ export const getFollowersByCollectionId = async (
   offset,
   limit
 ) => {
-  return mockFollowers.map((p, idx) => ({ ...p, collectionId, userId: idx, profilePhotoUrl: mockPhoto }));
+  return mockFollowers.slice(offset, offset + limit).map((p, idx) => ({ ...p, collectionId, userId: idx, profilePhotoUrl: mockPhoto }));
 };
