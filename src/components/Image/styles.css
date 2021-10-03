@@ -1,0 +1,17 @@
+.big-image {
+  object-fit: contain;
+  width: 100vw;
+  height: 100vw;
+}
+
+.medium-image {
+  object-fit: contain;
+  width: 30vw;
+  height: 30vw;
+}
+
+.small-image {
+  object-fit: contain;
+  width: 20vw;
+  height: 20vw;
+}
