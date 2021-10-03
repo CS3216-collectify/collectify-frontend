@@ -1,14 +1,16 @@
 import { IonButton, IonIcon, IonLabel } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
 
-import './button.scss';
+import "./button.scss";
+import { googleLogin } from "../../services/google-auth";
 
-const FollowButton = ({ onClick }) => {
+const GoogleLoginButton = ({ handleGoogleLogin }) => {
   return (
-    <IonButton size="small" onClick={onClick}>
-      <IonLabel>Follow</IonLabel>
+    <IonButton size="small" fill="solid" className="google-login-button" onClick={async () => handleGoogleLogin(await googleLogin())}>
+      <IonIcon size="small" slot="icon-only" icon={logoGoogle} className="ion-margin-horizontal" />
+      <IonLabel>Log In with Google</IonLabel>
     </IonButton>
   );
 };
 
-export default FollowButton;
+export default GoogleLoginButton;

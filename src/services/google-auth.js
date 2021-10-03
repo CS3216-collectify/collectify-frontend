@@ -1,5 +1,7 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
+import GoogleAuthStatus from "../enums/google-auth-status.enum";
+
 export const googleLogin = async () => {
   // {
   //   "email": "...@gmail.com",
@@ -15,16 +17,16 @@ export const googleLogin = async () => {
   //   "serverAuthCode": "..."
   // }
 
-  await GoogleAuth.signIn().then(
+  return await GoogleAuth.signIn().then(
     (res) => {
       // success callback
       console.log("success", res);
-      return true;
+      return GoogleAuthStatus.GOOGLE_AUTH_SUCCESS;
     },
     (error) => {
       // failure callback
-      console.log(error, "error");
-      return false;
+      console.log("error", error);
+      return GoogleAuthStatus.GOOGLE_AUTH_FAILURE;
     }
   );
 };
