@@ -7,6 +7,7 @@ import {
   IonThumbnail,
 } from "@ionic/react";
 import { useState } from "react";
+import FlexIonImg from "../Image/FlexIonImg"
 import "./styles.css";
 
 const sampleImage =
@@ -48,21 +49,11 @@ const ImageGrid = (props) => {
     <IonGrid className="image-grid">
       {groupsOfThree.map((grp, idx) => (
         <IonRow className="single-row" size={12} key={idx}>
-          {grp[0] && (
-            <IonCol className="single-image"  size={4}>
-              <IonImg height="100%" width="100%" src={grp[0]} />
+          {grp.map((url, idx) => (
+            <IonCol key={idx} className="single-image"  size={4}>
+              <FlexIonImg src={url} />
             </IonCol>
-          )}
-          {grp[1] && (
-            <IonCol className="single-image"  size={4}>
-              <IonImg height="100%" width="100%" src={grp[1]} />
-            </IonCol>
-          )}
-          {grp[2] && (
-            <IonCol className="single-image"  size={4}>
-              <IonImg height="100%" width="100%" src={grp[2]} />
-            </IonCol>
-          )}
+          ))}
         </IonRow>
       ))}
     </IonGrid>
