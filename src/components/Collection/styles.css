@@ -1,0 +1,13 @@
+.image-grid{
+  padding: 0px;
+  margin: 0px;
+}
+
+.single-row{
+  height: 33vw;
+}
+
+.single-image{
+  width: 33vw;
+  padding:0px;
+}
