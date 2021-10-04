@@ -37,19 +37,16 @@ const ImageCarousel = (props) => {
   }
 
   return (
-    <IonContent>
-      <IonSlides 
-        pager={true} 
-        onIonSlideDidChange={getActiveIndex}
-      >
-        {images.map((imgUrl, idx) => (
-          <IonSlide key={idx}>
-            <FlexIonImg src={imgUrl}/>
-          </IonSlide>
-        ))}
-      </IonSlides>
-      {/* <SlidesPager activeIndex={activeIndex} length={images.length} /> */}
-    </IonContent>
+    <IonSlides 
+      pager={true} 
+      onIonSlideDidChange={getActiveIndex}
+    >
+      {images.map((imgUrl, idx) => (
+        <IonSlide key={idx}>
+          <FlexIonImg src={imgUrl}/>
+        </IonSlide>
+      ))}
+    </IonSlides>
   )
 }
 
