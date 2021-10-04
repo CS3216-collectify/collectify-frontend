@@ -3,11 +3,20 @@
   margin: 0px;
 }
 
-.single-row{
+.single-row-3{
   height: 33vw;
 }
 
-.single-image{
+.single-image-3{
   width: 33vw;
+  padding:0px;
+}
+
+.single-row-4{
+  height: 24vw;
+}
+
+.single-image-4{
+  width: 24vw;
   padding:0px;
 }

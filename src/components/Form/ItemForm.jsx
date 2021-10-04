@@ -1,4 +1,5 @@
-import { IonContent, IonInput, IonItem, IonList, IonTextarea } from "@ionic/react";
+import { IonContent, IonInput, IonItem, IonLabel, IonList, IonTextarea } from "@ionic/react";
+import ImageEditList from "../ImageGallery/ImageEditList";
 import { useState } from "react";
 
 const ItemForm = (props) => {
@@ -15,6 +16,10 @@ const ItemForm = (props) => {
   };
 
   const imageChangeHandler = (e) => {
+    if (images.length > 3) {
+      console.log("Cannot upload more than 4 photos");
+      return;
+    }
     setImages([...images, e.target.files[0]]);
   }
 
@@ -22,6 +27,7 @@ const ItemForm = (props) => {
     <IonContent>
       <IonList>
         <IonItem>
+          <IonLabel>Name</IonLabel>
           <IonInput
             value={name}
             placeholder="Enter item name"
@@ -29,6 +35,7 @@ const ItemForm = (props) => {
           />
         </IonItem>
         <IonItem>
+          <IonLabel>Description</IonLabel>
           <IonTextarea
             value={description}
             placeholder="Enter item description"
@@ -36,7 +43,10 @@ const ItemForm = (props) => {
           />
         </IonItem>
         <IonItem>
-          {/* Display images here */}
+          <IonLabel>Images</IonLabel>
+        </IonItem>
+        <IonItem>
+          <ImageEditList />
         </IonItem>
         <IonItem>
           <IonInput

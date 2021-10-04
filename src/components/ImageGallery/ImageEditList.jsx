@@ -18,36 +18,38 @@ const mockImages = [
   sampleImage,
 ];
 
-const groupElementsByThree = (arr) => {
-  const groupsOfThree = [];
+const LIMIT = 4;
+
+const groupElementsByFour = (arr) => {
+  const groupsofFour = [];
   var i = 0;
   var group = [];
   for (let elem of arr) {
-    if (i === 3) {
-      groupsOfThree.push(group);
+    if (i === 4) {
+      groupsofFour.push(group);
       group = [];
       i = 0;
     }
     group.push(elem);
     i = i + 1;
   }
-  groupsOfThree.push(group);
+  groupsofFour.push(group);
 
-  console.log(groupsOfThree);
-  return groupsOfThree;
+  console.log(groupsofFour);
+  return groupsofFour;
 };
 
-const ImageGrid = (props) => {
-  const [images, setImages] = useState(mockImages);
+const ImageEditList = (props) => {
+  const [images, setImages] = useState(mockImages.slice(0, LIMIT));
 
-  const groupsOfThree = groupElementsByThree(images);
+  const groupsOfFour = groupElementsByFour(images);
 
   return (
     <IonGrid className="image-grid">
-      {groupsOfThree.map((grp, idx) => (
-        <IonRow className="single-row-3" size={12} key={idx}>
+      {groupsOfFour.map((grp, idx) => (
+        <IonRow className="single-row-4 ion-justify-content-evenly" size={12} key={idx}>
           {grp.map((url, idx) => (
-            <IonCol key={idx} className="single-image-3"  size={4}>
+            <IonCol key={idx} className="single-image-4"  size={2}>
               <FlexIonImg src={url} />
             </IonCol>
           ))}
@@ -57,4 +59,4 @@ const ImageGrid = (props) => {
   );
 };
 
-export default ImageGrid;
+export default ImageEditList;
