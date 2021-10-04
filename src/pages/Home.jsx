@@ -6,7 +6,7 @@ import DeleteButton from "../components/button/DeleteButton";
 import FollowButton from "../components/button/FollowButton";
 import UnfollowButton from "../components/button/UnfollowButton";
 import Toast from "../components/toast/Toast";
-import Toolbar from "../components/toolbar/Toolbar";
+import HomeToolbar from "../components/toolbar/HomeToolbar";
 import TextInput from "../components/text-input/TextInput";
 import { googleLogin } from "../services/google-auth";
 
@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <IonPage>
-      <Toolbar title="Home"/>
+      <HomeToolbar title="Home"/>
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">

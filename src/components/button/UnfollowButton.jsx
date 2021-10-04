@@ -4,7 +4,7 @@ import "./button.scss";
 
 const UnfollowButton = ({ onClick }) => {
   return (
-    <IonButton size="small" fill="outline" color="danger" onClick={onClick}>
+    <IonButton size="small" fill="outline" color="danger" onClick={onClick} className="unfollow-button">
       <IonLabel>Unfollow</IonLabel>
     </IonButton>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonListHeader, IonList, useIonPopover } from "@ionic/react";
+import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonListHeader, IonList, IonBackButton, IonHeader, useIonPopover } from "@ionic/react";
 import {
   search,
   addCircleOutline,
@@ -10,8 +10,8 @@ import {
   arrowBackOutline,
 } from "ionicons/icons";
 
-// Can create copies for different screen or pass in different content
-const Toolbar = ({ title }) => {
+const HomeToolbar = () => {
+  // Menu with items shown when ellipsis icon is pressed
   const PopoverList: React.FC<{
     onHide: () => void,
   }> = ({ onHide }) => (
@@ -30,9 +30,10 @@ const Toolbar = ({ title }) => {
   const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
   return (
-    <>
+    <IonHeader>
+      {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>{title} big</IonTitle>
+        <IonTitle>collectify</IonTitle>
 
         <IonButtons slot="end">
           <IonButton>
@@ -53,11 +54,12 @@ const Toolbar = ({ title }) => {
         </IonButtons>
       </IonToolbar>
 
+      {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
+        <IonTitle>collectify</IonTitle>
         <IonButtons slot="start">
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={arrowBackOutline} />
-          </IonButton>
+          {/* <IonBackButton defaultHref="home" /> */}
+          <IonBackButton />
         </IonButtons>
         <IonButtons slot="end">
           <IonButton
@@ -70,10 +72,9 @@ const Toolbar = ({ title }) => {
             <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
           </IonButton>
         </IonButtons>
-        <IonTitle>{title} small</IonTitle>
       </IonToolbar>
-    </>
+    </IonHeader>
   );
 };
 
-export default Toolbar;
+export default HomeToolbar;
