@@ -1,4 +1,4 @@
-import { IonContent, IonInput, IonItem, IonLabel, IonList, IonTextarea } from "@ionic/react";
+import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonList, IonTextarea } from "@ionic/react";
 import ImageEditList from "../ImageGallery/ImageEditList";
 import { useState } from "react";
 import FlexIonImg from "../Image/FlexIonImg";
@@ -25,7 +25,9 @@ const ItemForm = (props) => {
       console.log("Cannot upload more than 4 photos");
       return;
     }
-    setImages([...images, e.target.files[0]]);
+    const newFile = e.target.files[0];
+    setImages([...images, newFile]);
+    e.target.files = null;
   }
 
   return (
@@ -39,15 +41,24 @@ const ItemForm = (props) => {
           <ImageEditList />
         </IonItem>
         <IonItem>
-          <IonInput
+          <input
+            id="my-image-input"
             type="file"
             accept="image/png, image/jpg"
-            onIonChange={imageChangeHandler}
+            onChange={imageChangeHandler}
             multiple={false}
+            hidden={true}
           />
+          <IonButton
+            onClick={() => document.getElementById("my-image-input").click()}
+          >
+            Add Image
+          </IonButton>
         </IonItem>
         <IonItem>
-          <IonLabel>Name</IonLabel>
+          <IonLabel>Item Name</IonLabel>
+        </IonItem>
+        <IonItem>
           <IonInput
             value={name}
             placeholder="Enter item name"
@@ -56,6 +67,8 @@ const ItemForm = (props) => {
         </IonItem>
         <IonItem>
           <IonLabel>Description</IonLabel>
+        </IonItem>
+        <IonItem>
           <IonTextarea
             value={description}
             placeholder="Enter item description"
