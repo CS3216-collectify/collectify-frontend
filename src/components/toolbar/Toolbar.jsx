@@ -10,6 +10,7 @@ import {
   arrowBackOutline,
 } from "ionicons/icons";
 
+// Can create copies for different screen or pass in different content
 const Toolbar = ({ title }) => {
   const PopoverList: React.FC<{
     onHide: () => void,
@@ -59,11 +60,13 @@ const Toolbar = ({ title }) => {
           </IonButton>
         </IonButtons>
         <IonButtons slot="end">
-          <IonButton onClick={(e) =>
-            present({
-              event: e.nativeEvent,
-            })
-          }>
+          <IonButton
+            onClick={(e) =>
+              present({
+                event: e.nativeEvent,
+              })
+            }
+          >
             <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
           </IonButton>
         </IonButtons>
