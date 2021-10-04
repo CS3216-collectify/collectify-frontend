@@ -1,6 +1,11 @@
 import { IonContent, IonInput, IonItem, IonLabel, IonList, IonTextarea } from "@ionic/react";
 import ImageEditList from "../ImageGallery/ImageEditList";
 import { useState } from "react";
+import FlexIonImg from "../Image/FlexIonImg";
+import ImageCarousel from "../ImageGallery/ImageCarousel";
+
+const sampleImage =
+  "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
 
 const ItemForm = (props) => {
   const [name, setName] = useState("");
@@ -27,6 +32,21 @@ const ItemForm = (props) => {
     <IonContent>
       <IonList>
         <IonItem>
+          <IonLabel>Images</IonLabel>
+        </IonItem>
+        <ImageCarousel />
+        <IonItem>
+          <ImageEditList />
+        </IonItem>
+        <IonItem>
+          <IonInput
+            type="file"
+            accept="image/png, image/jpg"
+            onIonChange={imageChangeHandler}
+            multiple={false}
+          />
+        </IonItem>
+        <IonItem>
           <IonLabel>Name</IonLabel>
           <IonInput
             value={name}
@@ -40,20 +60,6 @@ const ItemForm = (props) => {
             value={description}
             placeholder="Enter item description"
             onIonChange={descriptionChangeHandler}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>Images</IonLabel>
-        </IonItem>
-        <IonItem>
-          <ImageEditList />
-        </IonItem>
-        <IonItem>
-          <IonInput
-            type="file"
-            accept="image/png, image/jpg"
-            onIonChange={imageChangeHandler}
-            multiple={false}
           />
         </IonItem>
       </IonList>
