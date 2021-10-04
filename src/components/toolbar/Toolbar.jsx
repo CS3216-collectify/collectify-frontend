@@ -1,4 +1,5 @@
-import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon } from "@ionic/react";
+import { useState } from "react";
+import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonListHeader, IonList, useIonPopover } from "@ionic/react";
 import {
   search,
   addCircleOutline,
@@ -9,7 +10,24 @@ import {
   arrowBackOutline,
 } from "ionicons/icons";
 
-const Toolbar = ({title}) => {
+const Toolbar = ({ title }) => {
+  const PopoverList: React.FC<{
+    onHide: () => void,
+  }> = ({ onHide }) => (
+    <IonList>
+      <IonListHeader>Popover Content</IonListHeader>
+      <IonItem button>Learn Ionic</IonItem>
+      <IonItem button>Documentation</IonItem>
+      <IonItem button>Showcase</IonItem>
+      <IonItem button>GitHub Repo</IonItem>
+      <IonItem lines="none" detail={false} button onClick={onHide}>
+        Close
+      </IonItem>
+    </IonList>
+  );
+
+  const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
+
   return (
     <>
       <IonToolbar className="ion-hide-sm-down">
@@ -41,7 +59,11 @@ const Toolbar = ({title}) => {
           </IonButton>
         </IonButtons>
         <IonButtons slot="end">
-          <IonButton>
+          <IonButton onClick={(e) =>
+            present({
+              event: e.nativeEvent,
+            })
+          }>
             <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
           </IonButton>
         </IonButtons>
