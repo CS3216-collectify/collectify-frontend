@@ -1,4 +1,4 @@
-import { IonContent, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
+import { IonContent, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTextarea } from "@ionic/react";
 import { useState } from "react";
 
 const CollectionForm = (props) => {
@@ -34,7 +34,7 @@ const CollectionForm = (props) => {
         </IonItem>
         <IonItem>
           <IonLabel>Description</IonLabel>
-          <IonInput
+          <IonTextarea
             value={description}
             placeholder="Enter item description"
             onIonChange={descriptionChangeHandler}
