@@ -1,6 +1,8 @@
 import {
   IonCol,
   IonGrid,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonRow,
 } from "@ionic/react";
 import { useState } from "react";
@@ -11,6 +13,18 @@ const sampleImage =
   "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
 
 const mockImages = [
+  sampleImage,
+  sampleImage,
+  sampleImage,
+  sampleImage,
+  sampleImage,
+
+  sampleImage,
+  sampleImage,
+  sampleImage,
+  sampleImage,
+  sampleImage,
+
   sampleImage,
   sampleImage,
   sampleImage,
@@ -39,8 +53,15 @@ const groupElementsByThree = (arr) => {
 
 const ImageGrid = (props) => {
   const [images, setImages] = useState(mockImages);
+  const [hasMore, setHasMore] = useState(true);
 
   const groupsOfThree = groupElementsByThree(images);
+
+  const fetchNextPage = () => {
+    // TODO: Fetch next set of images
+    console.log("TODO: Implement infinite scroll")
+    setTimeout(() => setHasMore(false), 1500);
+  }
 
   return (
     <IonGrid className="image-grid">
@@ -53,6 +74,12 @@ const ImageGrid = (props) => {
           ))}
         </IonRow>
       ))}
+      <IonInfiniteScroll
+        disabled={!hasMore}
+        onIonInfinite={fetchNextPage}
+      >
+        <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
+      </IonInfiniteScroll>
     </IonGrid>
   );
 };
