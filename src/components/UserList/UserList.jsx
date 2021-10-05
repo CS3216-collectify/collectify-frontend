@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFollowersByCollectionId } from "../../services/followers";
+import FlexImage from "../../components/Image/FlexImage"
 
 const LIMIT = 10;
 
@@ -65,7 +66,7 @@ const UserList = (props) => {
         {users.map((userData, idx) => (
           <IonItem key={idx}>
             <IonAvatar>
-              <IonImg src={userData.profilePhotoUrl} />
+              <FlexImage src={userData.profilePhotoUrl} />
             </IonAvatar>
             <IonCol>
               <IonLabel>@{userData.username}</IonLabel>
