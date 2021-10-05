@@ -1,10 +1,12 @@
 import {
   IonCol,
   IonGrid,
+  IonIcon,
   IonRow,
 } from "@ionic/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import FlexIonImg from "../Image/FlexIonImg"
+import { trashBin } from "ionicons/icons";
 import "./styles.css";
 
 const sampleImage =
@@ -49,9 +51,14 @@ const ImageEditList = (props) => {
       {groupsOfFour.map((grp, idx) => (
         <IonRow className="single-row-4 ion-justify-content-evenly" size={12} key={idx}>
           {grp.map((url, idx) => (
-            <IonCol key={idx} className="single-image-4"  size={2}>
-              <FlexIonImg src={url} />
-            </IonCol>
+            <React.Fragment key={idx}>
+              <IonCol className="single-image-4"  size={2}>
+                <FlexIonImg src={url} />
+              </IonCol>
+              <IonCol size={1}>
+                <IonIcon className="delete-icon" icon={trashBin} />
+              </IonCol>
+            </React.Fragment>
           ))}
         </IonRow>
       ))}

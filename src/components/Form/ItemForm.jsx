@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonList, IonTextarea } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonInput, IonItem, IonLabel, IonList, IonRow, IonTextarea } from "@ionic/react";
 import ImageEditList from "../ImageGallery/ImageEditList";
 import { useState } from "react";
 import FlexIonImg from "../Image/FlexIonImg";
@@ -34,13 +34,42 @@ const ItemForm = (props) => {
     <IonContent>
       <IonList>
         <IonItem>
-          <IonLabel>Images</IonLabel>
+          <IonCol>
+            <IonRow>
+              <IonLabel>Item Name</IonLabel>
+            </IonRow>
+            <IonRow>
+              <IonInput
+                value={name}
+                placeholder="Enter item name"
+                onIonChange={nameChangeHandler}
+              />
+            </IonRow>
+          </IonCol>
         </IonItem>
-        <ImageCarousel />
         <IonItem>
-          <ImageEditList />
+          <IonCol>
+            <IonRow>
+              <IonLabel>Description</IonLabel>
+            </IonRow>
+            <IonRow>
+              <IonTextarea
+                value={description}
+                placeholder="Enter item description"
+                onIonChange={descriptionChangeHandler}
+              />
+            </IonRow>
+          </IonCol>
         </IonItem>
-        <IonItem>
+      </IonList>
+      <IonItem>
+        <IonCol>
+          <IonRow>
+            <IonLabel>Photos</IonLabel>
+          </IonRow>
+          <IonRow>
+            <ImageEditList />
+          </IonRow>
           <input
             id="my-image-input"
             type="file"
@@ -49,33 +78,15 @@ const ItemForm = (props) => {
             multiple={false}
             hidden={true}
           />
-          <IonButton
-            onClick={() => document.getElementById("my-image-input").click()}
-          >
-            Add Image
-          </IonButton>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Item Name</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonInput
-            value={name}
-            placeholder="Enter item name"
-            onIonChange={nameChangeHandler}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>Description</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonTextarea
-            value={description}
-            placeholder="Enter item description"
-            onIonChange={descriptionChangeHandler}
-          />
-        </IonItem>
-      </IonList>
+          <IonRow className="ion-justify-content-end">
+            <IonButton
+              onClick={() => document.getElementById("my-image-input").click()}
+            >
+              Add Photos
+            </IonButton>
+          </IonRow>
+        </IonCol>
+      </IonItem>
     </IonContent>
   );
 };
