@@ -54,6 +54,7 @@ const ItemForm = (props) => {
             </IonRow>
             <IonRow>
               <IonTextarea
+                autoGrow
                 value={description}
                 placeholder="Enter item description"
                 onIonChange={descriptionChangeHandler}

@@ -85,6 +85,7 @@ const CollectionForm = (props) => {
             </IonRow>
             <IonRow>
               <IonTextarea
+                autoGrow
                 value={description}
                 placeholder="Enter collection summary"
                 onIonChange={descriptionChangeHandler}
