@@ -4,7 +4,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import { useState } from "react";
-import FlexIonImg from "../Image/FlexIonImg"
+import FlexImage from "../Image/FlexImage"
 import "./styles.css";
 
 const sampleImage =
@@ -48,7 +48,7 @@ const ImageGrid = (props) => {
         <IonRow className="single-row-3" size={12} key={idx}>
           {grp.map((url, idx) => (
             <IonCol key={idx} className="single-image-3"  size={4}>
-              <FlexIonImg src={url} />
+              <FlexImage src={url} />
             </IonCol>
           ))}
         </IonRow>

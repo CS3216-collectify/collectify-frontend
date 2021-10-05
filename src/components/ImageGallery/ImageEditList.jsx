@@ -5,7 +5,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import React, { useState } from "react";
-import FlexIonImg from "../Image/FlexIonImg"
+import FlexImage from "../Image/FlexImage"
 import { trashBin } from "ionicons/icons";
 import "./styles.css";
 
@@ -53,7 +53,7 @@ const ImageEditList = (props) => {
           {grp.map((url, idx) => (
             <React.Fragment key={idx}>
               <IonCol className="single-image-4"  size={2}>
-                <FlexIonImg src={url} />
+                <FlexImage src={url} />
               </IonCol>
               <IonCol size={1}>
                 <IonIcon className="delete-icon" icon={trashBin} />

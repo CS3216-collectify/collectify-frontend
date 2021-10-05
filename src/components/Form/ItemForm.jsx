@@ -1,7 +1,7 @@
 import { IonButton, IonCol, IonContent, IonInput, IonItem, IonLabel, IonList, IonRow, IonTextarea } from "@ionic/react";
 import ImageEditList from "../ImageGallery/ImageEditList";
 import { useState } from "react";
-import FlexIonImg from "../Image/FlexIonImg";
+import FlexImage from "../Image/FlexImage";
 import ImageCarousel from "../ImageGallery/ImageCarousel";
 
 const sampleImage =
