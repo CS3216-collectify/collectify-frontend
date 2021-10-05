@@ -1,4 +1,16 @@
-import { IonContent, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTextarea } from "@ionic/react";
+import {
+  IonButton,
+  IonCol,
+  IonContent,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+} from "@ionic/react";
 import { useState } from "react";
 
 const CollectionForm = (props) => {
@@ -17,7 +29,7 @@ const CollectionForm = (props) => {
   const addCategoryHandler = (e) => {
     const newCat = e.detail.value;
     setCategories(newCat);
-  }
+  };
 
   console.log(categories);
 
@@ -25,27 +37,60 @@ const CollectionForm = (props) => {
     <IonContent>
       <IonList>
         <IonItem>
-          <IonLabel>Name</IonLabel>
-          <IonInput
-            value={name}
-            placeholder="Enter item name"
-            onIonChange={nameChangeHandler}
-          />
+          <IonCol>
+            <IonRow>
+              <IonLabel>Collection Title</IonLabel>
+            </IonRow>
+            <IonRow>
+              <IonInput
+                value={name}
+                placeholder="Enter collection title"
+                onIonChange={nameChangeHandler}
+              />
+            </IonRow>
+          </IonCol>
         </IonItem>
         <IonItem>
-          <IonLabel>Description</IonLabel>
-          <IonTextarea
-            value={description}
-            placeholder="Enter item description"
-            onIonChange={descriptionChangeHandler}
-          />
+          <IonRow className="ion-justify-content-start">
+            {categories.map((cat, idx) => (
+              <IonCol key={idx}>{cat}</IonCol>
+            ))}
+          </IonRow>
         </IonItem>
         <IonItem>
-          <IonLabel>Categories</IonLabel>
-          <IonSelect value={categories} multiple placeholder="Please choose at least 1 category" onIonChange={addCategoryHandler}>
-            <IonSelectOption value="category1">FirstCategory</IonSelectOption>
-            <IonSelectOption value="category2">SecondCategory</IonSelectOption>
-          </IonSelect>
+          <IonCol>
+            <IonRow className="ion-justify-content-end">
+              <IonButton
+                onClick={() => document.getElementById("cat-select").click()}
+              >
+                Edit Categories
+              </IonButton>
+            </IonRow>
+            <IonLabel hidden={true}>Categories</IonLabel>
+            <IonSelect
+              id="cat-select"
+              multiple
+              onIonChange={addCategoryHandler}
+              hidden={true}
+            >
+              <IonSelectOption value="Cat1">Cat1</IonSelectOption>
+              <IonSelectOption value="Cat2">Cat2</IonSelectOption>
+            </IonSelect>
+          </IonCol>
+        </IonItem>
+        <IonItem>
+          <IonCol>
+            <IonRow>
+              <IonLabel>Summary</IonLabel>
+            </IonRow>
+            <IonRow>
+              <IonTextarea
+                value={description}
+                placeholder="Enter collection summary"
+                onIonChange={descriptionChangeHandler}
+              />
+            </IonRow>
+          </IonCol>
         </IonItem>
       </IonList>
     </IonContent>
