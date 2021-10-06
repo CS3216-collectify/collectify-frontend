@@ -12,7 +12,7 @@ import {
   IonTextarea,
 } from "@ionic/react";
 import { useState } from "react";
-import TextArea from "./TextArea";
+import TextArea from "../text-input/TextArea";
 
 const CollectionForm = (props) => {
   const [name, setName] = useState("");
