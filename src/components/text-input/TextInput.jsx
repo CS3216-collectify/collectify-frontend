@@ -1,10 +1,10 @@
 import { IonItem, IonLabel, IonInput, IonGrid, IonRow } from "@ionic/react";
 import "./styles.css";
 
-const TextInput = ({ title, value, onChange: textChangeHandler, placeholder }) => {
+const TextInput = ({ label, value, onChange: textChangeHandler, placeholder }) => {
   return (
     <>
-      <IonLabel position="stacked">{title}</IonLabel>
+      <IonLabel position="stacked">{label}</IonLabel>
       <IonInput
         className="text-input"
         value={value}

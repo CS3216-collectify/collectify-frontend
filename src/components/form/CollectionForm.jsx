@@ -41,25 +41,11 @@ const CollectionForm = (props) => {
   return (
     <IonList>
       <IonItem>
-        <TextInput title="Collection Title" value={name} placeholder="Enter a title" onChange={setName} />
+        <TextInput label="Collection Title" value={name} placeholder="Enter a title" onChange={setName} />
       </IonItem>
-      {/* <IonItem>
-        <IonGrid>
-          <IonRow>
-            <IonLabel>Collection Title</IonLabel>
-          </IonRow>
-          <IonRow>
-            <IonInput
-              value={name}
-              placeholder="Enter collection title"
-              onIonChange={nameChangeHandler}
-            />
-          </IonRow>
-        </IonGrid>
-      </IonItem> */}
       <IonItem>
         <TextArea
-          title="Summary"
+          label="Summary"
           value={description}
           placeholder="Enter collection summary"
           onChange={setDescription}
