@@ -1,7 +1,9 @@
 import {
   IonButton,
+  IonChip,
   IonCol,
   IonContent,
+  IonGrid,
   IonInput,
   IonItem,
   IonLabel,
@@ -12,7 +14,9 @@ import {
   IonTextarea,
 } from "@ionic/react";
 import { useState } from "react";
+import CategoryChip from "../../chip/CategoryChip";
 import TextArea from "../text-input/TextArea";
+import TextInput from "../text-input/TextInput";
 
 const CollectionForm = (props) => {
   const [name, setName] = useState("");
@@ -37,7 +41,10 @@ const CollectionForm = (props) => {
   return (
     <IonList>
       <IonItem>
-        <IonCol>
+        <TextInput title="Collection Title" value={name} placeholder="Enter a title" onChange={setName} />
+      </IonItem>
+      {/* <IonItem>
+        <IonGrid>
           <IonRow>
             <IonLabel>Collection Title</IonLabel>
           </IonRow>
@@ -48,12 +55,25 @@ const CollectionForm = (props) => {
               onIonChange={nameChangeHandler}
             />
           </IonRow>
-        </IonCol>
+        </IonGrid>
+      </IonItem> */}
+      <IonItem>
+        <TextArea
+          title="Summary"
+          value={description}
+          placeholder="Enter collection summary"
+          onChange={setDescription}
+        />
       </IonItem>
       <IonItem>
         <IonRow className="ion-justify-content-start">
           {categories.map((cat, idx) => (
-            <IonCol key={idx}>{cat}</IonCol>
+            <IonCol key={idx}>
+              <CategoryChip 
+                name={cat} 
+                onDelete={() => console.log(`delete ${cat}`)}
+              />
+            </IonCol>
           ))}
         </IonRow>
       </IonItem>
@@ -76,20 +96,6 @@ const CollectionForm = (props) => {
             <IonSelectOption value="Cat1">Cat1</IonSelectOption>
             <IonSelectOption value="Cat2">Cat2</IonSelectOption>
           </IonSelect>
-        </IonCol>
-      </IonItem>
-      <IonItem>
-        <IonCol>
-          <IonRow>
-            <IonLabel>Summary</IonLabel>
-          </IonRow>
-          <IonRow>
-            <TextArea
-              value={description}
-              placeholder="Enter collection summary"
-              onChange={descriptionChangeHandler}
-            />
-          </IonRow>
         </IonCol>
       </IonItem>
       <IonItem>

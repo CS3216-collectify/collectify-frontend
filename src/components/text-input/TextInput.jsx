@@ -1,14 +1,17 @@
-import { IonItem, IonLabel, IonInput } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonGrid, IonRow } from "@ionic/react";
+import "./styles.css";
 
-/**
- * React Wrapper for IonToast
- */
-const TextInput = ({ value, onChange, type }) => {
+const TextInput = ({ title, value, onChange: textChangeHandler, placeholder }) => {
   return (
-    <IonItem>
-      <IonLabel position="fixed">Name</IonLabel>
-      <IonInput value={value} onIonChange={(e) => onChange(e.detail.value)} clearInput={true} type={type}></IonInput>
-    </IonItem>
+    <>
+      <IonLabel position="stacked">{title}</IonLabel>
+      <IonInput
+        className="text-input"
+        value={value}
+        placeholder={placeholder}
+        onIonChange={(e) => textChangeHandler(e.detail.value)}
+      />
+    </>
   );
 };
 

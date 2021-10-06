@@ -1,15 +1,18 @@
-import { IonTextarea } from "@ionic/react";
+import { IonCol, IonLabel, IonTextarea } from "@ionic/react";
 
 const TextArea = (props) => {
-  const { value, placeholder, onChange: textChangeHandler } = props;
+  const { title, value, placeholder, onChange: textChangeHandler } = props;
 
   return (
-    <IonTextarea
-      autoGrow
-      value={value}
-      placeholder={placeholder}
-      onIonChange={textChangeHandler}
-    />
+    <>
+      <IonLabel position="stacked">{title}</IonLabel>
+      <IonTextarea
+        autoGrow
+        value={value}
+        placeholder={placeholder}
+        onIonChange={(e) => textChangeHandler(e.detail.value)}
+      />
+    </>
   )
 }
 
