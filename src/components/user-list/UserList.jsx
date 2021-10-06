@@ -12,7 +12,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFollowersByCollectionId } from "../../services/followers";
-import FlexImage from "../../components/Image/FlexImage"
+import FlexImage from "../../components/image/FlexImage"
 
 const LIMIT = 10;
 

@@ -1,4 +1,4 @@
-import ItemForm from "../../components/Form/ItemForm";
+import ItemForm from "../../components/form/ItemForm";
 
 const EditItem = (props) => {
   return (

@@ -5,7 +5,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import React, { useState } from "react";
-import FlexImage from "../Image/FlexImage"
+import FlexImage from "../image/FlexImage"
 import { trashBin } from "ionicons/icons";
 import "./styles.css";
 

@@ -1,5 +1,5 @@
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import ImageCarousel from '../../components/ImageGallery/ImageCarousel'
+import ImageCarousel from '../../components/gallery/ImageCarousel'
 
 const Item = (props) => {
   const { title = "Test Title", ownerUsername = "test", ownerName = "Test", description = "Test Description..." } = props;

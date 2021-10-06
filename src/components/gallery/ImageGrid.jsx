@@ -8,7 +8,7 @@ import {
 import { image } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { getItemsByCollectionId } from "../../services/items";
-import FlexImage from "../Image/FlexImage"
+import FlexImage from "../image/FlexImage"
 import "./styles.css";
 
 const groupElementsByThree = (arr) => {

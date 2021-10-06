@@ -1,5 +1,5 @@
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
-import ImageGrid from '../../components/ImageGallery/ImageGrid'
+import ImageGrid from '../../components/gallery/ImageGrid'
 import "./styles.css"
 
 const Collection = (props) => {

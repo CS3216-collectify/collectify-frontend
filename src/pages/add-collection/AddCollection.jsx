@@ -1,4 +1,4 @@
-import CollectionForm from "../../components/Form/CollectionForm";
+import CollectionForm from "../../components/form/CollectionForm";
 
 const AddCollection = (props) => {
   return (

@@ -1,8 +1,8 @@
 import { IonButton, IonCol, IonContent, IonInput, IonItem, IonLabel, IonList, IonRow, IonTextarea } from "@ionic/react";
-import ImageEditList from "../ImageGallery/ImageEditList";
+import ImageEditList from "../gallery/ImageEditList";
 import { useState } from "react";
-import FlexImage from "../Image/FlexImage";
-import ImageCarousel from "../ImageGallery/ImageCarousel";
+import FlexImage from "../image/FlexImage";
+import ImageCarousel from "../gallery/ImageCarousel";
 import TextArea from "./TextArea";
 
 const sampleImage =
@@ -32,37 +32,35 @@ const ItemForm = (props) => {
   }
 
   return (
-    <IonContent>
-      <IonList>
-        <IonItem>
-          <IonCol>
-            <IonRow>
-              <IonLabel>Item Name</IonLabel>
-            </IonRow>
-            <IonRow>
-              <IonInput
-                value={name}
-                placeholder="Enter item name"
-                onIonChange={nameChangeHandler}
-              />
-            </IonRow>
-          </IonCol>
-        </IonItem>
-        <IonItem>
-          <IonCol>
-            <IonRow>
-              <IonLabel>Description</IonLabel>
-            </IonRow>
-            <IonRow>
-              <TextArea
-                value={description}
-                placeholder="Enter item description"
-                onChange={descriptionChangeHandler}
-              />
-            </IonRow>
-          </IonCol>
-        </IonItem>
-      </IonList>
+    <IonList>
+      <IonItem>
+        <IonCol>
+          <IonRow>
+            <IonLabel>Item Name</IonLabel>
+          </IonRow>
+          <IonRow>
+            <IonInput
+              value={name}
+              placeholder="Enter item name"
+              onIonChange={nameChangeHandler}
+            />
+          </IonRow>
+        </IonCol>
+      </IonItem>
+      <IonItem>
+        <IonCol>
+          <IonRow>
+            <IonLabel>Description</IonLabel>
+          </IonRow>
+          <IonRow>
+            <TextArea
+              value={description}
+              placeholder="Enter item description"
+              onChange={descriptionChangeHandler}
+            />
+          </IonRow>
+        </IonCol>
+      </IonItem>
       <IonItem>
         <IonCol>
           <IonRow>
@@ -97,7 +95,7 @@ const ItemForm = (props) => {
           </IonButton>
         </IonRow>
       </IonItem>
-    </IonContent>
+    </IonList>
   );
 };
 
