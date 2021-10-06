@@ -5,32 +5,11 @@ import {
   IonInfiniteScrollContent,
   IonRow,
 } from "@ionic/react";
-import { useState } from "react";
+import { image } from "ionicons/icons";
+import { useEffect, useState } from "react";
+import { getItemsByCollectionId } from "../../services/items";
 import FlexImage from "../Image/FlexImage"
 import "./styles.css";
-
-const sampleImage =
-  "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
-
-const mockImages = [
-  sampleImage,
-  sampleImage,
-  sampleImage,
-  sampleImage,
-  sampleImage,
-
-  sampleImage,
-  sampleImage,
-  sampleImage,
-  sampleImage,
-  sampleImage,
-
-  sampleImage,
-  sampleImage,
-  sampleImage,
-  sampleImage,
-  sampleImage,
-];
 
 const groupElementsByThree = (arr) => {
   const groupsOfThree = [];
@@ -47,29 +26,63 @@ const groupElementsByThree = (arr) => {
   }
   groupsOfThree.push(group);
 
-  console.log(groupsOfThree);
   return groupsOfThree;
 };
 
-const ImageGrid = (props) => {
-  const [images, setImages] = useState(mockImages);
-  const [hasMore, setHasMore] = useState(true);
+const LIMIT = 18;
 
-  const groupsOfThree = groupElementsByThree(images);
+const ImageGrid = (props) => {
+  const { collectionId = 1 } = props;
+  const [items, setItems] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [pages, setPages] = useState(-1);
+
+  const loadItems = async () => {
+    const nextPage = pages + 1;
+    setTimeout(async () => {
+      // TODO: Remove this timeout
+      try {
+        if (!hasMore) {
+          return;
+        }
+        const retrievedItems = await getItemsByCollectionId(
+          collectionId,
+          nextPage * LIMIT,
+          LIMIT
+        );
+        console.log(retrievedItems);
+        if (
+          (retrievedItems && retrievedItems.length < LIMIT) ||
+          !retrievedItems
+        ) {
+          setHasMore(false);
+        }
+        setItems([...items, ...retrievedItems]);
+        setPages(nextPage);
+      } catch (e) {
+        console.log(e);
+      }
+    }, 2000);
+  };
 
   const fetchNextPage = () => {
-    // TODO: Fetch next set of images
-    console.log("TODO: Implement infinite scroll")
-    setTimeout(() => setHasMore(false), 1500);
-  }
+    console.log("load next");
+    loadItems();
+  };
+
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  const groupsOfThree = groupElementsByThree(items);
 
   return (
     <IonGrid className="image-grid">
       {groupsOfThree.map((grp, idx) => (
         <IonRow className="single-row-3" size={12} key={idx}>
-          {grp.map((url, idx) => (
+          {grp.map((item, idx) => (
             <IonCol key={idx} className="single-image-3"  size={4}>
-              <FlexImage src={url} />
+              <FlexImage src={item.coverImage.url} />
             </IonCol>
           ))}
         </IonRow>
