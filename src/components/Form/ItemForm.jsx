@@ -3,6 +3,7 @@ import ImageEditList from "../ImageGallery/ImageEditList";
 import { useState } from "react";
 import FlexImage from "../Image/FlexImage";
 import ImageCarousel from "../ImageGallery/ImageCarousel";
+import TextArea from "./TextArea";
 
 const sampleImage =
   "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
@@ -53,11 +54,10 @@ const ItemForm = (props) => {
               <IonLabel>Description</IonLabel>
             </IonRow>
             <IonRow>
-              <IonTextarea
-                autoGrow
+              <TextArea
                 value={description}
                 placeholder="Enter item description"
-                onIonChange={descriptionChangeHandler}
+                onChange={descriptionChangeHandler}
               />
             </IonRow>
           </IonCol>

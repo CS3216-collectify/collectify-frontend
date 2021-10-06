@@ -12,6 +12,7 @@ import {
   IonTextarea,
 } from "@ionic/react";
 import { useState } from "react";
+import TextArea from "./TextArea";
 
 const CollectionForm = (props) => {
   const [name, setName] = useState("");
@@ -84,11 +85,10 @@ const CollectionForm = (props) => {
               <IonLabel>Summary</IonLabel>
             </IonRow>
             <IonRow>
-              <IonTextarea
-                autoGrow
+              <TextArea
                 value={description}
                 placeholder="Enter collection summary"
-                onIonChange={descriptionChangeHandler}
+                onChange={descriptionChangeHandler}
               />
             </IonRow>
           </IonCol>
