@@ -1,17 +1,9 @@
 import {
-  IonButton,
-  IonChip,
   IonCol,
-  IonContent,
   IonGrid,
-  IonInput,
   IonItem,
-  IonLabel,
   IonList,
   IonRow,
-  IonSelect,
-  IonSelectOption,
-  IonTextarea,
 } from "@ionic/react";
 import { useState } from "react";
 import CategoryChip from "../../chip/CategoryChip";
@@ -66,7 +58,7 @@ const CollectionForm = (props) => {
         </IonRow>
       </IonItem>
       <IonItem>
-        <IonCol>
+        <IonGrid>
           <IonRow className="ion-justify-content-end">
             <SelectButton 
               onChange={setCategories} 
@@ -75,7 +67,7 @@ const CollectionForm = (props) => {
               selectLabel="Categories"
             />
           </IonRow>
-        </IonCol>
+        </IonGrid>
       </IonItem>
       <IonItem>
         <SaveButton onClick={() => console.log("Save collection handler not yet implemented")} />

@@ -1,5 +1,5 @@
 import { IonImg } from '@ionic/react';
-import './styles.css';
+import './styles.scss';
 
 const FlexImage = (props) => {
   return (

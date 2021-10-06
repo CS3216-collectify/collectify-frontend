@@ -1,5 +1,5 @@
 import { IonItem, IonLabel, IonInput, IonGrid, IonRow } from "@ionic/react";
-import "./styles.css";
+import "./styles.scss";
 
 const TextInput = ({ label, value, onChange: textChangeHandler, placeholder }) => {
   return (
