@@ -12,14 +12,6 @@ import {
   useIonPopover,
 } from "@ionic/react";
 import { ellipsisVertical } from "ionicons/icons";
-import {
-  search,
-  addCircleOutline,
-  chatbubblesOutline,
-  personCircleOutline,
-  settingsOutline,
-   arrowBackOutline,
-} from "ionicons/icons";
 
 const ProfileToolbar = ({ username }) => {
   // Menu with items shown when ellipsis icon is pressed
@@ -58,27 +50,6 @@ const ProfileToolbar = ({ username }) => {
             }
           >
             <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
-          </IonButton>
-        </IonButtons>
-      </IonToolbar>
-
-      <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>{username}</IonTitle>
-        <IonButtons slot="end">
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={search} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
-          </IonButton>
-          <IonButton>
-            <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
           </IonButton>
         </IonButtons>
       </IonToolbar>

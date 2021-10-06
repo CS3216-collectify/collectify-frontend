@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonTabBar } from "@ionic/react";
+import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
 
@@ -67,27 +67,27 @@ const App = () => {
               <IonTabBar slot="bottom" className="ion-hide-sm-up">
                 <IonTabButton tab="home" href="/home">
                   <IonIcon icon={homeOutline} />
-                  <p>Home</p>
+                  <IonText>Home</IonText>
                 </IonTabButton>
 
                 <IonTabButton tab="b" href="/b">
                   <IonIcon icon={searchOutline} />
-                  <p>Discover</p>
+                  <IonText>Discover</IonText>
                 </IonTabButton>
 
                 <IonTabButton tab="c" href="/c">
                   <IonIcon icon={addCircleOutline} />
-                  <p>Add</p>
+                  <IonText>Add</IonText>
                 </IonTabButton>
 
                 <IonTabButton tab="d" href="/d">
                   <IonIcon icon={chatbubblesOutline} />
-                  <p>Chats</p>
+                  <IonText>Chats</IonText>
                 </IonTabButton>
 
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
-                  <p>Profile</p>
+                  <IonText>Profile</IonText>
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>
