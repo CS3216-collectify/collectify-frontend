@@ -1,14 +1,17 @@
-import { useState } from "react";
-import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonListHeader, IonList, IonBackButton, IonHeader, useIonPopover } from "@ionic/react";
 import {
-  search,
-  addCircleOutline,
-  chatbubblesOutline,
-  personCircleOutline,
-  settingsOutline,
-  ellipsisVertical,
-  arrowBackOutline,
-} from "ionicons/icons";
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonItem,
+  IonListHeader,
+  IonList,
+  IonBackButton,
+  IonHeader,
+  useIonPopover,
+} from "@ionic/react";
+import { ellipsisVertical } from "ionicons/icons";
 
 const ProfileToolbar = ({ username }) => {
   // Menu with items shown when ellipsis icon is pressed

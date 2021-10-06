@@ -32,6 +32,10 @@ const Login = () => {
     }
   };
 
+  const handleGuestLogin = async () => {
+    history.replace("/home");
+  };
+
   return (
     <IonPage className="login">
       {/* Ion padding applies 16px  */}
@@ -45,7 +49,7 @@ const Login = () => {
           </IonRow>
           <IonRow>or</IonRow>
           <IonRow className="ion-justify-content-center">
-            <GuestLoginButton />
+            <GuestLoginButton handleGuestLogin={handleGuestLogin}/>
           </IonRow>
         </IonGrid>
 
