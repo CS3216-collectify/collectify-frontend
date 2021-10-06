@@ -1,33 +1,27 @@
-import { IonGrid, IonRow, IonCol, IonText } from '@ionic/react';
+import { IonGrid, IonRow, IonCol } from '@ionic/react';
 import ImageCarousel from '../../components/ImageGallery/ImageCarousel'
 
 const Item = (props) => {
-  const { title = "Test Title", ownerUsername = "@test", ownerName = "Test", description = "Test Description..." } = props;
+  const { title = "Test Title", ownerUsername = "test", ownerName = "Test", description = "Test Description..." } = props;
   return (
     <IonGrid>
       <IonRow>
         <IonCol>
-          <p>{ownerUsername} ({ownerName}) </p>
+          <p>@{ownerUsername} ({ownerName}) </p>
         </IonCol>
       </IonRow>
       <ImageCarousel />
       <IonRow>
         <IonCol size={9}>
-          <IonText>
-            <p>{title}</p>
-          </IonText>
+          <p>{title}</p>
         </IonCol>
         <IonCol size={3}>
-          <IonText>
-            <p>12 likes</p>
-          </IonText>
+          <p>12 likes</p>
         </IonCol>
       </IonRow>
       <IonRow className="top-margin-s">
         <IonCol>
-          <IonText>
-            <p>{description}</p>
-          </IonText>
+          <p>{description}</p>
         </IonCol>
       </IonRow>
     </IonGrid>

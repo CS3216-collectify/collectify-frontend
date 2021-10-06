@@ -1,35 +1,27 @@
-import { IonCol, IonGrid, IonRow, IonText } from '@ionic/react';
+import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import ImageGrid from '../../components/ImageGallery/ImageGrid'
 import "./styles.css"
 
 const Collection = (props) => {
-  const { title = "Test Collection", ownerName = "Test", ownerUsername = "@test", description = "Test Collection Description..." } = props;
+  const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   return (
     <IonGrid>
       <IonRow>
         <IonCol size={8}>
-          <IonText>
-            <p>{title}</p>
-          </IonText>
+          <p>{title}</p>
         </IonCol>
         <IonCol size={4}>
-          <IonText>
-            <p>20 followers</p>
-          </IonText>
+          <p>20 followers</p>
         </IonCol>
       </IonRow>
       <IonRow className="top-margin-s">
         <IonCol>
-          <IonText>
-            <p>by {ownerUsername} ({ownerName}) </p>
-          </IonText>
+          <p>by @{ownerUsername} ({ownerName}) </p>
         </IonCol>
       </IonRow>
       <IonRow className="top-margin-s">
         <IonCol>
-          <IonText>
-            <p>{description}</p>
-          </IonText>
+          <p>{description}</p>
         </IonCol>
       </IonRow>
       <ImageGrid />
