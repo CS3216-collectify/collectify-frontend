@@ -93,6 +93,15 @@ const CollectionForm = (props) => {
             </IonRow>
           </IonCol>
         </IonItem>
+        <IonItem>
+          <IonRow>
+            <IonButton
+              onClick={() => console.log("Clicked save")}
+            >
+              Save
+            </IonButton>
+          </IonRow>
+        </IonItem>
       </IonList>
     </IonContent>
   );
