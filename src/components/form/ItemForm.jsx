@@ -1,10 +1,11 @@
-import { IonButton, IonCol, IonContent, IonInput, IonItem, IonLabel, IonList, IonRow, IonTextarea } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonList, IonRow, IonTextarea } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
 import { useState } from "react";
 import FlexImage from "../image/FlexImage";
 import ImageCarousel from "../gallery/ImageCarousel";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
+import UploadButton from "../button/UploadButton";
 
 const sampleImage =
   "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
@@ -51,29 +52,15 @@ const ItemForm = (props) => {
         />
       </IonItem>
       <IonItem>
-        <IonCol>
-          <IonRow>
-            <IonLabel>Photos</IonLabel>
-          </IonRow>
-          <IonRow>
-            <ImageEditList />
-          </IonRow>
-          <input
-            id="my-image-input"
-            type="file"
-            accept="image/png, image/jpg"
-            onChange={imageChangeHandler}
-            multiple={false}
-            hidden={true}
-          />
+        <IonGrid>
+          <IonLabel>Photos</IonLabel>
+          <ImageEditList />
           <IonRow className="ion-justify-content-end">
-            <IonButton
-              onClick={() => document.getElementById("my-image-input").click()}
-            >
-              Add Photos
-            </IonButton>
+            <UploadButton 
+              onChange={imageChangeHandler}
+            />
           </IonRow>
-        </IonCol>
+        </IonGrid>
       </IonItem>
       <IonItem>
         <IonRow>
