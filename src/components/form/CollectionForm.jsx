@@ -35,75 +35,73 @@ const CollectionForm = (props) => {
   console.log(categories);
 
   return (
-    <IonContent>
-      <IonList>
-        <IonItem>
-          <IonCol>
-            <IonRow>
-              <IonLabel>Collection Title</IonLabel>
-            </IonRow>
-            <IonRow>
-              <IonInput
-                value={name}
-                placeholder="Enter collection title"
-                onIonChange={nameChangeHandler}
-              />
-            </IonRow>
-          </IonCol>
-        </IonItem>
-        <IonItem>
-          <IonRow className="ion-justify-content-start">
-            {categories.map((cat, idx) => (
-              <IonCol key={idx}>{cat}</IonCol>
-            ))}
-          </IonRow>
-        </IonItem>
-        <IonItem>
-          <IonCol>
-            <IonRow className="ion-justify-content-end">
-              <IonButton
-                onClick={() => document.getElementById("cat-select").click()}
-              >
-                Edit Categories
-              </IonButton>
-            </IonRow>
-            <IonLabel hidden={true}>Categories</IonLabel>
-            <IonSelect
-              id="cat-select"
-              multiple
-              onIonChange={addCategoryHandler}
-              hidden={true}
-            >
-              <IonSelectOption value="Cat1">Cat1</IonSelectOption>
-              <IonSelectOption value="Cat2">Cat2</IonSelectOption>
-            </IonSelect>
-          </IonCol>
-        </IonItem>
-        <IonItem>
-          <IonCol>
-            <IonRow>
-              <IonLabel>Summary</IonLabel>
-            </IonRow>
-            <IonRow>
-              <TextArea
-                value={description}
-                placeholder="Enter collection summary"
-                onChange={descriptionChangeHandler}
-              />
-            </IonRow>
-          </IonCol>
-        </IonItem>
-        <IonItem>
+    <IonList>
+      <IonItem>
+        <IonCol>
           <IonRow>
+            <IonLabel>Collection Title</IonLabel>
+          </IonRow>
+          <IonRow>
+            <IonInput
+              value={name}
+              placeholder="Enter collection title"
+              onIonChange={nameChangeHandler}
+            />
+          </IonRow>
+        </IonCol>
+      </IonItem>
+      <IonItem>
+        <IonRow className="ion-justify-content-start">
+          {categories.map((cat, idx) => (
+            <IonCol key={idx}>{cat}</IonCol>
+          ))}
+        </IonRow>
+      </IonItem>
+      <IonItem>
+        <IonCol>
+          <IonRow className="ion-justify-content-end">
             <IonButton
-              onClick={() => console.log("Clicked save")}
+              onClick={() => document.getElementById("cat-select").click()}
             >
-              Save
+              Edit Categories
             </IonButton>
           </IonRow>
-        </IonItem>
-      </IonList>
-    </IonContent>
+          <IonLabel hidden={true}>Categories</IonLabel>
+          <IonSelect
+            id="cat-select"
+            multiple
+            onIonChange={addCategoryHandler}
+            hidden={true}
+          >
+            <IonSelectOption value="Cat1">Cat1</IonSelectOption>
+            <IonSelectOption value="Cat2">Cat2</IonSelectOption>
+          </IonSelect>
+        </IonCol>
+      </IonItem>
+      <IonItem>
+        <IonCol>
+          <IonRow>
+            <IonLabel>Summary</IonLabel>
+          </IonRow>
+          <IonRow>
+            <TextArea
+              value={description}
+              placeholder="Enter collection summary"
+              onChange={descriptionChangeHandler}
+            />
+          </IonRow>
+        </IonCol>
+      </IonItem>
+      <IonItem>
+        <IonRow>
+          <IonButton
+            onClick={() => console.log("Clicked save")}
+          >
+            Save
+          </IonButton>
+        </IonRow>
+      </IonItem>
+    </IonList>
   );
 };
 

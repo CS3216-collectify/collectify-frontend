@@ -60,27 +60,25 @@ const UserList = (props) => {
   }, []);
 
   return (
-    <IonContent fullscreen>
-      <IonList>
-        {/* <IonListHeader>Followers/Likes</IonListHeader> */}
-        {users.map((userData, idx) => (
-          <IonItem key={idx}>
-            <IonAvatar>
-              <FlexImage src={userData.profilePhotoUrl} />
-            </IonAvatar>
-            <IonCol>
-              <IonLabel>@{userData.username}</IonLabel>
-            </IonCol>
-          </IonItem>
-        ))}
-        <IonInfiniteScroll
-          disabled={!hasMore}
-          onIonInfinite={fetchNextPage}
-        >
-          <IonInfiniteScrollContent loadingText="Loading..."></IonInfiniteScrollContent>
-        </IonInfiniteScroll>
-      </IonList>
-    </IonContent>
+    <IonList>
+      {/* <IonListHeader>Followers/Likes</IonListHeader> */}
+      {users.map((userData, idx) => (
+        <IonItem key={idx}>
+          <IonAvatar>
+            <FlexImage src={userData.profilePhotoUrl} />
+          </IonAvatar>
+          <IonCol>
+            <IonLabel>@{userData.username}</IonLabel>
+          </IonCol>
+        </IonItem>
+      ))}
+      <IonInfiniteScroll
+        disabled={!hasMore}
+        onIonInfinite={fetchNextPage}
+      >
+        <IonInfiniteScrollContent loadingText="Loading..."></IonInfiniteScrollContent>
+      </IonInfiniteScroll>
+    </IonList>
   );
 };
 
