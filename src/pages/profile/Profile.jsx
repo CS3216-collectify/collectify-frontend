@@ -7,7 +7,6 @@ import {
   IonRow,
   IonCol,
   IonImg,
-  IonText,
   IonItemDivider,
   IonItem,
   IonButton,
@@ -55,25 +54,16 @@ const Profile = () => {
             <IonCol>
               <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
-                    <b>{"3"}</b>
-                  </IonText>
+                  <b>{"3"}</b>
                   <br />
-                  <IonText>COLLECTIONS</IonText>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
-                    <b>{"15"}</b>
-                  </IonText>
+                  <b>{"15"}</b>
                   <br />
-                  <IonText>ITEMS</IonText>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
-                    <b>{"45"}</b>
-                  </IonText>
+                  <b>{"45"}</b>
                   <br />
-                  <IonText>LIKES</IonText>
                 </div>
                 {/* <div>
                   <IonButton>
@@ -104,7 +94,6 @@ const Profile = () => {
             <IonList className="profile-collection--list">
               <div className="profile-collection--container ion-margin-vertical">
                 <div className="profile-collection-title--container">
-                  <IonText className="profile-collection--title">Title</IonText>
                   <div>
                     <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
                     20 followers
@@ -133,9 +122,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div>
-                  <IonText className="profile-collection--desc">Description</IonText>
-                </div>
+                <div></div>
 
                 <div className="profile-collection-categories--container">
                   <IonChip>
@@ -167,7 +154,6 @@ const Profile = () => {
 
               <div className="profile-collection--container ion-margin-vertical">
                 <div className="profile-collection-title--container">
-                  <IonText className="profile-collection--title">Title</IonText>
                   <div>
                     <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
                     20 followers
@@ -196,9 +182,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div>
-                  <IonText className="profile-collection--desc">Description</IonText>
-                </div>
+                <div></div>
 
                 <div className="profile-collection-categories--container">
                   <IonChip>
@@ -230,7 +214,6 @@ const Profile = () => {
 
               <div className="profile-collection--container ion-margin-vertical">
                 <div className="profile-collection-title--container">
-                  <IonText className="profile-collection--title">Title</IonText>
                   <div>
                     <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
                     20 followers
@@ -259,9 +242,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div>
-                  <IonText className="profile-collection--desc">Description</IonText>
-                </div>
+                <div></div>
 
                 <div className="profile-collection-categories--container">
                   <IonChip>
