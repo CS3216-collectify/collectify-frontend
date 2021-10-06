@@ -16,28 +16,29 @@ import {
 import { useState } from "react";
 import CategoryChip from "../../chip/CategoryChip";
 import SaveButton from "../button/SaveButton";
+import SelectButton from "../button/SelectButton";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 
 const CollectionForm = (props) => {
+  // TODO: fetch from backend
+  const categoryOptions = [
+    {
+      id: 1,
+      name: "Cat1"
+    },
+    {
+      id: 2,
+      name: "Cat2"
+    },
+  ];
+
+  const selectOptions = categoryOptions.map((cat) => ({ value: cat.id, text: cat.name }));
+  const convertCategoryIdToName = (selectedId) => categoryOptions.filter((cat) => cat.id === selectedId)[0]?.name ?? "Unknown";
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
-
-  const nameChangeHandler = (e) => {
-    setName(e.detail.value);
-  };
-
-  const descriptionChangeHandler = (e) => {
-    setDescription(e.detail.value);
-  };
-
-  const addCategoryHandler = (e) => {
-    const newCat = e.detail.value;
-    setCategories(newCat);
-  };
-
-  console.log(categories);
 
   return (
     <IonList>
@@ -54,11 +55,11 @@ const CollectionForm = (props) => {
       </IonItem>
       <IonItem>
         <IonRow className="ion-justify-content-start">
-          {categories.map((cat, idx) => (
+          {categories.map((catId, idx) => (
             <IonCol key={idx}>
               <CategoryChip 
-                name={cat} 
-                onDelete={() => console.log(`delete ${cat}`)}
+                name={convertCategoryIdToName(catId)} 
+                onDelete={() => console.log(`delete ${catId}`)}
               />
             </IonCol>
           ))}
@@ -67,22 +68,13 @@ const CollectionForm = (props) => {
       <IonItem>
         <IonCol>
           <IonRow className="ion-justify-content-end">
-            <IonButton
-              onClick={() => document.getElementById("cat-select").click()}
-            >
-              Edit Categories
-            </IonButton>
+            <SelectButton 
+              onChange={setCategories} 
+              options={selectOptions}
+              buttonLabel="Edit Categories"
+              selectLabel="Categories"
+            />
           </IonRow>
-          <IonLabel hidden={true}>Categories</IonLabel>
-          <IonSelect
-            id="cat-select"
-            multiple
-            onIonChange={addCategoryHandler}
-            hidden={true}
-          >
-            <IonSelectOption value="Cat1">Cat1</IonSelectOption>
-            <IonSelectOption value="Cat2">Cat2</IonSelectOption>
-          </IonSelect>
         </IonCol>
       </IonItem>
       <IonItem>
