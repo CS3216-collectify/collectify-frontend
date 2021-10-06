@@ -6,6 +6,7 @@ import ImageCarousel from "../gallery/ImageCarousel";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import UploadButton from "../button/UploadButton";
+import SaveButton from "../button/SaveButton";
 
 const sampleImage =
   "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
@@ -63,13 +64,7 @@ const ItemForm = (props) => {
         </IonGrid>
       </IonItem>
       <IonItem>
-        <IonRow>
-          <IonButton
-            onClick={() => console.log("Clicked save")}
-          >
-            Save
-          </IonButton>
-        </IonRow>
+        <SaveButton onClick={() => console.log("Save item handler not yet implemented")} />
       </IonItem>
     </IonList>
   );

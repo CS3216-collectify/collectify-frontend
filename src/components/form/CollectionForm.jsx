@@ -15,6 +15,7 @@ import {
 } from "@ionic/react";
 import { useState } from "react";
 import CategoryChip from "../../chip/CategoryChip";
+import SaveButton from "../button/SaveButton";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 
@@ -85,13 +86,7 @@ const CollectionForm = (props) => {
         </IonCol>
       </IonItem>
       <IonItem>
-        <IonRow>
-          <IonButton
-            onClick={() => console.log("Clicked save")}
-          >
-            Save
-          </IonButton>
-        </IonRow>
+        <SaveButton onClick={() => console.log("Save collection handler not yet implemented")} />
       </IonItem>
     </IonList>
   );
