@@ -11,23 +11,13 @@ import { getItemsByCollectionId } from "../../services/items";
 import FlexImage from "../image/FlexImage"
 import "./gallery.scss";
 
-const groupElementsByThree = (arr) => {
-  const groupsOfThree = [];
-  var i = 0;
-  var group = [];
-  for (let elem of arr) {
-    if (i === 3) {
-      groupsOfThree.push(group);
-      group = [];
-      i = 0;
-    }
-    group.push(elem);
-    i = i + 1;
+const groupElements = (arr, interval) => {
+  var groups = [];
+  for (var i = 0; i < arr.length; i += interval) {
+    groups.push(arr.slice(i, i + interval));
   }
-  groupsOfThree.push(group);
-
-  return groupsOfThree;
-};
+  return groups;
+}
 
 const LIMIT = 18;
 
@@ -74,7 +64,7 @@ const ImageGrid = (props) => {
     loadItems();
   }, []);
 
-  const groupsOfThree = groupElementsByThree(items);
+  const groupsOfThree = groupElements(items, 3);
 
   return (
     <IonGrid className="image-grid">

@@ -22,29 +22,18 @@ const mockImages = [
 
 const LIMIT = 4;
 
-const groupElementsByFour = (arr) => {
-  const groupsofFour = [];
-  var i = 0;
-  var group = [];
-  for (let elem of arr) {
-    if (i === 4) {
-      groupsofFour.push(group);
-      group = [];
-      i = 0;
-    }
-    group.push(elem);
-    i = i + 1;
+const groupElements = (arr, interval) => {
+  var groups = [];
+  for (var i = 0; i < arr.length; i += interval) {
+    groups.push(arr.slice(i, i + interval));
   }
-  groupsofFour.push(group);
-
-  console.log(groupsofFour);
-  return groupsofFour;
-};
+  return groups;
+}
 
 const ImageEditList = (props) => {
   const [images, setImages] = useState(mockImages.slice(0, LIMIT));
 
-  const groupsOfFour = groupElementsByFour(images);
+  const groupsOfFour = groupElements(images, 4);
 
   return (
     <IonGrid className="image-grid">
