@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/react";
 
 import "./Home.scss";
 import DeleteButton from "../components/button/DeleteButton";
@@ -43,8 +43,9 @@ const Home = () => {
         <DeleteButton />
 
         <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color="danger" />
-
-        <TextInput value={name} onChange={setName} type="text" />
+        <IonItem>
+          <TextInput label="Test" value={name} onChange={setName} placeholder="Type text here" />
+        </IonItem>
       </IonContent>
     </IonPage>
   );
