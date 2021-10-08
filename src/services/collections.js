@@ -35,6 +35,7 @@ const mockPostCollectionResponse = {
   collectionId: 123,
 };
 
+// categoryId and userId are optional
 export const getCollections = async (categoryId, userId, offset, limit) => {
   //   const response = await axios
   //     .get("/collections", {
@@ -52,7 +53,7 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
   return mockCollections;
 };
 
-export const getCollection = async (collectionId) => {
+export const getCollectionByCollectionId = async (collectionId) => {
   //   const response = await axios
   //     .get("/collections" + collectionId, {
   //       params: {   },

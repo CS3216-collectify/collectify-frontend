@@ -41,7 +41,7 @@ const mockPostItemResponse = {
   itemId: 123,
 };
 
-export const getItems = async (collectionId, offset, limit) => {
+export const getItemsFromCollection = async (collectionId, offset, limit) => {
 //   const response = await axios
 //     .get("/collections/" + collectionId + "/items", {
 //       params: { offset: offset, limit: limit },
@@ -58,7 +58,7 @@ export const getItems = async (collectionId, offset, limit) => {
   return mockItems;
 };
 
-export const getItem = async (collectionId, itemId) => {
+export const getItemFromCollection = async (collectionId, itemId) => {
 //   const response = await axios
 //     .get("/collections/" + collectionId + "/items/" + itemId, {
 //       params: {},
@@ -132,6 +132,9 @@ export const updateItem = async (data, itemId) => {
 
   return {};
 };
+
+
+// TODO: delete item?
 
 export const deleteCollection = async (collectionId) => {
   //   const data = {

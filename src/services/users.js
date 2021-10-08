@@ -7,7 +7,7 @@ const mockUsers = {
     "https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg",
 };
 
-export const getUsers = async (userId) => {
+export const getUserByUserId = async (userId) => {
   //   const response = await axios
   //     .get("/users/" + userId, {
   //       params: {},
