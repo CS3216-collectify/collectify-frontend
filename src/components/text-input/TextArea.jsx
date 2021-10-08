@@ -1,4 +1,4 @@
-import { IonCol, IonLabel, IonTextarea } from "@ionic/react";
+import { IonLabel, IonTextarea } from "@ionic/react";
 
 const TextArea = (props) => {
   const { label, value, placeholder, onChange: textChangeHandler } = props;

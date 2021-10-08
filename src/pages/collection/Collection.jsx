@@ -1,6 +1,6 @@
 import { IonCol, IonContent, IonGrid, IonRow } from '@ionic/react';
 import ImageGrid from '../../components/gallery/ImageGrid'
-import "./styles.scss"
+import "./Collection.scss"
 
 const Collection = (props) => {
   const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;

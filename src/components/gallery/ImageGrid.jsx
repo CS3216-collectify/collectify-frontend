@@ -9,7 +9,7 @@ import { image } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { getItemsByCollectionId } from "../../services/items";
 import FlexImage from "../image/FlexImage"
-import "./styles.scss";
+import "./gallery.scss";
 
 const groupElementsByThree = (arr) => {
   const groupsOfThree = [];

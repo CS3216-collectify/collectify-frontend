@@ -1,5 +1,5 @@
 import { IonGrid, IonRow, IonCol, IonContent } from '@ionic/react';
-import ImageCarousel from '../../components/gallery/ImageCarousel'
+import ImageCarousel from '../../components/gallery/ImageCarousel';
 
 const Item = (props) => {
   const { title = "Test Title", ownerUsername = "test", ownerName = "Test", description = "Test Description..." } = props;
@@ -20,7 +20,7 @@ const Item = (props) => {
             <p>12 likes</p>
           </IonCol>
         </IonRow>
-        <IonRow className="top-margin-s">
+        <IonRow>
           <IonCol>
             <p>{description}</p>
           </IonCol>
