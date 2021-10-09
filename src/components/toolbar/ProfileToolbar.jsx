@@ -10,8 +10,17 @@ import {
   IonBackButton,
   IonHeader,
   useIonPopover,
+  IonText,
 } from "@ionic/react";
-import { ellipsisVertical } from "ionicons/icons";
+import {
+  search,
+  addCircleOutline,
+  chatbubblesOutline,
+  personCircleOutline,
+  settingsOutline,
+  ellipsisVertical,
+  arrowBackOutline,
+} from "ionicons/icons";
 
 const ProfileToolbar = ({ username }) => {
   // Menu with items shown when ellipsis icon is pressed
@@ -19,13 +28,11 @@ const ProfileToolbar = ({ username }) => {
     onHide: () => void,
   }> = ({ onHide }) => (
     <IonList>
-      <IonListHeader>Popover Content</IonListHeader>
-      <IonItem button>Learn Ionic</IonItem>
-      <IonItem button>Documentation</IonItem>
-      <IonItem button>Showcase</IonItem>
-      <IonItem button>GitHub Repo</IonItem>
+      <IonListHeader>Menu</IonListHeader>
+      <IonItem button>Edit Profile</IonItem>
+      <IonItem button>Settings</IonItem>
       <IonItem lines="none" detail={false} button onClick={onHide}>
-        Close
+        <IonText color="danger">Close</IonText>
       </IonItem>
     </IonList>
   );
@@ -34,6 +41,29 @@ const ProfileToolbar = ({ username }) => {
 
   return (
     <IonHeader>
+      {/* Toolbar shown for desktop view */}
+      <IonToolbar className="ion-hide-sm-down">
+        <IonTitle>collectify</IonTitle>
+
+        <IonButtons slot="end">
+          <IonButton>
+            <IonIcon size="small" slot="icon-only" icon={search} />
+          </IonButton>
+          <IonButton>
+            <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
+          </IonButton>
+          <IonButton>
+            <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
+          </IonButton>
+          <IonButton>
+            <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
+          </IonButton>
+          <IonButton>
+            <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
+          </IonButton>
+        </IonButtons>
+      </IonToolbar>
+
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
         <IonTitle>{username}</IonTitle>

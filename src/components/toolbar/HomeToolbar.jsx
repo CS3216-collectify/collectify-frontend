@@ -7,7 +7,6 @@ import {
   personCircleOutline,
   settingsOutline,
   ellipsisVertical,
-  arrowBackOutline,
 } from "ionicons/icons";
 
 const HomeToolbar = () => {

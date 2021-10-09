@@ -24,6 +24,7 @@ import { ReactComponent as Logo } from "../../assets/logo.svg";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
+import EditProfileButton from "../../components/button/EditProfileButton";
 
 const Profile = () => {
   // TODO: conditional Toast color
@@ -34,6 +35,10 @@ const Profile = () => {
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
+
+  // to keep track of which buttons to show, will need to be updated when unfollow/follow is pressed
+  let isMyAccount = true;
+  let hasFollowed = true;
 
   return (
     <IonPage className="profile">
@@ -83,8 +88,7 @@ const Profile = () => {
               </IonRow>
 
               <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
-                {/* <FollowButton /> */}
-                <UnfollowButton />
+                {isMyAccount ? <EditProfileButton /> : hasFollowed ? <UnfollowButton /> : <FollowButton />}
               </IonRow>
             </IonCol>
           </IonRow>
