@@ -36,9 +36,10 @@
 
       .profile-collection--title {
       }
-      .followers--icon {
-        align-self: center;
-        flex: 1;
+      .profile-collection-followers--container {
+        ion-icon {
+          vertical-align: middle;
+        }
       }
     }
 
@@ -61,5 +62,9 @@
         padding-right: 4px;
       }
     }
+  }
+
+  ion-chip {
+    pointer-events: none;
   }
 }

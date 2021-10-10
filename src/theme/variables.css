@@ -81,6 +81,13 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** grid **/
+  --ion-grid-width-xs: 100%;
+  --ion-grid-width-sm: 540px;
+  --ion-grid-width-md: 540px;
+  --ion-grid-width-lg: 540px;
+  --ion-grid-width-xl: 540px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -245,4 +252,8 @@ ion-button {
   text-transform: none;
   font-weight: 700;
   --box-shadow: none;
+}
+
+.ion-flex-full {
+  flex: 1;
 }

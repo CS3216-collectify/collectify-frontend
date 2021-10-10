@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   IonContent,
   IonPage,
@@ -16,7 +17,6 @@ import {
   IonList,
   IonLabel,
 } from "@ionic/react";
-import { ellipsisVertical, peopleOutline } from "ionicons/icons";
 
 import "./Profile.scss";
 import Toast from "../../components/toast/Toast";
@@ -25,8 +25,11 @@ import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
+import ProfileCollection from "./ProfileCollection";
 
 const Profile = () => {
+  const history = useHistory();
+
   // TODO: conditional Toast color
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -88,7 +91,13 @@ const Profile = () => {
               </IonRow>
 
               <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
-                {isMyAccount ? <EditProfileButton /> : hasFollowed ? <UnfollowButton /> : <FollowButton />}
+                {isMyAccount ? (
+                  <EditProfileButton onClick={() => history.push("/profile/edit")} />
+                ) : hasFollowed ? (
+                  <UnfollowButton />
+                ) : (
+                  <FollowButton />
+                )}
               </IonRow>
             </IonCol>
           </IonRow>
@@ -102,198 +111,13 @@ const Profile = () => {
               vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
             </div>
           </IonRow>
-          <IonItemDivider />
 
           <IonRow>
-            <IonList className="profile-collection--list">
-              <div className="profile-collection--container ion-margin-vertical">
-                <div className="profile-collection-title--container">
-                  <IonText className="profile-collection--title">Title</IonText>
-                  <div>
-                    <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-                    20 followers
-                  </div>
-                </div>
-
-                <div className="profile-collection--images">
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-                </div>
-
-                <div>
-                  <IonText className="profile-collection--desc">Description</IonText>
-                </div>
-
-                <div className="profile-collection-categories--container">
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                </div>
-              </div>
-
-              <div className="profile-collection--container ion-margin-vertical">
-                <div className="profile-collection-title--container">
-                  <IonText className="profile-collection--title">Title</IonText>
-                  <div>
-                    <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-                    20 followers
-                  </div>
-                </div>
-
-                <div className="profile-collection--images">
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-                </div>
-
-                <div>
-                  <IonText className="profile-collection--desc">Description</IonText>
-                </div>
-
-                <div className="profile-collection-categories--container">
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                </div>
-              </div>
-
-              <div className="profile-collection--container ion-margin-vertical">
-                <div className="profile-collection-title--container">
-                  <IonText className="profile-collection--title">Title</IonText>
-                  <div>
-                    <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-                    20 followers
-                  </div>
-                </div>
-
-                <div className="profile-collection--images">
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-
-                  <IonImg
-                    className="profile-collection--image"
-                    src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-                  />
-                </div>
-
-                <div>
-                  <IonText className="profile-collection--desc">Description</IonText>
-                </div>
-
-                <div className="profile-collection-categories--container">
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                  <IonChip>
-                    <IonLabel>Keyboard</IonLabel>
-                  </IonChip>
-                </div>
-              </div>
+            <IonList lines="full" className="profile-collection--list">
+              <ProfileCollection />
+              <ProfileCollection />
+              <ProfileCollection />
+              <ProfileCollection />
             </IonList>
           </IonRow>
         </IonGrid>

@@ -1,7 +1,7 @@
 import { IonLabel, IonInput } from "@ionic/react";
 import "./text-input.scss";
 
-const TextInput = ({ label, value, onChange: textChangeHandler, placeholder }) => {
+const TextInput = ({ label, value, onChange, placeholder }) => {
   return (
     <>
       <IonLabel position="stacked">{label}</IonLabel>
@@ -9,7 +9,7 @@ const TextInput = ({ label, value, onChange: textChangeHandler, placeholder }) =
         className="text-input"
         value={value}
         placeholder={placeholder}
-        onIonChange={(e) => textChangeHandler(e.detail.value)}
+        onIonChange={(e) => onChange(e.detail.value)}
       />
     </>
   );
