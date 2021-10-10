@@ -1,4 +1,4 @@
-const axios = require("axios");
+import { server } from "../utils/server";
 
 const mockItems = {
   items: [

@@ -64,7 +64,7 @@ const App = () => {
               <Route exact path="/profile/edit">
                 <EditProfile />
               </Route>
-              <Route exact path="/item">
+              <Route exact path="/collections/:collectinId/items/:itemId">
                 <Item />
               </Route>
             </IonRouterOutlet>
