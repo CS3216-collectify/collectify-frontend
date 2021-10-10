@@ -1,6 +1,8 @@
 import { IonImg, IonText, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
 
+import "./ProfileCollection.scss";
+
 const ProfileCollection = () => {
   return (
     <IonList className="profile-collection--container ion-margin-vertical">

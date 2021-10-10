@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList } from "@ionic/react";
+
+import './EditProfile.scss';
 import TextInput from "../../components/text-input/TextInput";
 import TextArea from "../../components/text-input/TextArea";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";

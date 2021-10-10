@@ -25,7 +25,7 @@ import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
-import ProfileCollection from "./ProfileCollection";
+import ProfileCollection from "../../components/profile-collection/ProfileCollection";
 
 const Profile = () => {
   const history = useHistory();

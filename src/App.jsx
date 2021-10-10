@@ -29,7 +29,7 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
-import EditProfile from "./pages/profile/EditProfile";
+import EditProfile from "./pages/edit-profile/EditProfile";
 import Item from "./pages/item/Item";
 
 const App = () => {

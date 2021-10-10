@@ -21,26 +21,12 @@ const Home = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="collectify"/>
+      <HomeToolbar title="collectify" />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-        <IonGrid fixed>
-          <IonRow>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-            <IonCol>ion-col</IonCol>
-          </IonRow>
-        </IonGrid>
-        <FollowButton onClick={() => setShowToast(true)} />
-        <UnfollowButton onClick={() => handleLogin()} />
-        <DeleteButton />
+        <IonGrid fixed></IonGrid>
 
         <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color="danger" />
         <IonItem>
