@@ -8,7 +8,7 @@ const AddItem = () => {
   const { collectionId } = useParams();
 
   const addCompleteHandler = async (item) => {
-    const updatedItem = await postItem(collectionId, item);
+    const itemId = await postItem(collectionId, item);
     // redirect
   };
 

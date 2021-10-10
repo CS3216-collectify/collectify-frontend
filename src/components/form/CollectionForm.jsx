@@ -15,21 +15,22 @@ const CollectionForm = (props) => {
   const {
     collectionData = getDefaultCollectionData(),
     onComplete: completeHandler,
+    categoryOptions,
   } = props;
 
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  // const [categoryOptions, setCategoryOptions] = useState([]);
+  const [name, setName] = useState(collectionData.collectionName);
+  const [description, setDescription] = useState(collectionData.collectionDescription);
   const [categoryId, setCategory] = useState(null);
 
-  useEffect(() => {
-    loadCategoryOptions();
-  });
+  // useEffect(() => {
+  //   loadCategoryOptions();
+  // }, []);
 
-  const loadCategoryOptions = async () => {
-    const options = await getCategories();
-    setCategoryOptions(options);
-  };
+  // const loadCategoryOptions = async () => {
+  //   const options = await getCategories();
+  //   setCategoryOptions(options);
+  // };
 
   console.log(categoryOptions);
   const selectOptions = categoryOptions.map((cat) => ({
