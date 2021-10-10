@@ -30,6 +30,7 @@ import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
+import Item from "./pages/item/Item";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -62,6 +63,9 @@ const App = () => {
               </Route>
               <Route exact path="/profile/edit">
                 <EditProfile />
+              </Route>
+              <Route exact path="/item">
+                <Item />
               </Route>
             </IonRouterOutlet>
 

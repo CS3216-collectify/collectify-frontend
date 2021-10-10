@@ -53,7 +53,7 @@ const ItemForm = (props) => {
         />
       </IonItem>
       <IonItem>
-        <IonGrid>
+        <IonGrid fixed>
           <IonLabel>Photos</IonLabel>
           <ImageEditList />
           <IonRow className="ion-justify-content-end">

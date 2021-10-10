@@ -58,7 +58,7 @@ const CollectionForm = (props) => {
         </IonRow>
       </IonItem>
       <IonItem>
-        <IonGrid>
+        <IonGrid fixed>
           <IonRow className="ion-justify-content-end">
             <SelectButton 
               onChange={setCategories} 

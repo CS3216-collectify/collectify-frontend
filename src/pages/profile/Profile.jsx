@@ -113,7 +113,7 @@ const Profile = () => {
           </IonRow>
 
           <IonRow>
-            <IonList lines="full" className="profile-collection--list">
+            <IonList className="profile-collection--list">
               <ProfileCollection />
               <ProfileCollection />
               <ProfileCollection />

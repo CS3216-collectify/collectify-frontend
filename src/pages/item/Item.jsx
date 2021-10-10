@@ -5,7 +5,7 @@ const Item = (props) => {
   const { title = "Test Title", ownerUsername = "test", ownerName = "Test", description = "Test Description..." } = props;
   return (
     <IonContent>
-      <IonGrid>
+      <IonGrid fixed>
         <IonRow>
           <IonCol>
             <p>@{ownerUsername} ({ownerName}) </p>

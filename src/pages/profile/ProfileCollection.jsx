@@ -1,20 +1,5 @@
-import {
-  IonContent,
-  IonPage,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonImg,
-  IonText,
-  IonItemDivider,
-  IonItem,
-  IonButton,
-  IonIcon,
-  IonChip,
-  IonList,
-  IonLabel,
-} from "@ionic/react";
-import { ellipsisVertical, peopleOutline } from "ionicons/icons";
+import { IonImg, IonText, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
+import { peopleOutline } from "ionicons/icons";
 
 const ProfileCollection = () => {
   return (

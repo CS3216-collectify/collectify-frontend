@@ -6,7 +6,7 @@ const Collection = (props) => {
   const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   return (
     <IonContent>
-      <IonGrid>
+      <IonGrid fixed>
         <IonRow>
           <IonCol size={8}>
             <p>{title}</p>
