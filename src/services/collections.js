@@ -54,6 +54,7 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
+  console.log("Get Collection with id", collectionId);
   //   const response = await axios
   //     .get("/collections" + collectionId, {
   //       params: {   },
@@ -71,6 +72,7 @@ export const getCollectionByCollectionId = async (collectionId) => {
 };
 
 export const postCollection = async (data) => {
+  console.log("creating new collection...");
   //   const data = {
   //     collectionName: "Keyboards",
   //     collectionDescription: "My keyboards",
@@ -93,7 +95,8 @@ export const postCollection = async (data) => {
   return mockPostCollectionResponse;
 };
 
-export const updateCollection = async (data, collectionId) => {
+export const updateCollection = async (collectionId, data) => {
+  console.log("Update Collection with id", collectionId);
   //   const data = {
   //     collectionName: "Keyboards",
   //     collectionDescription: "My keyboards",
@@ -113,7 +116,7 @@ export const updateCollection = async (data, collectionId) => {
   //       console.log(error);
   //     });
 
-  return {};
+  return {...data};
 };
 
 export const deleteCollection = async (collectionId) => {

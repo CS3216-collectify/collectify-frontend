@@ -105,7 +105,7 @@ export const postItem = async (collectionId, itemData) => {
   //       console.log(error);
   //     });
 
-  return { ...itemData };
+  return mockPostItemResponse;
 };
 
 export const updateItem = async (collectionId, itemId, itemData) => {
