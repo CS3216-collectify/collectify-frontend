@@ -3,11 +3,11 @@ const axios = require("axios");
 const mockCategories = {
   categories: [
     {
-      collectionId: 19,
+      categoryId: 19,
       name: "Pokemon Cards",
     },
     {
-      collectionId: 29,
+      categoryId: 29,
       name: "Sneakers",
     },
   ],
@@ -27,5 +27,5 @@ export const getCategories = async () => {
 //       console.log(error);
 //     });
 
-  return mockCategories;
+  return mockCategories.categories;
 };
