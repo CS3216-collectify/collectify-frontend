@@ -29,7 +29,6 @@ const ProfileToolbar = ({ username }) => {
   }> = ({ onHide }) => (
     <IonList>
       <IonListHeader>Menu</IonListHeader>
-      <IonItem button>Edit Profile</IonItem>
       <IonItem button>Settings</IonItem>
       <IonItem lines="none" detail={false} button onClick={onHide}>
         <IonText color="danger">Close</IonText>

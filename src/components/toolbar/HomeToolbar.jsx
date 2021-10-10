@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonListHeader, IonList, IonBackButton, IonHeader, useIonPopover } from "@ionic/react";
 import {
-  search,
-  addCircleOutline,
-  chatbubblesOutline,
-  personCircleOutline,
-  settingsOutline,
-  ellipsisVertical,
-} from "ionicons/icons";
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonItem,
+  IonListHeader,
+  IonList,
+  IonBackButton,
+  IonHeader,
+  useIonPopover,
+} from "@ionic/react";
+import { search, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
 
-const HomeToolbar = () => {
+const HomeToolbar = ({ title }) => {
   // Menu with items shown when ellipsis icon is pressed
   const PopoverList: React.FC<{
     onHide: () => void,
@@ -32,7 +37,7 @@ const HomeToolbar = () => {
     <IonHeader>
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>collectify</IonTitle>
+        <IonTitle>{title}</IonTitle>
 
         <IonButtons slot="end">
           <IonButton>
@@ -55,7 +60,7 @@ const HomeToolbar = () => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <IonTitle>collectify</IonTitle>
+        <IonTitle>{title}</IonTitle>
         <IonButtons slot="start">
           {/* <IonBackButton defaultHref="home" /> */}
           <IonBackButton />
