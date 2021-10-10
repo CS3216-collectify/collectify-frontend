@@ -18,19 +18,9 @@ const CollectionForm = (props) => {
     categoryOptions,
   } = props;
 
-  // const [categoryOptions, setCategoryOptions] = useState([]);
   const [name, setName] = useState(collectionData.collectionName);
   const [description, setDescription] = useState(collectionData.collectionDescription);
   const [categoryId, setCategory] = useState(null);
-
-  // useEffect(() => {
-  //   loadCategoryOptions();
-  // }, []);
-
-  // const loadCategoryOptions = async () => {
-  //   const options = await getCategories();
-  //   setCategoryOptions(options);
-  // };
 
   console.log(categoryOptions);
   const selectOptions = categoryOptions.map((cat) => ({
@@ -76,7 +66,7 @@ const CollectionForm = (props) => {
             {categoryId && 
               <CategoryChip
                 name={convertCategoryIdToName(categoryId)}
-                onDelete={() => console.log(`delete ${categoryId}`)}
+                onDelete={() => setCategory(null)}
               />
             }
           </IonCol>
