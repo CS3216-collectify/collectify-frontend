@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import ImageCarousel from '../../components/gallery/ImageCarousel';
@@ -12,18 +12,31 @@ const Item = () => {
   const [ownerUsername, setOwnerUsername] = useState("itemOwner");
   const [ownerName, setOwnerName] = useState("itemOwner");
   const [description, setDescription] = useState("Test Description...");
+  const [loading, setLoading] = useState(false);
 
   const fetchItemData = async () => {
-    const item = await getItemFromCollection(collectionId, itemId);
-    setTitle(item.itemName);
-    setDescription(item.description);
-    // setOwnerUsername(item.ownerUsername);
-    // setOwnerName(item.ownerName);
+    setLoading(true);
+    try {
+      const item = await getItemFromCollection(collectionId, itemId);
+      setTitle(item.itemName);
+      setDescription(item.description);
+      // setOwnerUsername(item.ownerUsername);
+      // setOwnerName(item.ownerName);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
+    setLoading(true);
     fetchItemData();
   }, []);
+
+  if (loading) {
+    return <IonLoading isOpen={loading} />;
+  }
 
   return (
     <IonPage className="profile">
