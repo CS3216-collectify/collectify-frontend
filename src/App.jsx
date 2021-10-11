@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
@@ -39,53 +39,37 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          {/* Check Auth status. 
-          If user has clicked "Continue as Guest", store it in a isGuest variable
-          
-          if isLoggedIn, redirect to /home.
-          if not isLoggedIn and isGuest, redirect to /home.
-          if not isLoggedIn and not isGuest, stay here.
-          */}
           <Route exact path="/">
+            {/* {landingPage} */}
             <Login />
           </Route>
 
           <IonTabs>
             <IonRouterOutlet>
-              <Route exact path="/home">
-                <Home />
-              </Route>
-              <Route exact path="/profile/:username">
-                <Profile />
-              </Route>
-              <Route exact path="/profile">
-                <Profile />
-              </Route>
-              <Route exact path="/profile/edit">
-                <EditProfile />
-              </Route>
-              <Route exact path="/item">
-                <Item />
-              </Route>
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/profile/:username" component={Profile} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/profile/edit" component={EditProfile} />
+              <Route exact path="/item" component={Item} />
             </IonRouterOutlet>
 
-            <IonTabBar slot="bottom" className="ion-hide-sm-up">
+            <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
               <IonTabButton tab="home" href="/home">
                 <IonIcon icon={homeOutline} />
                 <IonText>Home</IonText>
               </IonTabButton>
 
-              <IonTabButton tab="b" href="/b">
+              <IonTabButton tab="b" href="/home">
                 <IonIcon icon={searchOutline} />
                 <IonText>Discover</IonText>
               </IonTabButton>
 
-              <IonTabButton tab="c" href="/c">
+              <IonTabButton tab="c" href="/home">
                 <IonIcon icon={addCircleOutline} />
                 <IonText>Add</IonText>
               </IonTabButton>
 
-              <IonTabButton tab="d" href="/d">
+              <IonTabButton tab="d" href="/home">
                 <IonIcon icon={chatbubblesOutline} />
                 <IonText>Chats</IonText>
               </IonTabButton>

@@ -24,6 +24,7 @@ export const googleLogin = async () => {
       const response = await server.post("/api/token/obtain/social/", {
         idToken: idToken,
       });
+      
       console.log(response.data);
       server.defaults.headers["Authorization"] =
         "Bearer " + response.data.access;

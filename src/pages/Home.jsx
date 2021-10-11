@@ -2,9 +2,7 @@ import { useState } from "react";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/react";
 
 import "./Home.scss";
-import DeleteButton from "../components/button/DeleteButton";
-import FollowButton from "../components/button/FollowButton";
-import UnfollowButton from "../components/button/UnfollowButton";
+import LogoutButtom from ".././components/button/LogoutButon";
 import Toast from "../components/toast/Toast";
 import HomeToolbar from "../components/toolbar/HomeToolbar";
 import TextInput from "../components/text-input/TextInput";
@@ -27,6 +25,7 @@ const Home = () => {
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
         <IonGrid fixed></IonGrid>
+        <LogoutButtom />
 
         <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color="danger" />
         <IonItem>
