@@ -3,10 +3,8 @@ import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/re
 
 import "./Home.scss";
 import LogoutButton from "../components/button/LogoutButton";
-import Toast from "../components/toast/Toast";
 import HomeToolbar from "../components/toolbar/HomeToolbar";
 import TextInput from "../components/text-input/TextInput";
-import { googleLogin } from "../services/google-auth";
 import { getCollections } from "../services/collections";
 
 const Home = () => {
