@@ -24,10 +24,9 @@ export const googleLogin = async () => {
       const response = await server.post("/api/token/obtain/social/", {
         idToken: idToken,
       });
-      
+
       console.log(response.data);
-      server.defaults.headers["Authorization"] =
-        "Bearer " + response.data.access;
+      server.defaults.headers["Authorization"] = "Bearer " + response.data.access;
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
       return;
@@ -39,7 +38,6 @@ export const googleLogin = async () => {
   return await GoogleAuth.signIn().then(
     async (res) => {
       // success callback
-      console.log("received Google tokens", res);
       try {
         await requestAccessToken(res.authentication.idToken);
         console.log("successful auth");

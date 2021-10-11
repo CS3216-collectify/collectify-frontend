@@ -9,18 +9,10 @@ import {
   IonCol,
   IonImg,
   IonText,
-  IonItemDivider,
-  IonItem,
-  IonButton,
-  IonIcon,
-  IonChip,
   IonList,
-  IonLabel,
 } from "@ionic/react";
 
 import "./Profile.scss";
-import Toast from "../../components/toast/Toast";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
@@ -29,11 +21,6 @@ import ProfileCollection from "../../components/profile-collection/ProfileCollec
 
 const Profile = () => {
   const history = useHistory();
-
-  // TODO: conditional Toast color
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
@@ -121,8 +108,6 @@ const Profile = () => {
             </IonList>
           </IonRow>
         </IonGrid>
-
-        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color={toastColor} />
       </IonContent>
     </IonPage>
   );

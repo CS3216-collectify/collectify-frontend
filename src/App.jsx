@@ -26,6 +26,7 @@ import "./App.scss";
 
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
+import { ToastContextProvider } from "./contexts/ToastContext";
 import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
@@ -36,53 +37,54 @@ const App = () => {
   useEffect(() => GoogleAuth.init(), []);
 
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/">
-            {/* {landingPage} */}
-            <Login />
-          </Route>
+    <ToastContextProvider>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path="/">
+              <Login />
+            </Route>
 
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/profile/:username" component={Profile} />
-              <Route exact path="/profile" component={Profile} />
-              <Route exact path="/profile/edit" component={EditProfile} />
-              <Route exact path="/item" component={Item} />
-            </IonRouterOutlet>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/profile/:username" component={Profile} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/edit" component={EditProfile} />
+                <Route exact path="/item" component={Item} />
+              </IonRouterOutlet>
 
-            <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
-              <IonTabButton tab="home" href="/home">
-                <IonIcon icon={homeOutline} />
-                <IonText>Home</IonText>
-              </IonTabButton>
+              <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
+                <IonTabButton tab="home" href="/home">
+                  <IonIcon icon={homeOutline} />
+                  <IonText>Home</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="b" href="/home">
-                <IonIcon icon={searchOutline} />
-                <IonText>Discover</IonText>
-              </IonTabButton>
+                <IonTabButton tab="b" href="/home">
+                  <IonIcon icon={searchOutline} />
+                  <IonText>Discover</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="c" href="/home">
-                <IonIcon icon={addCircleOutline} />
-                <IonText>Add</IonText>
-              </IonTabButton>
+                <IonTabButton tab="c" href="/home">
+                  <IonIcon icon={addCircleOutline} />
+                  <IonText>Add</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="d" href="/home">
-                <IonIcon icon={chatbubblesOutline} />
-                <IonText>Chats</IonText>
-              </IonTabButton>
+                <IonTabButton tab="d" href="/d">
+                  <IonIcon icon={chatbubblesOutline} />
+                  <IonText>Chats</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="user-profile" href="/profile">
-                <IonIcon icon={personCircleOutline} />
-                <IonText>Profile</IonText>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
+                <IonTabButton tab="user-profile" href="/profile">
+                  <IonIcon icon={personCircleOutline} />
+                  <IonText>Profile</IonText>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+    </ToastContextProvider>
   );
 };
 

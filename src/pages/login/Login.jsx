@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
 
 import "./Login.scss";
-import Toast from "../../components/toast/Toast";
+import useToastContext from "../../hooks/useToastContext";
 import GuestLoginButton from "../../components/button/GuestLoginButton";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
@@ -13,23 +13,28 @@ import server from "../../utils/server";
 
 const Login = () => {
   const history = useHistory();
+  const setToast = useToastContext();
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  useEffect(() => {
+    if (
+      localStorage.getItem("access_token") !== null ||
+      localStorage.getItem("refresh_token") !== null ||
+      localStorage.getItem("is_guest") !== null
+    ) {
+      history.replace("/home");
+    } else {
+      history.replace("/");
+    }
+  }, [history]);
 
   const handleGoogleLogin = async (googleAuthStatus) => {
     if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_SUCCESS) {
       // success
-      setToastMessage("Google authentication successful!");
-      setToastColor("success");
-      setShowToast(true);
+      setToast({ message: "Google authentication successful!", color: "success" });
       history.replace("/home");
     } else {
       // error
-      setToastMessage("Google authentication failed. Please try again.");
-      setToastColor("danger");
-      setShowToast(true);
+      setToast({ message: "Google authentication failed. Please try again.", color: "danger" });
     }
   };
 
@@ -54,13 +59,6 @@ const Login = () => {
             <GuestLoginButton handleGuestLogin={handleGuestLogin} />
           </IonRow>
         </IonGrid>
-
-        <Toast
-          showToast={showToast}
-          setShowToast={setShowToast}
-          toastMessage={toastMessage}
-          color={toastColor}
-        />
       </IonContent>
     </IonPage>
   );
