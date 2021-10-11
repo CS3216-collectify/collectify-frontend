@@ -26,7 +26,9 @@ const ItemForm = (props) => {
       console.log("Cannot upload more than 4 photos");
       return;
     }
-    // setImages([...images, newFile]);
+    const newUrl = URL.createObjectURL(newFile);
+    const newFileData = { url: newUrl, position: images.length + 1 };
+    setImages([...images, newFileData]);
     console.log("Image upload not implemented yet");
     console.log("file:", newFile);
   };
