@@ -15,9 +15,6 @@ const EditProfile = () => {
   const history = useHistory();
   const setToast = useToastContext();
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

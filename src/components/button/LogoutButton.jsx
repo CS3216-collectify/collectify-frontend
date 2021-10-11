@@ -14,7 +14,7 @@ const LogoutButton = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         history.replace("/");
-        setToast({ message: "Logged out successfully." });
+        setToast({ message: "Logged out successfully.", color: "success" });
       }}
     >
       Log Out
