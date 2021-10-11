@@ -9,6 +9,7 @@ import GuestLoginButton from "../../components/button/GuestLoginButton";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
+import server from "../../utils/server";
 
 const Login = () => {
   const history = useHistory();
@@ -33,6 +34,7 @@ const Login = () => {
   };
 
   const handleGuestLogin = async () => {
+    server.defaults.headers["Authorization"] = null;
     history.replace("/home");
   };
 
@@ -49,11 +51,16 @@ const Login = () => {
           </IonRow>
           <IonRow>or</IonRow>
           <IonRow className="ion-justify-content-center">
-            <GuestLoginButton handleGuestLogin={handleGuestLogin}/>
+            <GuestLoginButton handleGuestLogin={handleGuestLogin} />
           </IonRow>
         </IonGrid>
 
-        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color={toastColor} />
+        <Toast
+          showToast={showToast}
+          setShowToast={setShowToast}
+          toastMessage={toastMessage}
+          color={toastColor}
+        />
       </IonContent>
     </IonPage>
   );
