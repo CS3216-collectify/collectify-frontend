@@ -1,4 +1,4 @@
-const axios = require("axios");
+const server = require("server");
 
 const mockItems = {
   items: [
@@ -42,7 +42,7 @@ const mockPostItemResponse = {
 };
 
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
-//   const response = await axios
+//   const response = await server
 //     .get("/collections/" + collectionId + "/items", {
 //       params: { offset: offset, limit: limit },
 //     })
@@ -59,7 +59,7 @@ export const getItemsFromCollection = async (collectionId, offset, limit) => {
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
-//   const response = await axios
+//   const response = await server
 //     .get("/collections/" + collectionId + "/items/" + itemId, {
 //       params: {},
 //     })
@@ -88,7 +88,7 @@ export const postItem = async (data) => {
   //     ],
   //   };
 
-  //   const response = await axios
+  //   const response = await server
   //     .post("/collections/" + collectionId + "/items", {
   //       data,
   //     })
@@ -117,7 +117,7 @@ export const updateItem = async (data, itemId) => {
   //     ],
   //   };
 
-  //   const response = await axios
+  //   const response = await server
   //     .post("/collections/" + collectionId + "/items/" + itemId, {
   //       data,
   //     })
@@ -143,7 +143,7 @@ export const deleteCollection = async (collectionId) => {
   //     categoryId: 123,
   //   };
 
-  //   const response = await axios
+  //   const response = await server
   //     .delete("/collections/" + collectionId + "/items/" + itemId)
   //     .then((response) => {
   //       // handle success

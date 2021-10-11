@@ -99,7 +99,7 @@ const Profile = () => {
             </div>
           </IonRow>
 
-          <IonRow>
+          <IonRow className=" ion-justify-content-center">
             <IonList className="profile-collection--list">
               <ProfileCollection />
               <ProfileCollection />

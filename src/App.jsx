@@ -32,6 +32,7 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/edit-profile/EditProfile";
 import Item from "./pages/item/Item";
+import Settings from "./pages/settings/Settings";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -52,6 +53,7 @@ const App = () => {
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/profile/edit" component={EditProfile} />
                 <Route exact path="/item" component={Item} />
+                <Route exact path="/settings" component={Settings} />
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
