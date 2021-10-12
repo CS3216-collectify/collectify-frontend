@@ -33,6 +33,11 @@ const CollectionForm = (props) => {
     "Unknown";
 
   const saveHandler = () => {
+    // TODO: input validation
+    if (categoryId === null) {
+      console.log("Plase select one category");
+      return;
+    }
     const collectionToSave = {
       name,
       description,

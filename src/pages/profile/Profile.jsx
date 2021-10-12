@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList } from "@ionic/react";
+import {
+  IonContent,
+  IonPage,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  IonText,
+  IonList,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+} from "@ionic/react";
 
 import "./Profile.scss";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
@@ -10,6 +21,10 @@ import UnfollowButton from "../../components/button/UnfollowButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
 import ProfileCollection from "../../components/profile-collection/ProfileCollection";
 import AddButton from "../../components/button/AddButton";
+import { getUserId } from "../../utils/user";
+import { getCollections } from "../../services/collections";
+
+const LIMIT = 10;
 
 const Profile = () => {
   const history = useHistory();
@@ -17,11 +32,50 @@ const Profile = () => {
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
+  let userId = getUserId();
 
   // to keep track of which buttons to show, will need to be updated when unfollow/follow is pressed
   let isMyAccount = true;
   let hasFollowed = true;
 
+  const [collections, setCollections] = useState([]);
+  const [pages, setPages] = useState(-1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const loadUserCollections = async () => {
+    const nextPage = pages + 1;
+    try {
+      if (!hasMore) {
+        return;
+      }
+      const retrievedCollections = await getCollections(
+        null,
+        userId,
+        nextPage * LIMIT,
+        LIMIT
+      );
+      console.log(retrievedCollections);
+      if (
+        (retrievedCollections && retrievedCollections.length < LIMIT) ||
+        !retrievedCollections
+      ) {
+        setHasMore(false);
+      }
+      setCollections([...collections, ...retrievedCollections]);
+      setPages(nextPage);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    loadUserCollections();
+  }, []);
+
+  const fetchNextPage = () => {
+    console.log("load next");
+    loadUserCollections();
+  }
   return (
     <IonPage className="profile">
       <ProfileToolbar username={"my username"} />
@@ -103,10 +157,20 @@ const Profile = () => {
           </IonRow>
           <IonRow className=" ion-justify-content-center">
             <IonList className="profile-collection--list">
-              <ProfileCollection />
-              <ProfileCollection />
-              <ProfileCollection />
-              <ProfileCollection />
+              {collections.map((collection) => (
+                <ProfileCollection
+                  collection={collection}
+                  onClick={() =>
+                    history.push(`/collections/${collection.collectionId}`)
+                  }
+                />
+              ))}
+              <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
+                <IonInfiniteScrollContent
+                  className="ion-margin-top"
+                  loadingText="Loading..."
+                />
+              </IonInfiniteScroll>
             </IonList>
           </IonRow>
         </IonGrid>

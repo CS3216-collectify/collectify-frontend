@@ -14,18 +14,7 @@ const mockCategories = {
 };
 
 export const getCategories = async () => {
-  const response = await server
-    .get("/categories/all", {
-      params: {},
-    })
-    .then((response) => {
-      // handle success
-      console.log(response);
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-    });
+  const response = await server.get("/categories/");
 
   // return mockCategories.categories;
   return response;

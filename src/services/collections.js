@@ -38,7 +38,10 @@ const mockPostCollectionResponse = {
 // categoryId and userId are optional
 export const getCollections = async (categoryId, userId, offset, limit) => {
   console.log("GET collection by filter");
-  const params = { categoryId, userId, offset, limit };
+  const params = { user: userId, offset, limit };
+  if (categoryId != null) {
+    params["category"] = categoryId;
+  }
   const response = await server.get("collections", { params });
   console.log(response);
 

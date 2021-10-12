@@ -44,6 +44,8 @@ const ItemForm = (props) => {
   }
 
   const saveHandler = () => {
+    // TODO: Input validation
+  
     // const newImages = images.filter((img) => img.isNew);
     // const imageUpdates = {
     //   deletedImageIds,
