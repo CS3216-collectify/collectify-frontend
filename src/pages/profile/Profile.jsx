@@ -110,12 +110,13 @@ const Profile = () => {
             </IonList>
           </IonRow>
         </IonGrid>
-        <Toast
+        {/* TODO: Check the following */}
+        {/* <Toast
           showToast={showToast}
           setShowToast={setShowToast}
           toastMessage={toastMessage}
           color={toastColor}
-        />
+        /> */}
       </IonContent>
     </IonPage>
   );

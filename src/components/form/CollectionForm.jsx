@@ -15,7 +15,7 @@ const CollectionForm = (props) => {
   const {
     collectionData = getDefaultCollectionData(),
     onComplete: completeHandler,
-    categoryOptions,
+    categoryOptions = [],
   } = props;
 
   const [name, setName] = useState(collectionData.collectionName);
