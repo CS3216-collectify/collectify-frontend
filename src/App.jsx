@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
@@ -26,79 +26,67 @@ import "./App.scss";
 
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
+import { ToastContextProvider } from "./contexts/ToastContext";
 import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/edit-profile/EditProfile";
 import Item from "./pages/item/Item";
+import Settings from "./pages/settings/Settings";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
 
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          {/* Check Auth status. 
-          If user has clicked "Continue as Guest", store it in a isGuest variable
-          
-          if isLoggedIn, redirect to /home.
-          if not isLoggedIn and isGuest, redirect to /home.
-          if not isLoggedIn and not isGuest, stay here.
-          */}
-          <Route exact path="/">
-            <Login />
-          </Route>
+    <ToastContextProvider>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path="/">
+              <Login />
+            </Route>
 
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/home">
-                <Home />
-              </Route>
-              <Route exact path="/profile/:username">
-                <Profile />
-              </Route>
-              <Route exact path="/profile">
-                <Profile />
-              </Route>
-              <Route exact path="/profile/edit">
-                <EditProfile />
-              </Route>
-              <Route exact path="/item">
-                <Item />
-              </Route>
-            </IonRouterOutlet>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/profile/:username" component={Profile} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/edit" component={EditProfile} />
+                <Route exact path="/item" component={Item} />
+                <Route exact path="/settings" component={Settings} />
+              </IonRouterOutlet>
 
-            <IonTabBar slot="bottom" className="ion-hide-sm-up">
-              <IonTabButton tab="home" href="/home">
-                <IonIcon icon={homeOutline} />
-                <IonText>Home</IonText>
-              </IonTabButton>
+              <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
+                <IonTabButton tab="home" href="/home">
+                  <IonIcon icon={homeOutline} />
+                  <IonText>Home</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="b" href="/b">
-                <IonIcon icon={searchOutline} />
-                <IonText>Discover</IonText>
-              </IonTabButton>
+                <IonTabButton tab="b" href="/home">
+                  <IonIcon icon={searchOutline} />
+                  <IonText>Discover</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="c" href="/c">
-                <IonIcon icon={addCircleOutline} />
-                <IonText>Add</IonText>
-              </IonTabButton>
+                <IonTabButton tab="c" href="/home">
+                  <IonIcon icon={addCircleOutline} />
+                  <IonText>Add</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="d" href="/d">
-                <IonIcon icon={chatbubblesOutline} />
-                <IonText>Chats</IonText>
-              </IonTabButton>
+                <IonTabButton tab="d" href="/d">
+                  <IonIcon icon={chatbubblesOutline} />
+                  <IonText>Chats</IonText>
+                </IonTabButton>
 
-              <IonTabButton tab="user-profile" href="/profile">
-                <IonIcon icon={personCircleOutline} />
-                <IonText>Profile</IonText>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
+                <IonTabButton tab="user-profile" href="/profile">
+                  <IonIcon icon={personCircleOutline} />
+                  <IonText>Profile</IonText>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+    </ToastContextProvider>
   );
 };
 

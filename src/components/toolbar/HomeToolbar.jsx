@@ -16,22 +16,22 @@ import { search, addCircleOutline, chatbubblesOutline, personCircleOutline, sett
 
 const HomeToolbar = ({ title }) => {
   // Menu with items shown when ellipsis icon is pressed
-  const PopoverList: React.FC<{
-    onHide: () => void,
-  }> = ({ onHide }) => (
-    <IonList>
-      <IonListHeader>Popover Content</IonListHeader>
-      <IonItem button>Learn Ionic</IonItem>
-      <IonItem button>Documentation</IonItem>
-      <IonItem button>Showcase</IonItem>
-      <IonItem button>GitHub Repo</IonItem>
-      <IonItem lines="none" detail={false} button onClick={onHide}>
-        Close
-      </IonItem>
-    </IonList>
-  );
+  // const PopoverList: React.FC<{
+  //   onHide: () => void,
+  // }> = ({ onHide }) => (
+  //   <IonList>
+  //     <IonListHeader>Popover Content</IonListHeader>
+  //     <IonItem button>Learn Ionic</IonItem>
+  //     <IonItem button>Documentation</IonItem>
+  //     <IonItem button>Showcase</IonItem>
+  //     <IonItem button>GitHub Repo</IonItem>
+  //     <IonItem lines="none" detail={false} button onClick={onHide}>
+  //       Close
+  //     </IonItem>
+  //   </IonList>
+  // );
 
-  const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
+  // const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
   return (
     <IonHeader>
@@ -65,7 +65,7 @@ const HomeToolbar = ({ title }) => {
           {/* <IonBackButton defaultHref="home" /> */}
           <IonBackButton />
         </IonButtons>
-        <IonButtons slot="end">
+        {/* <IonButtons slot="end">
           <IonButton
             onClick={(e) =>
               present({
@@ -75,7 +75,7 @@ const HomeToolbar = ({ title }) => {
           >
             <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
           </IonButton>
-        </IonButtons>
+        </IonButtons> */}
       </IonToolbar>
     </IonHeader>
   );

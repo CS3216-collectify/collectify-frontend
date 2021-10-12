@@ -21,15 +21,26 @@ import {
   ellipsisVertical,
   arrowBackOutline,
 } from "ionicons/icons";
+import { useHistory } from "react-router-dom";
 
 const ProfileToolbar = ({ username }) => {
+  const history = useHistory();
+
   // Menu with items shown when ellipsis icon is pressed
   const PopoverList: React.FC<{
     onHide: () => void,
   }> = ({ onHide }) => (
     <IonList>
       <IonListHeader>Menu</IonListHeader>
-      <IonItem button>Settings</IonItem>
+      <IonItem
+        button
+        onClick={() => {
+          onHide();
+          history.push("Settings");
+        }}
+      >
+        Settings
+      </IonItem>
       <IonItem lines="none" detail={false} button onClick={onHide}>
         <IonText color="danger">Close</IonText>
       </IonItem>

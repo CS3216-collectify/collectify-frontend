@@ -1,4 +1,4 @@
-const axios = require("axios");
+import server from "../utils/server";
 
 const mockCollections = {
   collections: [
@@ -37,81 +37,69 @@ const mockPostCollectionResponse = {
 
 // categoryId and userId are optional
 export const getCollections = async (categoryId, userId, offset, limit) => {
-  //   const response = await axios
-  //     .get("/collections", {
-  //       params: { categoryId: categoryId, userId: userId, offset: offset, limit: limit },
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
+  const response = await server
+    .get("/collections", {
+      params: { categoryId: categoryId, userId: userId, offset: offset, limit: limit },
+    })
+    .then((response) => {
+      // handle success
+      console.log(response);
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
 
-  return mockCollections;
+  return response;
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
-  //   const response = await axios
-  //     .get("/collections" + collectionId, {
-  //       params: {   },
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
+    const response = await server
+      .get("/collections" + collectionId, {
+        params: {   },
+      })
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
 
-  return mockCollection;
+  return response;
 };
 
 export const postCollection = async (data) => {
-  //   const data = {
-  //     collectionName: "Keyboards",
-  //     collectionDescription: "My keyboards",
-  //     categoryId: 123,
-  //   };
+    const response = await server
+      .post("/collections", {
+        data,
+      })
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
 
-  //   const response = await axios
-  //     .post("/collections", {
-  //       data,
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
-
-  return mockPostCollectionResponse;
+  return response;
 };
 
 export const updateCollection = async (data, collectionId) => {
-  //   const data = {
-  //     collectionName: "Keyboards",
-  //     collectionDescription: "My keyboards",
-  //     categoryId: 123,
-  //   };
-
-  //   const response = await axios
-  //     .put("/collections/" + collectionId, {
-  //       data,
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
+    const response = await server
+      .put("/collections/" + collectionId, {
+        data,
+      })
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
 
   return {};
 };
