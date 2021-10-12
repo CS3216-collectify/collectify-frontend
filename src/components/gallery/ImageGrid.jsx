@@ -7,7 +7,7 @@ import {
 } from "@ionic/react";
 import { image } from "ionicons/icons";
 import { useEffect, useState } from "react";
-import { getItemsByCollectionId } from "../../services/items";
+import { getItemsByCollectionId, getItemsFromCollection } from "../../services/items";
 import FlexImage from "../image/FlexImage"
 import "./gallery.scss";
 
@@ -29,30 +29,27 @@ const ImageGrid = (props) => {
 
   const loadItems = async () => {
     const nextPage = pages + 1;
-    setTimeout(async () => {
-      // TODO: Remove this timeout
-      try {
-        if (!hasMore) {
-          return;
-        }
-        const retrievedItems = await getItemsByCollectionId(
-          collectionId,
-          nextPage * LIMIT,
-          LIMIT
-        );
-        console.log(retrievedItems);
-        if (
-          (retrievedItems && retrievedItems.length < LIMIT) ||
-          !retrievedItems
-        ) {
-          setHasMore(false);
-        }
-        setItems([...items, ...retrievedItems]);
-        setPages(nextPage);
-      } catch (e) {
-        console.log(e);
+    try {
+      if (!hasMore) {
+        return;
       }
-    }, 2000);
+      const retrievedItems = await getItemsFromCollection(
+        collectionId,
+        nextPage * LIMIT,
+        LIMIT
+      );
+      console.log(retrievedItems);
+      if (
+        (retrievedItems && retrievedItems.length < LIMIT) ||
+        !retrievedItems
+      ) {
+        setHasMore(false);
+      }
+      setItems([...items, ...retrievedItems]);
+      setPages(nextPage);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const fetchNextPage = () => {

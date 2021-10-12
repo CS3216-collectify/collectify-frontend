@@ -71,7 +71,7 @@ const Collection = (props) => {
             <AddButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
             <EditButton label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
           </IonRow>
-          <ImageGrid />
+          <ImageGrid collectionId={collectionId} />
         </IonGrid>
       </IonContent>
     </IonPage>
