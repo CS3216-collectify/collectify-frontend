@@ -11,7 +11,7 @@ const Home = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    getCollections( );
+    getCollections();
   }, []);
 
   return (

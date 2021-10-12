@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonImg,
-  IonText,
-  IonList,
-} from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList } from "@ionic/react";
 
 import "./Profile.scss";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
