@@ -1,6 +1,6 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import ItemForm from "../../components/form/ItemForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getItemFromCollection, updateItem } from "../../services/items";
@@ -10,13 +10,14 @@ const getDefaultItemData = () => {
 };
 
 const EditItem = () => {
+  const history = useHistory();
   const { collectionId, itemId } = useParams();
   const [item, setItem] = useState(getDefaultItemData());
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(loadExistingData, 1500); // TODO: Remove timeout
+    loadExistingData(); // TODO: Remove timeout
   }, []);
 
   const loadExistingData = async () => {
@@ -26,20 +27,25 @@ const EditItem = () => {
       console.log(currentItem);
       setItem(currentItem);
     } catch (e) {
-      // handle error
+      console.log(e);
     } finally {
       setLoading(false);
     }
   };
 
   const editCompleteHandler = async (item) => {
-    const updatedItem = await updateItem(collectionId, itemId, item);
-    setItem(updatedItem);
-    // redirect
+    setLoading(true);
+    try {
+      await updateItem(collectionId, itemId, item);
+      history.push(`/collections/${collectionId}/items/${itemId}`);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
 
   if (loading) {
-    return (<IonLoading isOpen={loading}/>)
+    return <IonLoading isOpen={loading} />;
   }
 
   return (

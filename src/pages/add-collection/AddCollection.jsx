@@ -1,22 +1,30 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import CollectionForm from "../../components/form/CollectionForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCategories } from "../../services/categories";
 import { postCollection } from "../../services/collections";
 
 const AddCollection = () => {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState([]);
 
   const addCollectionHandler = async (collection) => {
-    const collectionId = await postCollection(collection);
-    // redirect to new addedCollection
+    setLoading(true);
+    try {
+      const collectionId = await postCollection(collection);
+      history.push(`/collections/${collectionId}`);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(loadCategoryOptions, 1500); // TODO: Remove timeout
+    loadCategoryOptions(); // TODO: Remove timeout
   }, []);
 
   const loadCategoryOptions = async () => {

@@ -1,6 +1,6 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import CollectionForm from "../../components/form/CollectionForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCategories } from "../../services/categories";
@@ -14,6 +14,7 @@ const getDefaultCollectionData = () => {
 };
 
 const EditCollection = (props) => {
+  const history = useHistory();
   const { collectionId } = useParams();
   const [collection, setCollection] = useState(getDefaultCollectionData());
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ const EditCollection = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(loadExistingData, 1500); // TODO: Remove timeout
+    loadExistingData(); // TODO: Remove timeout
   }, []);
 
   const loadExistingData = async () => {
@@ -44,8 +45,14 @@ const EditCollection = (props) => {
   }
 
   const editCompleteHandler = async (collection) => {
-    const updatedCollection = await updateCollection(collectionId, collection);
-    // redirect
+    setLoading(true);
+    try {
+      await updateCollection(collectionId, collection);
+      history.push(`/collections/${collectionId}`);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
 
   return (

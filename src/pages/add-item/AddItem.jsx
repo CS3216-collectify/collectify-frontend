@@ -1,16 +1,29 @@
-import { IonContent, IonPage } from "@ionic/react";
-import { useParams } from "react-router";
+import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { useState } from "react";
+import { useHistory, useParams } from "react-router";
 import ItemForm from "../../components/form/ItemForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { postItem } from "../../services/items";
 
 const AddItem = () => {
+  const history = useHistory();
   const { collectionId } = useParams();
+  const [loading, setLoading] = useState(false);
 
   const addCompleteHandler = async (item) => {
-    const itemId = await postItem(collectionId, item);
-    // redirect
+    setLoading(true);
+    try {
+      const itemId = await postItem(collectionId, item);
+      history.push(`/collections/${collectionId}/items/${itemId}`);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return <IonLoading isOpen={loading} />;
+  }
 
   return (
     <IonPage>
