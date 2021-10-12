@@ -8,10 +8,7 @@ import {
 import { image } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import {
-  getItemsByCollectionId,
-  getItemsFromCollection,
-} from "../../services/items";
+import { getItemsFromCollection } from "../../services/items";
 import FlexImage from "../image/FlexImage";
 import "./gallery.scss";
 

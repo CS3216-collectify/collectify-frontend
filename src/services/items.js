@@ -168,14 +168,14 @@ const mockItemByCollection = {
 };
 
 // TODO: For testing ImageGrid, use getItemsFromCollection instead
-export const getItemsByCollectionId = async (collectionId, offset, limit) => {
-  // TODO: Replace with actual
-  if (offset === 18) {
-    limit = 14;
-  }
-  return [
-    ...Array.from({ length: limit }, (_, idx) => {
-      return { ...mockItemByCollection, itemId: idx + offset, collectionId };
-    }),
-  ];
-};
+// export const getItemsByCollectionId = async (collectionId, offset, limit) => {
+//   // TODO: Replace with actual
+//   if (offset === 18) {
+//     limit = 14;
+//   }
+//   return [
+//     ...Array.from({ length: limit }, (_, idx) => {
+//       return { ...mockItemByCollection, itemId: idx + offset, collectionId };
+//     }),
+//   ];
+// };
