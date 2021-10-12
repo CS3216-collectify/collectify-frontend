@@ -2,6 +2,7 @@ import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow } from "@ionic
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import AddButton from "../../components/button/AddButton";
+import EditButton from "../../components/button/EditButton";
 import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
@@ -68,6 +69,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow className="ion-justify-content-end">
             <AddButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
+            <EditButton label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
           </IonRow>
           <ImageGrid />
         </IonGrid>

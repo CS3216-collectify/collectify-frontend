@@ -1,11 +1,13 @@
 import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from '@ionic/react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
+import EditButton from '../../components/button/EditButton';
 import ImageCarousel from '../../components/gallery/ImageCarousel';
 import HomeToolbar from '../../components/toolbar/HomeToolbar';
 import { getItemFromCollection } from '../../services/items';
 
 const Item = () => {
+  const history = useHistory();
   const { collectionId, itemId } = useParams();
 
   const [title, setTitle] = useState("Test Title");
@@ -61,6 +63,9 @@ const Item = () => {
               <IonCol>
                 <p>{description}</p>
               </IonCol>
+            </IonRow>
+            <IonRow className="ion-justify-content-end">
+              <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
             </IonRow>
           </IonGrid>
         </IonContent>
