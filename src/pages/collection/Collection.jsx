@@ -1,15 +1,18 @@
-import { IonCol, IonContent, IonGrid, IonLoading, IonRow } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
+import AddButton from "../../components/button/AddButton";
 import ImageGrid from "../../components/gallery/ImageGrid";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
 import "./Collection.scss";
 
 const Collection = (props) => {
+  const history = useHistory();
   // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("TODO");
+  const [description, setDescription] = useState("TODO");
   const [ownerName, setOwnerName] = useState("TODO");
   const [ownerUsername, setOwnerUsername] = useState("todo");
   const [loading, setLoading] = useState(false);
@@ -39,31 +42,37 @@ const Collection = (props) => {
   }
 
   return (
-    <IonContent>
-      <IonGrid fixed>
-        <IonRow>
-          <IonCol size={8}>
-            <p>{title}</p>
-          </IonCol>
-          <IonCol size={4}>
-            <p>20 followers</p>
-          </IonCol>
-        </IonRow>
-        <IonRow className="top-margin-s">
-          <IonCol>
-            <p>
-              by @{ownerUsername} ({ownerName}){" "}
-            </p>
-          </IonCol>
-        </IonRow>
-        <IonRow className="top-margin-s">
-          <IonCol>
-            <p>{description}</p>
-          </IonCol>
-        </IonRow>
-        <ImageGrid />
-      </IonGrid>
-    </IonContent>
+    <IonPage>
+      <HomeToolbar title={`Collection`} />
+      <IonContent>
+        <IonGrid fixed>
+          <IonRow>
+            <IonCol size={8}>
+              <p>{title}</p>
+            </IonCol>
+            <IonCol size={4}>
+              <p>20 followers</p>
+            </IonCol>
+          </IonRow>
+          <IonRow className="top-margin-s">
+            <IonCol>
+              <p>
+                by @{ownerUsername} ({ownerName}){" "}
+              </p>
+            </IonCol>
+          </IonRow>
+          <IonRow className="top-margin-s">
+            <IonCol>
+              <p>{description}</p>
+            </IonCol>
+          </IonRow>
+          <IonRow className="ion-justify-content-end">
+            <AddButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
+          </IonRow>
+          <ImageGrid />
+        </IonGrid>
+      </IonContent>
+    </IonPage>
   );
 };
 
