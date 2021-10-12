@@ -3,6 +3,7 @@ import axios from "axios";
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 const REACT_LOGIN_REL_URL = "";
 
+/** Wrapper for axios **/
 const server = axios.create({
   baseURL: SERVER_BASE_URL,
   timeout: 5000,
