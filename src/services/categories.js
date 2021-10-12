@@ -1,4 +1,4 @@
-const axios = require("axios");
+import server from "../utils/server";
 
 const mockCategories = {
   categories: [
@@ -14,18 +14,19 @@ const mockCategories = {
 };
 
 export const getCategories = async () => {
-//   const response = await axios
-//     .get("/categories/all", {
-//       params: {},
-//     })
-//     .then((response) => {
-//       // handle success
-//       console.log(response);
-//     })
-//     .catch((error) => {
-//       // handle error
-//       console.log(error);
-//     });
+  const response = await server
+    .get("/categories/all", {
+      params: {},
+    })
+    .then((response) => {
+      // handle success
+      console.log(response);
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
 
-  return mockCategories.categories;
+  // return mockCategories.categories;
+  return response;
 };

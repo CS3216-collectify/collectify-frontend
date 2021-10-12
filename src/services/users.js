@@ -1,4 +1,4 @@
-const axios = require("axios");
+const server = require("server");
 
 const mockUsers = {
   userId: 12,
@@ -8,7 +8,7 @@ const mockUsers = {
 };
 
 export const getUserByUserId = async (userId) => {
-  //   const response = await axios
+  //   const response = await server
   //     .get("/users/" + userId, {
   //       params: {},
   //     })

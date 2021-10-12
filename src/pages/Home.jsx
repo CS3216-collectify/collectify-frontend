@@ -1,23 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/react";
 
 import "./Home.scss";
-import DeleteButton from "../components/button/DeleteButton";
-import FollowButton from "../components/button/FollowButton";
-import UnfollowButton from "../components/button/UnfollowButton";
-import Toast from "../components/toast/Toast";
+import LogoutButton from "../components/button/LogoutButton";
 import HomeToolbar from "../components/toolbar/HomeToolbar";
 import TextInput from "../components/text-input/TextInput";
-import { googleLogin } from "../services/google-auth";
+import { getCollections } from "../services/collections";
 
 const Home = () => {
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
   const [name, setName] = useState("");
 
-  const handleLogin = () => {
-    googleLogin();
-  };
+  useEffect(() => {
+    getCollections();
+  }, []);
 
   return (
     <IonPage>
@@ -27,8 +22,8 @@ const Home = () => {
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
         <IonGrid fixed></IonGrid>
+        <LogoutButton />
 
-        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color="danger" />
         <IonItem>
           <TextInput label="Test" value={name} onChange={setName} placeholder="Type text here" />
         </IonItem>

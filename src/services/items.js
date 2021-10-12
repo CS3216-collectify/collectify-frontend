@@ -51,7 +51,8 @@ export const getItemsFromCollection = async (collectionId, offset, limit) => {
   });
   console.log(response);
 
-  return mockItems;
+  // return mockItems;
+  return response;
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
@@ -61,7 +62,8 @@ export const getItemFromCollection = async (collectionId, itemId) => {
   );
   console.log(response);
 
-  return mockItem;
+  // return mockItem;
+  return response;
 };
 
 const blobToFile = (blob, fileName = "default-name", type = "image/png") => {
@@ -95,7 +97,8 @@ export const postItem = async (collectionId, itemData) => {
   const response = await server.post(`collections/${collectionId}`, body);
   console.log(response);
 
-  return mockPostItemResponse;
+  // return mockPostItemResponse;
+  return response;
 };
 
 export const updateItem = async (collectionId, itemId, itemData) => {
@@ -120,7 +123,7 @@ export const updateItem = async (collectionId, itemId, itemData) => {
   //     ],
   //   };
 
-  //   const response = await axios
+  //   const response = await server
   //     .post("/collections/" + collectionId + "/items/" + itemId, {
   //       data,
   //     })
@@ -148,7 +151,8 @@ export const deleteItem = async (collectionId, itemId) => {
   );
   console.log(response);
 
-  return {};
+  // return {};
+  return response;
 };
 
 const sampleImage =

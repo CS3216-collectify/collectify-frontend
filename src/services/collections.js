@@ -42,7 +42,8 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
   const response = await server.get("collections", { params });
   console.log(response);
 
-  return mockCollections;
+  // return mockCollections;
+  return response;
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
@@ -50,7 +51,8 @@ export const getCollectionByCollectionId = async (collectionId) => {
   const response = await server.get(`collections/${collectionId}`);
   console.log(response);
 
-  return mockCollection;
+  // return mockCollection;
+  return response;
 };
 
 export const postCollection = async (data) => {
@@ -63,7 +65,8 @@ export const postCollection = async (data) => {
   //     categoryId: 123,
   //   };
 
-  return mockPostCollectionResponse;
+  // return mockPostCollectionResponse;
+  return response;
 };
 
 export const updateCollection = async (collectionId, data) => {
@@ -76,7 +79,8 @@ export const updateCollection = async (collectionId, data) => {
   //     categoryId: 123,
   //   };
 
-  return {...data};
+  // return {...data};
+  return response;
 };
 
 export const deleteCollection = async (collectionId) => {
