@@ -7,8 +7,10 @@ const ProfileCollection = () => {
   return (
     <IonList className="profile-collection--container ion-margin-vertical">
       <div className="profile-collection-title--container">
-        <IonText className="profile-collection--title">Title</IonText>
-        <div className="profile-collection-followers--container">
+        <IonText className="profile-collection--title">
+          <b>Title</b>
+        </IonText>
+        <div className="profile-collection-followers--container ion-justify-content-center">
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
           20 followers
         </div>

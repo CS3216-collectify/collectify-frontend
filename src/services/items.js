@@ -7,7 +7,7 @@ const mockItems = {
       itemName: "Shiny Charmander",
       itemDescription: "My first ever card!",
       collectionId: 123,
-      itemCreationDate: "2021-09-23T01:22:47.541Z",
+      itemCreationDate: "2021-09-24T01:22:47.541Z",
       coverImage: {
         url: "https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg",
       },

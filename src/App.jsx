@@ -27,7 +27,7 @@ import "./App.scss";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import { ToastContextProvider } from "./contexts/ToastContext";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/edit-profile/EditProfile";
