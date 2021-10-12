@@ -26,6 +26,7 @@ import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
 import ProfileCollection from "../../components/profile-collection/ProfileCollection";
+import AddButton from "../../components/button/AddButton";
 
 const Profile = () => {
   const history = useHistory();
@@ -111,7 +112,10 @@ const Profile = () => {
               vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
             </div>
           </IonRow>
-
+          <IonRow className="ion-justify-content-end">
+            {/* Direct to AddCollection page */}
+            <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
+          </IonRow>
           <IonRow>
             <IonList className="profile-collection--list">
               <ProfileCollection />

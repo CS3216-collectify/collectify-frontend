@@ -31,6 +31,12 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/edit-profile/EditProfile";
 import Item from "./pages/item/Item";
+import EditItem from "./pages/edit-item/EditItem";
+import AddItem from "./pages/add-item/AddItem";
+import CollectionForm from "./components/form/CollectionForm";
+import AddCollection from "./pages/add-collection/AddCollection";
+import EditCollection from "./pages/edit-collection/EditCollection";
+import Collection from "./pages/collection/Collection";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -64,8 +70,27 @@ const App = () => {
               <Route exact path="/profile/edit">
                 <EditProfile />
               </Route>
-              <Route exact path="/collections/:collectinId/items/:itemId">
+              <Route exact path="/collections/:collectionId">
+                <Collection />
+              </Route>
+              <Route exact path="/collections/:collectionId/edit">
+                <EditCollection />
+              </Route>
+              <Route exact path="/collections/add">
+                <AddCollection />
+              </Route>
+              <Route exact path="/collections/:collectionId/items/:itemId">
                 <Item />
+              </Route>
+              <Route exact path="/collections/:collectionId/items/:itemId/edit">
+                <EditItem />
+              </Route>
+              <Route exact path="/collections/:collectionId/items/add">
+                <AddItem />
+              </Route>
+              {/* Test Route, DELETE */}
+              <Route exact path="/test/:collectionId/:itemId">
+                <AddCollection />
               </Route>
             </IonRouterOutlet>
 
