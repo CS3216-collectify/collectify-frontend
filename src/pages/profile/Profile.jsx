@@ -93,7 +93,9 @@ const Profile = () => {
 
               <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
                 {isMyAccount ? (
-                  <EditProfileButton onClick={() => history.push("/profile/edit")} />
+                  <EditProfileButton
+                    onClick={() => history.push("/profile/edit")}
+                  />
                 ) : hasFollowed ? (
                   <UnfollowButton />
                 ) : (
@@ -108,13 +110,18 @@ const Profile = () => {
               <b>John Doe</b>
             </div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
-              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+              vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
+              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum,
+              mi ante dapibus libero, at ultrices lectus urna eu nisl.
             </div>
           </IonRow>
           <IonRow className="ion-justify-content-end">
             {/* Direct to AddCollection page */}
-            <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
+            <AddButton
+              label="Collection"
+              onClick={() => history.push("/collections/add")}
+            />
           </IonRow>
           <IonRow>
             <IonList className="profile-collection--list">
@@ -126,7 +133,12 @@ const Profile = () => {
           </IonRow>
         </IonGrid>
 
-        <Toast showToast={showToast} setShowToast={setShowToast} toastMessage={toastMessage} color={toastColor} />
+        <Toast
+          showToast={showToast}
+          setShowToast={setShowToast}
+          toastMessage={toastMessage}
+          color={toastColor}
+        />
       </IonContent>
     </IonPage>
   );

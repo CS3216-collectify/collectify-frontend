@@ -1,10 +1,17 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from '@ionic/react';
-import { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
-import EditButton from '../../components/button/EditButton';
-import ImageCarousel from '../../components/gallery/ImageCarousel';
-import HomeToolbar from '../../components/toolbar/HomeToolbar';
-import { getItemFromCollection } from '../../services/items';
+import {
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonContent,
+  IonPage,
+  IonLoading,
+} from "@ionic/react";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router";
+import EditButton from "../../components/button/EditButton";
+import ImageCarousel from "../../components/gallery/ImageCarousel";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import { getItemFromCollection } from "../../services/items";
 
 const Item = () => {
   const history = useHistory();
@@ -29,7 +36,7 @@ const Item = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -43,34 +50,43 @@ const Item = () => {
   return (
     <IonPage className="profile">
       <HomeToolbar title={`${ownerName}'s Item`} />
-        <IonContent>
-          <IonGrid fixed>
-            <IonRow>
-              <IonCol>
-                <p>@{ownerUsername} ({ownerName}) </p>
-              </IonCol>
-            </IonRow>
-            <ImageCarousel />
-            <IonRow>
-              <IonCol size={9}>
-                <p>{title}</p>
-              </IonCol>
-              <IonCol size={3}>
-                <p>12 likes</p>
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <p>{description}</p>
-              </IonCol>
-            </IonRow>
-            <IonRow className="ion-justify-content-end">
-              <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
-            </IonRow>
-          </IonGrid>
-        </IonContent>
+      <IonContent>
+        <IonGrid fixed>
+          <IonRow>
+            <IonCol>
+              <p>
+                @{ownerUsername} ({ownerName}){" "}
+              </p>
+            </IonCol>
+          </IonRow>
+          <ImageCarousel />
+          <IonRow>
+            <IonCol size={9}>
+              <p>{title}</p>
+            </IonCol>
+            <IonCol size={3}>
+              <p>12 likes</p>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <p>{description}</p>
+            </IonCol>
+          </IonRow>
+          <IonRow className="ion-justify-content-end">
+            <EditButton
+              label="Item"
+              onClick={() =>
+                history.push(
+                  `/collections/${collectionId}/items/${itemId}/edit`
+                )
+              }
+            />
+          </IonRow>
+        </IonGrid>
+      </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
 export default Item;
