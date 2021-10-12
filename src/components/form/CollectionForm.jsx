@@ -78,7 +78,7 @@ const CollectionForm = (props) => {
             <SelectButton
               onChange={setCategory}
               options={selectOptions}
-              buttonLabel="Edit Categories"
+              buttonLabel="Select Category"
               selectLabel="Categories"
             />
           </IonRow>
