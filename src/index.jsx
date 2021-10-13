@@ -6,15 +6,15 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
 import { ToastContextProvider } from "./contexts/ToastContext";
-import { AuthenticationContextProvider } from "./contexts/AuthenticationContext";
+import { UserContextProvider } from "./contexts/UserContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthenticationContextProvider>
+    <UserContextProvider>
       <ToastContextProvider>
         <App />
       </ToastContextProvider>
-    </AuthenticationContextProvider>
+    </UserContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

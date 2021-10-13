@@ -1,14 +1,14 @@
 import React, { useCallback, useState, createContext } from "react";
 import { IonToast } from "@ionic/react";
 
-const AuthenticationContext = createContext();
+const UserContext = createContext();
 
-export default AuthenticationContext;
+export default UserContext;
 
-export const AuthenticationContextProvider = ({ children }) => {
+export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(
     localStorage.getItem("accessToken") !== null && localStorage.getItem("refreshToken") !== null && localStorage.getItem("userId") !== null
   );
 
-  return <AuthenticationContext.Provider value={{ isUserAuthenticated, setIsUserAuthenticated }}>{children}</AuthenticationContext.Provider>;
+  return <UserContext.Provider value={{ isUserAuthenticated, setIsUserAuthenticated }}>{children}</UserContext.Provider>;
 };
