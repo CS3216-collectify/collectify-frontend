@@ -15,7 +15,7 @@ const AddCollection = () => {
     setLoading(true);
     try {
       const collectionId = await postCollection(collection);
-      history.push(`/collections/${collectionId}`);
+      history.replace(`/collections/${collectionId}`);
     } catch (e) {
       console.log(e);
       setLoading(false);

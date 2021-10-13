@@ -1,11 +1,4 @@
-import {
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonContent,
-  IonPage,
-  IonLoading,
-} from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -43,12 +36,9 @@ const Item = () => {
     fetchItemData();
   }, []);
 
-  if (loading) {
-    return <IonLoading isOpen={loading} />;
-  }
-
   return (
     <IonPage className="profile">
+      <IonLoading isOpen={loading} />
       <HomeToolbar title={`${ownerName}'s Item`} />
       <IonContent>
         <IonGrid fixed>
@@ -74,14 +64,7 @@ const Item = () => {
             </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-end">
-            <EditButton
-              label="Item"
-              onClick={() =>
-                history.push(
-                  `/collections/${collectionId}/items/${itemId}/edit`
-                )
-              }
-            />
+            <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
           </IonRow>
         </IonGrid>
       </IonContent>

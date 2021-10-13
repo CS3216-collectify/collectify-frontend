@@ -11,8 +11,10 @@ const LogoutButton = () => {
   return (
     <IonButton
       onClick={() => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("isGuest");
         history.replace("/");
         setToast({ message: "Logged out successfully.", color: "success" });
       }}

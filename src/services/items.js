@@ -7,7 +7,7 @@ const mockItems = {
       itemName: "Shiny Charmander",
       itemDescription: "My first ever card!",
       collectionId: 123,
-      itemCreationDate: "2021-09-23T01:22:47.541Z",
+      itemCreationDate: "2021-09-24T01:22:47.541Z",
       coverImage: {
         url: "https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg",
       },
@@ -46,19 +46,18 @@ const mockPostItemResponse = {
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
   console.log("GET items from collection", collectionId);
   const params = { offset, limit };
-  const response = await server.get(`collections/${collectionId}/items`, {
+  const response = await server.get(`collections/${collectionId}/items/`, {
     params,
   });
-  console.log(response.data);
 
   // return mockItems;
-  return response.data.items;
+  return response.data;
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
   console.log("Get Item with collectionId", collectionId, "and itemId", itemId);
   const response = await server.get(
-    `collections/${collectionId}/items/${itemId}`
+    `collections/${collectionId}/items/${itemId}/`
   );
   console.log(response.data);
 
@@ -82,19 +81,21 @@ const loadImageFile = async (url, idx) => {
 export const postItem = async (collectionId, itemData) => {
   console.log("Post Item for collectionId", collectionId);
   // images = { url: ____, position: ____ }
-  const { itemName, itemDescription, images } = itemData;
+  const { name, description, images } = itemData;
 
   const body = new FormData();
-  body.append("itemName", itemName);
-  body.append("itemDescription", itemDescription);
+  body.append("itemName", name);
+  body.append("itemDescription", description);
 
   for (let i = 0; i < images.length; i++) {
     const { url } = images[i];
     const file = await loadImageFile(url, i);
     body.append("images", file);
   }
-
-  const response = await server.post(`collections/${collectionId}`, body);
+  console.log(itemData)
+ 
+  console.log(...body)
+    const response = await server.post(`collections/${collectionId}/items/`, body);
   console.log(response);
 
   // return mockPostItemResponse;
@@ -130,6 +131,7 @@ export const updateItem = async (collectionId, itemId, itemData) => {
   //     .then((response) => {
   //       // handle success
   //       console.log(response);
+  // return response.data;
   //     })
   //     .catch((error) => {
   //       // handle error
@@ -147,7 +149,7 @@ export const deleteItem = async (collectionId, itemId) => {
     itemId
   );
   const response = await server.delete(
-    `collections/${collectionId}/items/${itemId}`
+    `collections/${collectionId}/items/${itemId}/`
   );
   console.log(response);
 

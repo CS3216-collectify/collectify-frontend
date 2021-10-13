@@ -8,7 +8,7 @@ const server = axios.create({
   baseURL: SERVER_BASE_URL,
   timeout: 5000,
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("access_token"), // TODO: Test what happens when no token
+    Authorization: "Bearer " + localStorage.getItem("accessToken"), // TODO: Test what happens when no token
   },
 });
 
@@ -18,19 +18,16 @@ server.interceptors.response.use(
     const originalRequest = error.config;
 
     // Direct back to login page.
-    if (
-      error.response.status === 401 &&
-      originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/"
-    ) {
-      window.location.href = REACT_LOGIN_REL_URL;
+    if (error.response.status === 401 && originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/") {
+      console.log(error);
+      console.log("abc");
+      // window.location.href = REACT_LOGIN_REL_URL;
       return Promise.reject(error);
     }
 
-    if (
-      error.response.status === 401 &&
-      error.response.statusText === "Unauthorized"
-    ) {
-      const refreshToken = localStorage.getItem("refresh_token");
+    if (error.response.status === 401 && error.response.statusText === "Unauthorized") {
+      const refreshToken = localStorage.getItem("refreshToken");
+      console.log("def");
 
       if (refreshToken) {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
@@ -43,13 +40,11 @@ server.interceptors.response.use(
           return server
             .post("/api/token/refresh/", { refresh: refreshToken })
             .then((response) => {
-              localStorage.setItem("access_token", response.data.access);
-              localStorage.setItem("refresh_token", response.data.refresh);
+              localStorage.setItem("accessToken", response.data.access);
+              localStorage.setItem("refreshToken", response.data.refresh);
 
-              server.defaults.headers["Authorization"] =
-                "Bearer " + response.data.access;
-              originalRequest.headers["Authorization"] =
-                "Bearer " + response.data.access;
+              server.defaults.headers["Authorization"] = "Bearer " + response.data.access;
+              originalRequest.headers["Authorization"] = "Bearer " + response.data.access;
 
               return server(originalRequest);
             })
@@ -58,11 +53,11 @@ server.interceptors.response.use(
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          window.location.href = REACT_LOGIN_REL_URL;
+          // window.location.href = REACT_LOGIN_REL_URL;
         }
       } else {
         console.log("Refresh token not available.");
-        window.location.href = REACT_LOGIN_REL_URL;
+        // window.location.href = REACT_LOGIN_REL_URL;
       }
     }
 

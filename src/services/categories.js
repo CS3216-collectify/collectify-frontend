@@ -14,9 +14,9 @@ const mockCategories = {
 };
 
 export const getCategories = async () => {
-  const response = await server.get("/categories");
+  const response = await server.get(`/categories/`);
   console.log(response);
 
   // return mockCategories.categories;
-  return response.data.categories;
+  return response.data;
 };

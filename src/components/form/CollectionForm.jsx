@@ -12,25 +12,26 @@ const getDefaultCollectionData = () => {
 };
 
 const CollectionForm = (props) => {
-  const {
-    collectionData = getDefaultCollectionData(),
-    onComplete: completeHandler,
-    categoryOptions = [],
-  } = props;
+  const { collectionData = getDefaultCollectionData(), onComplete: completeHandler, categoryOptions = [] } = props;
 
-  const [name, setName] = useState(collectionData.collectionName);
-  const [description, setDescription] = useState(collectionData.collectionDescription);
+  const [collectionName, setCollectionName] = useState(collectionData.collectionName);
+  const [collectionDescription, setCollectionDescription] = useState(collectionData.collectionDescription);
   const [categoryId, setCategory] = useState(null);
 
-  console.log(categoryOptions);
+  useEffect(() => {
+    if (props.collectionData) {
+      setCollectionName(props.collectionData.collectionName);
+      setCollectionDescription(props.collectionData.collectionDescription);
+      setCategory(props.collectionData.categoryId);
+    }
+  }, [props.collectionData]);
+
   const selectOptions = categoryOptions.map((cat) => ({
     value: cat.categoryId,
     text: cat.name,
   }));
 
-  const convertCategoryIdToName = (selectedId) =>
-    categoryOptions.filter((cat) => cat.categoryId === selectedId)[0]?.name ??
-    "Unknown";
+  const convertCategoryIdToName = (selectedId) => categoryOptions.filter((cat) => cat.categoryId === selectedId)[0]?.name ?? "Unknown";
 
   const saveHandler = () => {
     // TODO: input validation
@@ -39,8 +40,8 @@ const CollectionForm = (props) => {
       return;
     }
     const collectionToSave = {
-      name,
-      description,
+      collectionName,
+      collectionDescription,
       categoryId,
       // other data
     };
@@ -50,42 +51,20 @@ const CollectionForm = (props) => {
   return (
     <IonList>
       <IonItem>
-        <TextInput
-          label="Collection Title"
-          value={name}
-          placeholder="Enter a title"
-          onChange={setName}
-        />
+        <TextInput label="Collection Title" value={collectionName} placeholder="Enter a title" onChange={setCollectionName} />
       </IonItem>
       <IonItem>
-        <TextArea
-          label="Summary"
-          value={description}
-          placeholder="Enter collection summary"
-          onChange={setDescription}
-        />
+        <TextArea label="Summary" value={collectionDescription} placeholder="Enter collection summary" onChange={setCollectionDescription} />
       </IonItem>
       <IonItem>
         <IonRow className="ion-justify-content-start">
-          <IonCol>
-            {categoryId && 
-              <CategoryChip
-                name={convertCategoryIdToName(categoryId)}
-                onDelete={() => setCategory(null)}
-              />
-            }
-          </IonCol>
+          <IonCol>{categoryId && <CategoryChip name={convertCategoryIdToName(categoryId)} onDelete={() => setCategory(null)} />}</IonCol>
         </IonRow>
       </IonItem>
       <IonItem>
         <IonGrid fixed>
           <IonRow className="ion-justify-content-end">
-            <SelectButton
-              onChange={setCategory}
-              options={selectOptions}
-              buttonLabel="Select Category"
-              selectLabel="Categories"
-            />
+            <SelectButton onChange={setCategory} options={selectOptions} buttonLabel="Select Category" selectLabel="Categories" />
           </IonRow>
         </IonGrid>
       </IonItem>
