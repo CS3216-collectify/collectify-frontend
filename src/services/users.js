@@ -1,4 +1,4 @@
-const server = require("server");
+import server from "../utils/server";
 
 const mockUsers = {
   userId: 12,
@@ -8,18 +8,10 @@ const mockUsers = {
 };
 
 export const getUserByUserId = async (userId) => {
-  //   const response = await server
-  //     .get("/users/" + userId, {
-  //       params: {},
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
-
-  return mockUsers;
+  console.log("Get user data of user" + userId);
+  const response = await server.get("api/user/" + userId, {
+    params: {},
+  });
+  console.log(response)
+  return response;
 };

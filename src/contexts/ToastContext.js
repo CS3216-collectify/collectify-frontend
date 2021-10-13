@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState, createContext } from "react";
-import { IonToast, CreateAnimation, Animation } from "@ionic/react";
+import React, { useCallback, useState, createContext } from "react";
+import { IonToast } from "@ionic/react";
 
 const ToastContext = createContext();
 

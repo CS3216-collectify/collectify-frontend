@@ -3,10 +3,12 @@ import { useHistory } from "react-router-dom";
 
 import "./button.scss";
 import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
 
 const LogoutButton = () => {
   const history = useHistory();
   const setToast = useToastContext();
+  const { setIsUserAuthenticated } = useUserContext();
 
   return (
     <IonButton
@@ -17,6 +19,7 @@ const LogoutButton = () => {
         localStorage.removeItem("isGuest");
         history.replace("/");
         setToast({ message: "Logged out successfully.", color: "success" });
+        setIsUserAuthenticated(false);
       }}
     >
       Log Out

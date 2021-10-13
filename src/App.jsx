@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
@@ -26,7 +26,7 @@ import "./App.scss";
 
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
-import { ToastContextProvider } from "./contexts/ToastContext";
+import useUserContext from "./hooks/useUserContext";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
@@ -41,77 +41,71 @@ import Settings from "./pages/settings/Settings";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
+  const { isUserAuthenticated } = useUserContext();
+
+  useEffect(() => {
+    console.log(isUserAuthenticated);
+  });
 
   return (
-    <ToastContextProvider>
-      <IonApp>
-        <IonReactRouter>
-          <IonRouterOutlet>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Switch>
             <Route exact path="/">
               <Login />
             </Route>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/profile/:username" component={Profile} />
-              <Route exact path="/profile" component={Profile} />
-              <Route exact path="/profile/edit" component={EditProfile} />
-              <Route exact path="/settings" component={Settings} />
-              <Route exact path="/collections/:collectionId">
-                <Collection />
-              </Route>
-              <Route exact path="/collections/:collectionId/edit">
-                <EditCollection />
-              </Route>
-              <Route exact path="/collections/add">
-                <AddCollection />
-              </Route>
-              <Route exact path="/collections/:collectionId/items/:itemId">
-                <Item />
-              </Route>
-              <Route exact path="/collections/:collectionId/items/:itemId/edit">
-                <EditItem />
-              </Route>
-              <Route exact path="/collections/:collectionId/items/add">
-                <AddItem />
-              </Route>
-              {/* Test Route, DELETE */}
-              <Route exact path="/test/:collectionId/:itemId">
-                <AddCollection />
-              </Route>
-            </IonRouterOutlet>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/profile/:username" component={Profile} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/edit" component={EditProfile} />
+                <Route exact path="/settings" component={Settings} />
+                <Route exact path="/collections/:collectionId" component={Collection} />
+                <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
+                <Route exact path="/collections/add" component={AddCollection} />
+                <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
+                <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
+                <Route exact path="/collections/:collectionId/items/add" component={AddItem} />
 
-            <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
-              <IonTabButton tab="home" href="/home">
-                <IonIcon icon={homeOutline} />
-                <IonText>Home</IonText>
-              </IonTabButton>
+                {/* Test Route, DELETE */}
+                <Route exact path="/test/:collectionId/:itemId" component={AddCollection} />
+              </IonRouterOutlet>
 
-              <IonTabButton tab="b" href="/home">
-                <IonIcon icon={searchOutline} />
-                <IonText>Discover</IonText>
-              </IonTabButton>
-
-              <IonTabButton tab="c" href="/home">
-                <IonIcon icon={addCircleOutline} />
-                <IonText>Add</IonText>
-              </IonTabButton>
-
-              <IonTabButton tab="d" href="/d">
-                <IonIcon icon={chatbubblesOutline} />
-                <IonText>Chats</IonText>
-              </IonTabButton>
-
-              <IonTabButton tab="user-profile" href="/profile">
-                <IonIcon icon={personCircleOutline} />
-                <IonText>Profile</IonText>
-              </IonTabButton>
-            </IonTabBar>
+              <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
+                {isUserAuthenticated && (
+                  <IonTabButton tab="home" href="/home">
+                    <IonIcon icon={homeOutline} />
+                    <IonText>Home</IonText>
+                  </IonTabButton>
+                )}
+                <IonTabButton tab="b" href="/home">
+                  <IonIcon icon={searchOutline} />
+                  <IonText>Discover</IonText>
+                </IonTabButton>
+                {isUserAuthenticated && (
+                  <IonTabButton tab="c" href="/home">
+                    <IonIcon icon={addCircleOutline} />
+                    <IonText>Add</IonText>
+                  </IonTabButton>
+                )}
+                {isUserAuthenticated && (
+                  <IonTabButton tab="d" href="/d">
+                    <IonIcon icon={chatbubblesOutline} />
+                    <IonText>Chats</IonText>
+                  </IonTabButton>
+                )}
+                <IonTabButton tab="user-profile" href="/profile">
+                  <IonIcon icon={personCircleOutline} />
+                  <IonText>Profile</IonText>
+                </IonTabButton>
+              </IonTabBar>
             </IonTabs>
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
-    </ToastContextProvider>
+          </Switch>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
   );
 };
 
