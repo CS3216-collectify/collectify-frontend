@@ -46,7 +46,7 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
   console.log(response);
 
   // return mockCollections;
-  return response.data.collections;
+  return response.data;
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
