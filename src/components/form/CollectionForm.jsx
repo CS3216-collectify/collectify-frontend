@@ -18,11 +18,10 @@ const CollectionForm = (props) => {
     categoryOptions = [],
   } = props;
 
-  const [name, setName] = useState(collectionData.collectionName);
-  const [description, setDescription] = useState(collectionData.collectionDescription);
+  const [collectionName, setCollectionName] = useState(collectionData.collectionName);
+  const [collectionDescription, setCollectionDescription] = useState(collectionData.collectionDescription);
   const [categoryId, setCategory] = useState(null);
 
-  console.log(categoryOptions);
   const selectOptions = categoryOptions.map((cat) => ({
     value: cat.categoryId,
     text: cat.name,
@@ -39,8 +38,8 @@ const CollectionForm = (props) => {
       return;
     }
     const collectionToSave = {
-      name,
-      description,
+      collectionName,
+      collectionDescription,
       categoryId,
       // other data
     };
@@ -52,17 +51,17 @@ const CollectionForm = (props) => {
       <IonItem>
         <TextInput
           label="Collection Title"
-          value={name}
+          value={collectionName}
           placeholder="Enter a title"
-          onChange={setName}
+          onChange={setCollectionName}
         />
       </IonItem>
       <IonItem>
         <TextArea
           label="Summary"
-          value={description}
+          value={collectionDescription}
           placeholder="Enter collection summary"
-          onChange={setDescription}
+          onChange={setCollectionDescription}
         />
       </IonItem>
       <IonItem>

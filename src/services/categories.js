@@ -18,5 +18,5 @@ export const getCategories = async () => {
   console.log(response);
 
   // return mockCategories.categories;
-  return response.data.categories;
+  return response.data;
 };
