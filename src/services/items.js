@@ -46,19 +46,18 @@ const mockPostItemResponse = {
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
   console.log("GET items from collection", collectionId);
   const params = { offset, limit };
-  const response = await server.get(`collections/${collectionId}/items`, {
+  const response = await server.get(`collections/${collectionId}/items/`, {
     params,
   });
-  console.log(response.data);
 
   // return mockItems;
-  return response.data.items;
+  return response.data;
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
   console.log("Get Item with collectionId", collectionId, "and itemId", itemId);
   const response = await server.get(
-    `collections/${collectionId}/items/${itemId}`
+    `collections/${collectionId}/items/${itemId}/`
   );
   console.log(response.data);
 
@@ -94,7 +93,7 @@ export const postItem = async (collectionId, itemData) => {
     body.append("images", file);
   }
 
-  const response = await server.post(`collections/${collectionId}`, body);
+  const response = await server.post(`collections/${collectionId}/`, body);
   console.log(response);
 
   // return mockPostItemResponse;
@@ -148,7 +147,7 @@ export const deleteItem = async (collectionId, itemId) => {
     itemId
   );
   const response = await server.delete(
-    `collections/${collectionId}/items/${itemId}`
+    `collections/${collectionId}/items/${itemId}/`
   );
   console.log(response);
 

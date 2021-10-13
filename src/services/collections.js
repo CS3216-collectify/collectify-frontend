@@ -42,7 +42,7 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
   if (categoryId != null) {
     params["category"] = categoryId;
   }
-  const response = await server.get("collections", { params });
+  const response = await server.get(`collections/`, { params });
   console.log(response);
 
   // return mockCollections;
@@ -61,7 +61,7 @@ export const getCollectionByCollectionId = async (collectionId) => {
 export const postCollection = async (data) => {
   console.log("creating new collection...");
   console.log(data)
-  const response = await server.post("collections/", data);
+  const response = await server.post(`collections/`, data);
   console.log(response);
   //   const data = {
   //     collectionName: "Keyboards",
