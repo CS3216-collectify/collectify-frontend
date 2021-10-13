@@ -1,4 +1,4 @@
-const server = require("server");
+import server from "../utils/server";
 
 const mockItems = {
   items: [
@@ -18,7 +18,9 @@ const mockItems = {
       itemDescription: "Bought for $100",
       collectionId: 123,
       itemCreationDate: "2021-09-23T01:22:47.541Z",
-      coverImage: { url: "https://static.wikia.nocookie.net/pokemon/images/4/49/Ash_Pikachu.png/revision/latest?cb=20200405125039" },
+      coverImage: {
+        url: "https://static.wikia.nocookie.net/pokemon/images/4/49/Ash_Pikachu.png/revision/latest?cb=20200405125039",
+      },
     },
   ],
 };
@@ -42,69 +44,73 @@ const mockPostItemResponse = {
 };
 
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
-//   const response = await server
-//     .get("/collections/" + collectionId + "/items", {
-//       params: { offset: offset, limit: limit },
-//     })
-//     .then((response) => {
-//       // handle success
-//       console.log(response);
-//     })
-//     .catch((error) => {
-//       // handle error
-//       console.log(error);
-//     });
+  console.log("GET items from collection", collectionId);
+  const params = { offset, limit };
+  const response = await server.get(`collections/${collectionId}/items`, {
+    params,
+  });
+  console.log(response.data);
 
-  return mockItems;
+  // return mockItems;
+  return response.data.items;
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
-//   const response = await server
-//     .get("/collections/" + collectionId + "/items/" + itemId, {
-//       params: {},
-//     })
-//     .then((response) => {
-//       // handle success
-//       console.log(response);
-//     })
-//     .catch((error) => {
-//       // handle error
-//       console.log(error);
-//     });
+  console.log("Get Item with collectionId", collectionId, "and itemId", itemId);
+  const response = await server.get(
+    `collections/${collectionId}/items/${itemId}`
+  );
+  console.log(response.data);
 
-  return mockItem;
+  // return mockItem;
+  return response.data;
 };
 
-export const postItem = async (data) => {
-  //   const data = {
-  //     itemName: "A keyboard",
-  //     itemDescription: "My keyboard",
-  //     images: [
-  //       {
-  //         imageId: 2,
-  //         url: "https://static.wikia.nocookie.net/pokemon/images/4/49/Ash_Pikachu.png/revision/latest?cb=20200405125039",
-  //         imageUploadDate: "2021-09-23T01:22:47.541Z",
-  //       },
-  //     ],
-  //   };
-
-  //   const response = await server
-  //     .post("/collections/" + collectionId + "/items", {
-  //       data,
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
-
-  return mockPostItemResponse;
+const blobToFile = (blob, fileName = "default-name", type = "image/png") => {
+  const file = new File([blob], fileName, { type });
+  return file;
 };
 
-export const updateItem = async (data, itemId) => {
+const loadImageFile = async (url, idx) => {
+  const filename = `im-${idx}`;
+  const file = await fetch(url)
+    .then((res) => res.blob())
+    .then((blob) => blobToFile(blob, filename));
+  return file;
+};
+
+export const postItem = async (collectionId, itemData) => {
+  console.log("Post Item for collectionId", collectionId);
+  // images = { url: ____, position: ____ }
+  const { itemName, itemDescription, images } = itemData;
+
+  const body = new FormData();
+  body.append("itemName", itemName);
+  body.append("itemDescription", itemDescription);
+
+  for (let i = 0; i < images.length; i++) {
+    const { url } = images[i];
+    const file = await loadImageFile(url, i);
+    body.append("images", file);
+  }
+
+  const response = await server.post(`collections/${collectionId}`, body);
+  console.log(response);
+
+  // return mockPostItemResponse;
+  return response.data.itemId;
+};
+
+export const updateItem = async (collectionId, itemId, itemData) => {
+  // TODO: Use FormData
+  // TODO: How images are updated?
+
+  console.log(
+    "Update Item with collectionId",
+    collectionId,
+    "and itemId",
+    itemId
+  );
   //   const data = {
   //     itemName: "A keyboard",
   //     itemDescription: "My keyboard",
@@ -130,50 +136,46 @@ export const updateItem = async (data, itemId) => {
   //       console.log(error);
   //     });
 
-  return {};
+  // return { ...itemData };
 };
 
+export const deleteItem = async (collectionId, itemId) => {
+  console.log(
+    "Deleting collection with collectionId",
+    collectionId,
+    "and itemId",
+    itemId
+  );
+  const response = await server.delete(
+    `collections/${collectionId}/items/${itemId}`
+  );
+  console.log(response);
 
-// TODO: delete item?
-
-export const deleteCollection = async (collectionId) => {
-  //   const data = {
-  //     collectionName: "Keyboards",
-  //     collectionDescription: "My keyboards",
-  //     categoryId: 123,
-  //   };
-
-  //   const response = await server
-  //     .delete("/collections/" + collectionId + "/items/" + itemId)
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
-
-  return {};
+  // return {};
+  // return response;
 };
-const sampleImage = "https://pbs.twimg.com/profile_images/1377854248621199360/F7S8p4xK_400x400.jpg";
+
+const sampleImage =
+  "https://pbs.twimg.com/profile_images/1377854248621199360/F7S8p4xK_400x400.jpg";
 
 const mockItemByCollection = {
-    itemName: "Shiny Charmander",
-    itemDescription: "My first ever card!",
-    itemCreationDate: "2021-09-23T01:22:47.541Z",
-    coverImage: {
-        url: sampleImage,
-    },
-}
+  itemName: "Shiny Charmander",
+  itemDescription: "My first ever card!",
+  itemCreationDate: "2021-09-23T01:22:47.541Z",
+  coverImage: {
+    url: sampleImage,
+  },
+};
 
-// TODO: This offset and should be done from server?
-export const getItemsByCollectionId = async (collectionId, offset, limit) => {
-    // TODO: Replace with actual 
-    if (offset === 18) {
-        limit = 14;
-    }
-    return [...Array.from({length: limit}, (_, idx) => {
-        return {...mockItemByCollection, itemId: idx + offset, collectionId};
-    })]
-}
+// TODO: For testing ImageGrid, use getItemsFromCollection instead
+// export const getItemsByCollectionId = async (collectionId, offset, limit) => {
+//   // TODO: Replace with actual
+//   if (offset === 18) {
+//     limit = 14;
+//   }
+//   return [
+//     ...Array.from({ length: limit }, (_, idx) => {
+//       return { ...mockItemByCollection, itemId: idx + offset, collectionId };
+//     }),
+//   ];
+// };

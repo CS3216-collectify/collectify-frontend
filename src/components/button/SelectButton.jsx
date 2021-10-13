@@ -14,7 +14,6 @@ const SelectButton = ({ buttonLabel, selectLabel, onChange: selectHandler, optio
       <IonLabel hidden={true}>{selectLabel}</IonLabel>
       <IonSelect
         id="cat-select"
-        multiple
         onIonChange={(e) => selectHandler(e.detail.value)}
         hidden={true}
       >

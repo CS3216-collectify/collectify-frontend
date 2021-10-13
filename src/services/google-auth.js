@@ -2,6 +2,7 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import GoogleAuthStatus from "../enums/google-auth-status.enum";
 import server from "../utils/server";
+import jwt_decode from "jwt-decode";
 
 export const googleLogin = async () => {
   // {
@@ -29,6 +30,10 @@ export const googleLogin = async () => {
       server.defaults.headers["Authorization"] = "Bearer " + response.data.access;
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
+
+      // TODO: Remove once backend changes done
+      const jwtDecoded = jwt_decode(response.data.access);
+      localStorage.setItem("userId", jwtDecoded.user_id);
       return;
     } catch (error) {
       throw error;
