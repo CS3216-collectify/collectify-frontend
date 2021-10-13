@@ -1,9 +1,14 @@
-import { IonButton, IonLabel } from "@ionic/react";
+import { IonButton } from "@ionic/react";
 
 import "./button.scss";
 
 // Button to upload images
-const UploadButton = ({ onChange }) => {
+const UploadButton = ({ onChange: changeHandler }) => {
+  const inputHandler = (e) => {
+    changeHandler(e.target.files[0]);
+    e.target.files = null;
+  };
+
   return (
     <>
       <IonButton
@@ -16,7 +21,7 @@ const UploadButton = ({ onChange }) => {
         id="my-image-input"
         type="file"
         accept="image/png, image/jpg"
-        onChange={onChange}
+        onChange={inputHandler}
         multiple={false}
         hidden={true}
       />

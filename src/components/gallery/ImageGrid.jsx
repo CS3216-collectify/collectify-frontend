@@ -7,8 +7,9 @@ import {
 } from "@ionic/react";
 import { image } from "ionicons/icons";
 import { useEffect, useState } from "react";
-import { getItemsByCollectionId } from "../../services/items";
-import FlexImage from "../image/FlexImage"
+import { useHistory } from "react-router";
+import { getItemsFromCollection } from "../../services/items";
+import FlexImage from "../image/FlexImage";
 import "./gallery.scss";
 
 const groupElements = (arr, interval) => {
@@ -17,11 +18,12 @@ const groupElements = (arr, interval) => {
     groups.push(arr.slice(i, i + interval));
   }
   return groups;
-}
+};
 
 const LIMIT = 18;
 
 const ImageGrid = (props) => {
+  const history = useHistory();
   const { collectionId = 1 } = props;
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -29,30 +31,27 @@ const ImageGrid = (props) => {
 
   const loadItems = async () => {
     const nextPage = pages + 1;
-    setTimeout(async () => {
-      // TODO: Remove this timeout
-      try {
-        if (!hasMore) {
-          return;
-        }
-        const retrievedItems = await getItemsByCollectionId(
-          collectionId,
-          nextPage * LIMIT,
-          LIMIT
-        );
-        console.log(retrievedItems);
-        if (
-          (retrievedItems && retrievedItems.length < LIMIT) ||
-          !retrievedItems
-        ) {
-          setHasMore(false);
-        }
-        setItems([...items, ...retrievedItems]);
-        setPages(nextPage);
-      } catch (e) {
-        console.log(e);
+    try {
+      if (!hasMore) {
+        return;
       }
-    }, 2000);
+      const retrievedItems = await getItemsFromCollection(
+        collectionId,
+        nextPage * LIMIT,
+        LIMIT
+      );
+      console.log(retrievedItems);
+      if (
+        (retrievedItems && retrievedItems.length < LIMIT) ||
+        !retrievedItems
+      ) {
+        setHasMore(false);
+      }
+      setItems([...items, ...retrievedItems]);
+      setPages(nextPage);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const fetchNextPage = () => {
@@ -71,17 +70,24 @@ const ImageGrid = (props) => {
       {groupsOfThree.map((grp, idx) => (
         <IonRow className="single-row-3" size={12} key={idx}>
           {grp.map((item, idx) => (
-            <IonCol key={idx} className="single-image-3"  size={4}>
-              <FlexImage src={item.coverImage.url} />
+            <IonCol key={idx} className="single-image-3" size={4}>
+              <FlexImage
+                src={item.coverImage.url}
+                onClick={() =>
+                  history.push(
+                    `/collections/${collectionId}/items/${item.itemId}`
+                  )
+                }
+              />
             </IonCol>
           ))}
         </IonRow>
       ))}
-      <IonInfiniteScroll
-        disabled={!hasMore}
-        onIonInfinite={fetchNextPage}
-      >
-        <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
+      <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
+        <IonInfiniteScrollContent
+          className="ion-margin-top"
+          loadingText="Loading..."
+        ></IonInfiniteScrollContent>
       </IonInfiniteScroll>
     </IonGrid>
   );

@@ -3,29 +3,20 @@ import server from "../utils/server";
 const mockCategories = {
   categories: [
     {
-      collectionId: 19,
+      categoryId: 19,
       name: "Pokemon Cards",
     },
     {
-      collectionId: 29,
+      categoryId: 29,
       name: "Sneakers",
     },
   ],
 };
 
 export const getCategories = async () => {
-  const response = await server
-    .get("/categories/", {
-      params: {},
-    })
-    .then((response) => {
-      // handle success
-       return response.data;
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-    });
+  const response = await server.get("/categories");
+  console.log(response);
 
-  return response;
+  // return mockCategories.categories;
+  return response.data.categories;
 };

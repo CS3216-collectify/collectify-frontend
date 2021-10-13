@@ -32,6 +32,11 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/edit-profile/EditProfile";
 import Item from "./pages/item/Item";
+import EditItem from "./pages/edit-item/EditItem";
+import AddItem from "./pages/add-item/AddItem";
+import AddCollection from "./pages/add-collection/AddCollection";
+import EditCollection from "./pages/edit-collection/EditCollection";
+import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 
 const App = () => {
@@ -45,43 +50,63 @@ const App = () => {
             <Route exact path="/">
               <Login />
             </Route>
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/profile/:username" component={Profile} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/profile/edit" component={EditProfile} />
+              <Route exact path="/settings" component={Settings} />
+              <Route exact path="/collections/:collectionId">
+                <Collection />
+              </Route>
+              <Route exact path="/collections/:collectionId/edit">
+                <EditCollection />
+              </Route>
+              <Route exact path="/collections/add">
+                <AddCollection />
+              </Route>
+              <Route exact path="/collections/:collectionId/items/:itemId">
+                <Item />
+              </Route>
+              <Route exact path="/collections/:collectionId/items/:itemId/edit">
+                <EditItem />
+              </Route>
+              <Route exact path="/collections/:collectionId/items/add">
+                <AddItem />
+              </Route>
+              {/* Test Route, DELETE */}
+              <Route exact path="/test/:collectionId/:itemId">
+                <AddCollection />
+              </Route>
+            </IonRouterOutlet>
 
-            <IonTabs>
-              <IonRouterOutlet>
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/profile/:username" component={Profile} />
-                <Route exact path="/profile" component={Profile} />
-                <Route exact path="/profile/edit" component={EditProfile} />
-                <Route exact path="/item" component={Item} />
-                <Route exact path="/settings" component={Settings} />
-              </IonRouterOutlet>
+            <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
+              <IonTabButton tab="home" href="/home">
+                <IonIcon icon={homeOutline} />
+                <IonText>Home</IonText>
+              </IonTabButton>
 
-              <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
-                <IonTabButton tab="home" href="/home">
-                  <IonIcon icon={homeOutline} />
-                  <IonText>Home</IonText>
-                </IonTabButton>
+              <IonTabButton tab="b" href="/home">
+                <IonIcon icon={searchOutline} />
+                <IonText>Discover</IonText>
+              </IonTabButton>
 
-                <IonTabButton tab="b" href="/home">
-                  <IonIcon icon={searchOutline} />
-                  <IonText>Discover</IonText>
-                </IonTabButton>
+              <IonTabButton tab="c" href="/home">
+                <IonIcon icon={addCircleOutline} />
+                <IonText>Add</IonText>
+              </IonTabButton>
 
-                <IonTabButton tab="c" href="/home">
-                  <IonIcon icon={addCircleOutline} />
-                  <IonText>Add</IonText>
-                </IonTabButton>
+              <IonTabButton tab="d" href="/d">
+                <IonIcon icon={chatbubblesOutline} />
+                <IonText>Chats</IonText>
+              </IonTabButton>
 
-                <IonTabButton tab="d" href="/d">
-                  <IonIcon icon={chatbubblesOutline} />
-                  <IonText>Chats</IonText>
-                </IonTabButton>
-
-                <IonTabButton tab="user-profile" href="/profile">
-                  <IonIcon icon={personCircleOutline} />
-                  <IonText>Profile</IonText>
-                </IonTabButton>
-              </IonTabBar>
+              <IonTabButton tab="user-profile" href="/profile">
+                <IonIcon icon={personCircleOutline} />
+                <IonText>Profile</IonText>
+              </IonTabButton>
+            </IonTabBar>
             </IonTabs>
           </IonRouterOutlet>
         </IonReactRouter>

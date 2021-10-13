@@ -1,41 +1,61 @@
-import {
-  IonCol,
-  IonGrid,
-  IonItem,
-  IonList,
-  IonRow,
-} from "@ionic/react";
-import { useState } from "react";
+import { IonCol, IonGrid, IonItem, IonList, IonRow } from "@ionic/react";
+import { useEffect, useState } from "react";
 import CategoryChip from "../../chip/CategoryChip";
+import { getCategories } from "../../services/categories";
 import SaveButton from "../button/SaveButton";
 import SelectButton from "../button/SelectButton";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 
+const getDefaultCollectionData = () => {
+  return { collectionName: "", collectionDescription: "", categoryId: null };
+};
+
 const CollectionForm = (props) => {
-  // TODO: fetch from backend
-  const categoryOptions = [
-    {
-      id: 1,
-      name: "Cat1"
-    },
-    {
-      id: 2,
-      name: "Cat2"
-    },
-  ];
+  const {
+    collectionData = getDefaultCollectionData(),
+    onComplete: completeHandler,
+    categoryOptions = [],
+  } = props;
 
-  const selectOptions = categoryOptions.map((cat) => ({ value: cat.id, text: cat.name }));
-  const convertCategoryIdToName = (selectedId) => categoryOptions.filter((cat) => cat.id === selectedId)[0]?.name ?? "Unknown";
+  const [name, setName] = useState(collectionData.collectionName);
+  const [description, setDescription] = useState(collectionData.collectionDescription);
+  const [categoryId, setCategory] = useState(null);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [categories, setCategories] = useState([]);
+  console.log(categoryOptions);
+  const selectOptions = categoryOptions.map((cat) => ({
+    value: cat.categoryId,
+    text: cat.name,
+  }));
+
+  const convertCategoryIdToName = (selectedId) =>
+    categoryOptions.filter((cat) => cat.categoryId === selectedId)[0]?.name ??
+    "Unknown";
+
+  const saveHandler = () => {
+    // TODO: input validation
+    if (categoryId === null) {
+      console.log("Plase select one category");
+      return;
+    }
+    const collectionToSave = {
+      name,
+      description,
+      categoryId,
+      // other data
+    };
+    completeHandler(collectionToSave);
+  };
 
   return (
     <IonList>
       <IonItem>
-        <TextInput label="Collection Title" value={name} placeholder="Enter a title" onChange={setName} />
+        <TextInput
+          label="Collection Title"
+          value={name}
+          placeholder="Enter a title"
+          onChange={setName}
+        />
       </IonItem>
       <IonItem>
         <TextArea
@@ -47,30 +67,30 @@ const CollectionForm = (props) => {
       </IonItem>
       <IonItem>
         <IonRow className="ion-justify-content-start">
-          {categories.map((catId, idx) => (
-            <IonCol key={idx}>
-              <CategoryChip 
-                name={convertCategoryIdToName(catId)} 
-                onDelete={() => console.log(`delete ${catId}`)}
+          <IonCol>
+            {categoryId && 
+              <CategoryChip
+                name={convertCategoryIdToName(categoryId)}
+                onDelete={() => setCategory(null)}
               />
-            </IonCol>
-          ))}
+            }
+          </IonCol>
         </IonRow>
       </IonItem>
       <IonItem>
         <IonGrid fixed>
           <IonRow className="ion-justify-content-end">
-            <SelectButton 
-              onChange={setCategories} 
+            <SelectButton
+              onChange={setCategory}
               options={selectOptions}
-              buttonLabel="Edit Categories"
+              buttonLabel="Select Category"
               selectLabel="Categories"
             />
           </IonRow>
         </IonGrid>
       </IonItem>
       <IonItem>
-        <SaveButton onClick={() => console.log("Save collection handler not yet implemented")} />
+        <SaveButton onClick={saveHandler} />
       </IonItem>
     </IonList>
   );

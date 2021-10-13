@@ -1,5 +1,4 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import jwt_decode from "jwt-decode";
 
 import GoogleAuthStatus from "../enums/google-auth-status.enum";
 import server from "../utils/server";
