@@ -44,12 +44,9 @@ const EditItem = () => {
     }
   };
 
-  if (loading) {
-    return <IonLoading isOpen={loading} />;
-  }
-
   return (
     <IonPage>
+      <IonLoading isOpen={loading} />
       <HomeToolbar title="Edit Item" />
       <IonContent>
         <ItemForm onComplete={editCompleteHandler} itemData={item} />

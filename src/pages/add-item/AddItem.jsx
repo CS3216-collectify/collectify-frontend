@@ -21,12 +21,9 @@ const AddItem = () => {
     }
   };
 
-  if (loading) {
-    return <IonLoading isOpen={loading} />;
-  }
-
   return (
     <IonPage>
+      <IonLoading isOpen={loading} />
       <HomeToolbar title="Add Item" />
       <IonContent>
         <ItemForm onComplete={addCompleteHandler} />

@@ -1,11 +1,4 @@
-import {
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonLoading,
-  IonPage,
-  IonRow,
-} from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import AddButton from "../../components/button/AddButton";
@@ -44,13 +37,11 @@ const Collection = (props) => {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return <IonLoading isOpen={loading} />;
-  }
+ 
 
   return (
     <IonPage>
+      <IonLoading isOpen={loading} />
       <HomeToolbar title={`Collection`} />
       <IonContent>
         <IonGrid fixed>
@@ -75,16 +66,8 @@ const Collection = (props) => {
             </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-end">
-            <AddButton
-              label="Item"
-              onClick={() =>
-                history.push(`/collections/${collectionId}/items/add`)
-              }
-            />
-            <EditButton
-              label="Collection"
-              onClick={() => history.push(`/collections/${collectionId}/edit`)}
-            />
+            <AddButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
+            <EditButton label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
           </IonRow>
           <ImageGrid collectionId={collectionId} />
         </IonGrid>
