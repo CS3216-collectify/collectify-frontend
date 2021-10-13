@@ -36,7 +36,7 @@ const Login = () => {
 
   const handleGuestLogin = async () => {
     server.defaults.headers["Authorization"] = null;
-    localStorage.setItem("isGuest", "isGuest");
+    localStorage.setItem("isGuest", true);
     history.replace("/home");
   };
 
