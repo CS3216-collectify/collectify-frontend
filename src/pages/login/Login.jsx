@@ -16,11 +16,7 @@ const Login = () => {
   const setToast = useToastContext();
 
   useEffect(() => {
-    if (
-      localStorage.getItem("access_token") !== null ||
-      localStorage.getItem("refresh_token") !== null ||
-      localStorage.getItem("is_guest") !== null
-    ) {
+    if (localStorage.getItem("accessToken") !== null || localStorage.getItem("refreshToken") !== null || localStorage.getItem("isGuest") !== null) {
       history.replace("/home");
     } else {
       history.replace("/");
@@ -40,6 +36,7 @@ const Login = () => {
 
   const handleGuestLogin = async () => {
     server.defaults.headers["Authorization"] = null;
+    localStorage.setItem("isGuest", "isGuest");
     history.replace("/home");
   };
 

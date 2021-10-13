@@ -42,35 +42,37 @@ const mockPostItemResponse = {
 };
 
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
-//   const response = await server
-//     .get("/collections/" + collectionId + "/items", {
-//       params: { offset: offset, limit: limit },
-//     })
-//     .then((response) => {
-//       // handle success
-//       console.log(response);
-//     })
-//     .catch((error) => {
-//       // handle error
-//       console.log(error);
-//     });
+  //   const response = await server
+  //     .get("/collections/" + collectionId + "/items", {
+  //       params: { offset: offset, limit: limit },
+  //     })
+  //     .then((response) => {
+  //       // handle success
+  //       console.log(response);
+  // return response.data;
+  //     })
+  //     .catch((error) => {
+  //       // handle error
+  //       console.log(error);
+  //     });
 
   return mockItems;
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
-//   const response = await server
-//     .get("/collections/" + collectionId + "/items/" + itemId, {
-//       params: {},
-//     })
-//     .then((response) => {
-//       // handle success
-//       console.log(response);
-//     })
-//     .catch((error) => {
-//       // handle error
-//       console.log(error);
-//     });
+  //   const response = await server
+  //     .get("/collections/" + collectionId + "/items/" + itemId, {
+  //       params: {},
+  //     })
+  //     .then((response) => {
+  //       // handle success
+  //       console.log(response);
+  //        return response.data;
+  //     })
+  //     .catch((error) => {
+  //       // handle error
+  //       console.log(error);
+  //     });
 
   return mockItem;
 };
@@ -95,6 +97,7 @@ export const postItem = async (data) => {
   //     .then((response) => {
   //       // handle success
   //       console.log(response);
+  // return response.data;
   //     })
   //     .catch((error) => {
   //       // handle error
@@ -124,6 +127,7 @@ export const updateItem = async (data, itemId) => {
   //     .then((response) => {
   //       // handle success
   //       console.log(response);
+  // return response.data;
   //     })
   //     .catch((error) => {
   //       // handle error
@@ -132,7 +136,6 @@ export const updateItem = async (data, itemId) => {
 
   return {};
 };
-
 
 // TODO: delete item?
 
@@ -148,6 +151,7 @@ export const deleteCollection = async (collectionId) => {
   //     .then((response) => {
   //       // handle success
   //       console.log(response);
+  // return response.data;
   //     })
   //     .catch((error) => {
   //       // handle error
@@ -159,21 +163,23 @@ export const deleteCollection = async (collectionId) => {
 const sampleImage = "https://pbs.twimg.com/profile_images/1377854248621199360/F7S8p4xK_400x400.jpg";
 
 const mockItemByCollection = {
-    itemName: "Shiny Charmander",
-    itemDescription: "My first ever card!",
-    itemCreationDate: "2021-09-23T01:22:47.541Z",
-    coverImage: {
-        url: sampleImage,
-    },
-}
+  itemName: "Shiny Charmander",
+  itemDescription: "My first ever card!",
+  itemCreationDate: "2021-09-23T01:22:47.541Z",
+  coverImage: {
+    url: sampleImage,
+  },
+};
 
 // TODO: This offset and should be done from server?
 export const getItemsByCollectionId = async (collectionId, offset, limit) => {
-    // TODO: Replace with actual 
-    if (offset === 18) {
-        limit = 14;
-    }
-    return [...Array.from({length: limit}, (_, idx) => {
-        return {...mockItemByCollection, itemId: idx + offset, collectionId};
-    })]
-}
+  // TODO: Replace with actual
+  if (offset === 18) {
+    limit = 14;
+  }
+  return [
+    ...Array.from({ length: limit }, (_, idx) => {
+      return { ...mockItemByCollection, itemId: idx + offset, collectionId };
+    }),
+  ];
+};

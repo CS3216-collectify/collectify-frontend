@@ -15,12 +15,12 @@ const mockCategories = {
 
 export const getCategories = async () => {
   const response = await server
-    .get("/categories/all", {
+    .get("/categories/", {
       params: {},
     })
     .then((response) => {
       // handle success
-      console.log(response);
+       return response.data;
     })
     .catch((error) => {
       // handle error

@@ -6,12 +6,14 @@ import LogoutButton from "../../components/button/LogoutButton";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import TextInput from "../../components/text-input/TextInput";
 import { getCollections } from "../../services/collections";
+import { getCategories } from "../../services/categories";
 
 const Home = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    getCollections();
+    getCollections().then((res) => console.log(res));
+    // getCategories().then((res) => console.log(res));
   }, []);
 
   return (

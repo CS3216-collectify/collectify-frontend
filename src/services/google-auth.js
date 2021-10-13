@@ -26,12 +26,11 @@ export const googleLogin = async () => {
         idToken: idToken,
       });
 
-      const jwtDecoded = jwt_decode(response.data.access);
       server.defaults.headers["Authorization"] = "Bearer " + response.data.access;
-      localStorage.setItem("access_token", response.data.access);
-      localStorage.setItem("refresh_token", response.data.refresh);
-      localStorage.setItem("userId", jwtDecoded.user_id);
-      
+      localStorage.setItem("accessToken", response.data.access);
+      localStorage.setItem("refreshToken", response.data.refresh);
+      localStorage.setItem("userId", response.data.id);
+
       return;
     } catch (error) {
       throw error;

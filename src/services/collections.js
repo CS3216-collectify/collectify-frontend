@@ -38,12 +38,13 @@ const mockPostCollectionResponse = {
 // categoryId and userId are optional
 export const getCollections = async (categoryId, userId, offset, limit) => {
   const response = await server
-    .get("/collections", {
+    .get("/collections/", {
       params: { categoryId: categoryId, userId: userId, offset: offset, limit: limit },
     })
     .then((response) => {
       // handle success
       console.log(response);
+      return response.data;
     })
     .catch((error) => {
       // handle error
@@ -54,52 +55,55 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
-    const response = await server
-      .get("/collections" + collectionId, {
-        params: {   },
-      })
-      .then((response) => {
-        // handle success
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
+  const response = await server
+    .get("/collections" + collectionId, {
+      params: {},
+    })
+    .then((response) => {
+      // handle success
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
 
   return response;
 };
 
 export const postCollection = async (data) => {
-    const response = await server
-      .post("/collections", {
-        data,
-      })
-      .then((response) => {
-        // handle success
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
+  const response = await server
+    .post("/collections", {
+      data,
+    })
+    .then((response) => {
+      // handle success
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
 
   return response;
 };
 
 export const updateCollection = async (data, collectionId) => {
-    const response = await server
-      .put("/collections/" + collectionId, {
-        data,
-      })
-      .then((response) => {
-        // handle success
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
+  const response = await server
+    .put("/collections/" + collectionId, {
+      data,
+    })
+    .then((response) => {
+      // handle success
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
 
   return {};
 };
@@ -116,6 +120,8 @@ export const deleteCollection = async (collectionId) => {
   //     .then((response) => {
   //       // handle success
   //       console.log(response);
+  // return response.data;
+
   //     })
   //     .catch((error) => {
   //       // handle error
