@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import AddButton from "../../components/button/AddButton";
 import EditButton from "../../components/button/EditButton";
+import CategoryChip from "../../components/chip/CategoryChip";
 import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
@@ -17,6 +18,8 @@ const Collection = (props) => {
   const [ownerName, setOwnerName] = useState("TODO");
   const [ownerUsername, setOwnerUsername] = useState("todo");
   const [loading, setLoading] = useState(false);
+  const [categoryId, setCategoryId] = useState(null);
+  const [categoryName, setCategoryName] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -27,10 +30,14 @@ const Collection = (props) => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      setTitle(collectionData.collectionName);
-      setDescription(collectionData.collectionDescription);
+      const { collectionName, collectionDescription, categoryName, categoryId } = collectionData;
+      setTitle(collectionName);
+      setDescription(collectionDescription);
+      setCategoryName(categoryName);
+      setCategoryId(categoryId);
       // setOwnerName("TODO");
       // setOwnerUsername("todo");
+      // setCategoryId(collectionData.categoryId);
     } catch (e) {
       console.log(e);
     } finally {
@@ -59,6 +66,9 @@ const Collection = (props) => {
                 by @{ownerUsername} ({ownerName}){" "}
               </p>
             </IonCol>
+          </IonRow>
+          <IonRow className="ion-justify-content-start">
+            <IonCol>{categoryName && <CategoryChip name={categoryName} />}</IonCol>
           </IonRow>
           <IonRow className="top-margin-s">
             <IonCol>
