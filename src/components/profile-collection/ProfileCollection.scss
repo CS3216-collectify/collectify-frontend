@@ -1,4 +1,5 @@
 .profile-collection--container {
+  min-width: 300px;
   .profile-collection-title--container {
     display: flex;
     justify-content: space-between;
@@ -24,8 +25,8 @@
   .profile-collection--images {
     display: flex;
     flex-direction: row;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 
     .profile-collection--image {
       // width: 100%;
@@ -35,6 +36,13 @@
       object-fit: cover;
       margin-left: 4px;
       margin-right: 4px;
+    }
+    
+    .profile-collection-empty-images {
+      font-size: 12px;
+      text-align: center;
+      margin:auto;
+      color: #808080;
     }
   }
 
