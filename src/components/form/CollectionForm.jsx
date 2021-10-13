@@ -1,6 +1,6 @@
 import { IonCol, IonGrid, IonItem, IonList, IonRow } from "@ionic/react";
 import { useEffect, useState } from "react";
-import CategoryChip from "../../chip/CategoryChip";
+import CategoryChip from "../chip/CategoryChip";
 import { getCategories } from "../../services/categories";
 import SaveButton from "../button/SaveButton";
 import SelectButton from "../button/SelectButton";
