@@ -11,11 +11,6 @@ import { getCategories } from "../../services/categories";
 const Home = () => {
   const [name, setName] = useState("");
 
-  useEffect(() => {
-    getCollections().then((res) => console.log(res));
-    // getCategories().then((res) => console.log(res));
-  }, []);
-
   return (
     <IonPage>
       <HomeToolbar title="collectify" />
