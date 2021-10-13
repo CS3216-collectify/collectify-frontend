@@ -20,9 +20,10 @@ const CollectionForm = (props) => {
 
   useEffect(() => {
     if (props.collectionData) {
-      setCollectionName(props.collectionData.collectionName);
-      setCollectionDescription(props.collectionData.collectionDescription);
-      setCategory(props.collectionData.categoryId);
+      const { collectionName, collectionDescription, categoryId } = props.collectionData;
+      setCollectionName(collectionName);
+      setCollectionDescription(collectionDescription);
+      setCategory(categoryId);
     }
   }, [props.collectionData]);
 

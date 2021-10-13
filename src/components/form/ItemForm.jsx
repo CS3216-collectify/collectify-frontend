@@ -1,6 +1,6 @@
 import { IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import UploadButton from "../button/UploadButton";
@@ -14,10 +14,19 @@ const ItemForm = (props) => {
   const { itemData = getDefaultItemData(), onComplete: completeHandler } =
     props;
 
-  const [name, setName] = useState(itemData.itemName);
-  const [description, setDescription] = useState(itemData.itemDescription);
+  const [itemName, setItemName] = useState(itemData.itemName);
+  const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
   const [deletedImageIds, setDeletedImageIds] = useState([]);
+
+  useEffect(() => {
+    if (props.itemData) {
+      const { itemName, itemDescription, images } = props.itemData;
+      setItemName(itemName);
+      setItemDescription(itemDescription);
+      setImages(images);
+    }
+  }, [props.itemData]);
 
   const newImageHandler = (newFile) => {
     if (images.length > 3) {
@@ -54,8 +63,8 @@ const ItemForm = (props) => {
     // }
 
     const itemToSave = {
-      name,
-      description,
+      itemName,
+      itemDescription,
       images,
       // imageUpdates
       // other data
@@ -68,17 +77,17 @@ const ItemForm = (props) => {
       <IonItem>
         <TextInput
           label="Item Name"
-          value={name}
+          value={itemName}
           placeholder="Enter item name"
-          onChange={setName}
+          onChange={setItemName}
         />
       </IonItem>
       <IonItem>
         <TextArea
           label="Description"
-          value={description}
+          value={itemDescription}
           placeholder="Enter item description"
-          onChange={setDescription}
+          onChange={setItemDescription}
         />
       </IonItem>
       <IonItem>

@@ -157,8 +157,9 @@ const Profile = () => {
           </IonRow>
           <IonRow className=" ion-justify-content-center">
             <IonList className="profile-collection--list">
-              {collections.map((collection) => (
+              {collections.map((collection, idx) => (
                 <ProfileCollection
+                  key={idx}
                   collection={collection}
                   onClick={() =>
                     history.push(`/collections/${collection.collectionId}`)

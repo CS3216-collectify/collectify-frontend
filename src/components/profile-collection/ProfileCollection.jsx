@@ -22,7 +22,7 @@ const ProfileCollection = (props) => {
         {coverImages.map((imgUrl, idx) => (
           <IonImg className="profile-collection--image" src={imgUrl} key={idx} />
         ))}
-        {coverImages.length === 0 && <IonText className="profile-collection-empty-images">No images added for this collection.</IonText>}
+        {coverImages.length === 0 && <IonText className="profile-collection-empty-images">This collection is empty.</IonText>}
       </div>
       <div>
         <IonText className="profile-collection--desc">{collectionDescription}</IonText>
