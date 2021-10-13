@@ -10,21 +10,17 @@ const LogoutButton = () => {
   const setToast = useToastContext();
   const { setIsUserAuthenticated } = useUserContext();
 
-  return (
-    <IonButton
-      onClick={() => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("isGuest");
-        history.replace("/");
-        setToast({ message: "Logged out successfully.", color: "success" });
-        setIsUserAuthenticated(false);
-      }}
-    >
-      Log Out
-    </IonButton>
-  );
+  const logoutUser = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isGuest");
+    history.replace("/");
+    setToast({ message: "Logged out successfully.", color: "success" });
+    setIsUserAuthenticated(false);
+  };
+
+  return <IonButton onClick={() => logoutUser()}>Log Out</IonButton>;
 };
 
 export default LogoutButton;
