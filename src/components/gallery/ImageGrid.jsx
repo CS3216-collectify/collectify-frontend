@@ -5,10 +5,6 @@ import {
   IonInfiniteScrollContent,
   IonRow,
 } from "@ionic/react";
-import { image } from "ionicons/icons";
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { getItemsFromCollection } from "../../services/items";
 import FlexImage from "../image/FlexImage";
 import "./gallery.scss";
 
@@ -21,7 +17,7 @@ const groupElements = (arr, interval) => {
 };
 
 const ImageGrid = (props) => {
-  const { onScrollEnd: fetchNextPage, images, hasMore } = props;
+  const { onScrollEnd: fetchNextPage, images, scrollEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
 
@@ -39,7 +35,7 @@ const ImageGrid = (props) => {
           ))}
         </IonRow>
       ))}
-      <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
+      <IonInfiniteScroll disabled={scrollEnded} onIonInfinite={fetchNextPage}>
         <IonInfiniteScrollContent
           className="ion-margin-top"
           loadingText="Loading..."

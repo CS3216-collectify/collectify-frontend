@@ -3,7 +3,7 @@ import "./button.scss";
 
 const EditButton = ({ label, onClick: editHandler }) => {
   return (
-    <IonButton onClick={editHandler}>
+    <IonButton size="small" onClick={editHandler}>
       <IonLabel>Edit {label}</IonLabel>
     </IonButton>
   );

@@ -3,14 +3,6 @@ import { useHistory } from "react-router";
 import ImageGrid from "../gallery/ImageGrid";
 import { getItemsFromCollection } from "../../services/items";
 
-const groupElements = (arr, interval) => {
-  var groups = [];
-  for (var i = 0; i < arr.length; i += interval) {
-    groups.push(arr.slice(i, i + interval));
-  }
-  return groups;
-};
-
 const LIMIT = 18;
 
 const CollectionItems = (props) => {
@@ -66,7 +58,7 @@ const CollectionItems = (props) => {
     <ImageGrid 
       onScrollEnd={fetchNextPage}
       images={gridImages}
-      hasMore={hasMore}
+      scrollEnded={!hasMore}
     />
   );
 };
