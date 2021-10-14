@@ -29,6 +29,7 @@ export const googleLogin = async () => {
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
       localStorage.setItem("userId", response.data.id);
+      localStorage.removeItem("isGuest");
 
       return;
     } catch (error) {
