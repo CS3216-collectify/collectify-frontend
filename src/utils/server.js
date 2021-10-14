@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAccessToken, getRefreshToken, loginUser } from "./user";
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 const REACT_LOGIN_REL_URL = "";
@@ -8,7 +9,7 @@ const server = axios.create({
   baseURL: SERVER_BASE_URL,
   timeout: 5000,
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("accessToken"), // TODO: Test what happens when no token
+    Authorization: "Bearer " + localStorage.getItem("Authorization"),
   },
 });
 
@@ -26,7 +27,7 @@ server.interceptors.response.use(
     }
 
     if (error.response.status === 401 && error.response.statusText === "Unauthorized") {
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = getRefreshToken();
       console.log("def");
 
       if (refreshToken) {
@@ -40,11 +41,7 @@ server.interceptors.response.use(
           return server
             .post("/api/token/refresh/", { refresh: refreshToken })
             .then((response) => {
-              console.log(response)
-              localStorage.setItem("accessToken", response.data.access);
-              localStorage.setItem("refreshToken", response.data.refresh);
-
-              server.defaults.headers["Authorization"] = "Bearer " + response.data.access;
+              loginUser(response.data);
               originalRequest.headers["Authorization"] = "Bearer " + response.data.access;
 
               return server(originalRequest);
