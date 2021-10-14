@@ -89,8 +89,8 @@ export const postItem = async (collectionId, itemData) => {
   body.append("itemDescription", itemDescription);
 
   for (let i = 0; i < images.length; i++) {
-    const { url } = images[i];
-    const file = await loadImageFile(url, i);
+    const { imageUrl } = images[i];
+    const file = await loadImageFile(imageUrl, i);
     body.append("images", file);
   }
   console.log(itemData)
@@ -122,11 +122,11 @@ export const updateItem = async (collectionId, itemId, itemData) => {
   
 
   for (let i = 0; i < images.length; i++) {
-    const { url, isNew } = images[i];
+    const { imageUrl, isNew } = images[i];
     if (!isNew) {
       continue;
     }
-    const file = await loadImageFile(url, i);
+    const file = await loadImageFile(imageUrl, i);
     body.append("newImages", file);
   }
 

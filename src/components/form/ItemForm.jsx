@@ -35,7 +35,7 @@ const ItemForm = (props) => {
       return;
     }
     const newUrl = URL.createObjectURL(newFile);
-    const newFileData = { url: newUrl, position: images.length, isNew: true };
+    const newFileData = { imageUrl: newUrl, position: images.length, isNew: true };
     setImages([...images, newFileData]);
     console.log("Image upload not implemented yet");
     console.log("file:", newFile);
