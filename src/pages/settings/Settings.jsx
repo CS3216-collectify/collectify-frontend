@@ -9,6 +9,7 @@ import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
+import { getUserId } from "../../utils/user";
 // Pass user ID and load data\
 // some redirect if accessed by Guest
 const Settings = () => {
@@ -21,7 +22,7 @@ const Settings = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(localStorage.getItem("userId"));
+      setCurrentUserId(getUserId());
       history.replace("/home");
     } else {
       // error
