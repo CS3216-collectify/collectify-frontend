@@ -1,5 +1,4 @@
-import { IonCol, IonContent, IonGrid, IonIcon, IonRow, IonSlide, IonSlides } from "@ionic/react";
-import { useState } from "react";
+import { IonRow, IonSlide, IonSlides } from "@ionic/react";
 import FlexImage from "../image/FlexImage";
 import "./gallery.scss";
 
