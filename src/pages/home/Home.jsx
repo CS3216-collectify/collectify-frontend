@@ -7,9 +7,11 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import TextInput from "../../components/text-input/TextInput";
 import { getCollections } from "../../services/collections";
 import { getCategories } from "../../services/categories";
+import useUserContext from "../../hooks/useUserContext";
 
 const Home = () => {
   const [name, setName] = useState("");
+  const x = useUserContext();
 
   return (
     <IonPage>
@@ -18,7 +20,12 @@ const Home = () => {
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-        <IonGrid fixed></IonGrid>
+        <IonGrid
+          fixed
+          onClick={() => {
+            x.setIsUserAuthenticated(false);
+          }}
+        ></IonGrid>
         <LogoutButton />
 
         <IonItem>
