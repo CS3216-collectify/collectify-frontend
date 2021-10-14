@@ -3,7 +3,7 @@ import './image.scss';
 
 const FlexImage = (props) => {
   return (
-    <IonImg className="flex-image" src={props.src} />
+    <IonImg className="flex-image" {...props} />
   )
 }
 
