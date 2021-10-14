@@ -94,7 +94,7 @@ const Profile = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(localStorage.getItem("userId"));
+      setCurrentUserId(getUserId());
       history.replace("/home");
     } else {
       // error

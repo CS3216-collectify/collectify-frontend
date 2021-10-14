@@ -11,6 +11,7 @@ import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import server from "../../utils/server";
+import { getAccessToken, getIsGuest, getRefreshToken, getUserId, loginGuest } from "../../utils/user";
 
 const Login = () => {
   const history = useHistory();
@@ -18,7 +19,7 @@ const Login = () => {
   const { isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId} = useUserContext();
 
   useEffect(() => {
-    if (localStorage.getItem("accessToken") !== null || localStorage.getItem("refreshToken") !== null || localStorage.getItem("isGuest") !== null) {
+    if (getAccessToken() !== null || getRefreshToken() !== null || getIsGuest() !== null) {
       history.replace("/home");
     } else {
       history.replace("/");
@@ -30,7 +31,7 @@ const Login = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(localStorage.getItem("userId"));
+      setCurrentUserId(getUserId());
       history.replace("/home");
     } else {
       // error
@@ -39,8 +40,7 @@ const Login = () => {
   };
 
   const handleGuestLogin = async () => {
-    server.defaults.headers["Authorization"] = null;
-    localStorage.setItem("isGuest", true);
+    loginGuest();
     history.replace("/discover");
   };
 

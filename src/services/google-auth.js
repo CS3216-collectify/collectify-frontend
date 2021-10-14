@@ -2,6 +2,7 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import GoogleAuthStatus from "../enums/google-auth-status.enum";
 import server from "../utils/server";
+import { loginUser } from "../utils/user";
 
 export const googleLogin = async () => {
   // {
@@ -19,22 +20,11 @@ export const googleLogin = async () => {
   // }
 
   const requestAccessToken = async (idToken) => {
-    try {
-      server.defaults.headers["Authorization"] = null;
-      const response = await server.post("/api/token/obtain/social/", {
-        idToken: idToken,
-      });
-
-      server.defaults.headers["Authorization"] = "Bearer " + response.data.access;
-      localStorage.setItem("accessToken", response.data.access);
-      localStorage.setItem("refreshToken", response.data.refresh);
-      localStorage.setItem("userId", response.data.id);
-      localStorage.removeItem("isGuest");
-
-      return;
-    } catch (error) {
-      throw error;
-    }
+    server.defaults.headers["Authorization"] = null;
+    const response = await server.post("/api/token/obtain/social/", {
+      idToken: idToken,
+    });
+    loginUser(response.data);
   };
 
   return await GoogleAuth.signIn().then(
