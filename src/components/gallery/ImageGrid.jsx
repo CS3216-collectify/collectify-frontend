@@ -72,7 +72,7 @@ const ImageGrid = (props) => {
           {grp.map((item, idx) => (
             <IonCol key={idx} className="single-image-3" size={4}>
               <FlexImage
-                src={item.coverImage.url}
+                src={item.coverImage}
                 onClick={() =>
                   history.push(
                     `/collections/${collectionId}/items/${item.itemId}`

@@ -49,6 +49,7 @@ export const getItemsFromCollection = async (collectionId, offset, limit) => {
   const response = await server.get(`collections/${collectionId}/items/`, {
     params,
   });
+  console.log(response);
 
   // return mockItems;
   return response.data;
