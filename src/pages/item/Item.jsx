@@ -15,6 +15,7 @@ const Item = () => {
   const [ownerName, setOwnerName] = useState("itemOwner");
   const [description, setDescription] = useState("Test Description...");
   const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState([]);
 
   const fetchItemData = async () => {
     setLoading(true);
@@ -22,6 +23,7 @@ const Item = () => {
       const item = await getItemFromCollection(collectionId, itemId);
       setTitle(item.itemName);
       setDescription(item.description);
+      setImages(item.images);
       // setOwnerUsername(item.ownerUsername);
       // setOwnerName(item.ownerName);
     } catch (e) {
@@ -36,6 +38,8 @@ const Item = () => {
     fetchItemData();
   }, []);
 
+  const imageUrls = images.map((img) => img.imageUrl);
+
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} />
@@ -49,7 +53,7 @@ const Item = () => {
               </p>
             </IonCol>
           </IonRow>
-          <ImageCarousel />
+          <ImageCarousel imageUrls={imageUrls} />
           <IonRow>
             <IonCol size={9}>
               <p>{title}</p>
