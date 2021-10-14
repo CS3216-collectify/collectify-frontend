@@ -29,6 +29,7 @@ const ItemForm = (props) => {
   }, [props.itemData]);
 
   const newImageHandler = (newFile) => {
+    // TODO: VALIDATION - name and description annot be empty
     if (images.length > 3) {
       console.log("Cannot upload more than 4 photos");
       return;
@@ -66,6 +67,7 @@ const ItemForm = (props) => {
       itemName,
       itemDescription,
       images,
+      deletedImageIds
       // imageUpdates
       // other data
     };
