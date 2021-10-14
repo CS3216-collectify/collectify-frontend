@@ -1,5 +1,5 @@
 import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
 import EditButton from "../../components/button/EditButton";
 import ImageCarousel from "../../components/gallery/ImageCarousel";
@@ -16,10 +16,11 @@ const Item = () => {
   const [description, setDescription] = useState("Test Description...");
   const [loading, setLoading] = useState(false);
 
-  const fetchItemData = async () => {
+  const fetchItemData = useCallback(async () => {
     setLoading(true);
     try {
       const item = await getItemFromCollection(collectionId, itemId);
+      console.log(item)
       setTitle(item.itemName);
       setDescription(item.description);
       // setOwnerUsername(item.ownerUsername);
@@ -27,14 +28,15 @@ const Item = () => {
     } catch (e) {
       console.log(e);
     } finally {
+      console.log("YE boi")
       setLoading(false);
     }
-  };
+  }, [collectionId, itemId]);
 
   useEffect(() => {
     setLoading(true);
     fetchItemData();
-  }, []);
+  }, [fetchItemData]);
 
   return (
     <IonPage className="profile">
@@ -45,7 +47,7 @@ const Item = () => {
           <IonRow>
             <IonCol>
               <p>
-                @{ownerUsername} ({ownerName}){" "}
+                @{ownerUsername} ({ownerName})
               </p>
             </IonCol>
           </IonRow>

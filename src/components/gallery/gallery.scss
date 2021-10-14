@@ -1,22 +1,28 @@
-.image-grid{
+.image-grid {
   padding: 0px;
   margin: 0px;
+  margin-top: 16px;
+
+  ion-col {
+    padding: 0px;
+  }
 }
 
-.single-row-3{
+.single-row-3 {
   height: 33vw;
 }
 
-.single-image-3{
+.single-image-3 {
   width: 33vw;
-  padding:0px;
+  // height: 33vw;
+  padding: 0px;
 }
 
-.single-row-4{
+.single-row-4 {
   height: 24vw;
 }
 
-.single-image-4{
+.single-image-4 {
   width: 24vw;
   padding: 5px 0px;
   position: relative;

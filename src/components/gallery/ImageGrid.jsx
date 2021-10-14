@@ -1,12 +1,6 @@
-import {
-  IonCol,
-  IonGrid,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  IonRow,
-} from "@ionic/react";
+import { IonCol, IonGrid, IonInfiniteScroll, IonInfiniteScrollContent, IonRow } from "@ionic/react";
 import { image } from "ionicons/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
 import { getItemsFromCollection } from "../../services/items";
 import FlexImage from "../image/FlexImage";
@@ -29,22 +23,15 @@ const ImageGrid = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
 
-  const loadItems = async () => {
+  const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
     try {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getItemsFromCollection(
-        collectionId,
-        nextPage * LIMIT,
-        LIMIT
-      );
+      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
       console.log(retrievedItems);
-      if (
-        (retrievedItems && retrievedItems.length < LIMIT) ||
-        !retrievedItems
-      ) {
+      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }
       setItems([...items, ...retrievedItems]);
@@ -52,7 +39,7 @@ const ImageGrid = (props) => {
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [collectionId, hasMore, items, pages]);
 
   const fetchNextPage = () => {
     console.log("load next");
@@ -61,33 +48,24 @@ const ImageGrid = (props) => {
 
   useEffect(() => {
     loadItems();
-  }, []);
+  }, [loadItems]);
 
   const groupsOfThree = groupElements(items, 3);
 
   return (
-    <IonGrid className="image-grid">
+    <IonGrid fixed className="image-grid">
       {groupsOfThree.map((grp, idx) => (
-        <IonRow className="single-row-3" size={12} key={idx}>
+        <IonRow key={idx}>
           {grp.map((item, idx) => (
-            <IonCol key={idx} className="single-image-3" size={4}>
-              <FlexImage
-                src={item.coverImage.url}
-                onClick={() =>
-                  history.push(
-                    `/collections/${collectionId}/items/${item.itemId}`
-                  )
-                }
-              />
+            <IonCol key={idx}  size={4}>
+              {/* TODO: add default error one */}
+              <FlexImage src={item.coverImage} onClick={() => history.push(`/collections/${collectionId}/items/${item.itemId}`)} />
             </IonCol>
           ))}
         </IonRow>
       ))}
       <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
-        <IonInfiniteScrollContent
-          className="ion-margin-top"
-          loadingText="Loading..."
-        ></IonInfiniteScrollContent>
+        <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
       </IonInfiniteScroll>
     </IonGrid>
   );
