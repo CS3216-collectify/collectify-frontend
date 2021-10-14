@@ -1,6 +1,6 @@
 import { IonCol, IonGrid, IonItem, IonList, IonRow } from "@ionic/react";
 import { useEffect, useState } from "react";
-import CategoryChip from "../../chip/CategoryChip";
+import CategoryChip from "../chip/CategoryChip";
 import { getCategories } from "../../services/categories";
 import SaveButton from "../button/SaveButton";
 import SelectButton from "../button/SelectButton";
@@ -20,9 +20,10 @@ const CollectionForm = (props) => {
 
   useEffect(() => {
     if (props.collectionData) {
-      setCollectionName(props.collectionData.collectionName);
-      setCollectionDescription(props.collectionData.collectionDescription);
-      setCategory(props.collectionData.categoryId);
+      const { collectionName, collectionDescription, categoryId } = props.collectionData;
+      setCollectionName(collectionName);
+      setCollectionDescription(collectionDescription);
+      setCategory(categoryId);
     }
   }, [props.collectionData]);
 

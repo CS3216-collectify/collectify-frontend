@@ -1,23 +1,32 @@
-import { IonCol, IonContent, IonGrid, IonIcon, IonRow, IonSlide, IonSlides } from "@ionic/react";
-import { useState } from "react";
+import { IonRow, IonSlide, IonSlides } from "@ionic/react";
 import FlexImage from "../image/FlexImage";
 import "./gallery.scss";
-const sampleImage = "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
-const images = [sampleImage, sampleImage, sampleImage, sampleImage];
+
+// const sampleImage = "https://i1.wp.com/jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png?ssl=1";
+// const imageUrls = [sampleImage, sampleImage, sampleImage, sampleImage];
+
+const SCREEN_WIDTH = Math.max(
+  document.documentElement.clientWidth || 0,
+  window.innerWidth || 0
+);
+
+const slideOpts = {
+  initialSlide: 1,
+  width: SCREEN_WIDTH,
+  height: SCREEN_WIDTH,
+}
 
 const ImageCarousel = (props) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { imageUrls = [] } = props;
 
-  const getActiveIndex = async (e) => {
-    await e.target.getActiveIndex().then(v => setActiveIndex(v));
-  }
+  // console.log(imageUrls);
 
   return (
     <IonSlides 
       pager={true} 
-      onIonSlideDidChange={getActiveIndex}
+      options={slideOpts} 
     >
-      {images.map((imgUrl, idx) => (
+      {imageUrls.map((imgUrl, idx) => (
         <IonSlide key={idx}>
           <IonRow className="padding-bottom">
             <FlexImage src={imgUrl} />
