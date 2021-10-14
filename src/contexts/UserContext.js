@@ -10,5 +10,9 @@ export const UserContextProvider = ({ children }) => {
     localStorage.getItem("accessToken") !== null && localStorage.getItem("refreshToken") !== null && localStorage.getItem("userId") !== null
   );
 
-  return <UserContext.Provider value={{ isUserAuthenticated, setIsUserAuthenticated }}>{children}</UserContext.Provider>;
+  const [currentUserId, setCurrentUserId] = useState(localStorage.getItem("userId"));
+
+  return (
+    <UserContext.Provider value={{ isUserAuthenticated, setIsUserAuthenticated, currentUserId, setCurrentUserId }}>{children}</UserContext.Provider>
+  );
 };

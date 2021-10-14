@@ -1,8 +1,9 @@
-import { IonImg, IonText, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
+import { IonCol, IonText, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
 import { useHistory } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
 import "./ProfileCollection.scss";
+import FlexImage from "../image/FlexImage";
 
 const ProfileCollection = (props) => {
   const { collection } = props;
@@ -20,7 +21,10 @@ const ProfileCollection = (props) => {
       </div>
       <div className="profile-collection--images">
         {coverImages.map((imgUrl, idx) => (
-          <IonImg className="profile-collection--image" src={imgUrl} key={idx} />
+          <IonCol key={idx} size={4}>
+            {/* TODO: add default error one */}
+            <FlexImage src={imgUrl} />
+          </IonCol>
         ))}
         {coverImages.length === 0 && <IonText className="profile-collection-empty-images">This collection is empty.</IonText>}
       </div>

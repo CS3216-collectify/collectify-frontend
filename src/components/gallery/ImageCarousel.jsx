@@ -12,8 +12,8 @@ const SCREEN_WIDTH = Math.max(
 
 const slideOpts = {
   initialSlide: 1,
-  width: SCREEN_WIDTH,
-  height: SCREEN_WIDTH,
+  // width: SCREEN_WIDTH,
+  // height: SCREEN_WIDTH,
 }
 
 const ImageCarousel = (props) => {
@@ -25,6 +25,7 @@ const ImageCarousel = (props) => {
     <IonSlides 
       pager={true} 
       options={slideOpts} 
+      className="image-carousel"
     >
       {imageUrls.map((imgUrl, idx) => (
         <IonSlide key={idx}>

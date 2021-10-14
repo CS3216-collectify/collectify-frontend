@@ -14,7 +14,8 @@ const AddItem = () => {
     setLoading(true);
     try {
       const itemId = await postItem(collectionId, item);
-      history.push(`/collections/${collectionId}/items/${itemId}`);
+      setLoading(false);
+      history.replace(`/collections/${collectionId}/items/${itemId}`);
     } catch (e) {
       console.log(e);
     } finally {
@@ -24,7 +25,7 @@ const AddItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} />
+      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Add Item" />
       <IonContent>
         <ItemForm onComplete={addCompleteHandler} />

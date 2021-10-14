@@ -38,6 +38,7 @@ import AddCollection from "./pages/add-collection/AddCollection";
 import EditCollection from "./pages/edit-collection/EditCollection";
 import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
+import Discover from "./pages/discover/Discover";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -57,17 +58,19 @@ const App = () => {
             </Route>
             <IonTabs>
               <IonRouterOutlet>
+                {/* TODO: add redirects for guests */}
                 <Route exact path="/home" component={Home} />
-                <Route exact path="/profile/:username" component={Profile} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/:username" component={Profile} />
                 <Route exact path="/profile/edit" component={EditProfile} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/collections/:collectionId" component={Collection} />
                 <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
                 <Route exact path="/collections/add" component={AddCollection} />
+                <Route exact path="/collections/:collectionId/items/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
                 <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
-                <Route exact path="/collections/:collectionId/items/add" component={AddItem} />
+                <Route exact path="/discover" component={Discover} />
 
                 {/* Test Route, DELETE */}
                 <Route exact path="/test/:collectionId/:itemId" component={AddCollection} />
@@ -80,11 +83,11 @@ const App = () => {
                     <IonText>Home</IonText>
                   </IonTabButton>
                 )}
-                <IonTabButton tab="b" href="/home">
+                <IonTabButton tab="b" href="/discover">
                   <IonIcon icon={searchOutline} />
                   <IonText>Discover</IonText>
                 </IonTabButton>
-                {isUserAuthenticated && (
+                {/* {isUserAuthenticated && (
                   <IonTabButton tab="c" href="/home">
                     <IonIcon icon={addCircleOutline} />
                     <IonText>Add</IonText>
@@ -95,7 +98,7 @@ const App = () => {
                     <IonIcon icon={chatbubblesOutline} />
                     <IonText>Chats</IonText>
                   </IonTabButton>
-                )}
+                )} */}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>

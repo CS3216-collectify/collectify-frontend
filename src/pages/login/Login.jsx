@@ -15,7 +15,7 @@ import server from "../../utils/server";
 const Login = () => {
   const history = useHistory();
   const setToast = useToastContext();
-  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId} = useUserContext();
 
   useEffect(() => {
     if (localStorage.getItem("accessToken") !== null || localStorage.getItem("refreshToken") !== null || localStorage.getItem("isGuest") !== null) {
@@ -30,6 +30,7 @@ const Login = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
+      setCurrentUserId(localStorage.getItem("userId"));
       history.replace("/home");
     } else {
       // error
@@ -40,7 +41,7 @@ const Login = () => {
   const handleGuestLogin = async () => {
     server.defaults.headers["Authorization"] = null;
     localStorage.setItem("isGuest", true);
-    history.replace("/home");
+    history.replace("/discover");
   };
 
   return (

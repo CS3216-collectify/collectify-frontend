@@ -9,13 +9,14 @@ import { logoutUser } from "../../utils/user";
 const LogoutButton = () => {
   const history = useHistory();
   const setToast = useToastContext();
-  const { setIsUserAuthenticated } = useUserContext();
+  const { setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
   const logoutHandler = () => {
     logoutUser();
     history.replace("/");
     setToast({ message: "Logged out successfully.", color: "success" });
     setIsUserAuthenticated(false);
+    setCurrentUserId(null);
   };
 
   return <IonButton onClick={() => logoutHandler()}>Log Out</IonButton>;

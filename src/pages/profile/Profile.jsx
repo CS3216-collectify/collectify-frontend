@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent } from "@ionic/react";
 
 import "./Profile.scss";
+import useUserContext from "../../hooks/useUserContext";
+import useToastContext from "../../hooks/useToastContext";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
@@ -13,28 +15,45 @@ import AddButton from "../../components/button/AddButton";
 import { getUserId } from "../../utils/user";
 import { getCollections } from "../../services/collections";
 import { getUserByUserId } from "../../services/users";
+import GoogleLoginButton from "../../components/button/GoogleLoginButton";
+import GoogleAuthStatus from "../../enums/google-auth-status.enum";
+
 const LIMIT = 10;
 
 const Profile = () => {
   const history = useHistory();
+  const setToast = useToastContext();
+  const { currentUserId, isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
   let userId = getUserId();
 
-  // to keep track of which buttons to show, will need to be updated when unfollow/follow is pressed
-  let isMyAccount = true;
-  let hasFollowed = true;
-
+  // TODO : add profile description and pass to EditProfile
+  const [profileUserId, setProfileUserId] = useState(null);
+  const [profileFirstName, setProfileFirstName] = useState("");
+  const [profileLastName, setProfileLastName] = useState("");
+  const [profileUsername, setProfileUsername] = useState("");
+  const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [collections, setCollections] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
 
-  const getUserInformation = () => {
-    getUserByUserId(1);
-  };
+  // TODO: add api call for username
+  const getUserInformation = useCallback(() => {
+    getUserByUserId(currentUserId)
+      .then((res) => {
+        setProfileUserId(Number(res.userId));
+        setProfileFirstName(res.firstName);
+        setProfileLastName(res.lastName);
+        setProfileUsername(res.username);
+        setProfileProfilePicture(res.pictureUrl);
+      })
+      .catch((e) => console.log(e));
+  }, [currentUserId]);
 
+  // should check whether its guest clicking profile tab, or user clicking their own tab, or user viewing others' profile
   const loadUserCollections = useCallback(async () => {
     const nextPage = pages + 1;
     try {
@@ -54,97 +73,129 @@ const Profile = () => {
   }, [collections, hasMore, pages, userId]);
 
   useEffect(() => {
-    getUserInformation();
-    loadUserCollections();
-  }, [loadUserCollections]);
+    if (!username && currentUserId) {
+      getUserInformation();
+    }
+  }, [currentUserId, getUserInformation, username]);
+
+  useEffect(() => {
+    if (!username && currentUserId) {
+      loadUserCollections();
+    }
+  }, [currentUserId, loadUserCollections, username]);
 
   const fetchNextPage = () => {
     console.log("load next");
     loadUserCollections();
   };
+
+  const handleGoogleLogin = async (googleAuthStatus) => {
+    if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_SUCCESS) {
+      // success
+      setToast({ message: "Google authentication successful!", color: "success" });
+      setIsUserAuthenticated(true);
+      setCurrentUserId(localStorage.getItem("userId"));
+      history.replace("/home");
+    } else {
+      // error
+      setToast({ message: "Google authentication failed. Please try again.", color: "danger" });
+    }
+  };
+
   return (
     <IonPage className="profile">
-      <ProfileToolbar username={"my username"} />
+      <ProfileToolbar username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         {/* --ion-grid-width to modify the fixed width */}
-        <IonGrid fixed className="profile--grid">
-          <IonRow>
-            <IonCol size="auto">
-              {/* <Logo className="profile--img"/> */}
-              <IonImg
-                className="profile--img"
-                src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-              />
-            </IonCol>
 
-            <IonCol>
-              <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
-                <div className="profile-statistics ion-text-center">
-                  <IonText>
-                    <b>{"3"}</b>
-                  </IonText>
-                  <br />
-                  <IonText>COLLECTIONS</IonText>
-                </div>
-                <div className="profile-statistics ion-text-center">
-                  <IonText>
-                    <b>{"15"}</b>
-                  </IonText>
-                  <br />
-                  <IonText>ITEMS</IonText>
-                </div>
-                <div className="profile-statistics ion-text-center">
-                  <IonText>
-                    <b>{"45"}</b>
-                  </IonText>
-                  <br />
-                  <IonText>LIKES</IonText>
-                </div>
-                {/* <div>
-                  <IonButton>
-                    <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
-                  </IonButton>
-                </div> */}
-              </IonRow>
+        {username ? (
+          <>Show other people's profile</>
+        ) : currentUserId ? (
+          <IonGrid fixed className="profile--grid">
+            <IonRow>
+              <IonCol size="auto">
+                {/* <Logo className="profile--img"/> */}
+                <IonImg className="profile--img" src={profileProfilePicture} />
+              </IonCol>
 
-              <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
-                {isMyAccount ? (
-                  <EditProfileButton onClick={() => history.push("/profile/edit")} />
-                ) : hasFollowed ? (
-                  <UnfollowButton />
-                ) : (
-                  <FollowButton />
-                )}
-              </IonRow>
-            </IonCol>
-          </IonRow>
+              <IonCol>
+                <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
+                  <div className="profile-statistics ion-text-center">
+                    <IonText>
+                      <b>{"3"}</b>
+                    </IonText>
+                    <br />
+                    <IonText>COLLECTIONS</IonText>
+                  </div>
+                  <div className="profile-statistics ion-text-center">
+                    <IonText>
+                      <b>{"15"}</b>
+                    </IonText>
+                    <br />
+                    <IonText>ITEMS</IonText>
+                  </div>
+                  <div className="profile-statistics ion-text-center">
+                    <IonText>
+                      <b>{"45"}</b>
+                    </IonText>
+                    <br />
+                    <IonText>LIKES</IonText>
+                  </div>
+                </IonRow>
 
-          <IonRow className="profile-details--container">
-            <div>
-              <b>John Doe</b>
-            </div>
-            <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
-              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
-            </div>
-          </IonRow>
-          <IonRow className="ion-justify-content-end">
-            {/* Direct to AddCollection page */}
-            <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
-          </IonRow>
-          <IonRow className=" ion-justify-content-center">
-            <IonList className="profile-collection--list">
-              {collections.map((collection, index) => (
-                <ProfileCollection collection={collection} key={index} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
-              ))}
-              <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
-                <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..." />
-              </IonInfiniteScroll>
-            </IonList>
-          </IonRow>
-        </IonGrid>
+                <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                  {Number(currentUserId) === profileUserId ? (
+                    <EditProfileButton
+                      onClick={() =>
+                        history.push({
+                          pathname: "/profile/edit",
+                          state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName },
+                        })
+                      }
+                    />
+                  ) : true ? (
+                    <UnfollowButton />
+                  ) : (
+                    <FollowButton />
+                  )}
+                </IonRow>
+              </IonCol>
+            </IonRow>
+
+            <IonRow className="profile-details--container">
+              <div>
+                <b>{profileFirstName + " " + profileLastName}</b>
+              </div>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
+                vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
+              </div>
+            </IonRow>
+            <IonRow className="ion-justify-content-end">
+              {/* Direct to AddCollection page */}
+              <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
+            </IonRow>
+            <IonRow className=" ion-justify-content-center">
+              <IonList className="profile-collection--list">
+                {collections.map((collection, index) => (
+                  <ProfileCollection collection={collection} key={index} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
+                ))}
+                <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
+                  <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..." />
+                </IonInfiniteScroll>
+              </IonList>
+            </IonRow>
+          </IonGrid>
+        ) : (
+          <IonGrid fixed>
+            <IonRow className="ion-justify-content-center ion-margin-top">
+              <IonText><h1>Log in to collectify to begin showcasing your collectables to the world!</h1></IonText>
+              <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
+            </IonRow>
+          </IonGrid>
+        )}
       </IonContent>
     </IonPage>
   );
