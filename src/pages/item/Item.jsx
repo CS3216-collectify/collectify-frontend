@@ -5,13 +5,16 @@ import EditButton from "../../components/button/EditButton";
 import ImageCarousel from "../../components/gallery/ImageCarousel";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getItemFromCollection } from "../../services/items";
+import useUserContext from "../../hooks/useUserContext";
 
 const Item = () => {
   const history = useHistory();
   const { collectionId, itemId } = useParams();
+  const { currentUserId } = useUserContext();
 
   const [title, setTitle] = useState("Test Title");
   const [ownerUsername, setOwnerUsername] = useState("itemOwner");
+  const [ownerId, setOwnerId] = useState(null);
   const [ownerName, setOwnerName] = useState("itemOwner");
   const [description, setDescription] = useState("Test Description...");
   const [loading, setLoading] = useState(false);
@@ -21,16 +24,17 @@ const Item = () => {
     setLoading(true);
     try {
       const item = await getItemFromCollection(collectionId, itemId);
-      console.log(item)
+      console.log(item);
       setTitle(item.itemName);
       setDescription(item.description);
       setImages(item.images);
+      setOwnerId(item.ownerId);
       // setOwnerUsername(item.ownerUsername);
       // setOwnerName(item.ownerName);
     } catch (e) {
       console.log(e);
     } finally {
-      console.log("YE boi")
+      console.log("YE boi");
       setLoading(false);
     }
   }, [collectionId, itemId]);
@@ -44,7 +48,7 @@ const Item = () => {
 
   return (
     <IonPage className="profile">
-      <IonLoading isOpen={loading} spinner="crescent"/>
+      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`${ownerName}'s Item`} />
       <IonContent>
         <IonGrid fixed>
@@ -69,9 +73,11 @@ const Item = () => {
               <p>{description}</p>
             </IonCol>
           </IonRow>
-          <IonRow className="ion-justify-content-end">
-            <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
-          </IonRow>
+          {Number(currentUserId) === Number(ownerId) && (
+            <IonRow className="ion-justify-content-end">
+              <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
+            </IonRow>
+          )}
         </IonGrid>
       </IonContent>
     </IonPage>
