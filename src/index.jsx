@@ -5,9 +5,16 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
+import { ToastContextProvider } from "./contexts/ToastContext";
+import { UserContextProvider } from "./contexts/UserContext";
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserContextProvider>
+      <ToastContextProvider>
+        <App />
+      </ToastContextProvider>
+    </UserContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

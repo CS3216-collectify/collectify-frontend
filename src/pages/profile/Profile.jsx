@@ -1,18 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonImg,
-  IonText,
-  IonList,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-} from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent } from "@ionic/react";
 
 import "./Profile.scss";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
@@ -23,7 +12,7 @@ import ProfileCollection from "../../components/profile-collection/ProfileCollec
 import AddButton from "../../components/button/AddButton";
 import { getUserId } from "../../utils/user";
 import { getCollections } from "../../services/collections";
-
+import { getUserByUserId } from "../../services/users";
 const LIMIT = 10;
 
 const Profile = () => {
@@ -42,23 +31,19 @@ const Profile = () => {
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
 
-  const loadUserCollections = async () => {
+  const getUserInformation = () => {
+    getUserByUserId(1);
+  };
+
+  const loadUserCollections = useCallback(async () => {
     const nextPage = pages + 1;
     try {
       if (!hasMore) {
         return;
       }
-      const retrievedCollections = await getCollections(
-        null,
-        userId,
-        nextPage * LIMIT,
-        LIMIT
-      );
-      console.log(retrievedCollections);
-      if (
-        (retrievedCollections && retrievedCollections.length < LIMIT) ||
-        !retrievedCollections
-      ) {
+      const retrievedCollections = await getCollections(null, userId, nextPage * LIMIT, LIMIT);
+
+      if ((retrievedCollections && retrievedCollections.length < LIMIT) || !retrievedCollections) {
         setHasMore(false);
       }
       setCollections([...collections, ...retrievedCollections]);
@@ -66,16 +51,17 @@ const Profile = () => {
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [collections, hasMore, pages, userId]);
 
   useEffect(() => {
+    getUserInformation();
     loadUserCollections();
-  }, []);
+  }, [loadUserCollections]);
 
   const fetchNextPage = () => {
     console.log("load next");
     loadUserCollections();
-  }
+  };
   return (
     <IonPage className="profile">
       <ProfileToolbar username={"my username"} />
@@ -125,9 +111,7 @@ const Profile = () => {
 
               <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
                 {isMyAccount ? (
-                  <EditProfileButton
-                    onClick={() => history.push("/profile/edit")}
-                  />
+                  <EditProfileButton onClick={() => history.push("/profile/edit")} />
                 ) : hasFollowed ? (
                   <UnfollowButton />
                 ) : (
@@ -142,46 +126,25 @@ const Profile = () => {
               <b>John Doe</b>
             </div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
-              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum,
-              mi ante dapibus libero, at ultrices lectus urna eu nisl.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
+              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
             </div>
           </IonRow>
           <IonRow className="ion-justify-content-end">
             {/* Direct to AddCollection page */}
-            <AddButton
-              label="Collection"
-              onClick={() => history.push("/collections/add")}
-            />
+            <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
           </IonRow>
           <IonRow className=" ion-justify-content-center">
             <IonList className="profile-collection--list">
-              {collections.map((collection, idx) => (
-                <ProfileCollection
-                  key={idx}
-                  collection={collection}
-                  onClick={() =>
-                    history.push(`/collections/${collection.collectionId}`)
-                  }
-                />
+              {collections.map((collection, index) => (
+                <ProfileCollection collection={collection} key={index} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
               ))}
               <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
-                <IonInfiniteScrollContent
-                  className="ion-margin-top"
-                  loadingText="Loading..."
-                />
+                <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..." />
               </IonInfiniteScroll>
             </IonList>
           </IonRow>
         </IonGrid>
-        {/* TODO: Check the following */}
-        {/* <Toast
-          showToast={showToast}
-          setShowToast={setShowToast}
-          toastMessage={toastMessage}
-          color={toastColor}
-        /> */}
       </IonContent>
     </IonPage>
   );

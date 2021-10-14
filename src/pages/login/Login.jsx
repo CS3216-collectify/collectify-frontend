@@ -5,6 +5,7 @@ import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
 
 import "./Login.scss";
 import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
 import GuestLoginButton from "../../components/button/GuestLoginButton";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
@@ -14,6 +15,7 @@ import server from "../../utils/server";
 const Login = () => {
   const history = useHistory();
   const setToast = useToastContext();
+  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
 
   useEffect(() => {
     if (localStorage.getItem("accessToken") !== null || localStorage.getItem("refreshToken") !== null || localStorage.getItem("isGuest") !== null) {
@@ -27,6 +29,7 @@ const Login = () => {
     if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_SUCCESS) {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
+      setIsUserAuthenticated(true);
       history.replace("/home");
     } else {
       // error
