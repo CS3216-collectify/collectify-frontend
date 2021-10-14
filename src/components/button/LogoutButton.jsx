@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./button.scss";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { logoutUser } from "../../services/users";
+import { logoutUser } from "../../utils/user";
 
 const LogoutButton = () => {
   const history = useHistory();
