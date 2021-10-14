@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-items: center;
+
   .ion-spinner-container {
     flex: 1;
     height: 100%;
@@ -9,7 +10,8 @@
     position: absolute;
     align-items: center;
     justify-items: center;
-    background-color: white;      padding: 24px;
+    background-color: white;
+    padding: 40%;
 
     ion-spinner {
       height: 100%;
