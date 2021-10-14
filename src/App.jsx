@@ -62,8 +62,8 @@ const App = () => {
                 <Switch>
                   <Route exact path="/home" component={Home} />
                   <Route exact path="/profile/:username" component={Profile} />
-                  <Route exact path="/profile" component={Profile} />
                   <Route exact path="/profile/edit" component={EditProfile} />
+                  <Route exact path="/profile" component={Profile} />
                   <Route exact path="/settings" component={Settings} />
                   <Route exact path="/collections/:collectionId" component={Collection} />
                   <Route exact path="/collections/:collectionId/edit" component={EditCollection} />

@@ -24,6 +24,7 @@ const EditProfile = () => {
     history.goBack();
   };
 
+  console.log("ASDASD")
   return (
     <IonPage>
       <HomeToolbar title="Edit Profile" />

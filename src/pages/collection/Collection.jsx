@@ -1,6 +1,7 @@
-import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonText, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
+import { peopleOutline } from "ionicons/icons";
 
 import useUserContext from "../../hooks/useUserContext";
 import AddButton from "../../components/button/AddButton";
@@ -46,35 +47,44 @@ const Collection = (props) => {
   }, [loadCollectionData]);
 
   return (
-    <IonPage>
-      <IonLoading isOpen={loading} />
+    <IonPage className="collection">
+      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Collection`} />
       <IonContent>
         <IonGrid fixed>
           <IonRow>
-            <IonCol size={8}>
-              <p>{title}</p>
-            </IonCol>
-            <IonCol size={4}>
-              <p>20 followers</p>
-            </IonCol>
+            <IonText className="collection-owner">
+              <b>
+                @{ownerUsername} ({ownerName})
+              </b>
+            </IonText>
           </IonRow>
-          <IonRow className="top-margin-s">
+
+          <IonRow>
+            <div className="collection-title--container">
+              <IonText className="collection--title">
+                <b>
+                  <b>{title}</b>
+                </b>
+              </IonText>
+
+              <div className="collection-followers--container">
+                <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
+                20 followers
+              </div>
+            </div>
+          </IonRow>
+
+          <IonRow>
             <IonCol>
-              <p>
-                by @{ownerUsername} ({ownerName}){" "}
-              </p>
+              <IonText>{description}</IonText>
             </IonCol>
           </IonRow>
-          <IonRow className="top-margin-s">
-            <IonCol>
-              <p>{description}</p>
-            </IonCol>
-          </IonRow>
+          {/* TODO: add follow button */}
           {Number(currentUserId) === Number(ownerUserId) && (
             <IonRow className="ion-justify-content-end">
-              <AddButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
-              <EditButton label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
+              <IonCol><AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} /></IonCol>
+              <IonCol><EditButton className="collection--button" label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} /></IonCol>
             </IonRow>
           )}
           <ImageGrid collectionId={collectionId} />

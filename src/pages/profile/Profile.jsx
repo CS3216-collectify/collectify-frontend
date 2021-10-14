@@ -36,7 +36,6 @@ const Profile = () => {
   const getUserInformation = useCallback(() => {
     getUserByUserId(currentUserId)
       .then((res) => {
-        console.log(res);
         setProfileUserId(Number(res.userId));
         setProfileFullName(res.firstName + " " + res.lastName);
         setProfileUsername(res.username);

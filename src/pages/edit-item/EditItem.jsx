@@ -46,7 +46,7 @@ const EditItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} />
+      <IonLoading isOpen={loading} spinner="crescent"/>
       <HomeToolbar title="Edit Item" />
       <IonContent>
         <ItemForm onComplete={editCompleteHandler} itemData={item} />

@@ -24,7 +24,7 @@ const AddItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} />
+      <IonLoading isOpen={loading} spinner="crescent"/>
       <HomeToolbar title="Add Item" />
       <IonContent>
         <ItemForm onComplete={addCompleteHandler} />

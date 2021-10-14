@@ -1,4 +1,24 @@
 .flex-image {
-  aspect-ratio: 1;
-  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  .ion-spinner-container {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    align-items: center;
+    justify-items: center;
+    background-color: white;      padding: 24px;
+
+    ion-spinner {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  ion-img {
+    flex: 1;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
 }

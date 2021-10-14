@@ -1,9 +1,9 @@
 import { IonButton, IonLabel } from "@ionic/react";
 import "./button.scss";
 
-const EditButton = ({ label, onClick: editHandler }) => {
+const EditButton = ({ label, className, onClick: editHandler }) => {
   return (
-    <IonButton size="small" onClick={editHandler}>
+    <IonButton size="small" onClick={editHandler} className={className} fill="outline">
       <IonLabel>Edit {label}</IonLabel>
     </IonButton>
   );

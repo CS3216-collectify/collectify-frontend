@@ -51,7 +51,7 @@ const EditCollection = (props) => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} />
+      <IonLoading isOpen={loading} spinner="crescent"/>
 
       <HomeToolbar title="Edit Collection" />
       <IonContent>

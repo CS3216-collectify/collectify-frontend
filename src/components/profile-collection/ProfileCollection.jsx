@@ -9,7 +9,7 @@ const ProfileCollection = (props) => {
   const { collection } = props;
   const { collectionId, collectionName, collectionDescription, categoryName, coverImages } = collection;
   const history = useHistory();
-  console.log(collection);
+
   return (
     <IonList className="profile-collection--container ion-margin-vertical" onClick={() => history.push("/collections/" + collectionId)}>
       <div className="profile-collection-title--container">

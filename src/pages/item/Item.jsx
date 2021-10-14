@@ -40,7 +40,7 @@ const Item = () => {
 
   return (
     <IonPage className="profile">
-      <IonLoading isOpen={loading} />
+      <IonLoading isOpen={loading} spinner="crescent"/>
       <HomeToolbar title={`${ownerName}'s Item`} />
       <IonContent>
         <IonGrid fixed>
