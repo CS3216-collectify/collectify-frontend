@@ -36,6 +36,7 @@ const EditProfile = () => {
       setProfilePicture(location.state.profileProfilePicture);
     }
   }, [location]);
+
   return (
     <IonPage>
       <HomeToolbar title="Edit Profile" />

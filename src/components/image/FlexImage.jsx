@@ -10,7 +10,7 @@ const FlexImage = (props) => {
   return (
     <div className="flex-image">
       <div className={`ion-spinner-container ${loading ? "" : "ion-hide"}`}><IonSpinner name="crescent"/></div>
-      <IonImg src={props.src === null ? NoImageAdded : props.src} onIonImgDidLoad={() => setLoading(false)} onIonError />
+      <IonImg {...props} src={props.src === null ? NoImageAdded : props.src} onIonImgDidLoad={() => setLoading(false)} onIonError />
     </div>
   );
 };

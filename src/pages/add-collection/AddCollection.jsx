@@ -18,6 +18,7 @@ const AddCollection = () => {
       history.replace(`/collections/${collectionId}`);
     } catch (e) {
       console.log(e);
+    } finally {
       setLoading(false);
     }
   };

@@ -49,6 +49,7 @@ export const getItemsFromCollection = async (collectionId, offset, limit) => {
   const response = await server.get(`collections/${collectionId}/items/`, {
     params,
   });
+  console.log(response);
 
   // return mockItems;
   return response.data;
@@ -81,21 +82,21 @@ const loadImageFile = async (url, idx) => {
 export const postItem = async (collectionId, itemData) => {
   console.log("Post Item for collectionId", collectionId);
   // images = { url: ____, position: ____ }
-  const { name, description, images } = itemData;
+  const { itemName, itemDescription, images } = itemData;
 
   const body = new FormData();
-  body.append("itemName", name);
-  body.append("itemDescription", description);
+  body.append("itemName", itemName);
+  body.append("itemDescription", itemDescription);
 
   for (let i = 0; i < images.length; i++) {
-    const { url } = images[i];
-    const file = await loadImageFile(url, i);
+    const { imageUrl } = images[i];
+    const file = await loadImageFile(imageUrl, i);
     body.append("images", file);
   }
   console.log(itemData)
  
   console.log(...body)
-    const response = await server.post(`collections/${collectionId}/items/`, body);
+  const response = await server.post(`collections/${collectionId}/items/`, body);
   console.log(response);
 
   // return mockPostItemResponse;
@@ -112,33 +113,29 @@ export const updateItem = async (collectionId, itemId, itemData) => {
     "and itemId",
     itemId
   );
-  //   const data = {
-  //     itemName: "A keyboard",
-  //     itemDescription: "My keyboard",
-  //     images: [
-  //       {
-  //         imageId: 2,
-  //         url: "https://static.wikia.nocookie.net/pokemon/images/4/49/Ash_Pikachu.png/revision/latest?cb=20200405125039",
-  //         imageUploadDate: "2021-09-23T01:22:47.541Z",
-  //       },
-  //     ],
-  //   };
+  console.log(itemData);
 
-  //   const response = await server
-  //     .post("/collections/" + collectionId + "/items/" + itemId, {
-  //       data,
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       console.log(response);
-  // return response.data;
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     });
+  const body = new FormData();
+  const { itemName, itemDescription, images, deletedImageIds } = itemData;
+  body.append("itemName", itemName);
+  body.append("itemDescription", itemDescription);
+  
 
-  // return { ...itemData };
+  for (let i = 0; i < images.length; i++) {
+    const { imageUrl, isNew } = images[i];
+    if (!isNew) {
+      continue;
+    }
+    const file = await loadImageFile(imageUrl, i);
+    body.append("newImages", file);
+  }
+
+  for (let id of deletedImageIds) {
+    body.append("deletedImageIds", id);
+  }
+
+  console.log(...body);
+  await server.patch(`collections/${collectionId}/items/${itemId}/`, body);
 };
 
 export const deleteItem = async (collectionId, itemId) => {

@@ -40,6 +40,7 @@ const EditItem = () => {
       history.push(`/collections/${collectionId}/items/${itemId}`);
     } catch (e) {
       console.log(e);
+    } finally {
       setLoading(false);
     }
   };

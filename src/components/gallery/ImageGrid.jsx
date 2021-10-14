@@ -40,30 +40,25 @@ const ImageGrid = (props) => {
     }
   }, [collectionId, hasMore, items, pages]);
 
-  const fetchNextPage = () => {
-    console.log("load next");
-    loadItems();
-  };
-
   useEffect(() => {
     loadItems();
   }, [loadItems]);
+  const { onScrollEnd: fetchNextPage, images, scrollEnded } = props;
 
-  const groupsOfThree = groupElements(items, 3);
+  const groupsOfThree = groupElements(images, 3);
 
   return (
     <IonGrid fixed className="image-grid">
       {groupsOfThree.map((grp, idx) => (
-        <IonRow key={idx}>
-          {grp.map((item, idx) => (
-            <IonCol key={idx}  size={4}>
-              {/* TODO: add default error one */}
-              <FlexImage src={item.coverImage} onClick={() => history.push(`/collections/${collectionId}/items/${item.itemId}`)} />
+        <IonRow  key={idx}>
+          {grp.map((img, idx) => (
+            <IonCol key={idx} size={4}>
+              <FlexImage src={img.url} onClick={img.clickHandler} />
             </IonCol>
           ))}
         </IonRow>
       ))}
-      <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
+      <IonInfiniteScroll disabled={scrollEnded} onIonInfinite={fetchNextPage}>
         <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
       </IonInfiniteScroll>
     </IonGrid>

@@ -26,8 +26,7 @@ const ProfileCollection = (props) => {
             <FlexImage src={imgUrl} />
           </IonCol>
         ))}
-
-        {coverImages.length === 0 && <IonText className="profile-collection-empty-images">No images added for this collection.</IonText>}
+        {coverImages.length === 0 && <IonText className="profile-collection-empty-images">This collection is empty.</IonText>}
       </div>
       <div>
         <IonText className="profile-collection--desc">{collectionDescription}</IonText>

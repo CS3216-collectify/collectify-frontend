@@ -17,14 +17,15 @@ const AddItem = () => {
       setLoading(false);
       history.replace(`/collections/${collectionId}/items/${itemId}`);
     } catch (e) {
-      setLoading(false);
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent"/>
+      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Add Item" />
       <IonContent>
         <ItemForm onComplete={addCompleteHandler} />

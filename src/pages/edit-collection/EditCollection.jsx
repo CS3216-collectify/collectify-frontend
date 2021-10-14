@@ -41,7 +41,7 @@ const EditCollection = (props) => {
     setLoading(true);
     try {
       await updateCollection(collectionId, collection);
-      history.replace(`/collections/${collectionId}`);
+      history.goBack();
     } catch (e) {
       console.log(e);
     } finally {
