@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import FlexImage from "../image/FlexImage"
 import { trashBin } from "ionicons/icons";
 import "./gallery.scss";
+import useToastContext from "../../hooks/useToastContext";
 
 const LIMIT = 4;
 
@@ -20,9 +21,18 @@ const groupElements = (arr, interval) => {
 }
 
 const ImageEditList = (props) => {
+  const setToast = useToastContext();
   const { images, onDelete: deleteImageHandler } = props;
 
   const groupsOfFour = groupElements(images, 4);
+
+  const safeDeleteHandler = (idx) => {
+    if (images.length < 2) {
+      setToast({message: "Please upload another image before deleting this image.", color: "danger"})
+      return;
+    }
+    deleteImageHandler(idx);
+  };
 
   return (
     <IonGrid className="image-grid">
@@ -34,7 +44,7 @@ const ImageEditList = (props) => {
                 <FlexImage src={imageUrl} />
               </IonCol>
               <IonCol size={1}>
-                <IonIcon onClick={() => deleteImageHandler(idx)} className="delete-icon" icon={trashBin} />
+                <IonIcon onClick={() => safeDeleteHandler(idx)} className="delete-icon" icon={trashBin} />
               </IonCol>
             </React.Fragment>
           ))}
