@@ -25,8 +25,10 @@ const Profile = () => {
   let { username } = useParams();
   let userId = getUserId();
 
+  // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
-  const [profileFullName, setProfileFullName] = useState("");
+  const [profileFirstName, setProfileFirstName] = useState("");
+  const [profileLastName, setProfileLastName] = useState("");
   const [profileUsername, setProfileUsername] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [collections, setCollections] = useState([]);
@@ -37,12 +39,13 @@ const Profile = () => {
     getUserByUserId(currentUserId)
       .then((res) => {
         setProfileUserId(Number(res.userId));
-        setProfileFullName(res.firstName + " " + res.lastName);
+        setProfileFirstName(res.firstName);
+        setProfileLastName(res.lastName);
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
       })
       .catch((e) => console.log(e));
-  },[currentUserId]);
+  }, [currentUserId]);
 
   const loadUserCollections = useCallback(async () => {
     const nextPage = pages + 1;
@@ -120,7 +123,14 @@ const Profile = () => {
 
               <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
                 {Number(currentUserId) === profileUserId ? (
-                  <EditProfileButton onClick={() => history.push("/profile/edit")} />
+                  <EditProfileButton
+                    onClick={() =>
+                      history.push({
+                        pathname: "/profile/edit",
+                        state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName },
+                      })
+                    }
+                  />
                 ) : true ? (
                   <UnfollowButton />
                 ) : (
@@ -132,7 +142,7 @@ const Profile = () => {
 
           <IonRow className="profile-details--container">
             <div>
-              <b>{profileFullName}</b>
+              <b>{profileFirstName + " " + profileLastName}</b>
             </div>
             <div>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam

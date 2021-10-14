@@ -59,23 +59,21 @@ const App = () => {
             <IonTabs>
               <IonRouterOutlet>
                 {/* TODO: add redirects for guests */}
-                <Switch>
-                  <Route exact path="/home" component={Home} />
-                  <Route exact path="/profile/:username" component={Profile} />
-                  <Route exact path="/profile/edit" component={EditProfile} />
-                  <Route exact path="/profile" component={Profile} />
-                  <Route exact path="/settings" component={Settings} />
-                  <Route exact path="/collections/:collectionId" component={Collection} />
-                  <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
-                  <Route exact path="/collections/add" component={AddCollection} />
-                  <Route exact path="/collections/:collectionId/items/add" component={AddItem} />
-                  <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
-                  <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
-                  <Route exact path="/discover" component={Discover} />
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/:username" component={Profile} />
+                <Route exact path="/profile/edit" component={EditProfile} />
+                <Route exact path="/settings" component={Settings} />
+                <Route exact path="/collections/:collectionId" component={Collection} />
+                <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
+                <Route exact path="/collections/add" component={AddCollection} />
+                <Route exact path="/collections/:collectionId/items/add" component={AddItem} />
+                <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
+                <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
+                <Route exact path="/discover" component={Discover} />
 
-                  {/* Test Route, DELETE */}
-                  <Route exact path="/test/:collectionId/:itemId" component={AddCollection} />
-                </Switch>
+                {/* Test Route, DELETE */}
+                <Route exact path="/test/:collectionId/:itemId" component={AddCollection} />
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
