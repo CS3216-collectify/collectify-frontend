@@ -40,6 +40,7 @@ server.interceptors.response.use(
           return server
             .post("/api/token/refresh/", { refresh: refreshToken })
             .then((response) => {
+              console.log(response)
               localStorage.setItem("accessToken", response.data.access);
               localStorage.setItem("refreshToken", response.data.refresh);
 

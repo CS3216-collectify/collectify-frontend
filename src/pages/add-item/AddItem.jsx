@@ -14,10 +14,11 @@ const AddItem = () => {
     setLoading(true);
     try {
       const itemId = await postItem(collectionId, item);
-      history.push(`/collections/${collectionId}/items/${itemId}`);
-    } catch (e) {
-      console.log(e);
       setLoading(false);
+      history.replace(`/collections/${collectionId}/items/${itemId}`);
+    } catch (e) {
+      setLoading(false);
+      console.log(e);
     }
   };
 

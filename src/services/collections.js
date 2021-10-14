@@ -43,18 +43,14 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
     params["category"] = categoryId;
   }
   const response = await server.get(`collections/`, { params });
-  console.log(response);
 
-  // return mockCollections;
   return response.data;
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
   console.log("Get Collection with id", collectionId);
   const response = await server.get(`collections/${collectionId}/`);
-  console.log(response);
 
-  // return mockCollection;
   return response.data;
 };
 
@@ -62,14 +58,7 @@ export const postCollection = async (data) => {
   console.log("creating new collection...");
   console.log(data)
   const response = await server.post(`collections/`, data);
-  console.log(response);
-  //   const data = {
-  //     collectionName: "Keyboards",
-  //     collectionDescription: "My keyboards",
-  //     categoryId: 123,
-  //   };
 
-  // return mockPostCollectionResponse;
   return response.data.collectionId;
 };
 
@@ -77,11 +66,6 @@ export const updateCollection = async (collectionId, data) => {
   console.log("Update Collection with id", collectionId);
   const response = await server.put(`collections/${collectionId}/`, data);
   console.log(response);
-  //   const data = {
-  //     collectionName: "Keyboards",
-  //     collectionDescription: "My keyboards",
-  //     categoryId: 123,
-  //   };
 
   // return {...data};
   // return response;
@@ -91,11 +75,6 @@ export const deleteCollection = async (collectionId) => {
   console.log("Deleting collection with id", collectionId);
   const response = await server.delete(`collections/${collectionId}/`);
   console.log(response);
-  //   const data = {
-  //     collectionName: "Keyboards",
-  //     collectionDescription: "My keyboards",
-  //     categoryId: 123,
-  //   };
 
   // return {};
 };

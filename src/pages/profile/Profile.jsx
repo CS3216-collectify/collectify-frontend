@@ -10,6 +10,7 @@ import UnfollowButton from "../../components/button/UnfollowButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
 import ProfileCollection from "../../components/profile-collection/ProfileCollection";
 import AddButton from "../../components/button/AddButton";
+import useUserContext from "../../hooks/useUserContext";
 import { getUserId } from "../../utils/user";
 import { getCollections } from "../../services/collections";
 import { getUserByUserId } from "../../services/users";
@@ -17,23 +18,32 @@ const LIMIT = 10;
 
 const Profile = () => {
   const history = useHistory();
+  const { currentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
   let userId = getUserId();
 
-  // to keep track of which buttons to show, will need to be updated when unfollow/follow is pressed
-  let isMyAccount = true;
-  let hasFollowed = true;
-
+  const [profileUserId, setProfileUserId] = useState(null);
+  const [profileFullName, setProfileFullName] = useState("");
+  const [profileUsername, setProfileUsername] = useState("");
+  const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [collections, setCollections] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
 
-  const getUserInformation = () => {
-    getUserByUserId(1);
-  };
+  const getUserInformation = useCallback(() => {
+    getUserByUserId(currentUserId)
+      .then((res) => {
+        console.log(res);
+        setProfileUserId(Number(res.userId));
+        setProfileFullName(res.firstName + " " + res.lastName);
+        setProfileUsername(res.username);
+        setProfileProfilePicture(res.pictureUrl);
+      })
+      .catch((e) => console.log(e));
+  },[currentUserId]);
 
   const loadUserCollections = useCallback(async () => {
     const nextPage = pages + 1;
@@ -55,6 +65,9 @@ const Profile = () => {
 
   useEffect(() => {
     getUserInformation();
+  }, [getUserInformation]);
+
+  useEffect(() => {
     loadUserCollections();
   }, [loadUserCollections]);
 
@@ -64,7 +77,7 @@ const Profile = () => {
   };
   return (
     <IonPage className="profile">
-      <ProfileToolbar username={"my username"} />
+      <ProfileToolbar username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
@@ -73,10 +86,7 @@ const Profile = () => {
           <IonRow>
             <IonCol size="auto">
               {/* <Logo className="profile--img"/> */}
-              <IonImg
-                className="profile--img"
-                src="https://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg"
-              />
+              <IonImg className="profile--img" src={profileProfilePicture} />
             </IonCol>
 
             <IonCol>
@@ -110,9 +120,9 @@ const Profile = () => {
               </IonRow>
 
               <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
-                {isMyAccount ? (
+                {Number(currentUserId) === profileUserId ? (
                   <EditProfileButton onClick={() => history.push("/profile/edit")} />
-                ) : hasFollowed ? (
+                ) : true ? (
                   <UnfollowButton />
                 ) : (
                   <FollowButton />
@@ -123,7 +133,7 @@ const Profile = () => {
 
           <IonRow className="profile-details--container">
             <div>
-              <b>John Doe</b>
+              <b>{profileFullName}</b>
             </div>
             <div>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam

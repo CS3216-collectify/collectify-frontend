@@ -30,7 +30,6 @@ const ImageGrid = (props) => {
         return;
       }
       const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
-      console.log(retrievedItems);
       if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }

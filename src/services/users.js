@@ -11,6 +11,5 @@ export const getUserByUserId = async (userId) => {
   console.log("Get user data of user" + userId);
   const response = await server.get(`api/user/${userId}/`);
 
-  console.log(response);
-  return response;
+  return response.data;
 };
