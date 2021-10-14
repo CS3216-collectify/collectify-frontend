@@ -20,64 +20,20 @@ const groupElements = (arr, interval) => {
   return groups;
 };
 
-const LIMIT = 18;
-
 const ImageGrid = (props) => {
-  const history = useHistory();
-  const { collectionId = 1 } = props;
-  const [items, setItems] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [pages, setPages] = useState(-1);
+  const { onScrollEnd: fetchNextPage, images, hasMore } = props;
 
-  const loadItems = async () => {
-    const nextPage = pages + 1;
-    try {
-      if (!hasMore) {
-        return;
-      }
-      const retrievedItems = await getItemsFromCollection(
-        collectionId,
-        nextPage * LIMIT,
-        LIMIT
-      );
-      console.log(retrievedItems);
-      if (
-        (retrievedItems && retrievedItems.length < LIMIT) ||
-        !retrievedItems
-      ) {
-        setHasMore(false);
-      }
-      setItems([...items, ...retrievedItems]);
-      setPages(nextPage);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const fetchNextPage = () => {
-    console.log("load next");
-    loadItems();
-  };
-
-  useEffect(() => {
-    loadItems();
-  }, []);
-
-  const groupsOfThree = groupElements(items, 3);
+  const groupsOfThree = groupElements(images, 3);
 
   return (
     <IonGrid className="image-grid">
       {groupsOfThree.map((grp, idx) => (
         <IonRow className="single-row-3" size={12} key={idx}>
-          {grp.map((item, idx) => (
+          {grp.map((img, idx) => (
             <IonCol key={idx} className="single-image-3" size={4}>
               <FlexImage
-                src={item.coverImage}
-                onClick={() =>
-                  history.push(
-                    `/collections/${collectionId}/items/${item.itemId}`
-                  )
-                }
+                src={img.url}
+                onClick={img.clickHandler}
               />
             </IonCol>
           ))}

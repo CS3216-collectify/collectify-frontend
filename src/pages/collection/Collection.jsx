@@ -8,6 +8,7 @@ import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
 import "./Collection.scss";
+import CollectionItems from "../../components/collection-items/CollectionItems";
 
 const Collection = (props) => {
   const history = useHistory();
@@ -79,7 +80,7 @@ const Collection = (props) => {
             <AddButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
             <EditButton label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
           </IonRow>
-          <ImageGrid collectionId={collectionId} />
+          <CollectionItems collectionId={collectionId} />
         </IonGrid>
       </IonContent>
     </IonPage>
