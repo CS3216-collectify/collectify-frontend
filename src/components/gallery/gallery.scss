@@ -33,3 +33,9 @@
 .padding-bottom {
   padding-bottom: 30px;
 }
+
+.image-carousel {
+  ion-img {
+    object-fit: contain;
+  }
+}
