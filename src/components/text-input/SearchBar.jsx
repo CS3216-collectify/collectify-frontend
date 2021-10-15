@@ -1,16 +1,31 @@
 import { IonSearchbar } from "@ionic/react";
 
 const SearchBar = (props) => {
-  const { searchText, onChange: textChangeHandler } = props;
+  const { value, onChange, onSubmit } = props;
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    onSubmit();
+  }
+
+  const changeHandler = (e) => {
+    onChange(e.detail.value);
+  }
+
+  const clearHandler = (e) => {
+    onChange("");
+  }
 
   return (
-    <IonSearchbar
-      value={searchText}
-      onIonChange={(e) => textChangeHandler(e.detail.value)}
-      onIonCancel={() => textChangeHandler("")}
-      showCancelButton={true}
-      enterkeyhint="search"
-    />
+    <form onSubmit={submitHandler}>
+      <IonSearchbar
+        value={value}
+        onIonChange={changeHandler}
+        onIonCancel={clearHandler}
+        showCancelButton={true}
+        enterkeyhint="search"
+      />
+    </form>
   );
 };
 
