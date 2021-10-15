@@ -1,8 +1,8 @@
 import { useState } from "react";
-import CollectionSearchResultDisplay from "../../components/search/CollectionSearchResultDisplay";
-import ItemSearchResultDisplay from "../../components/search/ItemSearchResultDisplay";
+import CollectionSearchResults from "../../components/search/CollectionSearchResults";
+import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
-import UserSearchResultDisplay from "../../components/search/UserSearchResultDisplay";
+import UserSearchResults from "../../components/search/UserSearchResults";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -15,13 +15,13 @@ const SearchResults = (props) => {
   return (
     <>
       {mode === USERS_MODE &&
-        <UserSearchResultDisplay searchText={searchText} />
+        <UserSearchResults searchText={searchText} />
       }
       {mode === COLLECTIONS_MODE &&
-        <CollectionSearchResultDisplay searchText={searchText} />
+        <CollectionSearchResults searchText={searchText} />
       }
       {mode === ITEMS_MODE &&
-        <ItemSearchResultDisplay searchText={searchText} />
+        <ItemSearchResults searchText={searchText} />
       }
     </>
   )
