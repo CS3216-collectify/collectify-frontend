@@ -2,6 +2,7 @@ import { IonLoading } from "@ionic/react";
 import { useState } from "react";
 import SearchBox from "../../components/search/SearchBox";
 import UserList from "../../components/user-list/UserList";
+import { searchUsers } from "../../services/search";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -9,10 +10,32 @@ const USERS_MODE = 2;
 
 const SEARCH_MODES = [ITEMS_MODE, COLLECTIONS_MODE, USERS_MODE];
 
+const getDefaultResultProps = () => {
+  return {
+    [ITEMS_MODE]: {
+      pages: -1,
+      hasMore: true,
+      limit: 18,
+    },
+    [USERS_MODE]: {
+      pages: -1,
+      hasMore: true,
+      limit: 20,
+    },
+    [COLLECTIONS_MODE]: {
+      pages: -1,
+      hasMore: true,
+      limit: 8,
+    },
+  };
+}
+
 const Search = (props) => {
-  const [mode, setMode] = useState(ITEMS_MODE);
+  // const [mode, setMode] = useState(ITEMS_MODE);
+  const [mode, setMode] = useState(USERS_MODE);
   const [resultComponents, setResultComponents] = useState({});
   const [submittedSearchText, setSubmittedSearchText] = useState("");
+  const [resultProps, setResultProps] = useState(getDefaultResultProps());
   const [loading, setLoading] = useState(false);
 
   const itemsComponentHandler = (text) => {
@@ -29,10 +52,33 @@ const Search = (props) => {
     return null;
   };
 
-  const usersComponentHandler = (text) => {
-    // TODO: fetch users
-    // TODO: return component to render
+  const usersComponentHandler = async (text) => {
     console.log(text);
+    setLoading(true);
+    const { pages, hasMore, limit } = resultProps[USERS_MODE];
+    if (!hasMore) {
+      return;
+    }
+    const nextPage = pages + 1;
+    try {
+      const users = await searchUsers(text, nextPage * limit, limit);
+      console.log(users);
+      const updatedHasMore = !(users && users.length < limit) || !users;
+      setResultProps({
+        ...resultProps, 
+        [USERS_MODE]: {
+          ...resultProps[USERS_MODE], 
+          pages: nextPage, 
+          hasMore: updatedHasMore
+        }
+      });
+      return <UserList />;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+
     return null;
   };
   
@@ -42,11 +88,13 @@ const Search = (props) => {
     [COLLECTIONS_MODE]: collectionsComponentHandler,
   };
 
-  const searchHandler = (mode, text) => {
+  const searchHandler = async (mode, text) => {
     if (!componentHandlers.hasOwnProperty(mode)) {
       return;
     }
-    return componentHandlers[mode](text);
+    const component = await componentHandlers[mode](text);
+    let updatedResultComponents = {...resultComponents, [mode]: component};
+    setResultComponents(updatedResultComponents);
   };
 
   const submitHandler = (text) => {
@@ -56,9 +104,7 @@ const Search = (props) => {
     // handle search
     console.log(mode);
     setSubmittedSearchText(text);
-    const component = searchHandler(mode, text);
-    const updatedResultComponents = {[mode]: component};
-    setResultComponents(updatedResultComponents);
+    searchHandler(mode, text);
   };
 
   const modeChangeHandler = (newMode) => {
@@ -66,9 +112,8 @@ const Search = (props) => {
       return;
     }
     if (!resultComponents.hasOwnProperty(newMode)) {
-      const component = searchHandler(newMode, submittedSearchText);
-      const updatedResultComponents = {...resultComponents, [newMode]: component};
-      setResultComponents(updatedResultComponents);
+      setResultComponents({});
+      searchHandler(newMode, submittedSearchText);
     }
     setMode(newMode);
   };
