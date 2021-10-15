@@ -50,16 +50,19 @@ const UserSearchResultDisplay = (props) => {
 
   useEffect(() => {
     if (props.searchText) {
+      console.log("loading...");
       loadInitialPage();
     }
   }, [props.searchText]);
 
   return (
-    <UserList 
-      listEnded={!hasMore} 
-      onScrollEnd={loadNextPage} 
-      users={users} 
-    />
+    <>
+      <UserList 
+        listEnded={!hasMore} 
+        onScrollEnd={loadNextPage} 
+        users={users} 
+      />
+    </>
   )
 }
 

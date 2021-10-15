@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
@@ -12,22 +12,14 @@ const CollectionItems = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
 
-  const loadItems = async () => {
+  const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
     try {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getItemsFromCollection(
-        collectionId,
-        nextPage * LIMIT,
-        LIMIT
-      );
-      console.log(retrievedItems);
-      if (
-        (retrievedItems && retrievedItems.length < LIMIT) ||
-        !retrievedItems
-      ) {
+      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
+      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }
       setItems([...items, ...retrievedItems]);
@@ -35,16 +27,16 @@ const CollectionItems = (props) => {
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [collectionId, hasMore, items, pages]);
+
+  useEffect(() => {
+    loadItems();
+  }, [loadItems]);
 
   const fetchNextPage = () => {
     console.log("load next");
     loadItems();
   };
-
-  useEffect(() => {
-    loadItems();
-  }, []);
 
   return (
     <ItemGrid

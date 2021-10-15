@@ -17,32 +17,6 @@ const groupElements = (arr, interval) => {
 const LIMIT = 18;
 
 const ImageGrid = (props) => {
-  const history = useHistory();
-  const { collectionId = 1 } = props;
-  const [items, setItems] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [pages, setPages] = useState(-1);
-
-  const loadItems = useCallback(async () => {
-    const nextPage = pages + 1;
-    try {
-      if (!hasMore) {
-        return;
-      }
-      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
-      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
-        setHasMore(false);
-      }
-      setItems([...items, ...retrievedItems]);
-      setPages(nextPage);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionId, hasMore, items, pages]);
-
-  useEffect(() => {
-    loadItems();
-  }, [loadItems]);
   const { onScrollEnd: fetchNextPage, images, listEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
