@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
 import { getItemsFromCollection } from "../../services/items";
 import FlexImage from "../image/FlexImage";
+import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import "./gallery.scss";
 
 const groupElements = (arr, interval) => {
@@ -32,9 +33,7 @@ const ImageGrid = (props) => {
           ))}
         </IonRow>
       ))}
-      <IonInfiniteScroll disabled={listEnded} onIonInfinite={fetchNextPage}>
-        <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
-      </IonInfiniteScroll>
+      <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </IonGrid>
   );
 };

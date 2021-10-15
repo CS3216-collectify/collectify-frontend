@@ -1,5 +1,6 @@
 import { IonInfiniteScroll, IonInfiniteScrollContent, IonList } from "@ionic/react";
 import { useHistory } from "react-router";
+import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import ProfileCollection from "./ProfileCollection";
 
 const CollectionList = (props) => {
@@ -11,9 +12,7 @@ const CollectionList = (props) => {
       {collections.map((collection, index) => (
         <ProfileCollection collection={collection} key={index} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
       ))}
-      <IonInfiniteScroll disabled={listEnded} onIonInfinite={fetchNextPage}>
-        <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..." />
-      </IonInfiniteScroll>
+      <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </IonList>
   )
 }
