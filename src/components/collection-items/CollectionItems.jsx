@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import ImageGrid from "../gallery/ImageGrid";
+import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
 
 const LIMIT = 18;
@@ -46,21 +46,13 @@ const CollectionItems = (props) => {
     loadItems();
   }, []);
 
-  const goToItemPage = (itemId) => {
-    history.push(
-      `/collections/${collectionId}/items/${itemId}`
-    );
-  };
-
-  const gridImages = items.map((item) => ({ url: item.coverImage, clickHandler: () => goToItemPage(item.itemId) }));
-
   return (
-    <ImageGrid 
+    <ItemGrid
       onScrollEnd={fetchNextPage}
-      images={gridImages}
+      items={items}
       listEnded={!hasMore}
     />
-  );
+  )
 };
 
 export default CollectionItems;

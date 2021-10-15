@@ -1,5 +1,6 @@
 import { useState } from "react";
-import CollectionSearchResultDisplay from "../../components/search/CollectionsSearchResultDisplay";
+import CollectionSearchResultDisplay from "../../components/search/CollectionSearchResultDisplay";
+import ItemSearchResultDisplay from "../../components/search/ItemSearchResultDisplay";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResultDisplay from "../../components/search/UserSearchResultDisplay";
 
@@ -8,6 +9,23 @@ const COLLECTIONS_MODE = 1;
 const USERS_MODE = 2;
 
 const SEARCH_MODES = [ITEMS_MODE, COLLECTIONS_MODE, USERS_MODE];
+
+const SearchResults = (props) => {
+  const { mode, searchText } = props;
+  return (
+    <>
+      {mode === USERS_MODE &&
+        <UserSearchResultDisplay searchText={searchText} />
+      }
+      {mode === COLLECTIONS_MODE &&
+        <CollectionSearchResultDisplay searchText={searchText} />
+      }
+      {mode === ITEMS_MODE &&
+        <ItemSearchResultDisplay searchText={searchText} />
+      }
+    </>
+  )
+}
 
 const Search = (props) => {
   const [mode, setMode] = useState(USERS_MODE);
@@ -27,15 +45,7 @@ const Search = (props) => {
   return (
     <>
       <SearchBox onSubmit={searchHandler}>
-        {mode === USERS_MODE &&
-          <UserSearchResultDisplay searchText={searchText} />
-        }
-        {mode === COLLECTIONS_MODE &&
-          <CollectionSearchResultDisplay searchText={searchText} />
-        }
-        {mode === ITEMS_MODE &&
-          null // TODO: items React component
-        }
+        <SearchResults mode={mode} searchText={searchText} />
       </SearchBox>
     </>
   );
