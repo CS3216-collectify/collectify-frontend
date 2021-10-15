@@ -12,8 +12,8 @@ const SearchBox = (props) => {
 
   const submitHandler = () => {
     if (searchText && searchText !== prevSearch) {
-      onSubmit(searchText);
       setPrevSearch(searchText);
+      onSubmit(searchText);
     }
   };
 
