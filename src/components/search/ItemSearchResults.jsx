@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react"
 import { searchItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
 
-const LIMIT = 10;
+const LIMIT = 18;
 
 const ItemSearchResultDisplay = (props) => {
   const { searchText } = props;
