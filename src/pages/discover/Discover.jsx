@@ -19,9 +19,6 @@ const Discover = () => {
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         <IonGrid fixed>
-          <IonRow className="ion-justify-content-center">
-            <Logo />
-          </IonRow>
           <DiscoverItems />
         </IonGrid>
       </IonContent>

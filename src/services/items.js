@@ -8,9 +8,8 @@ const mockItems = {
       itemDescription: "My first ever card!",
       collectionId: 123,
       itemCreationDate: "2021-09-24T01:22:47.541Z",
-      coverImage: {
-        url: "https://collectify-images.s3.amazonaws.com/item_images/im-0_b3TompB?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3TZYYO6CANXBDQ4E%2F20211015%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20211015T090002Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1a6a457286e3f8f47af394388c2eccbcc5eb2250bebbbf4daa2f5619008a18ef",
-      },
+      coverImage:
+        "https://collectify-images.s3.amazonaws.com/item_images/im-0_b3TompB?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3TZYYO6CANXBDQ4E%2F20211015%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20211015T090002Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1a6a457286e3f8f47af394388c2eccbcc5eb2250bebbbf4daa2f5619008a18ef",
     },
     {
       itemId: 501,
@@ -18,9 +17,8 @@ const mockItems = {
       itemDescription: "Bought for $100",
       collectionId: 123,
       itemCreationDate: "2021-09-23T01:22:47.541Z",
-      coverImage: {
-        url: "https://collectify-images.s3.amazonaws.com/item_images/im-0_b3TompB?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3TZYYO6CANXBDQ4E%2F20211015%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20211015T090002Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1a6a457286e3f8f47af394388c2eccbcc5eb2250bebbbf4daa2f5619008a18ef",
-      },
+      coverImage:
+        "https://collectify-images.s3.amazonaws.com/item_images/im-0_b3TompB?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3TZYYO6CANXBDQ4E%2F20211015%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20211015T090002Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1a6a457286e3f8f47af394388c2eccbcc5eb2250bebbbf4daa2f5619008a18ef",
     },
   ],
 };
