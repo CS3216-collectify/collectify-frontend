@@ -1,11 +1,12 @@
-import { IonContent } from "@ionic/react";
+import { IonContent, IonLoading } from "@ionic/react";
 import { useState } from "react";
 import SearchBar from "../text-input/SearchBar";
 
 const SearchBox = (props) => {
   const {
-    resultComponent,
+    children,
     onSubmit,
+    loading,
   } = props;
   const [prevSearch, setPrevSearch] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -25,7 +26,7 @@ const SearchBox = (props) => {
         onSubmit={submitHandler}
       />
       <IonContent>
-        {resultComponent}
+        {loading ? <IonLoading isOpen={loading} /> : children}
       </IonContent>
     </>
   );

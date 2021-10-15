@@ -33,7 +33,6 @@ const getDefaultResultProps = () => {
 const Search = (props) => {
   // const [mode, setMode] = useState(ITEMS_MODE);
   const [mode, setMode] = useState(USERS_MODE);
-  const [resultComponents, setResultComponents] = useState({});
   const [submittedSearchText, setSubmittedSearchText] = useState("");
   const [resultProps, setResultProps] = useState(getDefaultResultProps());
   const [loading, setLoading] = useState(false);
@@ -72,16 +71,13 @@ const Search = (props) => {
           hasMore: updatedHasMore
         }
       });
-      return <UserList />;
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
-
-    return null;
   };
-  
+
   const componentHandlers = {
     [USERS_MODE]: usersComponentHandler,
     [ITEMS_MODE]: itemsComponentHandler,
@@ -92,9 +88,7 @@ const Search = (props) => {
     if (!componentHandlers.hasOwnProperty(mode)) {
       return;
     }
-    const component = await componentHandlers[mode](text);
-    let updatedResultComponents = {...resultComponents, [mode]: component};
-    setResultComponents(updatedResultComponents);
+    await componentHandlers[mode](text);
   };
 
   const submitHandler = (text) => {
@@ -111,19 +105,26 @@ const Search = (props) => {
     if (!SEARCH_MODES.includes(newMode) || mode === newMode) {
       return;
     }
-    if (!resultComponents.hasOwnProperty(newMode)) {
-      setResultComponents({});
+    if (!setResultProps.hasOwnProperty(newMode)) {
+      setResultProps({});
       searchHandler(newMode, submittedSearchText);
     }
     setMode(newMode);
   };
 
-  // how search result should be displayed
-  const resultComponent = loading ? <IonLoading isOpen={loading} /> : resultComponents[mode];
-
   return (
     <>
-      <SearchBox onSubmit={submitHandler} resultComponent={resultComponent} />
+      <SearchBox onSubmit={submitHandler} loading={loading}>
+        {mode === USERS_MODE &&
+          <UserList /> // TODO: pass props
+        }
+        {mode === COLLECTIONS_MODE &&
+          null // TODO: collections React component
+        }
+        {mode === ITEMS_MODE &&
+          null // TODO: items React component
+        }
+      </SearchBox>
     </>
   );
 };
