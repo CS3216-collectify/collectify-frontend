@@ -1,11 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
+
+import "./DiscoverItems.scss";
 import ImageGrid from "../gallery/ImageGrid";
-import { getItemsFromCollection } from "../../services/items";
+import { getItemsForDiscover } from "../../services/items";
 
 const LIMIT = 18;
 
-const CollectionItems = (props) => {
+const DiscoverItems = (props) => {
   const history = useHistory();
   const { collectionId = 1 } = props;
   const [items, setItems] = useState([]);
@@ -18,7 +20,7 @@ const CollectionItems = (props) => {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
+      const retrievedItems = (await getItemsForDiscover(nextPage * LIMIT, LIMIT)).items;
       console.log(retrievedItems);
       if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
@@ -28,7 +30,7 @@ const CollectionItems = (props) => {
     } catch (e) {
       console.log(e);
     }
-  }, [collectionId, hasMore, items, pages]);
+  }, [hasMore, items, pages]);
 
   const fetchNextPage = () => {
     console.log("load next");
@@ -48,4 +50,4 @@ const CollectionItems = (props) => {
   return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} scrollEnded={!hasMore} />;
 };
 
-export default CollectionItems;
+export default DiscoverItems;

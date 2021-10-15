@@ -7,6 +7,7 @@ import "./Discover.scss";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
+import DiscoverItems from "../../components/discover-items/DiscoverItems";
 
 const Discover = () => {
   const history = useHistory();
@@ -21,6 +22,7 @@ const Discover = () => {
           <IonRow className="ion-justify-content-center">
             <Logo />
           </IonRow>
+          <DiscoverItems />
         </IonGrid>
       </IonContent>
     </IonPage>

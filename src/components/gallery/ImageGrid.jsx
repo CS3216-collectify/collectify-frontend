@@ -49,6 +49,7 @@ const ImageGrid = (props) => {
 
   return (
     <IonGrid fixed className="image-grid">
+      {console.log(groupsOfThree)}
       {groupsOfThree.map((grp, idx) => (
         <IonRow  key={idx}>
           {grp.map((img, idx) => (
