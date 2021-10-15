@@ -6,7 +6,6 @@ const SearchBox = (props) => {
   const {
     children,
     onSubmit,
-    loading,
   } = props;
   const [prevSearch, setPrevSearch] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -26,7 +25,7 @@ const SearchBox = (props) => {
         onSubmit={submitHandler}
       />
       <IonContent>
-        {loading ? <IonLoading isOpen={loading} /> : children}
+        {children}
       </IonContent>
     </>
   );
