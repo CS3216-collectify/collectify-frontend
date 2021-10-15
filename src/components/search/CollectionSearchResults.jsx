@@ -20,7 +20,7 @@ const CollectionSearchResultDisplay = (props) => {
       const nextPage = pages + 1;
       const fetchedCollections = await searchCollections(searchText, nextPage * LIMIT, LIMIT);
       const updatedCollections = [...collections, ...fetchedCollections] 
-      const updatedHasMore = !(fetchedCollections && fetchedCollections.length < LIMIT) || !fetchedCollections;
+      const updatedHasMore = fetchedCollections && fetchedCollections.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
       setCollections(updatedCollections);
@@ -38,7 +38,7 @@ const CollectionSearchResultDisplay = (props) => {
       console.log(searchText);
       const nextPage = 0;
       const fetchedCollections = await searchCollections(searchText, nextPage * LIMIT, LIMIT);
-      const updatedHasMore = !(fetchedCollections && fetchedCollections.length < LIMIT) || !fetchedCollections;
+      const updatedHasMore = fetchedCollections && fetchedCollections.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
       setCollections(fetchedCollections);

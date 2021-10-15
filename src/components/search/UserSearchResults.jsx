@@ -20,7 +20,7 @@ const UserSearchResultDisplay = (props) => {
       const nextPage = pages + 1;
       const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
       const updatedUsers = [...users, ...fetchedUsers] 
-      const updatedHasMore = !(fetchedUsers && fetchedUsers.length < LIMIT) || !fetchedUsers;
+      const updatedHasMore = fetchedUsers && fetchedUsers.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
       setUsers(updatedUsers);
@@ -38,7 +38,7 @@ const UserSearchResultDisplay = (props) => {
       console.log(searchText);
       const nextPage = 0;
       const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
-      const updatedHasMore = !(fetchedUsers && fetchedUsers.length < LIMIT) || !fetchedUsers;
+      const updatedHasMore = fetchedUsers && fetchedUsers.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
       setUsers(fetchedUsers);

@@ -4,7 +4,7 @@ import ProfileCollection from "./ProfileCollection";
 
 const CollectionList = (props) => {
   const history = useHistory();
-  const { collections, onScrollEnded: fetchNextPage, listEnded } = props;
+  const { collections, onScrollEnd: fetchNextPage, listEnded } = props;
 
   return (
     <IonList className="profile-collection--list">

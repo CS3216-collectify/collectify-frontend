@@ -20,7 +20,7 @@ const ItemSearchResultDisplay = (props) => {
       const nextPage = pages + 1;
       const fetchedItems = await searchItems(searchText, nextPage * LIMIT, LIMIT);
       const updatedItems = [...items, ...fetchedItems] 
-      const updatedHasMore = !(fetchedItems && fetchedItems.length < LIMIT) || !fetchedItems;
+      const updatedHasMore = fetchedItems && fetchedItems.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
       setItems(updatedItems);
@@ -38,7 +38,7 @@ const ItemSearchResultDisplay = (props) => {
       console.log(searchText);
       const nextPage = 0;
       const fetchedItems = await searchItems(searchText, nextPage * LIMIT, LIMIT);
-      const updatedHasMore = !(fetchedItems && fetchedItems.length < LIMIT) || !fetchedItems;
+      const updatedHasMore = fetchedItems && fetchedItems.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
       setItems(fetchedItems);
