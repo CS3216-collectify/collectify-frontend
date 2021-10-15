@@ -56,7 +56,7 @@ const CollectionSearchResultDisplay = (props) => {
 
   return (
     <CollectionList 
-      scrollEnded={!hasMore} 
+      listEnded={!hasMore} 
       onScrollEnd={loadNextPage} 
       collections={collections} 
     />

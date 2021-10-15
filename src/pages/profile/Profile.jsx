@@ -179,7 +179,7 @@ const Profile = () => {
               <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
             </IonRow>
             <IonRow className=" ion-justify-content-center">
-              <CollectionList onScrollEnded={fetchNextPage} scrollEnded={!hasMore} collections={collections} />
+              <CollectionList onScrollEnded={fetchNextPage} listEnded={!hasMore} collections={collections} />
             </IonRow>
           </IonGrid>
         ) : (

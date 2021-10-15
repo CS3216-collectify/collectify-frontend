@@ -17,7 +17,7 @@ import FlexImage from "../../components/image/FlexImage"
 const LIMIT = 10;
 
 const UserList = (props) => {
-  const { onScrollEnd: fetchNextPage, users = [], scrollEnded } = props;
+  const { onScrollEnd: fetchNextPage, users = [], listEnded } = props;
 
   return (
     <IonList>
@@ -33,7 +33,7 @@ const UserList = (props) => {
         </IonItem>
       ))}
       <IonInfiniteScroll
-        disabled={scrollEnded}
+        disabled={listEnded}
         onIonInfinite={fetchNextPage}
       >
         <IonInfiniteScrollContent loadingText="Loading..."></IonInfiniteScrollContent>

@@ -58,7 +58,7 @@ const CollectionItems = (props) => {
     <ImageGrid 
       onScrollEnd={fetchNextPage}
       images={gridImages}
-      scrollEnded={!hasMore}
+      listEnded={!hasMore}
     />
   );
 };

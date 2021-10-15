@@ -56,7 +56,7 @@ const UserSearchResultDisplay = (props) => {
 
   return (
     <UserList 
-      scrollEnded={!hasMore} 
+      listEnded={!hasMore} 
       onScrollEnd={loadNextPage} 
       users={users} 
     />

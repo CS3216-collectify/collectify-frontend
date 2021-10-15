@@ -43,7 +43,7 @@ const ImageGrid = (props) => {
   useEffect(() => {
     loadItems();
   }, [loadItems]);
-  const { onScrollEnd: fetchNextPage, images, scrollEnded } = props;
+  const { onScrollEnd: fetchNextPage, images, listEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
 
@@ -58,7 +58,7 @@ const ImageGrid = (props) => {
           ))}
         </IonRow>
       ))}
-      <IonInfiniteScroll disabled={scrollEnded} onIonInfinite={fetchNextPage}>
+      <IonInfiniteScroll disabled={listEnded} onIonInfinite={fetchNextPage}>
         <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
       </IonInfiniteScroll>
     </IonGrid>
