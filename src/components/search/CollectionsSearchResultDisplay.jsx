@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
-import { searchUsers } from "../../services/search";
-import UserList from "../user-list/UserList";
+import { searchCollections } from "../../services/search";
+import CollectionList from "../profile-collection/CollectionList";
 
-const LIMIT = 20;
+const LIMIT = 10;
 
-const UserSearchResultDisplay = (props) => {
+const CollectionSearchResultDisplay = (props) => {
   const { searchText } = props;
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
-  const [users, setUsers] = useState([]);
+  const [collections, setCollections] = useState([]);
 
   const loadNextPage = async () => {
     if (!hasMore || !searchText) {
@@ -17,12 +17,12 @@ const UserSearchResultDisplay = (props) => {
     }
     try {
       const nextPage = pages + 1;
-      const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
-      const updatedUsers = [...users, ...fetchedUsers] 
-      const updatedHasMore = !(fetchedUsers && fetchedUsers.length < LIMIT) || !fetchedUsers;
+      const fetchedCollections = await searchCollections(searchText, nextPage * LIMIT, LIMIT);
+      const updatedCollections = [...collections, ...fetchedCollections] 
+      const updatedHasMore = !(fetchedCollections && fetchedCollections.length < LIMIT) || !fetchedCollections;
       setPages(nextPage);
       setHasMore(updatedHasMore);
-      setUsers(updatedUsers);
+      setCollections(updatedCollections);
     } catch (e) {
       // TODO: Error handling
       console.log(e);
@@ -35,11 +35,11 @@ const UserSearchResultDisplay = (props) => {
     try {
       console.log(searchText);
       const nextPage = 0;
-      const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
-      const updatedHasMore = !(fetchedUsers && fetchedUsers.length < LIMIT) || !fetchedUsers;
+      const fetchedCollections = await searchCollections(searchText, nextPage * LIMIT, LIMIT);
+      const updatedHasMore = !(fetchedCollections && fetchedCollections.length < LIMIT) || !fetchedCollections;
       setPages(nextPage);
       setHasMore(updatedHasMore);
-      setUsers(fetchedUsers);
+      setCollections(fetchedCollections);
     } catch (e) {
       // TODO: Error handling
       console.log(e);
@@ -55,12 +55,12 @@ const UserSearchResultDisplay = (props) => {
   }, [props.searchText]);
 
   return (
-    <UserList 
+    <CollectionList 
       scrollEnded={!hasMore} 
       onScrollEnd={loadNextPage} 
-      users={users} 
+      collections={collections} 
     />
   )
 }
 
-export default UserSearchResultDisplay;
+export default CollectionSearchResultDisplay;

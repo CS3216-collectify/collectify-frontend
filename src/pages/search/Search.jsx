@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CollectionSearchResultDisplay from "../../components/search/CollectionsSearchResultDisplay";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResultDisplay from "../../components/search/UserSearchResultDisplay";
 
@@ -30,7 +31,7 @@ const Search = (props) => {
           <UserSearchResultDisplay searchText={searchText} />
         }
         {mode === COLLECTIONS_MODE &&
-          null // TODO: collections React component
+          <CollectionSearchResultDisplay searchText={searchText} />
         }
         {mode === ITEMS_MODE &&
           null // TODO: items React component
