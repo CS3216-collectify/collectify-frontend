@@ -1,3 +1,4 @@
+import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import { searchCollections } from "../../services/search";
 import CollectionList from "../profile-collection/CollectionList";
@@ -9,6 +10,7 @@ const CollectionSearchResultDisplay = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadNextPage = useCallback(async () => {
     if (!hasMore || !searchText) {
@@ -32,6 +34,7 @@ const CollectionSearchResultDisplay = (props) => {
 
   const loadInitialPage = useCallback(async () => {
     try {
+      setLoading(true);
       console.log(searchText);
       const nextPage = 0;
       const fetchedCollections = await searchCollections(searchText, nextPage * LIMIT, LIMIT);
@@ -43,7 +46,7 @@ const CollectionSearchResultDisplay = (props) => {
       // TODO: Error handling
       console.log(e);
     } finally {
-      // TODO: ?
+      setLoading(false);
     }
   }, [searchText])
 
@@ -54,11 +57,14 @@ const CollectionSearchResultDisplay = (props) => {
   }, [props.searchText]);
 
   return (
-    <CollectionList 
-      listEnded={!hasMore} 
-      onScrollEnd={loadNextPage} 
-      collections={collections} 
-    />
+    <>
+      <IonLoading isOpen={loading} />
+      <CollectionList 
+        listEnded={!hasMore} 
+        onScrollEnd={loadNextPage} 
+        collections={collections} 
+      />
+    </>
   )
 }
 

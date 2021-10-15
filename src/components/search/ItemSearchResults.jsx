@@ -1,3 +1,4 @@
+import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import { searchItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
@@ -9,6 +10,7 @@ const ItemSearchResultDisplay = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadNextPage = useCallback(async () => {
     if (!hasMore || !searchText) {
@@ -32,6 +34,7 @@ const ItemSearchResultDisplay = (props) => {
 
   const loadInitialPage = useCallback(async () => {
     try {
+      setLoading(true);
       console.log(searchText);
       const nextPage = 0;
       const fetchedItems = await searchItems(searchText, nextPage * LIMIT, LIMIT);
@@ -43,7 +46,7 @@ const ItemSearchResultDisplay = (props) => {
       // TODO: Error handling
       console.log(e);
     } finally {
-      // TODO: ?
+      setLoading(false);
     }
   }, [searchText]);
 
@@ -54,11 +57,14 @@ const ItemSearchResultDisplay = (props) => {
   }, [props.searchText]);
 
   return (
-    <ItemGrid 
-      listEnded={!hasMore} 
-      onScrollEnd={loadNextPage} 
-      items={items} 
-    />
+    <>
+      <IonLoading isOpen={loading} />
+      <ItemGrid 
+        listEnded={!hasMore} 
+        onScrollEnd={loadNextPage} 
+        items={items} 
+      />
+    </>
   )
 }
 

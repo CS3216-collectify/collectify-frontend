@@ -1,3 +1,4 @@
+import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import { searchUsers } from "../../services/search";
 import UserList from "../user-list/UserList";
@@ -9,6 +10,7 @@ const UserSearchResultDisplay = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadNextPage = useCallback(async () => {
     if (!hasMore || !searchText) {
@@ -32,6 +34,7 @@ const UserSearchResultDisplay = (props) => {
 
   const loadInitialPage = useCallback(async () => {
     try {
+      setLoading(true)
       console.log(searchText);
       const nextPage = 0;
       const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
@@ -43,7 +46,7 @@ const UserSearchResultDisplay = (props) => {
       // TODO: Error handling
       console.log(e);
     } finally {
-      // TODO: ?
+      setLoading(false);
     }
   }, [searchText]);
 
@@ -55,6 +58,7 @@ const UserSearchResultDisplay = (props) => {
 
   return (
     <>
+      <IonLoading isOpen={loading} />
       <UserList 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 
