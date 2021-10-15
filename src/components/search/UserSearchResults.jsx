@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { searchUsers } from "../../services/search";
 import UserList from "../user-list/UserList";
 
@@ -10,9 +10,8 @@ const UserSearchResultDisplay = (props) => {
   const [pages, setPages] = useState(-1);
   const [users, setUsers] = useState([]);
 
-  const loadNextPage = async () => {
+  const loadNextPage = useCallback(async () => {
     if (!hasMore || !searchText) {
-      console.log("reached");
       return;
     }
     try {
@@ -29,9 +28,9 @@ const UserSearchResultDisplay = (props) => {
     } finally {
       // TODO: ?
     }
-  };
+  }, [searchText, hasMore, pages, users]);
 
-  const loadInitialPage = async () => {
+  const loadInitialPage = useCallback(async () => {
     try {
       console.log(searchText);
       const nextPage = 0;
@@ -46,11 +45,10 @@ const UserSearchResultDisplay = (props) => {
     } finally {
       // TODO: ?
     }
-  };
+  }, [searchText]);
 
   useEffect(() => {
     if (props.searchText) {
-      console.log("loading...");
       loadInitialPage();
     }
   }, [props.searchText]);

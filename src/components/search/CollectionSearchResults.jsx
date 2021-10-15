@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { searchCollections } from "../../services/search";
 import CollectionList from "../profile-collection/CollectionList";
 
@@ -10,9 +10,8 @@ const CollectionSearchResultDisplay = (props) => {
   const [pages, setPages] = useState(-1);
   const [collections, setCollections] = useState([]);
 
-  const loadNextPage = async () => {
+  const loadNextPage = useCallback(async () => {
     if (!hasMore || !searchText) {
-      console.log("reached");
       return;
     }
     try {
@@ -29,9 +28,9 @@ const CollectionSearchResultDisplay = (props) => {
     } finally {
       // TODO: ?
     }
-  };
+  }, [searchText, hasMore, pages, collections]);
 
-  const loadInitialPage = async () => {
+  const loadInitialPage = useCallback(async () => {
     try {
       console.log(searchText);
       const nextPage = 0;
@@ -46,7 +45,7 @@ const CollectionSearchResultDisplay = (props) => {
     } finally {
       // TODO: ?
     }
-  };
+  }, [searchText])
 
   useEffect(() => {
     if (props.searchText) {
