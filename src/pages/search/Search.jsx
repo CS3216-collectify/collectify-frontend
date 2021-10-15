@@ -16,16 +16,19 @@ const getDefaultResultProps = () => {
       pages: -1,
       hasMore: true,
       limit: 18,
+      items: [],
     },
     [USERS_MODE]: {
       pages: -1,
       hasMore: true,
-      limit: 20,
+      limit: 10,
+      users: []
     },
     [COLLECTIONS_MODE]: {
       pages: -1,
       hasMore: true,
       limit: 8,
+      collections: [],
     },
   };
 }
@@ -51,24 +54,29 @@ const Search = (props) => {
     return null;
   };
 
-  const usersComponentHandler = async (text) => {
-    console.log(text);
-    setLoading(true);
+  const usersComponentHandler = (text, isFirst = false) => async () => {
     const { pages, hasMore, limit } = resultProps[USERS_MODE];
-    if (!hasMore) {
+    if (!hasMore && text === submittedSearchText) {
+      console.log("reached");
       return;
     }
-    const nextPage = pages + 1;
+    const nextPage = text === submittedSearchText ? pages + 1 : 0;
     try {
-      const users = await searchUsers(text, nextPage * limit, limit);
-      console.log(users);
-      const updatedHasMore = !(users && users.length < limit) || !users;
+      setLoading(isFirst ? true : false);
+      console.log("fetching...");
+      const fetchedUsers = await searchUsers(text, nextPage * limit, limit);
+      console.log(fetchedUsers);
+      const updatedUsers = text === submittedSearchText 
+        ? [...resultProps[USERS_MODE].users, ...fetchedUsers] 
+        : fetchedUsers;
+      const updatedHasMore = !(fetchedUsers && fetchedUsers.length < limit) || !fetchedUsers;
       setResultProps({
-        ...resultProps, 
+        ...resultProps,
         [USERS_MODE]: {
-          ...resultProps[USERS_MODE], 
-          pages: nextPage, 
-          hasMore: updatedHasMore
+          ...resultProps[USERS_MODE],
+          pages: nextPage,
+          hasMore: updatedHasMore,
+          users: updatedUsers,
         }
       });
     } catch (e) {
@@ -88,11 +96,11 @@ const Search = (props) => {
     if (!componentHandlers.hasOwnProperty(mode)) {
       return;
     }
-    await componentHandlers[mode](text);
+    await componentHandlers[mode](text, true)();
   };
 
   const submitHandler = (text) => {
-    if (text === submittedSearchText) {
+    if (!text || text === submittedSearchText) {
       return;
     }
     // handle search
@@ -116,7 +124,7 @@ const Search = (props) => {
     <>
       <SearchBox onSubmit={submitHandler} loading={loading}>
         {mode === USERS_MODE &&
-          <UserList /> // TODO: pass props
+          <UserList scrollEnded={!resultProps[USERS_MODE].hasMore} onScrollEnd={usersComponentHandler(submittedSearchText)} users={resultProps[USERS_MODE].users} /> // TODO: pass props
         }
         {mode === COLLECTIONS_MODE &&
           null // TODO: collections React component
