@@ -1,3 +1,4 @@
+import { IonLoading } from "@ionic/react";
 import { useState } from "react";
 import SearchBox from "../../components/search/SearchBox";
 import UserList from "../../components/user-list/UserList";
@@ -8,68 +9,72 @@ const USERS_MODE = 2;
 
 const SEARCH_MODES = [ITEMS_MODE, COLLECTIONS_MODE, USERS_MODE];
 
-const itemsModeHandler = (text) => {
-  console.log(text);
-  return null;
-};
-
-const collectionsModeHandler = (text) => {
-  console.log(text);
-  return null;
-};
-
-const usersModeHandler = (text) => {
-  console.log(text);
-  return null;
-};
-
-const getComponentHandlerByMode = (mode) => {
-  const handlers = {
-    [USERS_MODE]: usersModeHandler,
-    [ITEMS_MODE]: itemsModeHandler,
-    [COLLECTIONS_MODE]: collectionsModeHandler,
-  };
-  return handlers[mode];
-};
-
-const getInitialComponents = () => {
-  return {
-    USERS_MODE: null,
-    ITEMS_MODE: null,
-    COLLECTIONS_MODE: null,
-  };
-};
-
 const Search = (props) => {
   const [mode, setMode] = useState(ITEMS_MODE);
-  const [resultComponents, setResultComponents] = useState(getInitialComponents());
+  const [resultComponents, setResultComponents] = useState({});
   const [submittedSearchText, setSubmittedSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const componentUpdateHelper = (mode, text) => {
-    const handler = getComponentHandlerByMode(mode);
-    const component = handler(text);
-    const updatedResultComponents = {...resultComponents, [mode]: component};
-    setResultComponents(updatedResultComponents);
-  }
+  const itemsComponentHandler = (text) => {
+    // TODO: fetch items
+    // TODO: return component to render
+    console.log(text);
+    return null;
+  };
+
+  const collectionsComponentHandler = (text) => {
+    // TODO: fetch collections
+    // TODO: return component to render
+    console.log(text);
+    return null;
+  };
+
+  const usersComponentHandler = (text) => {
+    // TODO: fetch users
+    // TODO: return component to render
+    console.log(text);
+    return null;
+  };
+  
+  const componentHandlers = {
+    [USERS_MODE]: usersComponentHandler,
+    [ITEMS_MODE]: itemsComponentHandler,
+    [COLLECTIONS_MODE]: collectionsComponentHandler,
+  };
+
+  const searchHandler = (mode, text) => {
+    if (!componentHandlers.hasOwnProperty(mode)) {
+      return;
+    }
+    return componentHandlers[mode](text);
+  };
 
   const submitHandler = (text) => {
+    if (text === submittedSearchText) {
+      return;
+    }
     // handle search
     console.log(mode);
     setSubmittedSearchText(text);
-    componentUpdateHelper(mode, text);
+    const component = searchHandler(mode, text);
+    const updatedResultComponents = {[mode]: component};
+    setResultComponents(updatedResultComponents);
   };
 
   const modeChangeHandler = (newMode) => {
-    if (newMode < 0 || newMode > 2 || newMode === mode) {
+    if (!SEARCH_MODES.includes(newMode) || mode === newMode) {
       return;
-    } 
-    // can be further optimized? (e.g. caching props?)
+    }
+    if (!resultComponents.hasOwnProperty(newMode)) {
+      const component = searchHandler(newMode, submittedSearchText);
+      const updatedResultComponents = {...resultComponents, [newMode]: component};
+      setResultComponents(updatedResultComponents);
+    }
     setMode(newMode);
-    componentUpdateHelper(newMode, submittedSearchText);
   };
 
   // how search result should be displayed
-  const resultComponent = resultComponents[mode]; // or loading component when loading
+  const resultComponent = loading ? <IonLoading isOpen={loading} /> : resultComponents[mode];
 
   return (
     <>
