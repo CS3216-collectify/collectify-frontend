@@ -6,17 +6,18 @@ import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
 import "./Discover.scss";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import Search from "../search/Search";
+import DiscoverItems from "../../components/discover-items/DiscoverItems";
 
 const Discover = () => {
-   const [ isSearchActive, setIsSearchActive ] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   const searchOpenHandler = () => {
     setIsSearchActive(true);
-  }
+  };
 
   const searchCloseHandler = () => {
     setIsSearchActive(false);
-  }
+  };
 
   return (
     <IonPage className="discover">
@@ -25,17 +26,12 @@ const Discover = () => {
       <HomeToolbar title="Discover" />
       <IonContent className="ion-padding">
         <IonGrid fixed>
-          {/* <DiscoverItems /> */}
-          <Search 
-            inactive={!isSearchActive} 
-            onFocus={searchOpenHandler} 
-            onCancel={searchCloseHandler}
-          />
+          <Search inactive={!isSearchActive} onFocus={searchOpenHandler} onCancel={searchCloseHandler} />
 
-          {!isSearchActive &&
+          {!isSearchActive && (
             // Ideally Discover component should have a "hidden" prop?
-            <p>Discover page should be here</p>
-          }
+            <DiscoverItems />
+          )}
         </IonGrid>
       </IonContent>
     </IonPage>
