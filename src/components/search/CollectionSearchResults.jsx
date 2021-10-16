@@ -33,6 +33,9 @@ const CollectionSearchResultDisplay = (props) => {
   }, [searchText, hasMore, pages, collections]);
 
   const loadInitialPage = useCallback(async () => {
+    if (!searchText) {
+      return;
+    }
     try {
       setLoading(true);
       console.log(searchText);
