@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { IonPage, IonGrid, IonContent } from "@ionic/react";
+
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -29,18 +32,12 @@ const SearchResults = (props) => {
   const { mode, searchText } = props;
   return (
     <>
-      {mode === USERS_MODE &&
-        <UserSearchResults searchText={searchText} />
-      }
-      {mode === COLLECTIONS_MODE &&
-        <CollectionSearchResults searchText={searchText} />
-      }
-      {mode === ITEMS_MODE &&
-        <ItemSearchResults searchText={searchText} />
-      }
+      {mode === USERS_MODE && <UserSearchResults searchText={searchText} />}
+      {mode === COLLECTIONS_MODE && <CollectionSearchResults searchText={searchText} />}
+      {mode === ITEMS_MODE && <ItemSearchResults searchText={searchText} />}
     </>
-  )
-}
+  );
+};
 
 const Search = (props) => {
   const [mode, setMode] = useState(ITEMS_MODE);
@@ -59,12 +56,19 @@ const Search = (props) => {
   };
 
   return (
-    <>
-      <SearchBox onSubmit={searchHandler}>
-        <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
-        <SearchResults mode={mode} searchText={searchText} />
-      </SearchBox>
-    </>
+    <IonPage className="discover">
+      <HomeToolbar title="Search" />
+
+      {/* Ion padding applies 16px  */}
+      {/* <IonContent className="ion-padding"> */}
+        <IonGrid fixed>
+          <SearchBox onSubmit={searchHandler}>
+            <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
+            <SearchResults mode={mode} searchText={searchText} />
+          </SearchBox>
+        </IonGrid>
+      {/* </IonContent> */}
+    </IonPage>
   );
 };
 
