@@ -12,18 +12,16 @@ const SearchBar = (props) => {
     onChange(e.detail.value);
   }
 
-  const clearHandler = (e) => {
-    onChange("");
-  }
-
   return (
     <form onSubmit={submitHandler}>
       <IonSearchbar
         value={value}
         onIonChange={changeHandler}
-        onIonCancel={clearHandler}
         showCancelButton={true}
         enterkeyhint="search"
+        // onIonCancel
+        // onIonFocus
+        // onIonBlur
       />
     </form>
   );
