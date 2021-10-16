@@ -12,19 +12,12 @@ import {
   useIonPopover,
   IonText,
 } from "@ionic/react";
-import {
-  search,
-  addCircleOutline,
-  chatbubblesOutline,
-  personCircleOutline,
-  settingsOutline,
-  ellipsisVertical,
-  arrowBackOutline,
-} from "ionicons/icons";
-import { useHistory } from "react-router-dom";
+import { search, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import { useHistory, useLocation } from "react-router-dom";
 
 const ProfileToolbar = ({ username }) => {
   const history = useHistory();
+  const location = useLocation();
 
   // Menu with items shown when ellipsis icon is pressed
   const PopoverList: React.FC<{
@@ -83,7 +76,13 @@ const ProfileToolbar = ({ username }) => {
         <IonTitle>{username}</IonTitle>
         <IonButtons slot="start">
           {/* <IonBackButton defaultHref="home" /> */}
-          <IonBackButton />
+          <IonBackButton
+            className={
+              location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
+                ? "ion-hide"
+                : ""
+            }
+          />{" "}
         </IonButtons>
         <IonButtons slot="end">
           <IonButton

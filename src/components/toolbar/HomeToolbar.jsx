@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 import {
   IonTitle,
@@ -36,6 +36,7 @@ const HomeToolbar = ({ title }) => {
   // const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
   const history = useHistory();
+  const location = useLocation();
 
   const handleButtonClick = (path) => {
     history.push(`/${path}`);
@@ -71,7 +72,13 @@ const HomeToolbar = ({ title }) => {
         <IonTitle>{title}</IonTitle>
         <IonButtons slot="start">
           {/* <IonBackButton defaultHref="home" /> */}
-          <IonBackButton />
+          <IonBackButton
+            className={
+              location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
+                ? "ion-hide"
+                : ""
+            }
+          />
         </IonButtons>
         {/* <IonButtons slot="end">
           <IonButton
