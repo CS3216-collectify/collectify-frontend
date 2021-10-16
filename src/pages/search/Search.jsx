@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { IonPage, IonGrid, IonContent } from "@ionic/react";
+import { IonPage, IonGrid, IonContent, IonRow } from "@ionic/react";
 
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -30,6 +30,18 @@ const SEARCH_MODE_TOGGLE_OPTIONS = [
 
 const SearchResults = (props) => {
   const { mode, searchText } = props;
+  console.log(mode, searchText);
+
+  if (!searchText) {
+    return (
+      <IonGrid>
+        <IonRow className="ion-justify-content-center ion-margin-top">
+          <Logo />
+        </IonRow>
+      </IonGrid>
+    );
+  }
+
   return (
     <>
       {mode === USERS_MODE && <UserSearchResults searchText={searchText} />}
@@ -40,10 +52,14 @@ const SearchResults = (props) => {
 };
 
 const Search = (props) => {
+  const { onFocus: focusHandler, onCancel, inactive } = props;
   const [mode, setMode] = useState(ITEMS_MODE);
   const [searchText, setSearchText] = useState("");
 
   const searchHandler = (text) => {
+    if (text === searchText) {
+      return;
+    }
     setSearchText(text);
   };
 
@@ -55,20 +71,28 @@ const Search = (props) => {
     setMode(newMode);
   };
 
-  return (
-    <IonPage className="discover">
-      <HomeToolbar title="Search" />
+  const initializeSearchState = () => {
+    setSearchText("");
+    setMode(ITEMS_MODE);
+  };
 
-      {/* Ion padding applies 16px  */}
-      {/* <IonContent className="ion-padding"> */}
-        <IonGrid fixed>
-          <SearchBox onSubmit={searchHandler}>
+  const cancelHandler = () => {
+    initializeSearchState();
+    onCancel();
+  };
+
+  return (
+    <>
+      <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}>
+        {!inactive && (
+          <>
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
+            {searchText && <p>Showing results for "{searchText}"</p>}
             <SearchResults mode={mode} searchText={searchText} />
-          </SearchBox>
-        </IonGrid>
-      {/* </IonContent> */}
-    </IonPage>
+          </>
+        )}
+      </SearchBox>
+    </>
   );
 };
 
