@@ -91,12 +91,12 @@ const Search = (props) => {
       <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}>
         {!inactive &&
           <>
-            {searchText &&
-              <>
-                Showing results for "{searchText}"
-              </>
-            }
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
+            {searchText &&
+              <p>
+                Showing results for "{searchText}"
+              </p>
+            }
             <SearchResults mode={mode} searchText={searchText} />
           </>
         }
