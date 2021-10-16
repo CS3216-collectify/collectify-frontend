@@ -27,7 +27,7 @@ const Collection = (props) => {
   const [categoryName, setCategoryName] = useState(null);
 
   const { currentUserId } = useUserContext();
-  console.log(collectionId)
+
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
     try {
@@ -94,7 +94,6 @@ const Collection = (props) => {
           {Number(currentUserId) === Number(ownerUserId) && (
             <IonRow className="ion-justify-content-end">
               <IonCol>
-                {console.log("here",collectionId)}
                 <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />
               </IonCol>
               <IonCol>

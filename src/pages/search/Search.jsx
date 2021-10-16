@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { IonPage, IonGrid, IonContent, IonRow } from "@ionic/react";
+import { IonGrid, IonRow } from "@ionic/react";
 
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -35,9 +34,7 @@ const SearchResults = (props) => {
   if (!searchText) {
     return (
       <IonGrid>
-        <IonRow className="ion-justify-content-center ion-margin-top">
-          <Logo />
-        </IonRow>
+        <IonRow className="ion-justify-content-center ion-margin-top"></IonRow>
       </IonGrid>
     );
   }

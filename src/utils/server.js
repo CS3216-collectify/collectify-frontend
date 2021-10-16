@@ -15,30 +15,24 @@ const server = axios.create({
 
 server.interceptors.response.use(
   (response) => {
-    console.log(response);
-    return response
+    return response;
   },
   (error) => {
     const originalRequest = error.config;
-    console.log(error)
     // Direct back to login page.
     if (error.response.status === 401 && originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/") {
-      console.log(error);
-      console.log("abc");
       // window.location.href = REACT_LOGIN_REL_URL;
       return Promise.reject(error);
     }
 
     if (error.response.status === 401 && error.response.statusText === "Unauthorized") {
       const refreshToken = getRefreshToken();
-      console.log("def");
 
       if (refreshToken) {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
 
         // exp date in token is expressed in seconds, while now() returns milliseconds:
         const now = Math.ceil(Date.now() / 1000);
-        console.log(tokenParts.exp);
 
         if (tokenParts.exp > now) {
           return server

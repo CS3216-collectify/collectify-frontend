@@ -18,7 +18,7 @@ const DiscoverItems = (props) => {
         return;
       }
       const retrievedItems = (await getItemsForDiscover(nextPage * LIMIT, LIMIT)).items;
-      console.log(retrievedItems);
+
       if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }

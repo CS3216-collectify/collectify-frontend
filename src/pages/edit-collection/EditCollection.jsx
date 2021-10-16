@@ -27,7 +27,6 @@ const EditCollection = (props) => {
     try {
       const currentCollection = await getCollectionByCollectionId(collectionId);
       const options = await getCategories();
-      console.log(currentCollection);
       setCollection(currentCollection);
       setCategoryOptions(options);
     } catch (e) {
