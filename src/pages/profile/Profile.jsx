@@ -17,6 +17,7 @@ import { getCollections } from "../../services/collections";
 import { getUserByUserId } from "../../services/users";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
+import CollectionList from "../../components/profile-collection/CollectionList";
 
 const LIMIT = 10;
 
@@ -178,14 +179,7 @@ const Profile = () => {
               <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
             </IonRow>
             <IonRow className=" ion-justify-content-center">
-              <IonList className="profile-collection--list">
-                {collections.map((collection, index) => (
-                  <ProfileCollection collection={collection} key={index} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
-                ))}
-                <IonInfiniteScroll disabled={!hasMore} onIonInfinite={fetchNextPage}>
-                  <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..." />
-                </IonInfiniteScroll>
-              </IonList>
+              <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
             </IonRow>
           </IonGrid>
         ) : (

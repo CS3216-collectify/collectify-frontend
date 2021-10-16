@@ -39,6 +39,7 @@ import EditCollection from "./pages/edit-collection/EditCollection";
 import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 import Discover from "./pages/discover/Discover";
+import Search from "./pages/search/Search";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -71,9 +72,7 @@ const App = () => {
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
                 <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/discover" component={Discover} />
-
-                {/* Test Route, DELETE */}
-                <Route exact path="/test/:collectionId/:itemId" component={AddCollection} />
+                <Route exact path="/discover/search" component={Search} />
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>

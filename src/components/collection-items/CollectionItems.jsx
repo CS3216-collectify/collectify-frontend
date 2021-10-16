@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import ImageGrid from "../gallery/ImageGrid";
+import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
 
 const LIMIT = 18;
@@ -12,22 +12,14 @@ const CollectionItems = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
 
-  const loadItems = async () => {
+  const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
     try {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getItemsFromCollection(
-        collectionId,
-        nextPage * LIMIT,
-        LIMIT
-      );
-      console.log(retrievedItems);
-      if (
-        (retrievedItems && retrievedItems.length < LIMIT) ||
-        !retrievedItems
-      ) {
+      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
+      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }
       setItems([...items, ...retrievedItems]);
@@ -35,32 +27,24 @@ const CollectionItems = (props) => {
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [collectionId, hasMore, items, pages]);
+
+  useEffect(() => {
+    loadItems();
+  }, [loadItems]);
 
   const fetchNextPage = () => {
     console.log("load next");
     loadItems();
   };
 
-  useEffect(() => {
-    loadItems();
-  }, []);
-
-  const goToItemPage = (itemId) => {
-    history.push(
-      `/collections/${collectionId}/items/${itemId}`
-    );
-  };
-
-  const gridImages = items.map((item) => ({ url: item.coverImage, clickHandler: () => goToItemPage(item.itemId) }));
-
   return (
-    <ImageGrid 
+    <ItemGrid
       onScrollEnd={fetchNextPage}
-      images={gridImages}
-      scrollEnded={!hasMore}
+      items={items}
+      listEnded={!hasMore}
     />
-  );
+  )
 };
 
 export default CollectionItems;
