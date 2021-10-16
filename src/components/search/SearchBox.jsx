@@ -1,4 +1,4 @@
-import { IonContent, IonLoading } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonIcon, IonLoading, IonRow } from "@ionic/react";
 import { useState } from "react";
 import SearchBar from "../text-input/SearchBar";
 
@@ -6,28 +6,34 @@ const SearchBox = (props) => {
   const {
     children,
     onSubmit,
+    onCancel: cancelHandler,
+    onFocus: focusHandler,
+    showCancel,
   } = props;
-  const [prevSearch, setPrevSearch] = useState("");
   const [searchText, setSearchText] = useState("");
 
   const submitHandler = () => {
-    if (searchText && searchText !== prevSearch) {
-      setPrevSearch(searchText);
+    if (searchText) {
       onSubmit(searchText);
     }
   };
 
+  const changeHandler = (text) => {
+    setSearchText(text);
+  }
+
   return (
-    <>
+    <IonGrid>
       <SearchBar
         value={searchText}
-        onChange={setSearchText}
+        onChange={changeHandler}
         onSubmit={submitHandler}
+        onCancel={cancelHandler}
+        onFocus={focusHandler}
+        showCancel={showCancel}
       />
-      <IonContent>
-        {children}
-      </IonContent>
-    </>
+      {children}
+    </IonGrid>
   );
 };
 

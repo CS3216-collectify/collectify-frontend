@@ -33,6 +33,9 @@ const UserSearchResultDisplay = (props) => {
   }, [searchText, hasMore, pages, users]);
 
   const loadInitialPage = useCallback(async () => {
+    if (!searchText) {
+      return;
+    }
     try {
       setLoading(true)
       console.log(searchText);
