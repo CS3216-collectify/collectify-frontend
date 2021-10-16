@@ -94,7 +94,7 @@ const Collection = (props) => {
           {Number(currentUserId) === Number(ownerUserId) && (
             <IonRow className="ion-justify-content-end">
               <IonCol>
-                <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/items/add`)} />
+                <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />
               </IonCol>
               <IonCol>
                 <EditButton className="collection--button" label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />

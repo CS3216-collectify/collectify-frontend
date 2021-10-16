@@ -12,7 +12,7 @@
   height: 33vw;
 }
 
-.single-image-3{
+.single-image-3 {
   height: 33vw;
   width: 33vw;
   // height: 33vw;
@@ -35,7 +35,11 @@
 }
 
 .image-carousel {
+  ion-slides {
+    width: 100%;
+  }
   ion-img {
     object-fit: contain;
+    width:100%;
   }
 }

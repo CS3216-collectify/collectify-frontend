@@ -6,20 +6,12 @@ const ItemGrid = (props) => {
   const { items, onScrollEnd: fetchNextPage, listEnded } = props;
 
   const goToItemPage = (collectionId, itemId) => {
-    history.push(
-      `/collections/${collectionId}/items/${itemId}`
-    );
+    history.push(`/collections/${collectionId}/items/${itemId}`);
   };
 
   const gridImages = items.map((item) => ({ url: item.coverImage, clickHandler: () => goToItemPage(item.collectionId, item.itemId) }));
 
-  return (
-    <ImageGrid 
-      onScrollEnd={fetchNextPage}
-      images={gridImages}
-      listEnded={listEnded}
-    />
-  );
-}
+  return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} listEnded={listEnded} />;
+};
 
 export default ItemGrid;

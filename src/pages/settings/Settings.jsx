@@ -39,9 +39,11 @@ const Settings = () => {
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
 
         <IonGrid fixed>
-          <IonText>
-            <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
-          </IonText>
+          {!currentUserId && (
+            <IonText>
+              <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
+            </IonText>
+          )}
           <IonRow>{currentUserId ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
         </IonGrid>
       </IonContent>

@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { IonGrid, IonRow } from "@ionic/react";
+
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
-import { IonGrid, IonRow } from "@ionic/react";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -34,27 +34,19 @@ const SearchResults = (props) => {
   if (!searchText) {
     return (
       <IonGrid>
-        <IonRow className="ion-justify-content-center ion-margin-top">
-          <Logo />
-        </IonRow>
+        <IonRow className="ion-justify-content-center ion-margin-top"></IonRow>
       </IonGrid>
     );
   }
 
   return (
     <>
-      {mode === USERS_MODE &&
-        <UserSearchResults searchText={searchText} />
-      }
-      {mode === COLLECTIONS_MODE &&
-        <CollectionSearchResults searchText={searchText} />
-      }
-      {mode === ITEMS_MODE &&
-        <ItemSearchResults searchText={searchText} />
-      }
+      {mode === USERS_MODE && <UserSearchResults searchText={searchText} />}
+      {mode === COLLECTIONS_MODE && <CollectionSearchResults searchText={searchText} />}
+      {mode === ITEMS_MODE && <ItemSearchResults searchText={searchText} />}
     </>
-  )
-}
+  );
+};
 
 const Search = (props) => {
   const { onFocus: focusHandler, onCancel, inactive } = props;
@@ -79,27 +71,23 @@ const Search = (props) => {
   const initializeSearchState = () => {
     setSearchText("");
     setMode(ITEMS_MODE);
-  }
+  };
 
   const cancelHandler = () => {
     initializeSearchState();
     onCancel();
-  }
+  };
 
   return (
     <>
       <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}>
-        {!inactive &&
+        {!inactive && (
           <>
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
-            {searchText &&
-              <p>
-                Showing results for "{searchText}"
-              </p>
-            }
+            {searchText && <p>Showing results for "{searchText}"</p>}
             <SearchResults mode={mode} searchText={searchText} />
           </>
-        }
+        )}
       </SearchBox>
     </>
   );

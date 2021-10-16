@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonText, IonIcon, IonButton } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -6,6 +6,7 @@ import ImageCarousel from "../../components/gallery/ImageCarousel";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getItemFromCollection } from "../../services/items";
 import useUserContext from "../../hooks/useUserContext";
+import { heart, heartOutline } from "ionicons/icons";
 
 const Item = () => {
   const history = useHistory();
@@ -19,6 +20,7 @@ const Item = () => {
   const [description, setDescription] = useState("Test Description...");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
+  const [liked, setLiked] = useState(false);
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
@@ -34,7 +36,6 @@ const Item = () => {
     } catch (e) {
       console.log(e);
     } finally {
-      console.log("YE boi");
       setLoading(false);
     }
   }, [collectionId, itemId]);
@@ -54,18 +55,28 @@ const Item = () => {
         <IonGrid fixed>
           <IonRow>
             <IonCol>
-              <p>
+              <IonText>
                 @{ownerUsername} ({ownerName})
-              </p>
+              </IonText>
+            </IonCol>
+            <IonCol>
+              {Number(currentUserId) === Number(ownerId) && (
+                <IonRow className="ion-justify-content-end">
+                  <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
+                </IonRow>
+              )}
             </IonCol>
           </IonRow>
           <ImageCarousel imageUrls={imageUrls} />
           <IonRow>
-            <IonCol size={9}>
+            <IonCol size={8}>
               <p>{title}</p>
             </IonCol>
-            <IonCol size={3}>
-              <p>12 likes</p>
+            <IonCol  size={4}>
+              <IonButton fill="clear" onClick={() => setLiked(!liked)}>
+                <IonIcon size="small" slot="icon-only" icon={liked ? heart : heartOutline} />
+                <IonText color="default">12 likes</IonText>
+              </IonButton>
             </IonCol>
           </IonRow>
           <IonRow>
@@ -73,11 +84,6 @@ const Item = () => {
               <p>{description}</p>
             </IonCol>
           </IonRow>
-          {Number(currentUserId) === Number(ownerId) && (
-            <IonRow className="ion-justify-content-end">
-              <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
-            </IonRow>
-          )}
         </IonGrid>
       </IonContent>
     </IonPage>

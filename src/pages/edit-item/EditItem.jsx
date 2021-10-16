@@ -24,7 +24,6 @@ const EditItem = () => {
     setLoading(true);
     try {
       const currentItem = await getItemFromCollection(collectionId, itemId);
-      console.log(currentItem);
       setItem(currentItem);
     } catch (e) {
       console.log(e);

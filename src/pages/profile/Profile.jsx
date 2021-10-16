@@ -14,23 +14,23 @@ import ProfileCollection from "../../components/profile-collection/ProfileCollec
 import AddButton from "../../components/button/AddButton";
 import { getUserId } from "../../utils/user";
 import { getCollections } from "../../services/collections";
-import { getUserByUserId } from "../../services/users";
+import { getCurrentUser, getUserByUsername } from "../../services/users";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import CollectionList from "../../components/profile-collection/CollectionList";
+import FlexImage from "../../components/image/FlexImage";
 
 const LIMIT = 10;
 
 const Profile = () => {
   const history = useHistory();
   const setToast = useToastContext();
-  const { currentUserId, isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
-  let userId = getUserId();
-
+ 
   // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");
@@ -43,16 +43,30 @@ const Profile = () => {
 
   // TODO: add api call for username
   const getUserInformation = useCallback(() => {
-    getUserByUserId(currentUserId)
-      .then((res) => {
-        setProfileUserId(Number(res.userId));
-        setProfileFirstName(res.firstName);
-        setProfileLastName(res.lastName);
-        setProfileUsername(res.username);
-        setProfileProfilePicture(res.pictureUrl);
-      })
-      .catch((e) => console.log(e));
-  }, [currentUserId]);
+    if (currentUserId) {
+      getCurrentUser()
+        .then((res) => {
+          setProfileUserId(Number(currentUserId));
+          setProfileFirstName(res.firstName);
+          setProfileLastName(res.lastName);
+          setProfileUsername(res.username);
+          setProfileProfilePicture(res.pictureUrl);
+        })
+        .catch((e) => console.log(e));
+    } else {
+      if (username) {
+        getUserByUsername()
+          .then((res) => {
+            setProfileUserId(Number(res.userId));
+            setProfileFirstName(res.firstName);
+            setProfileLastName(res.lastName);
+            setProfileUsername(res.username);
+            setProfileProfilePicture(res.pictureUrl);
+          })
+          .catch((e) => console.log(e));
+      }
+    }
+  }, [currentUserId, username]);
 
   // should check whether its guest clicking profile tab, or user clicking their own tab, or user viewing others' profile
   const loadUserCollections = useCallback(async () => {
@@ -61,7 +75,7 @@ const Profile = () => {
       if (!hasMore) {
         return;
       }
-      const retrievedCollections = await getCollections(null, userId, nextPage * LIMIT, LIMIT);
+      const retrievedCollections = await getCollections(null, profileUserId, nextPage * LIMIT, LIMIT);
 
       if ((retrievedCollections && retrievedCollections.length < LIMIT) || !retrievedCollections) {
         setHasMore(false);
@@ -71,7 +85,7 @@ const Profile = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [collections, hasMore, pages, userId]);
+  }, [collections, hasMore, pages, profileUserId]);
 
   useEffect(() => {
     if (!username && currentUserId) {
@@ -118,7 +132,7 @@ const Profile = () => {
             <IonRow>
               <IonCol size="auto">
                 {/* <Logo className="profile--img"/> */}
-                <IonImg className="profile--img" src={profileProfilePicture} />
+                <FlexImage className="profile--img" src={profileProfilePicture} />
               </IonCol>
 
               <IonCol>
@@ -176,7 +190,7 @@ const Profile = () => {
             </IonRow>
             <IonRow className="ion-justify-content-end">
               {/* Direct to AddCollection page */}
-              <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
+              <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
             <IonRow className=" ion-justify-content-center">
               <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
@@ -185,7 +199,9 @@ const Profile = () => {
         ) : (
           <IonGrid fixed>
             <IonRow className="ion-justify-content-center ion-margin-top">
-              <IonText><h1>Log in to collectify to begin showcasing your collectables to the world!</h1></IonText>
+              <IonText>
+                <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
+              </IonText>
               <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
             </IonRow>
           </IonGrid>

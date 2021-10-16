@@ -41,11 +41,12 @@ const CollectionItems = (props) => {
   return (
     <ItemGrid
       onScrollEnd={fetchNextPage}
-      items={items}
+      items={items.map((item) => {
+        return { ...item, collectionId };
+      })}
       listEnded={!hasMore}
     />
-  )
+  );
 };
 
 export default CollectionItems;
-  

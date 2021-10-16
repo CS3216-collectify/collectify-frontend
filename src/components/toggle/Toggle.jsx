@@ -1,8 +1,8 @@
 import { IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
 
-
 const Toggle = (props) => {
   const { value, options, onChange: toggleHandler } = props;
+
   return (
     <IonSegment value={value} onIonChange={(e) => toggleHandler(e.detail.value)}>
       {options.map((opt, idx) => (
@@ -11,7 +11,7 @@ const Toggle = (props) => {
         </IonSegmentButton>
       ))}
     </IonSegment>
-  )
-}
+  );
+};
 
 export default Toggle;
