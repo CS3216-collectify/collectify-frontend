@@ -38,7 +38,6 @@ const ItemSearchResultDisplay = (props) => {
     }
     try {
       setLoading(true);
-      console.log(searchText);
       const nextPage = 0;
       const fetchedItems = await searchItems(searchText, nextPage * LIMIT, LIMIT);
       const updatedHasMore = fetchedItems && fetchedItems.length >= LIMIT;

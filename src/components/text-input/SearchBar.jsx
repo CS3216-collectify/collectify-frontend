@@ -3,8 +3,6 @@ import { IonSearchbar } from "@ionic/react";
 const SearchBar = (props) => {
   const {
     showCancel = false,
-    value,
-    onChange,
     onSubmit,
     onCancel: cancelHandler,
     onFocus: focusHandler,
@@ -12,18 +10,17 @@ const SearchBar = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onSubmit();
-  };
-
-  const changeHandler = (e) => {
-    onChange(e.detail.value);
+    const searchText = document.getElementById("my-search-bar").value.trim();
+    console.log("search bar value is:", searchText);
+    if (searchText) {
+      onSubmit(searchText);
+    }
   };
 
   return (
     <form onSubmit={submitHandler}>
       <IonSearchbar
-        value={value}
-        onIonChange={changeHandler}
+        id="my-search-bar"
         onIonFocus={focusHandler}
         onIonCancel={cancelHandler}
         showClearButton="always"

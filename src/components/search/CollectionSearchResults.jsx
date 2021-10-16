@@ -38,7 +38,6 @@ const CollectionSearchResultDisplay = (props) => {
     }
     try {
       setLoading(true);
-      console.log(searchText);
       const nextPage = 0;
       const fetchedCollections = await searchCollections(searchText, nextPage * LIMIT, LIMIT);
       const updatedHasMore = fetchedCollections && fetchedCollections.length >= LIMIT;

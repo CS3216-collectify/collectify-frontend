@@ -37,8 +37,7 @@ const UserSearchResultDisplay = (props) => {
       return;
     }
     try {
-      setLoading(true)
-      console.log(searchText);
+      setLoading(true);
       const nextPage = 0;
       const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
       const updatedHasMore = fetchedUsers && fetchedUsers.length >= LIMIT;
