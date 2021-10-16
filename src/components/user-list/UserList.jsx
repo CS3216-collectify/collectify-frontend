@@ -1,19 +1,8 @@
 import {
-  IonAvatar,
-  IonCol,
-  IonContent,
-  IonImg,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  IonItem,
-  IonLabel,
   IonList,
 } from "@ionic/react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { getFollowersByCollectionId } from "../../services/followers";
-import FlexImage from "../../components/image/FlexImage"
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
+import UserCard from "./UserCard";
 
 const LIMIT = 10;
 
@@ -23,15 +12,8 @@ const UserList = (props) => {
   return (
     <IonList>
       {/* <IonListHeader>Followers/Likes</IonListHeader> */}
-      {users.map((userData, idx) => (
-        <IonItem key={idx}>
-          <IonAvatar>
-            <IonImg src={userData.profilePhotoUrl} />
-          </IonAvatar>
-          <IonCol>
-            <IonLabel>@{userData.username}</IonLabel>
-          </IonCol>
-        </IonItem>
+      {users.map(({ profilePhotoUrl, username }, idx) => (
+        <UserCard key={idx} profilePhotoUrl={profilePhotoUrl} username={username} />
       ))}
       <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </IonList>
