@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
+
 import {
   IonTitle,
   IonToolbar,
@@ -33,6 +35,12 @@ const HomeToolbar = ({ title }) => {
 
   // const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
+  const history = useHistory();
+
+  const handleButtonClick = (path) => {
+    history.push(`/${path}`);
+  };
+
   return (
     <IonHeader>
       {/* Toolbar shown for desktop view */}
@@ -40,19 +48,19 @@ const HomeToolbar = ({ title }) => {
         <IonTitle>{title}</IonTitle>
 
         <IonButtons slot="end">
-          <IonButton>
+          <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="small" slot="icon-only" icon={search} />
           </IonButton>
-          <IonButton>
+          {/* <IonButton onClick={() => handleButtonClick("add")}>
             <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
-          <IonButton>
+          <IonButton onClick={() => handleButtonClick("chat")}>
             <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
-          </IonButton>
-          <IonButton>
+          </IonButton> */}
+          <IonButton onClick={() => handleButtonClick("profile")}>
             <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
-          <IonButton>
+          <IonButton onClick={() => handleButtonClick("settings")}>
             <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
           </IonButton>
         </IonButtons>
