@@ -1,15 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
-import { useHistory } from "react-router";
 
 import "./DiscoverItems.scss";
-import ImageGrid from "../gallery/ImageGrid";
+import ItemGrid from "../collection-items/ItemGrid";
 import { getItemsForDiscover } from "../../services/items";
 
 const LIMIT = 18;
 
 const DiscoverItems = (props) => {
-  const history = useHistory();
-  const { collectionId = 1 } = props;
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
@@ -41,13 +38,7 @@ const DiscoverItems = (props) => {
     loadItems();
   }, [loadItems]);
 
-  const goToItemPage = (itemId) => {
-    history.push(`/collections/${collectionId}/items/${itemId}`);
-  };
-
-  const gridImages = items.map((item) => ({ url: item.coverImage, clickHandler: () => goToItemPage(item.itemId) }));
-
-  return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} scrollEnded={!hasMore} />;
+  return <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} />;
 };
 
 export default DiscoverItems;

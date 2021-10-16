@@ -1,3 +1,4 @@
+import { access } from "fs";
 import server from "./server";
 
 const USER_ID_KEY = "userId";
@@ -6,7 +7,10 @@ const ACCESS_TOKEN_KEY = "accessToken";
 const IS_GUEST_KEY = "isGuest";
 
 const AUTHORIZATION_HEADER = "Authorization";
-const formatAuthorizationValue = (accessToken) => `Bearer ${accessToken}`;
+const formatAuthorizationValue = (accessToken) => {
+  console.log("format", accessToken)
+  return `Bearer ${accessToken}`;
+};
 
 export const getUserId = () => {
   // TODO: Null Handling (if userId not in local storage)
@@ -16,17 +20,17 @@ export const getUserId = () => {
 export const getRefreshToken = () => {
   // TODO: Null handling
   return localStorage.getItem(REFRESH_TOKEN_KEY);
-}
+};
 
 export const getAccessToken = () => {
   // TODO: Null handling
   return localStorage.getItem(ACCESS_TOKEN_KEY);
-}
+};
 
 export const getIsGuest = () => {
   // TODO: Null handling
   return localStorage.getItem(IS_GUEST_KEY);
-}
+};
 
 export const logoutUser = () => {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
@@ -39,7 +43,9 @@ export const logoutUser = () => {
 };
 
 export const loginUser = (loginData) => {
+  console.log(loginData);
   const { access: accessToken, refresh: refreshToken, id: userId } = loginData;
+  console.log(accessToken, refreshToken, userId)
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   localStorage.setItem(USER_ID_KEY, userId);
@@ -47,10 +53,10 @@ export const loginUser = (loginData) => {
   localStorage.removeItem(IS_GUEST_KEY);
 
   server.defaults.headers[AUTHORIZATION_HEADER] = formatAuthorizationValue(accessToken);
-}
+};
 
 export const loginGuest = () => {
   logoutUser();
 
   localStorage.setItem(IS_GUEST_KEY, true);
-}
+};

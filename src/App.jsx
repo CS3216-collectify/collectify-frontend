@@ -68,7 +68,7 @@ const App = () => {
                 <Route exact path="/collections/:collectionId" component={Collection} />
                 <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
                 <Route exact path="/collections/add" component={AddCollection} />
-                <Route exact path="/collections/:collectionId/items/add" component={AddItem} />
+                <Route exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
                 <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/discover" component={Discover} />

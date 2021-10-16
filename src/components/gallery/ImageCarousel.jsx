@@ -11,7 +11,7 @@ const SCREEN_WIDTH = Math.max(
 );
 
 const slideOpts = {
-  initialSlide: 1,
+  initialSlide: 0,
   // width: SCREEN_WIDTH,
   // height: SCREEN_WIDTH,
 }

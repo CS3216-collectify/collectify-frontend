@@ -4,8 +4,9 @@ import ImageGrid from "../gallery/ImageGrid";
 const ItemGrid = (props) => {
   const history = useHistory();
   const { items, onScrollEnd: fetchNextPage, listEnded } = props;
-
+  console.log(items)
   const goToItemPage = (collectionId, itemId) => {
+    console.log("jx",collectionId, itemId)
     history.push(
       `/collections/${collectionId}/items/${itemId}`
     );

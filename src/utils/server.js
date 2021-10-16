@@ -9,15 +9,18 @@ const server = axios.create({
   baseURL: SERVER_BASE_URL,
   timeout: 5000,
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("Authorization"),
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
   },
 });
 
 server.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(response);
+    return response
+  },
   (error) => {
     const originalRequest = error.config;
-
+    console.log(error)
     // Direct back to login page.
     if (error.response.status === 401 && originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/") {
       console.log(error);
