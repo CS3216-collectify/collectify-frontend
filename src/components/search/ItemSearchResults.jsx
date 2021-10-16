@@ -33,6 +33,9 @@ const ItemSearchResultDisplay = (props) => {
   }, [searchText, hasMore, pages, items])
 
   const loadInitialPage = useCallback(async () => {
+    if (!searchText) {
+      return;
+    }
     try {
       setLoading(true);
       console.log(searchText);

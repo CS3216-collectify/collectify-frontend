@@ -72,7 +72,6 @@ const App = () => {
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
                 <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/discover" component={Discover} />
-                <Route exact path="/discover/search" component={Search} />
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
