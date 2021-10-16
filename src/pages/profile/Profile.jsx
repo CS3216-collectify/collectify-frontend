@@ -18,6 +18,7 @@ import { getCurrentUser, getUserByUsername } from "../../services/users";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import CollectionList from "../../components/profile-collection/CollectionList";
+import FlexImage from "../../components/image/FlexImage";
 
 const LIMIT = 10;
 
@@ -131,7 +132,7 @@ const Profile = () => {
             <IonRow>
               <IonCol size="auto">
                 {/* <Logo className="profile--img"/> */}
-                <IonImg className="profile--img" src={profileProfilePicture} />
+                <FlexImage className="profile--img" src={profileProfilePicture} />
               </IonCol>
 
               <IonCol>
@@ -189,7 +190,7 @@ const Profile = () => {
             </IonRow>
             <IonRow className="ion-justify-content-end">
               {/* Direct to AddCollection page */}
-              <AddButton label="Collection" onClick={() => history.push("/collections/add")} />
+              <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
             <IonRow className=" ion-justify-content-center">
               <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
