@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
 import { getItemsFromCollection } from "../../services/items";
 import FlexImage from "../image/FlexImage";
+import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import "./gallery.scss";
 
 const groupElements = (arr, interval) => {
@@ -17,33 +18,7 @@ const groupElements = (arr, interval) => {
 const LIMIT = 18;
 
 const ImageGrid = (props) => {
-  const history = useHistory();
-  const { collectionId = 1 } = props;
-  const [items, setItems] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [pages, setPages] = useState(-1);
-
-  const loadItems = useCallback(async () => {
-    const nextPage = pages + 1;
-    try {
-      if (!hasMore) {
-        return;
-      }
-      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
-      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
-        setHasMore(false);
-      }
-      setItems([...items, ...retrievedItems]);
-      setPages(nextPage);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionId, hasMore, items, pages]);
-
-  useEffect(() => {
-    loadItems();
-  }, [loadItems]);
-  const { onScrollEnd: fetchNextPage, images, scrollEnded } = props;
+  const { onScrollEnd: fetchNextPage, images, listEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
 
@@ -59,9 +34,7 @@ const ImageGrid = (props) => {
           ))}
         </IonRow>
       ))}
-      <IonInfiniteScroll disabled={scrollEnded} onIonInfinite={fetchNextPage}>
-        <IonInfiniteScrollContent className="ion-margin-top" loadingText="Loading..."></IonInfiniteScrollContent>
-      </IonInfiniteScroll>
+      <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </IonGrid>
   );
 };

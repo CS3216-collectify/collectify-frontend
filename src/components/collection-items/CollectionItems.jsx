@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import ImageGrid from "../gallery/ImageGrid";
+import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
 
 const LIMIT = 18;
@@ -19,7 +19,6 @@ const CollectionItems = (props) => {
         return;
       }
       const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
-      console.log(retrievedItems);
       if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }
@@ -30,22 +29,22 @@ const CollectionItems = (props) => {
     }
   }, [collectionId, hasMore, items, pages]);
 
+  useEffect(() => {
+    loadItems();
+  }, [loadItems]);
+
   const fetchNextPage = () => {
     console.log("load next");
     loadItems();
   };
 
-  useEffect(() => {
-    loadItems();
-  }, [loadItems]);
-
-  const goToItemPage = (itemId) => {
-    history.push(`/collections/${collectionId}/items/${itemId}`);
-  };
-
-  const gridImages = items.map((item) => ({ url: item.coverImage, clickHandler: () => goToItemPage(item.itemId) }));
-
-  return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} scrollEnded={!hasMore} />;
+  return (
+    <ItemGrid
+      onScrollEnd={fetchNextPage}
+      items={items}
+      listEnded={!hasMore}
+    />
+  )
 };
 
 export default CollectionItems;
