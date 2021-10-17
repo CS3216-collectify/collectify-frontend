@@ -29,12 +29,14 @@ const SEARCH_MODE_TOGGLE_OPTIONS = [
 
 const SearchResults = (props) => {
   const { mode, searchText } = props;
-  console.log(mode, searchText);
+  console.log("mode:", mode, ", search text:", searchText);
 
   if (!searchText) {
     return (
       <IonGrid>
-        <IonRow className="ion-justify-content-center ion-margin-top"></IonRow>
+        <IonRow className="ion-justify-content-center ion-margin-top">
+          Search for items, collections, or users! 
+        </IonRow>
       </IonGrid>
     );
   }
