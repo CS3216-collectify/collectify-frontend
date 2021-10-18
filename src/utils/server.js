@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAccessToken, getRefreshToken, loginUser } from "./user";
+import { logoutUser } from "./user";
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 const REACT_LOGIN_REL_URL = "";
@@ -21,7 +22,8 @@ server.interceptors.response.use(
     const originalRequest = error.config;
     // Direct back to login page.
     if (error.response.status === 401 && originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/") {
-      // window.location.href = REACT_LOGIN_REL_URL;
+      window.location.href = REACT_LOGIN_REL_URL;
+      logoutUser();
       return Promise.reject(error);
     }
 
@@ -48,11 +50,13 @@ server.interceptors.response.use(
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          // window.location.href = REACT_LOGIN_REL_URL;
+          logoutUser();
+          window.location.href = REACT_LOGIN_REL_URL;
         }
       } else {
         console.log("Refresh token not available.");
-        // window.location.href = REACT_LOGIN_REL_URL;
+        logoutUser();
+        window.location.href = REACT_LOGIN_REL_URL;
       }
     }
 
