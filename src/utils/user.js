@@ -43,13 +43,11 @@ export const logoutUser = () => {
 };
 
 export const loginUser = (loginData) => {
-  console.log(loginData);
   const { access: accessToken, refresh: refreshToken, id: userId } = loginData;
-  console.log(accessToken, refreshToken, userId);
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   
-  if (localStorage.getItem(USER_ID_KEY) === null && localStorage.getItem(USER_ID_KEY) === undefined) {
+  if (localStorage.getItem(USER_ID_KEY) === null || localStorage.getItem(USER_ID_KEY) === undefined) {
     localStorage.setItem(USER_ID_KEY, userId);
   }
 
