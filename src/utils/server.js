@@ -21,6 +21,8 @@ server.interceptors.response.use(
   (error) => {
     console.log(error)
     const originalRequest = error.config;
+    console.log(error.config)
+    console.log(error.response)
     // Direct back to login page.
     if (error.response.status === 401 && originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/") {
       window.location.href = REACT_LOGIN_REL_URL;
