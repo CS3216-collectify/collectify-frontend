@@ -8,7 +8,7 @@ const IS_GUEST_KEY = "isGuest";
 
 const AUTHORIZATION_HEADER = "Authorization";
 const formatAuthorizationValue = (accessToken) => {
-  console.log("format", accessToken)
+  console.log("format", accessToken);
   return `Bearer ${accessToken}`;
 };
 
@@ -45,10 +45,13 @@ export const logoutUser = () => {
 export const loginUser = (loginData) => {
   console.log(loginData);
   const { access: accessToken, refresh: refreshToken, id: userId } = loginData;
-  console.log(accessToken, refreshToken, userId)
+  console.log(accessToken, refreshToken, userId);
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-  localStorage.setItem(USER_ID_KEY, userId);
+  
+  if (localStorage.getItem(USER_ID_KEY) === null && localStorage.getItem(USER_ID_KEY) === undefined) {
+    localStorage.setItem(USER_ID_KEY, userId);
+  }
 
   localStorage.removeItem(IS_GUEST_KEY);
 

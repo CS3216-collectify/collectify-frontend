@@ -19,6 +19,7 @@ server.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log(error)
     const originalRequest = error.config;
     // Direct back to login page.
     if (error.response.status === 401 && originalRequest.url === SERVER_BASE_URL + "/api/token/refresh/") {
