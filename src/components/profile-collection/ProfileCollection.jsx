@@ -1,10 +1,10 @@
-import { IonCol, IonText, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
+import { IonCol, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
 import { useHistory } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
 import "./ProfileCollection.scss";
 import FlexImage from "../image/FlexImage";
-
+import Text from "../text/Text";
 const ProfileCollection = (props) => {
   const { collection } = props;
   const { collectionId, collectionName, collectionDescription, categoryName, coverImages } = collection;
@@ -13,10 +13,10 @@ const ProfileCollection = (props) => {
   return (
     <IonList className="profile-collection--container ion-margin-vertical" onClick={() => history.push("/collections/" + collectionId)}>
       <div className="profile-collection-title--container">
-        <IonText className="profile-collection--title">{collectionName}</IonText>
+        <Text className="profile-collection--title">{collectionName}</Text>
         <div className="profile-collection-followers--container">
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-          20 followers
+          <Text size="xs">20 followers</Text>
         </div>
       </div>
       <div className="profile-collection--images">
@@ -26,10 +26,16 @@ const ProfileCollection = (props) => {
             <FlexImage src={imgUrl} />
           </IonCol>
         ))}
-        {coverImages.length === 0 && <IonText className="profile-collection-empty-images">This collection is empty.</IonText>}
+        {coverImages.length === 0 && (
+          <Text size="xs" className="profile-collection-empty-images">
+            This collection is empty.
+          </Text>
+        )}
       </div>
       <div>
-        <IonText className="profile-collection--desc">{collectionDescription}</IonText>
+        <Text size="s" className="profile-collection--desc">
+          {collectionDescription}
+        </Text>
       </div>
       <div className="profile-collection-categories--container">
         {/* A collection only has a single category */}

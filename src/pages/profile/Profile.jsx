@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent } from "@ionic/react";
 
 import "./Profile.scss";
@@ -24,6 +23,7 @@ const LIMIT = 10;
 
 const Profile = () => {
   const history = useHistory();
+  const location = useLocation();
   const setToast = useToastContext();
   const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
@@ -88,11 +88,15 @@ const Profile = () => {
   }, [collections, hasMore, pages, profileUserId]);
 
   useEffect(() => {
+ 
+
     if (!username && currentUserId) {
       loadUserCollections();
       getUserInformation();
     }
-  }, [currentUserId, getUserInformation, loadUserCollections, username]);
+
+    // Add location as a useEffect dependency to reload on change
+  }, [currentUserId, getUserInformation, loadUserCollections, location, username]);
 
   const fetchNextPage = () => {
     console.log("load next");

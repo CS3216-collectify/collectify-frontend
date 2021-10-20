@@ -32,7 +32,7 @@ const EditProfile = () => {
 
     updateProfile(initialUsername, { username, firstName, lastName }).then((res) => {
       setToast({ message: "Profile saved!", color: "success" });
-      history.replace({ pathname: "/profile", state: { reload: true } });
+      history.replace('/profile');
       // window.location.reload();
     });
   };

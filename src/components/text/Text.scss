@@ -1,0 +1,17 @@
+.text {
+  &.text--xs {
+    font-size: 12px;
+  }
+  &.text--s {
+    font-size: 14px;
+  }
+  &.text--m {
+    font-size: 16px;
+  }
+  &.text--l {
+    font-size: 18px;
+  }
+  &.text--xl {
+    font-size: 20px;
+  }
+}
