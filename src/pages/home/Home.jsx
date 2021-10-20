@@ -11,6 +11,8 @@ const Home = () => {
   const [name, setName] = useState("");
   const x = useUserContext();
 
+  const { userId = 1, } = x;
+
   return (
     <IonPage>
       <HomeToolbar title="collectify" />
@@ -25,7 +27,9 @@ const Home = () => {
           }}
         ></IonGrid>
         <LogoutButton />
-        <Feed userId={x.userId} />
+        <IonGrid fixed>
+          <Feed userId={userId} />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
