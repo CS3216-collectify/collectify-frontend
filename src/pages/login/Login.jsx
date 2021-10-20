@@ -37,7 +37,7 @@ const Login = () => {
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
       setCurrentUserId(getUserId());
-      history.replace("/onboarding");
+      history.replace('/onboarding');
     } else {
       // error
       setToast({ message: "Google authentication failed. Please try again.", color: "danger" });
