@@ -18,6 +18,8 @@ import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import FlexImage from "../../components/image/FlexImage";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Toggle from "../../components/toggle/Toggle";
+import LikedItems from "../../components/liked-items/LikedItems";
+import FollowedCollections from "../../components/followed-collections.jsx/FollowedCollections";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -185,10 +187,12 @@ const Profile = () => {
             </IonRow>
             <IonRow className=" ion-justify-content-center">
               {mode === LIKED_ITEMS_MODE &&
-                null // TODO: Display liked items
+                // TODO: Finalize
+                <LikedItems />
               }
               {mode === FOLLOWING_COLLECTIONS_MODE &&
-                null // TODO: Display followed collections
+                // TODO: Finalize
+                <FollowedCollections />
               }
               {mode === COLLECTIONS_MODE &&
                 <ProfileCollections username={username} currentUserId={currentUserId} profileUserId={profileUserId}/>
