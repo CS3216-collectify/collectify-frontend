@@ -12,8 +12,8 @@ const UserList = (props) => {
   return (
     <IonList>
       {/* <IonListHeader>Followers/Likes</IonListHeader> */}
-      {users.map(({ profilePhotoUrl, username }, idx) => (
-        <UserCard key={idx} profilePhotoUrl={profilePhotoUrl} username={username} />
+      {users.map(({ pictureUrl, username }, idx) => (
+        <UserCard key={idx} pictureUrl={pictureUrl} username={username} />
       ))}
       <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </IonList>
