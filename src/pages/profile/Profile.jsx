@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent, IonLoading } from "@ionic/react";
 
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
@@ -56,43 +56,46 @@ const Profile = () => {
   const [profileUsername, setProfileUsername] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
+  const [loading, setLoading] = useState(false);
 
   const toggleMode = (mode) => {
     setMode(parseInt(mode));
   }
 
   // TODO: add api call for username
-  const getUserInformation = useCallback(() => {
-    if (currentUserId) {
-      getCurrentUser()
-        .then((res) => {
-          setProfileUserId(Number(currentUserId));
-          setProfileFirstName(res.firstName);
-          setProfileLastName(res.lastName);
-          setProfileUsername(res.username);
-          setProfileProfilePicture(res.pictureUrl);
-        })
-        .catch((e) => console.log(e));
-    } else {
+  const getUserInformation = useCallback(async () => {
+    try {
+      setLoading(true);
       if (username) {
-        getUserByUsername()
-          .then((res) => {
-            setProfileUserId(Number(res.userId));
-            setProfileFirstName(res.firstName);
-            setProfileLastName(res.lastName);
-            setProfileUsername(res.username);
-            setProfileProfilePicture(res.pictureUrl);
-          })
-          .catch((e) => console.log(e));
+        console.log(username)
+        const res = await getUserByUsername(username)
+        setProfileUserId(Number(res.userId));
+        setProfileFirstName(res.firstName);
+        setProfileLastName(res.lastName);
+        setProfileUsername(res.username);
+        setProfileProfilePicture(res.pictureUrl);
+      } else if (currentUserId) {
+        console.log(currentUserId);
+        const res = await getCurrentUser();
+        setProfileUserId(Number(currentUserId));
+        setProfileFirstName(res.firstName);
+        setProfileLastName(res.lastName);
+        setProfileUsername(res.username);
+        setProfileProfilePicture(res.pictureUrl);
       }
+    } catch (e) {
+      console.log(e);
+      // user not found
+    } finally {
+      setLoading(false);
     }
   }, [currentUserId, username]);
 
   useEffect(() => {
-    if (!username && currentUserId) {
+    if (username || currentUserId) {
       getUserInformation();
     }
-  }, [currentUserId, getUserInformation, username]);
+  }, [currentUserId, username]);
 
   const handleGoogleLogin = async (googleAuthStatus) => {
     if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_SUCCESS) {
@@ -109,15 +112,14 @@ const Profile = () => {
 
   return (
     <IonPage className="profile">
+      <IonLoading isOpen={loading} />
       <ProfileToolbar username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         {/* --ion-grid-width to modify the fixed width */}
 
-        {username ? (
-          <>Show other people's profile</>
-        ) : currentUserId ? (
+        {currentUserId ? (
           <IonGrid fixed className="profile--grid">
             <IonRow>
               <IonCol size="auto">
@@ -182,22 +184,29 @@ const Profile = () => {
               {/* Direct to AddCollection page */}
               <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
-            <IonRow>
-              <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
-            </IonRow>
-            <IonRow className=" ion-justify-content-center">
-              {mode === LIKED_ITEMS_MODE &&
-                // TODO: Finalize
-                <LikedItems />
-              }
-              {mode === FOLLOWING_COLLECTIONS_MODE &&
-                // TODO: Finalize
-                <FollowedCollections />
-              }
-              {mode === COLLECTIONS_MODE &&
-                <ProfileCollections username={username} currentUserId={currentUserId} profileUserId={profileUserId}/>
-              }
-            </IonRow>
+            {parseInt(currentUserId) === profileUserId &&
+              <>
+                <IonRow>
+                  <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
+                </IonRow>
+                <IonRow className=" ion-justify-content-center">
+                  {mode === LIKED_ITEMS_MODE &&
+                    // TODO: Finalize
+                    <LikedItems />
+                  }
+                  {mode === FOLLOWING_COLLECTIONS_MODE &&
+                    // TODO: Finalize
+                    <FollowedCollections />
+                  }
+                  {mode === COLLECTIONS_MODE &&
+                    <ProfileCollections profileUserId={profileUserId}/>
+                  }
+                </IonRow>
+              </>
+            }
+            {parseInt(currentUserId) !== profileUserId &&
+              <ProfileCollections profileUserId={profileUserId}/>
+            }
           </IonGrid>
         ) : (
           <IonGrid fixed>

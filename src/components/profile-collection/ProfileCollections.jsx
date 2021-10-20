@@ -11,15 +11,15 @@ const ProfileCollections = (props) => {
 
   console.log(pages);
   // username = someone elses, userId = my own
-  const { username, currentUserId, profileUserId } = props;
+  const { profileUserId } = props;
   // should check whether its guest clicking profile tab, or user clicking their own tab, or user viewing others' profile
-  const loadUserCollections = useCallback(async () => {
+  const loadUserCollections = useCallback(async (userId) => {
     const nextPage = pages + 1;
     try {
       if (!hasMore) {
         return;
       }
-      const retrievedCollections = await getCollections(null, profileUserId, nextPage * LIMIT, LIMIT);
+      const retrievedCollections = await getCollections(null, userId, nextPage * LIMIT, LIMIT);
 
       if ((retrievedCollections && retrievedCollections.length < LIMIT) || !retrievedCollections) {
         setHasMore(false);
@@ -32,10 +32,11 @@ const ProfileCollections = (props) => {
   }, [collections, hasMore, pages, profileUserId]);
 
   useEffect(() => {
-    if (!username && currentUserId) {
-      loadUserCollections();
+    const { profileUserId } = props;
+    if (profileUserId) {
+      loadUserCollections(profileUserId);
     }
-  }, [currentUserId, username]);
+  }, [props.profileUserId]);
 
   const fetchNextPage = () => {
     console.log("load next");
