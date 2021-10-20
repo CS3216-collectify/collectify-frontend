@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
 
@@ -7,6 +7,8 @@ const LIMIT = 18;
 
 const CollectionItems = (props) => {
   const history = useHistory();
+  const location = useLocation();
+
   const { collectionId = 1 } = props;
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -31,7 +33,7 @@ const CollectionItems = (props) => {
 
   useEffect(() => {
     loadItems();
-  }, [loadItems]);
+  }, [loadItems, location]);
 
   const fetchNextPage = () => {
     console.log("load next");

@@ -1,15 +1,17 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonText, IonIcon, IonButton } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonIcon, IonButton } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams, useLocation } from "react-router";
 import EditButton from "../../components/button/EditButton";
 import ImageCarousel from "../../components/gallery/ImageCarousel";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getItemFromCollection } from "../../services/items";
 import useUserContext from "../../hooks/useUserContext";
 import { heart, heartOutline } from "ionicons/icons";
+import Text from "../../components/text/Text";
 
 const Item = () => {
   const history = useHistory();
+  const location = useLocation();
   const { collectionId, itemId } = useParams();
   const { currentUserId } = useUserContext();
 
@@ -26,7 +28,6 @@ const Item = () => {
     setLoading(true);
     try {
       const item = await getItemFromCollection(collectionId, itemId);
-      console.log(item);
       setTitle(item.itemName);
       setDescription(item.description);
       setImages(item.images);
@@ -43,10 +44,10 @@ const Item = () => {
   useEffect(() => {
     setLoading(true);
     fetchItemData();
-  }, [fetchItemData]);
+    console.log("fetech")
+  }, [fetchItemData, location]);
 
-  const imageUrls = images.map((img) => img.imageUrl);
-
+ 
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} spinner="crescent" />
@@ -55,9 +56,9 @@ const Item = () => {
         <IonGrid fixed>
           <IonRow>
             <IonCol>
-              <IonText>
+              <Text>
                 @{ownerUsername} ({ownerName})
-              </IonText>
+              </Text>
             </IonCol>
             <IonCol>
               {Number(currentUserId) === Number(ownerId) && (
@@ -67,15 +68,15 @@ const Item = () => {
               )}
             </IonCol>
           </IonRow>
-          <ImageCarousel imageUrls={imageUrls} />
+          <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
           <IonRow>
             <IonCol size={8}>
               <p>{title}</p>
             </IonCol>
-            <IonCol  size={4}>
+            <IonCol size={4}>
               <IonButton fill="clear" onClick={() => setLiked(!liked)}>
                 <IonIcon size="small" slot="icon-only" icon={liked ? heart : heartOutline} />
-                <IonText color="default">12 likes</IonText>
+                <Text color="default">12 likes</Text>
               </IonButton>
             </IonCol>
           </IonRow>
