@@ -89,15 +89,10 @@ const Profile = () => {
 
   useEffect(() => {
     if (!username && currentUserId) {
+      loadUserCollections();
       getUserInformation();
     }
-  }, [currentUserId, getUserInformation, username]);
-
-  useEffect(() => {
-    if (!username && currentUserId) {
-      loadUserCollections();
-    }
-  }, [currentUserId, loadUserCollections, username]);
+  }, [currentUserId, getUserInformation, loadUserCollections, username]);
 
   const fetchNextPage = () => {
     console.log("load next");
