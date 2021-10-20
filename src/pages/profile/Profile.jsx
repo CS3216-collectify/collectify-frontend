@@ -10,17 +10,13 @@ import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
-import ProfileCollection from "../../components/profile-collection/ProfileCollection";
 import AddButton from "../../components/button/AddButton";
 import { getUserId } from "../../utils/user";
-import { getCollections } from "../../services/collections";
 import { getCurrentUser, getUserByUsername } from "../../services/users";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
-import CollectionList from "../../components/profile-collection/CollectionList";
 import FlexImage from "../../components/image/FlexImage";
-
-const LIMIT = 10;
+import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 
 const Profile = () => {
   const history = useHistory();
@@ -37,9 +33,6 @@ const Profile = () => {
   const [profileLastName, setProfileLastName] = useState("");
   const [profileUsername, setProfileUsername] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
-  const [collections, setCollections] = useState([]);
-  const [pages, setPages] = useState(-1);
-  const [hasMore, setHasMore] = useState(true);
 
   // TODO: add api call for username
   const getUserInformation = useCallback(() => {
@@ -68,41 +61,11 @@ const Profile = () => {
     }
   }, [currentUserId, username]);
 
-  // should check whether its guest clicking profile tab, or user clicking their own tab, or user viewing others' profile
-  const loadUserCollections = useCallback(async () => {
-    const nextPage = pages + 1;
-    try {
-      if (!hasMore) {
-        return;
-      }
-      const retrievedCollections = await getCollections(null, profileUserId, nextPage * LIMIT, LIMIT);
-
-      if ((retrievedCollections && retrievedCollections.length < LIMIT) || !retrievedCollections) {
-        setHasMore(false);
-      }
-      setCollections([...collections, ...retrievedCollections]);
-      setPages(nextPage);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collections, hasMore, pages, profileUserId]);
-
   useEffect(() => {
     if (!username && currentUserId) {
       getUserInformation();
     }
   }, [currentUserId, getUserInformation, username]);
-
-  useEffect(() => {
-    if (!username && currentUserId) {
-      loadUserCollections();
-    }
-  }, [currentUserId, loadUserCollections, username]);
-
-  const fetchNextPage = () => {
-    console.log("load next");
-    loadUserCollections();
-  };
 
   const handleGoogleLogin = async (googleAuthStatus) => {
     if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_SUCCESS) {
@@ -193,7 +156,7 @@ const Profile = () => {
               <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
             <IonRow className=" ion-justify-content-center">
-              <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
+              <ProfileCollections username={username} currentUserId={currentUserId} profileUserId={profileUserId}/>
             </IonRow>
           </IonGrid>
         ) : (
