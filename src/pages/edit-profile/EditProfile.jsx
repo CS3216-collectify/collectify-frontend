@@ -26,9 +26,14 @@ const EditProfile = () => {
   const [description, setDescription] = useState("");
 
   const saveProfile = () => {
-    updateProfile(initialUsername, { username, firstName, lastName });
-    setToast({ message: "Profile saved!", color: "success" });
-    // history.goBack();
+    // if (username.length < 8) {
+    //   setToast({ message: "Your username cannnot be less than 8 characters.", color: "danger" });
+    // }
+
+    updateProfile(initialUsername, { username, firstName, lastName }).then((res) => {
+      setToast({ message: "Profile saved!", color: "success" });
+      history.goBack();
+    });
   };
 
   useEffect(() => {

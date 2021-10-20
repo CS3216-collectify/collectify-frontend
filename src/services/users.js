@@ -8,7 +8,7 @@ const mockUsers = {
 };
 
 export const getCurrentUser = async () => {
-  console.log("Get user data of logged in user");
+  console.log("Get user data of user xax");
   // server.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
 
   const response = await server.get(`api/user/`);
