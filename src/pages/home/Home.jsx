@@ -4,14 +4,14 @@ import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/re
 import "./Home.scss";
 import LogoutButton from "../../components/button/LogoutButton";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import TextInput from "../../components/text-input/TextInput";
-import { getCollections } from "../../services/collections";
-import { getCategories } from "../../services/categories";
 import useUserContext from "../../hooks/useUserContext";
+import Feed from "../../components/feed/Feed";
 
 const Home = () => {
   const [name, setName] = useState("");
   const x = useUserContext();
+
+  const { userId = 1, } = x;
 
   return (
     <IonPage>
@@ -27,10 +27,9 @@ const Home = () => {
           }}
         ></IonGrid>
         <LogoutButton />
-
-        <IonItem>
-          <TextInput label="Test" value={name} onChange={setName} placeholder="Type text here" />
-        </IonItem>
+        <IonGrid fixed>
+          <Feed userId={userId} />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
