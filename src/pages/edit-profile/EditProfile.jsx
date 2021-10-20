@@ -32,7 +32,8 @@ const EditProfile = () => {
 
     updateProfile(initialUsername, { username, firstName, lastName }).then((res) => {
       setToast({ message: "Profile saved!", color: "success" });
-      history.goBack();
+      history.replace({ pathname: "/profile", state: { reload: true } });
+      // window.location.reload();
     });
   };
 

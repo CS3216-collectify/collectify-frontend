@@ -53,7 +53,7 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Switch>
+          {/* <Switch> */}
             <Route exact path="/">
               <Login />
             </Route>
@@ -104,7 +104,7 @@ const App = () => {
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>
-          </Switch>
+          {/* </Switch> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

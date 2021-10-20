@@ -30,7 +30,7 @@ const Profile = () => {
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
- 
+
   // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");
