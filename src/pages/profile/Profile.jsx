@@ -17,6 +17,26 @@ import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import FlexImage from "../../components/image/FlexImage";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
+import Toggle from "../../components/toggle/Toggle";
+
+const COLLECTIONS_MODE = 0;
+const LIKED_ITEMS_MODE = 1;
+const FOLLOWING_COLLECTIONS_MODE = 2;
+
+const MODE_SELECT_OPTIONS = [
+  {
+    value: COLLECTIONS_MODE,
+    label: "My Collections",
+  },
+  {
+    value: FOLLOWING_COLLECTIONS_MODE,
+    label: "Following",
+  },
+  {
+    value: LIKED_ITEMS_MODE,
+    label: "Liked",
+  },
+];
 
 const Profile = () => {
   const history = useHistory();
@@ -33,6 +53,11 @@ const Profile = () => {
   const [profileLastName, setProfileLastName] = useState("");
   const [profileUsername, setProfileUsername] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
+  const [mode, setMode] = useState(COLLECTIONS_MODE);
+
+  const toggleMode = (mode) => {
+    setMode(parseInt(mode));
+  }
 
   // TODO: add api call for username
   const getUserInformation = useCallback(() => {
@@ -155,8 +180,19 @@ const Profile = () => {
               {/* Direct to AddCollection page */}
               <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
+            <IonRow>
+              <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
+            </IonRow>
             <IonRow className=" ion-justify-content-center">
-              <ProfileCollections username={username} currentUserId={currentUserId} profileUserId={profileUserId}/>
+              {mode === LIKED_ITEMS_MODE &&
+                null // TODO: Display liked items
+              }
+              {mode === FOLLOWING_COLLECTIONS_MODE &&
+                null // TODO: Display followed collections
+              }
+              {mode === COLLECTIONS_MODE &&
+                <ProfileCollections username={username} currentUserId={currentUserId} profileUserId={profileUserId}/>
+              }
             </IonRow>
           </IonGrid>
         ) : (
