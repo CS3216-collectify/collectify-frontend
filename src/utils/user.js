@@ -43,9 +43,7 @@ export const logoutUser = () => {
 };
 
 export const loginUser = (loginData) => {
-  console.log(loginData);
   const { access: accessToken, refresh: refreshToken, id: userId } = loginData;
-  console.log(accessToken, refreshToken, userId)
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   localStorage.setItem(USER_ID_KEY, userId);
@@ -53,6 +51,7 @@ export const loginUser = (loginData) => {
   localStorage.removeItem(IS_GUEST_KEY);
 
   server.defaults.headers[AUTHORIZATION_HEADER] = formatAuthorizationValue(accessToken);
+  return loginData;
 };
 
 export const loginGuest = () => {
