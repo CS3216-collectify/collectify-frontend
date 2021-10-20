@@ -19,9 +19,8 @@ const CollectionItems = (props) => {
         return;
       }
       const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
-      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
-        setHasMore(false);
-      }
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {

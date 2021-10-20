@@ -17,11 +17,9 @@ const DiscoverItems = (props) => {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = (await getItemsForDiscover(nextPage * LIMIT, LIMIT)).items;
-
-      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
-        setHasMore(false);
-      }
+      const retrievedItems = await getItemsForDiscover(nextPage * LIMIT, LIMIT);
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {

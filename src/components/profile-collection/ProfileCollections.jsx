@@ -21,10 +21,8 @@ const ProfileCollections = (props) => {
         return;
       }
       const retrievedCollections = await getCollections(null, userId, nextPage * LIMIT, LIMIT);
-
-      if ((retrievedCollections && retrievedCollections.length < LIMIT) || !retrievedCollections) {
-        setHasMore(false);
-      }
+      const updatedHasMore = retrievedCollections && retrievedCollections.length >= LIMIT;
+      setHasMore(updatedHasMore);
       setCollections([...collections, ...retrievedCollections]);
       setPages(nextPage);
     } catch (e) {
