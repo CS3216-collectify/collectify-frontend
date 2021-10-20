@@ -8,7 +8,6 @@ const IS_GUEST_KEY = "isGuest";
 
 const AUTHORIZATION_HEADER = "Authorization";
 const formatAuthorizationValue = (accessToken) => {
-  console.log("format", accessToken);
   return `Bearer ${accessToken}`;
 };
 
