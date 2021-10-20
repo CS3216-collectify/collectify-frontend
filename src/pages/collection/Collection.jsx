@@ -64,7 +64,7 @@ const Collection = (props) => {
           <IonRow>
             <Text className="collection-owner">
               <b>
-                @{ownerUsername} ({ownerName})
+                @{ownerUsername} 
               </b>
             </Text>
           </IonRow>

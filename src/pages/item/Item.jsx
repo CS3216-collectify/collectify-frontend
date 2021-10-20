@@ -57,7 +57,7 @@ const Item = () => {
           <IonRow>
             <IonCol>
               <Text>
-                @{ownerUsername} ({ownerName})
+              @{ownerUsername}
               </Text>
             </IonCol>
             <IonCol>
