@@ -2,7 +2,7 @@ import { IonCol, IonText, IonIcon, IonChip, IonList, IonLabel } from "@ionic/rea
 import { useHistory } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
-import "./ProfileCollection.scss";
+import "./CollectionCard.scss";
 import FlexImage from "../image/FlexImage";
 
 const ProfileCollection = (props) => {
