@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol } from "@ionic/react";
 
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
@@ -18,6 +18,7 @@ import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import CollectionList from "../../components/profile-collection/CollectionList";
 import FlexImage from "../../components/image/FlexImage";
+import Text from "../../components/text/Text";
 
 const LIMIT = 10;
 
@@ -137,25 +138,25 @@ const Profile = () => {
               <IonCol>
                 <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                   <div className="profile-statistics ion-text-center">
-                    <IonText>
+                    <Text>
                       <b>{"3"}</b>
-                    </IonText>
+                    </Text>
                     <br />
-                    <IonText>COLLECTIONS</IonText>
+                    <Text>COLLECTIONS</Text>
                   </div>
                   <div className="profile-statistics ion-text-center">
-                    <IonText>
+                    <Text>
                       <b>{"15"}</b>
-                    </IonText>
+                    </Text>
                     <br />
-                    <IonText>ITEMS</IonText>
+                    <Text>ITEMS</Text>
                   </div>
                   <div className="profile-statistics ion-text-center">
-                    <IonText>
+                    <Text>
                       <b>{"45"}</b>
-                    </IonText>
+                    </Text>
                     <br />
-                    <IonText>LIKES</IonText>
+                    <Text>LIKES</Text>
                   </div>
                 </IonRow>
 
@@ -198,9 +199,9 @@ const Profile = () => {
         ) : (
           <IonGrid fixed>
             <IonRow className="ion-justify-content-center ion-margin-top">
-              <IonText>
+              <Text>
                 <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
-              </IonText>
+              </Text>
               <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
             </IonRow>
           </IonGrid>

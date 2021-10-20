@@ -1,22 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList, IonText } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonItem, IonList } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 
 import "./Onboarding.scss";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import LogoutButton from "../../components/button/LogoutButton";
 import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
-import GoogleLoginButton from "../../components/button/GoogleLoginButton";
-import GoogleAuthStatus from "../../enums/google-auth-status.enum";
-import { getUserId } from "../../utils/user";
 import TextInput from "../../components/text-input/TextInput";
 import UpdateUsernameButton from "../../components/button/UpdateUsernameButton";
 import { getCurrentUser } from "../../services/users";
 import { updateProfile } from "../../services/users";
+import Text from "../../components/text/Text";
 
 const Onboarding = () => {
-  const { currentUserId, isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { currentUserId } = useUserContext();
   const setToast = useToastContext();
   const history = useHistory();
   const [username, setUsername] = useState("");
