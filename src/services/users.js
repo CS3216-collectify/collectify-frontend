@@ -22,3 +22,9 @@ export const getUserByUsername = async (username) => {
 
   return response.data;
 };
+
+export const updateProfile = async (username, userInfo) => {
+  const response = await server.patch(`api/user/${username}/`, userInfo)
+
+  console.log(response)
+};
