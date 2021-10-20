@@ -46,7 +46,7 @@ const HomeItem = (props) => {
       <IonRow>
         <IonCol>
           <IonText>
-            @{ownerUsername} ({ownerName})
+            @{ownerUsername}
           </IonText>
         </IonCol>
       </IonRow>
@@ -65,11 +65,6 @@ const HomeItem = (props) => {
             {/* <IonIcon size="small" slot="icon-only" icon={liked ? heart : heartOutline} /> */}
             <IonText color="default">{likesCount} likes</IonText>
           </IonButton>
-        </IonCol>
-      </IonRow>
-      <IonRow>
-        <IonCol>
-          <p>{itemDescription}</p>
         </IonCol>
       </IonRow>
     </IonGrid>
