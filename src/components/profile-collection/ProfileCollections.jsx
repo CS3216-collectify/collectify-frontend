@@ -1,3 +1,4 @@
+import { IonGrid, IonRow } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { getCollections } from "../../services/collections";
 import CollectionList from "./CollectionList";
@@ -44,7 +45,9 @@ const ProfileCollections = (props) => {
   };
 
   return (
-    <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
+    <IonGrid>
+      <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
+    </IonGrid>
   )
 }
 
