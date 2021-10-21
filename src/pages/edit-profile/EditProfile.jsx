@@ -61,10 +61,10 @@ const EditProfile = () => {
               <TextInput label="Username" value={username} onChange={setUsername} placeholder="Type text here" />
             </IonItem>
             <IonItem>
-              <TextInput label="Name" value={firstName} onChange={setFirstName} placeholder="Type text here" />
+              <TextInput label="First Name" value={firstName} onChange={setFirstName} placeholder="Type text here" />
             </IonItem>
             <IonItem>
-              <TextInput label="Name" value={lastName} onChange={setLastName} placeholder="Type text here" />
+              <TextInput label="Last Name" value={lastName} onChange={setLastName} placeholder="Type text here" />
             </IonItem>
             <IonItem>
               <TextInput label="Description" value={description} onChange={setDescription} placeholder="Type text here" />
