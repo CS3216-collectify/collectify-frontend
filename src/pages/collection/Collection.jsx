@@ -56,19 +56,11 @@ const Collection = (props) => {
     <IonPage className="collection">
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Collection`} />
-      <IonContent>
+      <IonContent className="ion-padding">
         <IonGrid fixed>
           <IonRow>
-            <Text className="collection-owner">
-              <b>
-                @{ownerUsername} 
-              </b>
-            </Text>
-          </IonRow>
-
-          <IonRow>
             <div className="collection-title--container">
-              <Text className="collection--title">
+              <Text size="xl" className="collection--title">
                 <b>
                   <b>{title}</b>
                 </b>
@@ -79,6 +71,13 @@ const Collection = (props) => {
                 20 followers
               </div>
             </div>
+          </IonRow>
+          <IonRow className="ion-justify-content-between">
+            <Text size="s" className="collection-owner">
+              <b>
+                by @{ownerUsername} 
+              </b>
+            </Text>
           </IonRow>
           <IonRow className="ion-justify-content-start">
             <IonCol>{categoryName && <CategoryChip name={categoryName} />}</IonCol>
