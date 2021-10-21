@@ -36,7 +36,7 @@ const ProfileToolbar = ({ username }) => {
   // Menu with items shown when ellipsis icon is pressed
   const PopoverList = ({ onHide }) => (
     <IonList>
-      <IonListHeader>Menu</IonListHeader>
+      {/* <IonListHeader>Menu</IonListHeader> */}
       <IonItem
         button
         onClick={() => {
