@@ -64,6 +64,8 @@ const HomeItem = (props) => {
             <Text size="l" onClick={goToItemPage}>
               {itemName}
             </Text>
+          </IonRow>
+          <IonRow>
             <Text size="s">
               {convertUTCtoLocal(itemCreationDate)}
             </Text>

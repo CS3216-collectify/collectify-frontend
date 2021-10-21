@@ -88,9 +88,9 @@ const Item = () => {
                 <Text size="l">{title}</Text>
               </IonRow>
               <IonRow>
-              <Text size="s">
-                {convertUTCtoLocal(itemCreationDate)}
-              </Text>
+                <Text size="s">
+                  {convertUTCtoLocal(itemCreationDate)}
+                </Text>
               </IonRow>
             </IonCol>
             <IonCol size={4}>
