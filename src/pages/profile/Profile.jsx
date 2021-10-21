@@ -51,6 +51,7 @@ const Profile = () => {
   const [profileFirstName, setProfileFirstName] = useState("");
   const [profileLastName, setProfileLastName] = useState("");
   const [profileUsername, setProfileUsername] = useState("");
+  const [profileDescription, setProfileDescription] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
@@ -64,23 +65,22 @@ const Profile = () => {
   // TODO: add api call for username
   const getUserInformation = useCallback(async () => {
     try {
+      let res = null;
       setLoading(true);
       if (username) {
-        console.log(username)
-        const res = await getUserByUsername(username)
+        console.log(username);
+        res = await getUserByUsername(username);
+      } else if (currentUserId) {
+        console.log(currentUserId);
+        res = await getCurrentUser();
+      }
+      if (res) {
         setProfileUserId(Number(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
-      } else if (currentUserId) {
-        console.log(currentUserId);
-        const res = await getCurrentUser();
-        setProfileUserId(Number(currentUserId));
-        setProfileFirstName(res.firstName);
-        setProfileLastName(res.lastName);
-        setProfileUsername(res.username);
-        setProfileProfilePicture(res.pictureUrl);
+        // setProfileDescription(res.description);
       }
     } catch (e) {
       console.log(e);
