@@ -85,7 +85,7 @@ const Item = () => {
           <IonRow>
             <IonCol size={8}>
               <IonRow>
-              <Text size="l">{title}</Text>
+                <Text size="l">{title}</Text>
               </IonRow>
               <IonRow>
               <Text size="s">
