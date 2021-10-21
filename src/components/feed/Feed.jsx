@@ -3,6 +3,7 @@ import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import { useCallback, useEffect, useState } from "react";
 import { getFeed } from "../../services/feed";
 import { IonLoading } from "@ionic/react";
+import HorizontalLine from "../line/HorizontalLine";
 
 const LIMIT = 6;
 
@@ -64,7 +65,10 @@ const HomeItems = (props) => {
     <>
       <IonLoading isOpen={loading} />
       {items.map((item, idx) =>
-        <HomeItem key={idx} itemData={item} />
+        <>
+          <HomeItem key={idx} itemData={item} />
+          <HorizontalLine />
+        </>
       )}
       <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage}/>
     </>

@@ -8,6 +8,7 @@ import { getItemFromCollection } from "../../services/items";
 import useUserContext from "../../hooks/useUserContext";
 import { heart, heartOutline } from "ionicons/icons";
 import Text from "../../components/text/Text";
+import LikeButton from "../../components/button/LikeButton";
 
 const Item = () => {
   const history = useHistory();
@@ -23,6 +24,7 @@ const Item = () => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
@@ -32,6 +34,7 @@ const Item = () => {
       setDescription(item.description);
       setImages(item.images);
       setOwnerId(item.ownerId);
+      setLikesCount(item.likesCount);
       // setOwnerUsername(item.ownerUsername);
       // setOwnerName(item.ownerName);
     } catch (e) {
@@ -47,6 +50,11 @@ const Item = () => {
     console.log("fetech")
   }, [fetchItemData, location]);
 
+  const likeHandler = () => {
+    // TODO: handle api call
+
+    setLiked(!liked);
+  }
  
   return (
     <IonPage className="profile">
@@ -74,10 +82,7 @@ const Item = () => {
               <p>{title}</p>
             </IonCol>
             <IonCol size={4}>
-              <IonButton fill="clear" onClick={() => setLiked(!liked)}>
-                <IonIcon size="small" slot="icon-only" icon={liked ? heart : heartOutline} />
-                <Text color="default">12 likes</Text>
-              </IonButton>
+              <LikeButton liked={liked} likeHandler={likeHandler} likesCount={likesCount} />
             </IonCol>
           </IonRow>
           <IonRow>
