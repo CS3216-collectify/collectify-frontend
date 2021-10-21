@@ -9,9 +9,8 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import useUserContext from "../../hooks/useUserContext";
 import ImageCarousel from "../gallery/ImageCarousel";
-import { heart, heartOutline } from "ionicons/icons";
 import Text from "../text/Text";
-import LikeButton from "../button/LikeButton"
+import LikeButton from "../button/LikeButton";
 import { convertUTCtoLocal } from "../../utils/datetime";
 
 const HomeItem = (props) => {
@@ -43,10 +42,18 @@ const HomeItem = (props) => {
     setLiked(!liked);
   }
 
+  const goToItemPage = () => {
+    history.push(`/collections/${collectionId}/items/${itemId}`);
+  }
+
+  const goToUserProfilePage = () => {
+    history.push(`/profile/${ownerUsername}`);
+  }
+
   return (
     <IonGrid fixed>
       <IonRow>
-        <Text>
+        <Text onClick={goToUserProfilePage}>
           @{ownerUsername}
         </Text>
       </IonRow>
@@ -54,7 +61,9 @@ const HomeItem = (props) => {
       <IonRow>
         <IonCol size={8}>
           <IonRow>
-            <Text>{itemName}</Text>
+            <Text size="l" onClick={goToItemPage}>
+              {itemName}
+            </Text>
             <Text size="s">
               {convertUTCtoLocal(itemCreationDate)}
             </Text>
