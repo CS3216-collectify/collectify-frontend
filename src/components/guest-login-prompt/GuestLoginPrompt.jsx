@@ -5,6 +5,7 @@ import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getUserId } from "../../utils/user";
+import Text from "../text/Text";
 
 const GuestLoginPrompt = (props) => {
   const history = useHistory();
@@ -27,9 +28,11 @@ const GuestLoginPrompt = (props) => {
   return (
     <IonGrid fixed>
       <IonRow className="ion-justify-content-center ion-margin-top">
-        <IonText>
-          <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
-        </IonText>
+        <Text size="xl" className="ion-text-center">
+          Log in to collectify to begin showcasing your collectables to the world!
+        </Text>
+      </IonRow>
+      <IonRow className="ion-justify-content-center ion-margin-top">
         <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
       </IonRow>
     </IonGrid>
