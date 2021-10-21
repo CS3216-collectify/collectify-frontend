@@ -40,6 +40,7 @@ import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 import Discover from "./pages/discover/Discover";
 import Onboarding from "./pages/onboarding/Onboarding";
+import CollectifyChat from "./pages/chat/Chat";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -72,6 +73,7 @@ const App = () => {
               <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
               <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
               <Route exact path="/discover" component={Discover} />
+              <Route exact path="/chat" component={CollectifyChat} />
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
