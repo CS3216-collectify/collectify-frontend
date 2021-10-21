@@ -9,6 +9,7 @@ import useUserContext from "../../hooks/useUserContext";
 import { heart, heartOutline } from "ionicons/icons";
 import Text from "../../components/text/Text";
 import LikeButton from "../../components/button/LikeButton";
+import { convertUTCtoLocal } from "../../utils/datetime";
 
 const Item = () => {
   const history = useHistory();
@@ -25,6 +26,7 @@ const Item = () => {
   const [images, setImages] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [itemCreationDate, setItemCreationDate] = useState("")
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
@@ -35,6 +37,7 @@ const Item = () => {
       setImages(item.images);
       setOwnerId(item.ownerId);
       setLikesCount(item.likesCount);
+      setItemCreationDate(item.itemCreationDate);
       // setOwnerUsername(item.ownerUsername);
       // setOwnerName(item.ownerName);
     } catch (e) {
@@ -55,7 +58,9 @@ const Item = () => {
 
     setLiked(!liked);
   }
- 
+
+  const isItemOwner = Number(currentUserId) === Number(ownerId);
+
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} spinner="crescent" />
@@ -69,7 +74,7 @@ const Item = () => {
               </Text>
             </IonCol>
             <IonCol>
-              {Number(currentUserId) === Number(ownerId) && (
+              {isItemOwner && (
                 <IonRow className="ion-justify-content-end">
                   <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
                 </IonRow>
@@ -79,7 +84,14 @@ const Item = () => {
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
           <IonRow>
             <IonCol size={8}>
-              <p>{title}</p>
+              <IonRow>
+              <Text size="l">{title}</Text>
+              </IonRow>
+              <IonRow>
+              <Text size="s">
+                {convertUTCtoLocal(itemCreationDate)}
+              </Text>
+              </IonRow>
             </IonCol>
             <IonCol size={4}>
               <LikeButton liked={liked} likeHandler={likeHandler} likesCount={likesCount} />
