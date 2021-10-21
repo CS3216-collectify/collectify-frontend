@@ -67,7 +67,7 @@ const Feed = (props) => {
       {items.map((item, idx) =>
         <React.Fragment key={idx}>
           <HomeItem itemData={item} />
-          <HorizontalLine />
+          <HorizontalLine color="lightgrey"/>
         </React.Fragment>
       )}
       <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage}/>
