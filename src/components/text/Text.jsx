@@ -35,10 +35,10 @@ const getSizeClass = (size) => {
 };
 
 const Text = (props) => {
-  const { children, size, className, onClick: clickHandler } = props;
+  const { children, size, className, ...remainingProps } = props;
   const classes = `${getSizeClass(size)} ${className}`;
 
-  return <IonText className={classes} onClick={clickHandler}>{children}</IonText>;
+  return <IonText className={classes} {...remainingProps}>{children}</IonText>;
 };
 
 export default Text;

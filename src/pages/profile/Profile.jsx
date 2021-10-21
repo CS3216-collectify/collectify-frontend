@@ -6,6 +6,7 @@ import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import EditProfileButton from "../../components/button/EditProfileButton";
+import LogoutButton from "../../components/button/LogoutButton";
 import AddButton from "../../components/button/AddButton";
 import { getCurrentUser, getUserByUsername } from "../../services/users";
 import FlexImage from "../../components/image/FlexImage";
@@ -132,33 +133,35 @@ const Profile = () => {
             <IonCol>
               <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"3"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>COLLECTIONS</IonText>
+                  <Text size="s">COLLECTIONS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"15"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>ITEMS</IonText>
+                  <Text size="s">ITEMS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"45"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>LIKES</IonText>
+                  <Text size="s">LIKES</Text>
                 </div>
               </IonRow>
 
               {isOwnProfile && // can edit profile
-                <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                // <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                <IonRow>
                   <EditProfileButton
                     onClick={editProfileHandler}
                   />
+                  <LogoutButton />
                 </IonRow>
               }
             </IonCol>
