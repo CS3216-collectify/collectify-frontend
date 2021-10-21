@@ -24,7 +24,7 @@ const Discover = () => {
       {/* Ion padding applies 16px  */}
 
       <HomeToolbar title="Discover" />
-      <IonContent className="ion-padding">
+      <IonContent>
         <IonGrid fixed>
           <Search inactive={!isSearchActive} onFocus={searchOpenHandler} onCancel={searchCloseHandler} />
 

@@ -20,7 +20,6 @@ const Item = () => {
   const [title, setTitle] = useState("Test Title");
   const [ownerUsername, setOwnerUsername] = useState("itemOwner");
   const [ownerId, setOwnerId] = useState(null);
-  const [ownerName, setOwnerName] = useState("itemOwner");
   const [description, setDescription] = useState("Test Description...");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -38,8 +37,7 @@ const Item = () => {
       setOwnerId(item.ownerId);
       setLikesCount(item.likesCount);
       setItemCreationDate(item.itemCreationDate);
-      // setOwnerUsername(item.ownerUsername);
-      // setOwnerName(item.ownerName);
+      setOwnerUsername(item.ownerUsername);
     } catch (e) {
       console.log(e);
     } finally {
@@ -64,8 +62,8 @@ const Item = () => {
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} spinner="crescent" />
-      <HomeToolbar title={`${ownerName}'s Item`} />
-      <IonContent>
+      <HomeToolbar title={`Item`} />
+      <IonContent className="ion-padding">
         <IonGrid fixed>
           <IonRow>
             <IonCol>

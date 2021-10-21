@@ -21,7 +21,6 @@ const Collection = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [ownerUserId, setOwnerUserId] = useState(null);
-  const [ownerName, setOwnerName] = useState("User's Name");
   const [ownerUsername, setOwnerUsername] = useState("Username");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
@@ -33,16 +32,14 @@ const Collection = (props) => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { collectionName, collectionDescription, categoryName, categoryId, userId } = collectionData;
+      const { collectionName, collectionDescription, categoryName, categoryId, userId, ownerUsername } = collectionData;
       setTitle(collectionName);
       setDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerUserId(userId);
-
-      // setOwnerName("TODO");
-      // setOwnerUsername("todo");
-      // setCategoryId(collectionData.categoryId);
+      // setOwnerUsername(ownerUsername);
+      setCategoryId(collectionData.categoryId);
     } catch (e) {
       console.log(e);
     } finally {
