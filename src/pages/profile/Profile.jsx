@@ -161,7 +161,6 @@ const Profile = () => {
                   <EditProfileButton
                     onClick={editProfileHandler}
                   />
-                  <LogoutButton />
                 </IonRow>
               }
             </IonCol>
