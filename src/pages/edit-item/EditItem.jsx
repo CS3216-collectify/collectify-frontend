@@ -1,5 +1,5 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
 import ItemForm from "../../components/form/ItemForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -15,12 +15,7 @@ const EditItem = () => {
   const [item, setItem] = useState(getDefaultItemData());
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    loadExistingData(); // TODO: Remove timeout
-  }, []);
-
-  const loadExistingData = async () => {
+  const loadExistingData = useCallback(async () => {
     setLoading(true);
     try {
       const currentItem = await getItemFromCollection(collectionId, itemId);
@@ -30,13 +25,18 @@ const EditItem = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [collectionId, itemId]);
+
+  useEffect(() => {
+    setLoading(true);
+    loadExistingData(); // TODO: Remove timeout
+  }, [loadExistingData]);
 
   const editCompleteHandler = async (item) => {
     setLoading(true);
     try {
       await updateItem(collectionId, itemId, item);
-      history.push(`/collections/${collectionId}/items/${itemId}`);
+      history.goBack();//(`/collections/${collectionId}/items/${itemId}`);
     } catch (e) {
       console.log(e);
     } finally {
@@ -46,7 +46,7 @@ const EditItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent"/>
+      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
         <ItemForm onComplete={editCompleteHandler} itemData={item} />

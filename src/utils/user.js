@@ -53,6 +53,7 @@ export const loginUser = (loginData) => {
   localStorage.removeItem(IS_GUEST_KEY);
 
   server.defaults.headers[AUTHORIZATION_HEADER] = formatAuthorizationValue(accessToken);
+  return loginData;
 };
 
 export const loginGuest = () => {

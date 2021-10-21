@@ -1,8 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent, IonLoading, IonAvatar } from "@ionic/react";
-
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
@@ -16,6 +14,7 @@ import Toggle from "../../components/toggle/Toggle";
 import LikedItems from "../../components/liked-items/LikedItems";
 import FollowedCollections from "../../components/followed-collections.jsx/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
+import Text from "../../components/text/Text";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -38,13 +37,14 @@ const MODE_SELECT_OPTIONS = [
 
 const Profile = () => {
   const history = useHistory();
+  const location = useLocation();
   const setToast = useToastContext();
   const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
- 
+
   // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");

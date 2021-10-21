@@ -24,15 +24,20 @@ export const googleLogin = async () => {
     const response = await server.post("/api/token/obtain/social/", {
       idToken: idToken,
     });
-    loginUser(response.data);
+    return loginUser(response.data);
   };
 
   return await GoogleAuth.signIn().then(
     async (res) => {
       // success callback
       try {
-        await requestAccessToken(res.authentication.idToken);
+        const tokenRes = await requestAccessToken(res.authentication.idToken);
         console.log("successful auth");
+        console.log(tokenRes);
+        
+        if (tokenRes.isNew) {
+          return GoogleAuthStatus.GOOGLE_AUTH_ONBOARD;
+        }
         return GoogleAuthStatus.GOOGLE_AUTH_SUCCESS;
       } catch (error) {
         console.log("error", error);

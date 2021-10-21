@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonText, IonIcon } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
@@ -12,6 +12,7 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
 import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
+import Text from "../../components/text/Text";
 
 const Collection = (props) => {
   const history = useHistory();
@@ -61,20 +62,20 @@ const Collection = (props) => {
       <IonContent>
         <IonGrid fixed>
           <IonRow>
-            <IonText className="collection-owner">
+            <Text className="collection-owner">
               <b>
                 @{ownerUsername} 
               </b>
-            </IonText>
+            </Text>
           </IonRow>
 
           <IonRow>
             <div className="collection-title--container">
-              <IonText className="collection--title">
+              <Text className="collection--title">
                 <b>
                   <b>{title}</b>
                 </b>
-              </IonText>
+              </Text>
 
               <div className="collection-followers--container">
                 <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
@@ -87,7 +88,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonText>{description}</IonText>
+              <Text>{description}</Text>
             </IonCol>
           </IonRow>
           {/* TODO: add follow button */}
