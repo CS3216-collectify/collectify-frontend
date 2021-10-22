@@ -19,7 +19,7 @@ const LogoutButton = () => {
     setCurrentUserId(null);
   };
 
-  return <IonButton onClick={() => logoutHandler()}>Log Out</IonButton>;
+  return <IonButton fill="outline" expand="block" className="follow-button" size="small" onClick={() => logoutHandler()}>Log Out</IonButton>;
 };
 
 export default LogoutButton;

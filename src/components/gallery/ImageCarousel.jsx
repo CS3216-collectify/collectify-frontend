@@ -12,7 +12,6 @@ const slideOpts = {
 
 const ImageCarousel = (props) => {
   const { imageUrls = [] } = props;
-  console.log(imageUrls);
 
   return (
     // <IonSlides pager={true} options={slideOpts} className="image-carousel">

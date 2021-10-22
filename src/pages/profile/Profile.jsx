@@ -6,6 +6,7 @@ import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import EditProfileButton from "../../components/button/EditProfileButton";
+import LogoutButton from "../../components/button/LogoutButton";
 import AddButton from "../../components/button/AddButton";
 import { getCurrentUser, getUserByUsername } from "../../services/users";
 import FlexImage from "../../components/image/FlexImage";
@@ -50,6 +51,7 @@ const Profile = () => {
   const [profileFirstName, setProfileFirstName] = useState("");
   const [profileLastName, setProfileLastName] = useState("");
   const [profileUsername, setProfileUsername] = useState("");
+  const [profileDescription, setProfileDescription] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
@@ -63,23 +65,22 @@ const Profile = () => {
   // TODO: add api call for username
   const getUserInformation = useCallback(async () => {
     try {
+      let res = null;
       setLoading(true);
       if (username) {
-        console.log(username)
-        const res = await getUserByUsername(username)
+        console.log(username);
+        res = await getUserByUsername(username);
+      } else if (currentUserId) {
+        console.log(currentUserId);
+        res = await getCurrentUser();
+      }
+      if (res) {
         setProfileUserId(Number(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
-      } else if (currentUserId) {
-        console.log(currentUserId);
-        const res = await getCurrentUser();
-        setProfileUserId(Number(currentUserId));
-        setProfileFirstName(res.firstName);
-        setProfileLastName(res.lastName);
-        setProfileUsername(res.username);
-        setProfileProfilePicture(res.pictureUrl);
+        // setProfileDescription(res.description);
       }
     } catch (e) {
       console.log(e);
@@ -132,30 +133,31 @@ const Profile = () => {
             <IonCol>
               <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"3"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>COLLECTIONS</IonText>
+                  <Text size="s">COLLECTIONS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"15"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>ITEMS</IonText>
+                  <Text size="s">ITEMS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"45"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>LIKES</IonText>
+                  <Text size="s">LIKES</Text>
                 </div>
               </IonRow>
 
               {isOwnProfile && // can edit profile
-                <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                // <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                <IonRow>
                   <EditProfileButton
                     onClick={editProfileHandler}
                   />

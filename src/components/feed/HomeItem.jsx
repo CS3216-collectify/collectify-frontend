@@ -4,13 +4,14 @@ import {
   IonGrid,
   IonIcon,
   IonRow,
-  IonText,
 } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import useUserContext from "../../hooks/useUserContext";
 import ImageCarousel from "../gallery/ImageCarousel";
-import { heart, heartOutline } from "ionicons/icons";
+import Text from "../text/Text";
+import LikeButton from "../button/LikeButton";
+import { convertUTCtoLocal } from "../../utils/datetime";
 
 const HomeItem = (props) => {
   const history = useHistory();
@@ -41,30 +42,37 @@ const HomeItem = (props) => {
     setLiked(!liked);
   }
 
+  const goToItemPage = () => {
+    history.push(`/collections/${collectionId}/items/${itemId}`);
+  }
+
+  const goToUserProfilePage = () => {
+    history.push(`/profile/${ownerUsername}`);
+  }
+
   return (
     <IonGrid fixed>
       <IonRow>
-        <IonCol>
-          <IonText>
-            @{ownerUsername}
-          </IonText>
-        </IonCol>
+        <Text onClick={goToUserProfilePage}>
+          @{ownerUsername}
+        </Text>
       </IonRow>
       <ImageCarousel imageUrls={imageUrls} />
       <IonRow>
         <IonCol size={8}>
-          <p>{itemName}</p>
+          <IonRow>
+            <Text size="l" onClick={goToItemPage}>
+              {itemName}
+            </Text>
+          </IonRow>
+          <IonRow>
+            <Text size="s">
+              {convertUTCtoLocal(itemCreationDate)}
+            </Text>
+          </IonRow>
         </IonCol>
         <IonCol size={4}>
-          <IonButton fill="clear" onClick={likeHandler}>
-            <IonIcon
-              size="small"
-              slot="icon-only"
-              icon={liked ? heart : heartOutline}
-            />
-            {/* <IonIcon size="small" slot="icon-only" icon={liked ? heart : heartOutline} /> */}
-            <IonText color="default">{likesCount} likes</IonText>
-          </IonButton>
+          <LikeButton liked={liked} likeHandler={likeHandler} likesCount={likesCount} />
         </IonCol>
       </IonRow>
     </IonGrid>
