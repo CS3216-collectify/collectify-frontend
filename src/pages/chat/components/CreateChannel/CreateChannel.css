@@ -273,7 +273,7 @@
   display: none;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 570px) {
   .str-chat.dark .messaging-create-channel header {
     height: unset;
   }

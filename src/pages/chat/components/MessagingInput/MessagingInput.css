@@ -186,7 +186,7 @@ div.rta__autocomplete.str-chat__emojisearch {
   mix-blend-mode: normal;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 570px) {
   div.rta__autocomplete.str-chat__emojisearch {
     width: unset;
   }

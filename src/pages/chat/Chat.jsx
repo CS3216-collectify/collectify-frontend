@@ -127,7 +127,7 @@ const CollectifyChat = () => {
     <IonPage>
       <HomeToolbar title="Chat" />
 
-      <IonContent>
+      <IonContent class="chat-content">
         <Chat client={chatClient} theme={`messaging ${theme}`}>
           <div id="mobile-channel-list" onClick={toggleMobile}>
             <ChannelList

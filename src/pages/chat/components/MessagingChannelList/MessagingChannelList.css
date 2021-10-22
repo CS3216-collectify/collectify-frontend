@@ -5,7 +5,7 @@
   overflow-y: auto;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 570px) {
   .messaging__channel-list {
     width: unset;
   }
@@ -89,7 +89,7 @@
   list-style: none;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 570px) {
   .skeleton-loader__list {
     width: unset;
   }

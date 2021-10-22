@@ -126,7 +126,7 @@
   width: 300px !important;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 570px) {
   .str-chat__thread .str-chat__messaging-input .messaging-input__button.emoji-button {
     display: none;
   }
