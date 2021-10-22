@@ -13,7 +13,7 @@ import FlexImage from "../../components/image/FlexImage";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Toggle from "../../components/toggle/Toggle";
 import LikedItems from "../../components/liked-items/LikedItems";
-import FollowedCollections from "../../components/followed-collections.jsx/FollowedCollections";
+import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
 
