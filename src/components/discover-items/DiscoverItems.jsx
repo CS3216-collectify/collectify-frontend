@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 
 import "./DiscoverItems.scss";
 import ItemGrid from "../collection-items/ItemGrid";
-import { getItemsForDiscover } from "../../services/items";
+import { getDiscoverItems } from "../../services/search";
 
 const LIMIT = 18;
 
@@ -17,7 +17,7 @@ const DiscoverItems = (props) => {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getItemsForDiscover(nextPage * LIMIT, LIMIT);
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);

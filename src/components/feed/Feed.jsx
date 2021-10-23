@@ -1,7 +1,7 @@
 import HomeItem from "./HomeItem";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import React, { useCallback, useEffect, useState } from "react";
-import { getFeed } from "../../services/feed";
+import { getFeedItems } from "../../services/feed";
 import { IonLoading } from "@ionic/react";
 import HorizontalLine from "../line/HorizontalLine";
 import Text from "../text/Text";
@@ -20,7 +20,7 @@ const Feed = (props) => {
     }
     const nextPage = pages + 1;
     try {
-      const retrievedItems = await getFeed(nextPage * LIMIT, LIMIT);
+      const retrievedItems = await getFeedItems(nextPage * LIMIT, LIMIT);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
@@ -34,7 +34,7 @@ const Feed = (props) => {
     const nextPage = 0;
     try {
       setLoading(true);
-      const retrievedItems = await getFeed(nextPage * LIMIT, LIMIT);
+      const retrievedItems = await getFeedItems(nextPage * LIMIT, LIMIT);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setItems([...retrievedItems]);
       setPages(nextPage);

@@ -1,6 +1,6 @@
 import server from "../utils/server";
 
-export const getFeed = async (offset, limit) => {
+export const getFeedItems = async (offset, limit) => {
   const params = {
     offset,
     limit,

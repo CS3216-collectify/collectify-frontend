@@ -85,14 +85,3 @@ export const deleteItem = async (collectionId, itemId) => {
   const response = await server.delete(`collections/${collectionId}/items/${itemId}/`);
   console.log(response);
 };
-
-export const getItemsForDiscover = async (offset, limit) => {
-  const params = {
-    offset,
-    limit,
-  };
-  console.log("GET /items... string query:", params);
-  const res = await server.get("/items", { params });
-  console.log(res);
-  return res.data;
-};
