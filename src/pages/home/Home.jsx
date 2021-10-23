@@ -20,7 +20,7 @@ const Home = () => {
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
         <IonGrid fixed>
-          <Feed userId={userId} />
+          <Feed />
         </IonGrid>
       </IonContent>
     </IonPage>

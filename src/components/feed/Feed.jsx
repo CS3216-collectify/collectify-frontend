@@ -9,15 +9,13 @@ import Text from "../text/Text";
 const LIMIT = 6;
 
 const Feed = (props) => {
-
-  const { userId } = props;
   const [items, setItems] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const loadItems = useCallback(async () => {
-    if (!hasMore || !userId) {
+    if (!hasMore) {
       return;
     }
     const nextPage = pages + 1;
@@ -30,12 +28,9 @@ const Feed = (props) => {
     } catch (e) {
       console.log(e);
     }
-  }, [hasMore, items, pages, userId]);
+  }, [hasMore, items, pages]);
 
   const loadInitialItems = useCallback(async () => {
-    if (!userId) {
-      return;
-    }
     const nextPage = 0;
     try {
       setLoading(true);
@@ -49,13 +44,11 @@ const Feed = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
-    if (props.userId) {
-      loadInitialItems();
-    }
-  }, [props.userId]);
+    loadInitialItems();
+  }, []);
 
   const fetchNextPage = () => {
     console.log("load next");
