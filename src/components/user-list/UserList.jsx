@@ -1,13 +1,26 @@
 import {
+  IonGrid,
   IonList,
+  IonCol
 } from "@ionic/react";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
+import Text from "../text/Text";
 import UserCard from "./UserCard";
 
 const LIMIT = 10;
 
 const UserList = (props) => {
-  const { onScrollEnd: fetchNextPage, users = [], listEnded } = props;
+  const { onScrollEnd: fetchNextPage, users = [], listEnded, emptyMessage } = props;
+
+  if (listEnded && users && users.length === 0 && emptyMessage) {
+    return (
+      <IonGrid className="ion-text-center">
+        <Text size="xl" >
+          {emptyMessage}
+        </Text>
+      </IonGrid>
+    )
+  }
 
   return (
     <IonList>

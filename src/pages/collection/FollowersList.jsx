@@ -61,7 +61,12 @@ const FollowersList = (props) => {
       <HomeToolbar title={`Followers`} />
       <IonContent>
         <IonLoading isOpen={loading} />
-        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} />
+        <UserList 
+          users={users} 
+          onScrollEnded={loadNextPage} 
+          listEnded={loadInitialPage} 
+          emptyMessage="Be the first one to follow this collection!"
+        />
       </IonContent>
     </IonPage>
   )

@@ -65,6 +65,7 @@ const UserSearchResultDisplay = (props) => {
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 
         users={users} 
+        emptyMessage="No matching users found. Try another keyword!"
       />
     </>
   )

@@ -64,7 +64,7 @@ const Feed = (props) => {
           <HorizontalLine color="lightgrey"/>
         </React.Fragment>
       )}
-      {(items && items.length === 0 || !items) &&
+      {(items && items.length === 0 || !items) && !hasMore &&
         <div className="ion-text-center">
           <Text size="l" >
             Start following other's collections to stay updated!
