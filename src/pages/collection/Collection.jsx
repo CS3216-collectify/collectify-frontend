@@ -23,7 +23,7 @@ const Collection = (props) => {
   const { collectionId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [ownerUserId, setOwnerUserId] = useState(null);
+  const [ownerId, setOwnerId] = useState(null);
   const [ownerUsername, setOwnerUsername] = useState("Username");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
@@ -33,7 +33,7 @@ const Collection = (props) => {
 
   const { currentUserId } = useUserContext();
 
-  const isCollectionOwner = Number(currentUserId) === Number(ownerUserId);
+  const isCollectionOwner = Number(currentUserId) === Number(ownerId);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
@@ -44,7 +44,7 @@ const Collection = (props) => {
         collectionDescription, 
         categoryName, 
         categoryId, 
-        userId, 
+        ownerId, 
         ownerUsername, 
         isFollowed, 
         followersCount, 
@@ -53,7 +53,7 @@ const Collection = (props) => {
       setDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
-      setOwnerUserId(userId);
+      setOwnerId(ownerId);
       setOwnerUsername(ownerUsername);
       setFollowed(isFollowed);
       setFollowersCount(followersCount);
