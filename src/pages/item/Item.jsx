@@ -35,7 +35,7 @@ const Item = () => {
     try {
       const item = await getItemFromCollection(collectionId, itemId);
       setTitle(item.itemName);
-      setDescription(item.description);
+      setDescription(item.itemDescription);
       setImages(item.images);
       setOwnerId(item.ownerId);
       setLikesCount(item.likesCount);
