@@ -144,28 +144,28 @@ const Profile = () => {
               <FlexImage className="profile--img" src={profileProfilePicture} />
             </IonCol>
 
-            <IonCol>
+            <IonCol className="profile-header--container">
               <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{"3"}</b>
                   </Text>
                   <br />
-                  <Text size="s">COLLECTIONS</Text>
+                  <Text size="xs">COLLECTIONS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{"15"}</b>
                   </Text>
                   <br />
-                  <Text size="s">ITEMS</Text>
+                  <Text size="xs">ITEMS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{"45"}</b>
                   </Text>
                   <br />
-                  <Text size="s">LIKES</Text>
+                  <Text size="xs">LIKES</Text>
                 </div>
               </IonRow>
 
