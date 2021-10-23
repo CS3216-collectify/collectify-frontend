@@ -55,6 +55,7 @@ const Profile = () => {
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
 
   const isOwnProfile = parseInt(currentUserId) === profileUserId;
 
@@ -80,7 +81,8 @@ const Profile = () => {
         setProfileLastName(res.lastName);
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
-        // setProfileDescription(res.description);
+        setProfileDescription(res.description);
+        setLikesCount(res.likesCount);
       }
     } catch (e) {
       console.log(e);
@@ -149,7 +151,7 @@ const Profile = () => {
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
-                    <b>{"45"}</b>
+                    <b>{likesCount}</b>
                   </Text>
                   <br />
                   <Text size="s">LIKES</Text>
@@ -172,8 +174,7 @@ const Profile = () => {
               <b>{profileFirstName + " " + profileLastName}</b>
             </div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
-              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
+              {profileDescription}
             </div>
           </IonRow>
 
@@ -189,7 +190,6 @@ const Profile = () => {
               {mode === COLLECTIONS_MODE &&
                 <IonGrid>
                   <IonRow className="ion-justify-content-end">
-                    {/* Direct to AddCollection page */}
                     <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
                   <ProfileCollections profileUserId={profileUserId}/>

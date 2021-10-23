@@ -30,7 +30,7 @@ const EditProfile = () => {
     //   setToast({ message: "Your username cannnot be less than 8 characters.", color: "danger" });
     // }
 
-    updateProfile(initialUsername, { username, firstName, lastName }).then((res) => {
+    updateProfile(initialUsername, { username, firstName, lastName, description }).then((res) => {
       setToast({ message: "Profile saved!", color: "success" });
       history.replace('/profile');
       // window.location.reload();
