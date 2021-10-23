@@ -86,29 +86,12 @@ export const deleteItem = async (collectionId, itemId) => {
   console.log(response);
 };
 
-const mockItems = {
-  items: [
-    {
-      itemId: 500,
-      itemName: "Shiny Charmander",
-      itemDescription: "My first ever card!",
-      collectionId: 123,
-      itemCreationDate: "2021-09-24T01:22:47.541Z",
-      coverImage:
-        "https://collectify-images.s3.amazonaws.com/item_images/im-0_b3TompB",
-    },
-    {
-      itemId: 501,
-      itemName: "Rare Mew Two",
-      itemDescription: "Bought for $100",
-      collectionId: 123,
-      itemCreationDate: "2021-09-23T01:22:47.541Z",
-      coverImage:
-        "https://collectify-images.s3.amazonaws.com/item_images/im-0_b3TompB",
-    },
-  ],
-};
-
-export const getItemsForDiscover = async () => {
-  return [...mockItems.items];
+export const getItemsForDiscover = async (offset, limit) => {
+  const params = {
+    offset,
+    limit,
+  };
+  console.log("GET /items... string query:", params);
+  const res = await server.get("/items", { params });
+  return res.data;
 };

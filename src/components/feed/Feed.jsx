@@ -21,7 +21,7 @@ const Feed = (props) => {
     }
     const nextPage = pages + 1;
     try {
-      const retrievedItems = await getFeed(userId, nextPage * LIMIT, LIMIT);
+      const retrievedItems = await getFeed(nextPage * LIMIT, LIMIT, false);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
@@ -38,7 +38,7 @@ const Feed = (props) => {
     const nextPage = 0;
     try {
       setLoading(true);
-      const retrievedItems = await getFeed(userId, nextPage * LIMIT, LIMIT);
+      const retrievedItems = await getFeed(nextPage * LIMIT, LIMIT, false);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setItems([...retrievedItems]);
       setPages(nextPage);
