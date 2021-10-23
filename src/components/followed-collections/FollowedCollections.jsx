@@ -59,6 +59,7 @@ const FollowedCollections = (props) => {
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 
         collections={collections} 
+        emptyMessage="You are not following any collections!"
       />
     </>
   )

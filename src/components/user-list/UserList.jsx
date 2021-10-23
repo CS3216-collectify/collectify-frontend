@@ -10,7 +10,7 @@ import UserCard from "./UserCard";
 const LIMIT = 10;
 
 const UserList = (props) => {
-  const { onScrollEnd: fetchNextPage, users = [], listEnded, emptyMessage } = props;
+  const { onScrollEnd: fetchNextPage, users = [], listEnded, emptyMessage = "No users found!" } = props;
 
   if (listEnded && users && users.length === 0 && emptyMessage) {
     return (

@@ -44,7 +44,12 @@ const ProfileCollections = (props) => {
 
   return (
     <IonGrid>
-      <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} />
+      <CollectionList 
+        onScrollEnd={fetchNextPage} 
+        listEnded={!hasMore} 
+        collections={collections} 
+        emptyMessage="Start adding new collections!"
+      />
     </IonGrid>
   )
 }
