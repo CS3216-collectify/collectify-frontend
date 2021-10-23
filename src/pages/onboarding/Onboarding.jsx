@@ -40,7 +40,12 @@ const Onboarding = () => {
   }, [currentUserId, getUserInformation, initialUsername]);
 
   const handleUpdateUsername = () => {
-    updateProfile(initialUsername, { username }).then((res) => {
+    const trimmedUsername = username.trim();
+    if (!trimmedUsername) {
+      setToast("Username cannot be empty.");
+      return;
+    }
+    updateProfile(initialUsername, { username: trimmedUsername }).then((res) => {
       setToast({ message: "Username updated!", color: "success" });
       history.replace("/home");
     });

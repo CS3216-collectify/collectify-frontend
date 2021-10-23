@@ -6,6 +6,7 @@ import SaveButton from "../button/SaveButton";
 import SelectButton from "../button/SelectButton";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
+import useToastContext from "../../hooks/useToastContext";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -34,17 +35,31 @@ const CollectionForm = (props) => {
 
   const convertCategoryIdToName = (selectedId) => categoryOptions.filter((cat) => cat.categoryId === selectedId)[0]?.name ?? "Unknown";
 
+  const setToast = useToastContext();
+
+  const validationErrorMessage = msg => {
+    setToast({ message: msg, color: "danger" });
+  }
+
   const saveHandler = () => {
-    // TODO: input validation
+    const trimmedCollectionName = collectionName.trim();
+    const trimmedCollectionDescription = collectionDescription.trim();
+    if (!trimmedCollectionName) {
+      validationErrorMessage("Name cannot be empty!");
+      return;
+    }
+    if (!trimmedCollectionDescription) {
+      validationErrorMessage("Description cannot be empty!");
+      return;
+    }
     if (categoryId === null) {
-      console.log("Plase select one category");
+      validationErrorMessage("Please select at least one category!");
       return;
     }
     const collectionToSave = {
-      collectionName,
-      collectionDescription,
+      collectionName: trimmedCollectionName,
+      collectionDescription: trimmedCollectionDescription,
       categoryId,
-      // other data
     };
     completeHandler(collectionToSave);
   };
