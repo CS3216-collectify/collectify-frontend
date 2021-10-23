@@ -18,7 +18,7 @@ import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { logoutUser } from "../../utils/user";
 
-const ProfileToolbar = ({ username }) => {
+const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -99,17 +99,19 @@ const ProfileToolbar = ({ username }) => {
             }
           />{" "}
         </IonButtons>
-        <IonButtons slot="end">
-          <IonButton
-            onClick={(e) =>
-              present({
-                event: e.nativeEvent,
-              })
-            }
-          >
-            <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
-          </IonButton>
-        </IonButtons>
+        {showMenu && (
+          <IonButtons slot="end">
+            <IonButton
+              onClick={(e) =>
+                present({
+                  event: e.nativeEvent,
+                })
+              }
+            >
+              <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
+            </IonButton>
+          </IonButtons>
+        )}
       </IonToolbar>
     </IonHeader>
   );

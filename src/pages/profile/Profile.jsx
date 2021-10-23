@@ -103,12 +103,13 @@ const Profile = () => {
     });
   }
 
-  if (!currentUserId) {
+  if (!currentUserId && !username) {
     // is guest user
     return (
       <IonPage className="profile">
+        <IonLoading isOpen={loading} />
         <IonContent className="ion-padding">
-          <ProfileToolbar />
+          <ProfileToolbar showMenu={false} username="Guest User" />
             <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -118,7 +119,7 @@ const Profile = () => {
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} />
-      <ProfileToolbar username={profileUsername} />
+      <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
