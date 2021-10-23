@@ -42,6 +42,8 @@ import Discover from "./pages/discover/Discover";
 import Onboarding from "./pages/onboarding/Onboarding";
 import FollowersList from "./pages/collection/FollowersList";
 import LikesList from "./pages/item/LikesList";
+import { Redirect } from "react-router";
+import ProtectedRoute from "./components/route/ProtectedRoute";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -57,25 +59,26 @@ const App = () => {
         <IonRouterOutlet>
           {/* <Switch> */}
           <Route exact path="/" component={Login} />
-          <Route exact path="/onboarding" component={Onboarding} />
+          <ProtectedRoute exact path="/onboarding" component={Onboarding} />
           <Route>
             <IonTabs>
               <IonRouterOutlet>
                 {/* TODO: add redirects for guests */}
-                <Route exact path="/home" component={Home} />
+                <ProtectedRoute exact path="/home" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/profile/:username" component={Profile} />
-                <Route exact path="/profile/edit" component={EditProfile} />
+                <ProtectedRoute exact path="/profile/edit" component={EditProfile} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/collections/:collectionId" component={Collection} />
-                <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
-                <Route exact path="/add-collections" component={AddCollection} />
-                <Route exact path="/collections/:collectionId/add" component={AddItem} />
+                <ProtectedRoute exact path="/collections/:collectionId/edit" component={EditCollection} />
+                <ProtectedRoute exact path="/add-collections" component={AddCollection} />
+                <ProtectedRoute exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
-                <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
+                <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/discover" component={Discover} />
+                <Redirect to="/" />
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
