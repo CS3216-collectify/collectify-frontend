@@ -117,7 +117,7 @@ const Profile = () => {
     });
   };
 
-  if (!currentUserId) {
+  if (!currentUserId && !username) {
     // is guest user
     return (
       <IonPage className="profile">
