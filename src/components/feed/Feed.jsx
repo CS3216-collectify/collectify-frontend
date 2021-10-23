@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { getFeed } from "../../services/feed";
 import { IonLoading } from "@ionic/react";
 import HorizontalLine from "../line/HorizontalLine";
+import Text from "../text/Text";
 
 const LIMIT = 6;
 
@@ -64,12 +65,19 @@ const Feed = (props) => {
   return (
     <>
       <IonLoading isOpen={loading} />
-      {items.map((item, idx) =>
+      {items && items.length > 0 && items.map((item, idx) =>
         <React.Fragment key={idx}>
           <HomeItem itemData={item} />
           <HorizontalLine color="lightgrey"/>
         </React.Fragment>
       )}
+      {(items && items.length === 0 || !items) &&
+        <div className="ion-text-center">
+          <Text size="l" >
+            Start following other's collections to stay updated!
+          </Text>
+        </div>
+      }
       <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage}/>
     </>
   )
