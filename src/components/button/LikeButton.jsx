@@ -4,7 +4,7 @@ import Text from "../text/Text";
 
 
 const LikeButton = (props) => {
-  const { likeHandler, liked } = props;
+  const { onClick: likeHandler, liked } = props;
 
   return (
     <IonIcon

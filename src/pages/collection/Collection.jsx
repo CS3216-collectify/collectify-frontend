@@ -16,6 +16,7 @@ import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
+import FollowersList from "./FollowersList";
 
 const Collection = (props) => {
   const history = useHistory();
@@ -103,9 +104,9 @@ const Collection = (props) => {
                 </b>
               </Text>
 
-              <div className="collection-followers--container">
+              <div className="collection-followers--container" onClick={() => history.push(`/collections/${collectionId}/followers`)}>
                 <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-                {followersCount} followers
+                <Text size="xs">{followersCount} followers</Text>
               </div>
             </div>
           </IonRow>

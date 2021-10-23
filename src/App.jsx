@@ -40,6 +40,8 @@ import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 import Discover from "./pages/discover/Discover";
 import Onboarding from "./pages/onboarding/Onboarding";
+import FollowersList from "./pages/collection/FollowersList";
+import LikesList from "./pages/item/LikesList";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -70,6 +72,8 @@ const App = () => {
                 <Route exact path="/add-collections" component={AddCollection} />
                 <Route exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
+                <Route exact path="/items/:itemId/likes" component={LikesList} />
+                <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/discover" component={Discover} />
               </IonRouterOutlet>

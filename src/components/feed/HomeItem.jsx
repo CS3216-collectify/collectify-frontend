@@ -96,9 +96,9 @@ const HomeItem = (props) => {
           </IonRow>
         </IonCol>
         <IonCol size={1}>
-          <LikeButton liked={liked} likeHandler={likeHandler} />
+          <LikeButton liked={liked} onClick={likeHandler} />
         </IonCol>
-        <IonCol size={3}>
+        <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
           <Text color="default">{likesCount} likes</Text>
         </IonCol>
       </IonRow>
