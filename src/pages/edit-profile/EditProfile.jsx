@@ -29,11 +29,31 @@ const EditProfile = () => {
     //   setToast({ message: "Your username cannnot be less than 8 characters.", color: "danger" });
     // }
 
-    updateProfile(initialUsername, { username, firstName, lastName, description }).then((res) => {
-      setToast({ message: "Profile saved!", color: "success" });
-      history.replace("/profile");
-      // window.location.reload();
-    });
+    if (username.length < 8) {
+      setToast({ message: "Your username must be at least 8 characters long.", color: "danger" });
+      return;
+    }
+
+    if (firstName.length === 0) {
+      setToast({ message: "Your first name cannot be empty.", color: "danger" });
+      return;
+    }
+
+    if (description.length === 0) {
+      setToast({ message: "Your profile description cannot be empty.", color: "danger" });
+      return;
+    }
+
+    updateProfile(initialUsername, { username, firstName, lastName, description })
+      .then((res) => {
+        setToast({ message: "Profile saved!", color: "success" });
+        history.replace("/profile");
+        // window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        setToast({ message: "Error", color: "danger" });
+      });
   };
 
   useEffect(() => {
