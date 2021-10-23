@@ -88,7 +88,7 @@ const Profile = () => {
         res = await getCurrentUser();
       }
       if (res) {
-        console.log(res)
+        console.log(res);
         setProfileUserId(Number(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);
@@ -135,9 +135,9 @@ const Profile = () => {
       <ProfileToolbar username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
-      <IonContent className="ion-padding">
+      <IonContent>
         {/* --ion-grid-width to modify the fixed width */}
-        <IonGrid fixed className="profile--grid">
+        <IonGrid fixed className="profile--grid ion-padding">
           <IonRow>
             <IonCol size="auto">
               {/* <Logo className="profile--img"/> */}
@@ -182,27 +182,31 @@ const Profile = () => {
             <div>
               <b>{profileFirstName + " " + profileLastName}</b>
             </div>
-            <div>
-              {profileDescription}
-            </div>
+            <div>{profileDescription}</div>
           </IonRow>
+        </IonGrid>
 
-          {isOwnProfile && ( // Display my collections, liked items, and followed collections
-            <>
-              <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
+        {isOwnProfile && ( // Display my collections, liked items, and followed collections
+          <IonGrid fixed>
+            <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
+
+            <div className="ion-padding">
               {mode === LIKED_ITEMS_MODE && <LikedItems />}
               {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
               {mode === COLLECTIONS_MODE && (
-                <IonGrid>
+                <>
                   <IonRow className="ion-justify-content-end">
                     {/* Direct to AddCollection page */}
                     <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
                   <ProfileCollections profileUserId={profileUserId} />
-                </IonGrid>
+                </>
               )}
-            </>
-          )}
+            </div>
+          </IonGrid>
+        )}
+
+        <IonGrid fixed className="ion-padding">
           {!isOwnProfile && ( // Just display collections
             <ProfileCollections profileUserId={profileUserId} />
           )}
