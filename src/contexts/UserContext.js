@@ -1,6 +1,6 @@
-import React, { useCallback, useState, createContext, useEffect } from "react";
-import { IonToast } from "@ionic/react";
-import { getAccessToken, getRefreshToken, getUserId } from "../utils/user";
+import React, { useState, createContext, useEffect } from "react";
+import { getAccessToken, getRefreshToken, getUserId, storeUserId } from "../utils/user";
+import { getCurrentUser } from "../services/users";
 
 const UserContext = createContext();
 
@@ -8,12 +8,35 @@ export default UserContext;
 
 export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(
-    (getAccessToken() !== null || getRefreshToken() !== null) && getUserId() !== null
+    getAccessToken() !== null || getRefreshToken() !== null
   );
 
   const [currentUserId, setCurrentUserId] = useState(getUserId());
 
+  useEffect(() => {
+    if (!currentUserId && isUserAuthenticated) {
+      const storedUserId = getUserId();
+      if (storedUserId) {
+        setCurrentUserId(storedUserId);
+      } else {
+        console.log("Fetching user id data...");
+        getCurrentUser().then((res) => {
+          setCurrentUserId(res.userId);
+          console.log("Current User ID is", res.userId);
+          storeUserId(res.userId);
+        });
+      }
+    }
+    if (!isUserAuthenticated) {
+      setCurrentUserId(null);
+    }
+  }, [currentUserId, isUserAuthenticated]);
+
+  const isCurrentUserId = (userId) => {
+    return parseInt(currentUserId) === parseInt(userId);
+  }
+
   return (
-    <UserContext.Provider value={{ isUserAuthenticated, setIsUserAuthenticated, currentUserId, setCurrentUserId }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ isUserAuthenticated, isCurrentUserId, setIsUserAuthenticated }}>{children}</UserContext.Provider>
   );
 };

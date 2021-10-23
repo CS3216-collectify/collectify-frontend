@@ -10,14 +10,13 @@ import Text from "../text/Text";
 const GuestLoginPrompt = (props) => {
   const history = useHistory();
   const setToast = useToastContext();
-  const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { setIsUserAuthenticated } = useUserContext();
 
   const handleGoogleLogin = async (googleAuthStatus) => {
     if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_SUCCESS) {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(getUserId());
       history.replace("/home");
     } else {
       // error

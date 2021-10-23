@@ -16,7 +16,7 @@ import { getAccessToken, getIsGuest, getRefreshToken, getUserId, loginGuest } fr
 const Login = () => {
   const history = useHistory();
   const setToast = useToastContext();
-  const { isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
 
   useEffect(() => {
     if (getAccessToken() !== null || getRefreshToken() !== null) {
@@ -33,12 +33,10 @@ const Login = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(getUserId());
       history.replace("/home");
     } else if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_ONBOARD) {
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(getUserId());
       history.replace('/onboarding');
     } else {
       // error

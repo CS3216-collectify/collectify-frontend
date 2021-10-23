@@ -40,7 +40,7 @@ const Profile = () => {
   const history = useHistory();
   const location = useLocation();
   const setToast = useToastContext();
-  const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { isUserAuthenticated, isCurrentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
@@ -56,7 +56,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
 
-  const isOwnProfile = parseInt(currentUserId) === profileUserId;
+  const isOwnProfile = isCurrentUserId(profileUserId);
 
   const toggleMode = (mode) => {
     setMode(parseInt(mode));
@@ -70,8 +70,7 @@ const Profile = () => {
       if (username) {
         console.log(username);
         res = await getUserByUsername(username);
-      } else if (currentUserId) {
-        console.log(currentUserId);
+      } else if (isUserAuthenticated) {
         res = await getCurrentUser();
       }
       if (res) {
@@ -89,13 +88,13 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentUserId, username]);
+  }, [isUserAuthenticated, username]);
 
   useEffect(() => {
-    if (username || currentUserId) {
+    if (username || isUserAuthenticated) {
       getUserInformation();
     }
-  }, [currentUserId, username, location]);
+  }, [isUserAuthenticated, username, location]);
 
   const editProfileHandler = () => {
     history.push({
@@ -104,7 +103,7 @@ const Profile = () => {
     });
   }
 
-  if (!currentUserId && !username) {
+  if (!isUserAuthenticated && !username) {
     // is guest user
     return (
       <IonPage className="profile">

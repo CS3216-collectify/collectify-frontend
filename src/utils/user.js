@@ -61,3 +61,7 @@ export const loginGuest = () => {
 
   localStorage.setItem(IS_GUEST_KEY, true);
 };
+
+export const storeUserId = (userId) => {
+  localStorage.setItem(USER_ID_KEY, userId);
+}

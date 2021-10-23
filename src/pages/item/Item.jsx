@@ -17,7 +17,7 @@ const Item = () => {
   const history = useHistory();
   const location = useLocation();
   const { collectionId, itemId } = useParams();
-  const { currentUserId } = useUserContext();
+  const { isCurrentUserId } = useUserContext();
   const setToast = useToastContext();
 
   const [title, setTitle] = useState("Test Title");
@@ -75,7 +75,7 @@ const Item = () => {
     }
   }
 
-  const isItemOwner = Number(currentUserId) === Number(ownerId);
+  const isItemOwner = isCurrentUserId(ownerId);
 
   return (
     <IonPage className="profile">
