@@ -25,7 +25,7 @@ const Item = () => {
   const [images, setImages] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-  const [itemCreationDate, setItemCreationDate] = useState("")
+  const [itemCreationDate, setItemCreationDate] = useState("");
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
@@ -48,14 +48,14 @@ const Item = () => {
   useEffect(() => {
     setLoading(true);
     fetchItemData();
-    console.log("fetech")
+    console.log("fetech");
   }, [fetchItemData, location]);
 
   const likeHandler = () => {
     // TODO: handle api call
 
     setLiked(!liked);
-  }
+  };
 
   const isItemOwner = Number(currentUserId) === Number(ownerId);
 
@@ -63,13 +63,11 @@ const Item = () => {
     <IonPage className="profile">
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Item`} />
-      <IonContent className="ion-padding">
-        <IonGrid fixed>
+      <IonContent>
+        <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol>
-              <Text>
-              @{ownerUsername}
-              </Text>
+              <Text>@{ownerUsername}</Text>
             </IonCol>
             <IonCol>
               {isItemOwner && (
@@ -79,16 +77,20 @@ const Item = () => {
               )}
             </IonCol>
           </IonRow>
+        </IonGrid>
+
+        <IonGrid fixed className="ion-no-padding">
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
+        </IonGrid>
+
+        <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol size={8}>
               <IonRow>
                 <Text size="l">{title}</Text>
               </IonRow>
               <IonRow>
-                <Text size="s">
-                  {convertUTCtoLocal(itemCreationDate)}
-                </Text>
+                <Text size="s">{convertUTCtoLocal(itemCreationDate)}</Text>
               </IonRow>
             </IonCol>
             <IonCol size={4}>

@@ -10,18 +10,16 @@ const Home = () => {
   const [name, setName] = useState("");
   const x = useUserContext();
 
-  const { userId = 1, } = x;
+  const { userId = 1 } = x;
 
   return (
     <IonPage>
       <HomeToolbar title="collectify" />
 
       {/* Ion padding applies 16px  */}
-      <IonContent className="ion-padding">
+      <IonContent>
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-        <IonGrid fixed>
-          <Feed userId={userId} />
-        </IonGrid>
+        <Feed userId={userId} />
       </IonContent>
     </IonPage>
   );
