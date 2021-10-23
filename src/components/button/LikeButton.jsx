@@ -4,17 +4,15 @@ import Text from "../text/Text";
 
 
 const LikeButton = (props) => {
-  const { likeHandler, liked, likesCount } = props;
+  const { likeHandler, liked } = props;
 
   return (
-    <IonButton fill="clear" onClick={likeHandler}>
-      <IonIcon
-        size="small"
-        slot="icon-only"
-        icon={liked ? heart : heartOutline}
-      />
-      <Text color="default">{likesCount} likes</Text>
-    </IonButton>
+    <IonIcon
+      size="small"
+      icon={liked ? heart : heartOutline}
+      onClick={likeHandler}
+      color="danger"
+    />
   )
 }
 

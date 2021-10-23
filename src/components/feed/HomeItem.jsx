@@ -95,8 +95,11 @@ const HomeItem = (props) => {
             </Text>
           </IonRow>
         </IonCol>
-        <IonCol size={4}>
-          <LikeButton liked={liked} likeHandler={likeHandler} likesCount={likesCount} />
+        <IonCol size={1}>
+          <LikeButton liked={liked} likeHandler={likeHandler} />
+        </IonCol>
+        <IonCol size={3}>
+          <Text color="default">{likesCount} likes</Text>
         </IonCol>
       </IonRow>
     </IonGrid>
