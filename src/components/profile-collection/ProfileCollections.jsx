@@ -30,14 +30,14 @@ const ProfileCollections = (props) => {
     } catch (e) {
       console.log(e);
     }
-  }, [collections, hasMore, pages, profileUserId]);
+  }, [collections, hasMore, pages]);
 
   useEffect(() => {
     const { profileUserId } = props;
     if (profileUserId) {
       loadUserCollections(profileUserId);
     }
-  }, [props.profileUserId]);
+  }, [loadUserCollections, props]);
 
   const fetchNextPage = () => {
     console.log("load next");
