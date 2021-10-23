@@ -24,6 +24,7 @@ const HomeItem = (props) => {
     ownerId,
     ownerName,
     images,
+    coverImage,
     ownerUsername,
     liked: initLiked,
     likesCount,
@@ -35,7 +36,10 @@ const HomeItem = (props) => {
 
   const [liked, setLiked] = useState(initLiked);
 
-  const imageUrls = images.map((img) => img.url);
+  const imageUrls = [coverImage];
+
+  // TODO: Use the bottom one once images is implemented
+  // const imageUrls = images.map((img) => img.url);
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
