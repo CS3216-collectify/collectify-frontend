@@ -54,7 +54,7 @@ const Collection = (props) => {
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerUserId(userId);
-      // setOwnerUsername(ownerUsername);
+      setOwnerUsername(ownerUsername);
       setFollowed(isFollowed);
       setFollowersCount(followersCount);
     } catch (e) {
@@ -110,7 +110,7 @@ const Collection = (props) => {
             </div>
           </IonRow>
           <IonRow className="ion-justify-content-between">
-            <Text size="s" className="collection-owner">
+            <Text size="s" className="collection-owner" onClick={() => history.push(`/profile/${ownerUsername}`)}>
               <b>
                 by @{ownerUsername} 
               </b>
