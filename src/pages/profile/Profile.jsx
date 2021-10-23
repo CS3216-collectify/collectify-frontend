@@ -1,21 +1,21 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent, IonLoading, IonAvatar } from "@ionic/react";
-
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import EditProfileButton from "../../components/button/EditProfileButton";
+import LogoutButton from "../../components/button/LogoutButton";
 import AddButton from "../../components/button/AddButton";
 import { getCurrentUser, getUserByUsername } from "../../services/users";
 import FlexImage from "../../components/image/FlexImage";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Toggle from "../../components/toggle/Toggle";
 import LikedItems from "../../components/liked-items/LikedItems";
-import FollowedCollections from "../../components/followed-collections.jsx/FollowedCollections";
+import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
+import Text from "../../components/text/Text";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -38,18 +38,20 @@ const MODE_SELECT_OPTIONS = [
 
 const Profile = () => {
   const history = useHistory();
+  const location = useLocation();
   const setToast = useToastContext();
   const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
- 
+
   // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");
   const [profileLastName, setProfileLastName] = useState("");
   const [profileUsername, setProfileUsername] = useState("");
+  const [profileDescription, setProfileDescription] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
@@ -63,23 +65,22 @@ const Profile = () => {
   // TODO: add api call for username
   const getUserInformation = useCallback(async () => {
     try {
+      let res = null;
       setLoading(true);
       if (username) {
-        console.log(username)
-        const res = await getUserByUsername(username)
+        console.log(username);
+        res = await getUserByUsername(username);
+      } else if (currentUserId) {
+        console.log(currentUserId);
+        res = await getCurrentUser();
+      }
+      if (res) {
         setProfileUserId(Number(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
-      } else if (currentUserId) {
-        console.log(currentUserId);
-        const res = await getCurrentUser();
-        setProfileUserId(Number(currentUserId));
-        setProfileFirstName(res.firstName);
-        setProfileLastName(res.lastName);
-        setProfileUsername(res.username);
-        setProfileProfilePicture(res.pictureUrl);
+        // setProfileDescription(res.description);
       }
     } catch (e) {
       console.log(e);
@@ -102,12 +103,13 @@ const Profile = () => {
     });
   }
 
-  if (!currentUserId) {
+  if (!currentUserId && !username) {
     // is guest user
     return (
       <IonPage className="profile">
+        <IonLoading isOpen={loading} />
         <IonContent className="ion-padding">
-          <ProfileToolbar />
+          <ProfileToolbar showMenu={false} username="Guest User" />
             <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -117,7 +119,7 @@ const Profile = () => {
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} />
-      <ProfileToolbar username={profileUsername} />
+      <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
@@ -132,30 +134,31 @@ const Profile = () => {
             <IonCol>
               <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"3"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>COLLECTIONS</IonText>
+                  <Text size="s">COLLECTIONS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"15"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>ITEMS</IonText>
+                  <Text size="s">ITEMS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
-                  <IonText>
+                  <Text>
                     <b>{"45"}</b>
-                  </IonText>
+                  </Text>
                   <br />
-                  <IonText>LIKES</IonText>
+                  <Text size="s">LIKES</Text>
                 </div>
               </IonRow>
 
               {isOwnProfile && // can edit profile
-                <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                // <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
+                <IonRow>
                   <EditProfileButton
                     onClick={editProfileHandler}
                   />

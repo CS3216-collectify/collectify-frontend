@@ -14,17 +14,29 @@ import {
 } from "@ionic/react";
 import { search, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
+import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
+import { logoutUser } from "../../utils/user";
 
-const ProfileToolbar = ({ username }) => {
+const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();
   const location = useLocation();
 
+  const setToast = useToastContext();
+  const { setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+
+  const logoutHandler = () => {
+    logoutUser();
+    history.replace("/");
+    setToast({ message: "Logged out successfully.", color: "success" });
+    setIsUserAuthenticated(false);
+    setCurrentUserId(null);
+  };
+
   // Menu with items shown when ellipsis icon is pressed
-  const PopoverList: React.FC<{
-    onHide: () => void,
-  }> = ({ onHide }) => (
+  const PopoverList = ({ onHide }) => (
     <IonList>
-      <IonListHeader>Menu</IonListHeader>
+      {/* <IonListHeader>Menu</IonListHeader> */}
       <IonItem
         button
         onClick={() => {
@@ -34,8 +46,11 @@ const ProfileToolbar = ({ username }) => {
       >
         Settings
       </IonItem>
-      <IonItem lines="none" detail={false} button onClick={onHide}>
-        <IonText color="danger">Close</IonText>
+      <IonItem lines="none" detail={false} button onClick={() => {
+        onHide();
+        logoutHandler();
+      }}>
+        <IonText color="danger">Logout</IonText>
       </IonItem>
     </IonList>
   );
@@ -84,17 +99,19 @@ const ProfileToolbar = ({ username }) => {
             }
           />{" "}
         </IonButtons>
-        <IonButtons slot="end">
-          <IonButton
-            onClick={(e) =>
-              present({
-                event: e.nativeEvent,
-              })
-            }
-          >
-            <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
-          </IonButton>
-        </IonButtons>
+        {showMenu && (
+          <IonButtons slot="end">
+            <IonButton
+              onClick={(e) =>
+                present({
+                  event: e.nativeEvent,
+                })
+              }
+            >
+              <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
+            </IonButton>
+          </IonButtons>
+        )}
       </IonToolbar>
     </IonHeader>
   );

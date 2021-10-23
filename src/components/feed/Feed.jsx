@@ -1,12 +1,13 @@
 import HomeItem from "./HomeItem";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getFeed } from "../../services/feed";
 import { IonLoading } from "@ionic/react";
+import HorizontalLine from "../line/HorizontalLine";
 
 const LIMIT = 6;
 
-const HomeItems = (props) => {
+const Feed = (props) => {
 
   const { userId } = props;
   const [items, setItems] = useState([]);
@@ -64,11 +65,14 @@ const HomeItems = (props) => {
     <>
       <IonLoading isOpen={loading} />
       {items.map((item, idx) =>
-        <HomeItem key={idx} itemData={item} />
+        <React.Fragment key={idx}>
+          <HomeItem itemData={item} />
+          <HorizontalLine color="lightgrey"/>
+        </React.Fragment>
       )}
       <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage}/>
     </>
   )
 }
 
-export default HomeItems;
+export default Feed;

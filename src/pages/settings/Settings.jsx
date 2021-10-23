@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList, IonText } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 
 import "./Settings.scss";
@@ -10,6 +10,8 @@ import useToastContext from "../../hooks/useToastContext";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import { getUserId } from "../../utils/user";
+import Text from "../../components/text/Text";
+
 // Pass user ID and load data\
 // some redirect if accessed by Guest
 const Settings = () => {
@@ -40,9 +42,9 @@ const Settings = () => {
 
         <IonGrid fixed>
           {!currentUserId && (
-            <IonText>
+            <Text>
               <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
-            </IonText>
+            </Text>
           )}
           <IonRow>{currentUserId ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
         </IonGrid>

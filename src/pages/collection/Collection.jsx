@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonText, IonIcon } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
@@ -12,6 +12,7 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
 import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
+import Text from "../../components/text/Text";
 
 const Collection = (props) => {
   const history = useHistory();
@@ -20,7 +21,6 @@ const Collection = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [ownerUserId, setOwnerUserId] = useState(null);
-  const [ownerName, setOwnerName] = useState("User's Name");
   const [ownerUsername, setOwnerUsername] = useState("Username");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
@@ -32,16 +32,14 @@ const Collection = (props) => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { collectionName, collectionDescription, categoryName, categoryId, userId } = collectionData;
+      const { collectionName, collectionDescription, categoryName, categoryId, userId, ownerUsername } = collectionData;
       setTitle(collectionName);
       setDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerUserId(userId);
-
-      // setOwnerName("TODO");
-      // setOwnerUsername("todo");
-      // setCategoryId(collectionData.categoryId);
+      // setOwnerUsername(ownerUsername);
+      setCategoryId(collectionData.categoryId);
     } catch (e) {
       console.log(e);
     } finally {
@@ -58,23 +56,15 @@ const Collection = (props) => {
     <IonPage className="collection">
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Collection`} />
-      <IonContent>
+      <IonContent className="ion-padding">
         <IonGrid fixed>
           <IonRow>
-            <IonText className="collection-owner">
-              <b>
-                @{ownerUsername} 
-              </b>
-            </IonText>
-          </IonRow>
-
-          <IonRow>
             <div className="collection-title--container">
-              <IonText className="collection--title">
+              <Text size="xl" className="collection--title">
                 <b>
                   <b>{title}</b>
                 </b>
-              </IonText>
+              </Text>
 
               <div className="collection-followers--container">
                 <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
@@ -82,12 +72,19 @@ const Collection = (props) => {
               </div>
             </div>
           </IonRow>
+          <IonRow className="ion-justify-content-between">
+            <Text size="s" className="collection-owner">
+              <b>
+                by @{ownerUsername} 
+              </b>
+            </Text>
+          </IonRow>
           <IonRow className="ion-justify-content-start">
             <IonCol>{categoryName && <CategoryChip name={categoryName} />}</IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonText>{description}</IonText>
+              <Text>{description}</Text>
             </IonCol>
           </IonRow>
           {/* TODO: add follow button */}

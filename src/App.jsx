@@ -39,7 +39,7 @@ import EditCollection from "./pages/edit-collection/EditCollection";
 import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 import Discover from "./pages/discover/Discover";
-import Search from "./pages/search/Search";
+import Onboarding from "./pages/onboarding/Onboarding";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -53,10 +53,10 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
+          {/* <Switch> */}
+          <Route exact path="/" component={Login} />
+          <Route exact path="/onboarding" component={Onboarding} />
+          <Route>
             <IonTabs>
               <IonRouterOutlet>
                 {/* TODO: add redirects for guests */}
@@ -86,24 +86,25 @@ const App = () => {
                   <IonText>Discover</IonText>
                 </IonTabButton>
                 {/* {isUserAuthenticated && (
-                  <IonTabButton tab="c" href="/home">
-                    <IonIcon icon={addCircleOutline} />
-                    <IonText>Add</IonText>
-                  </IonTabButton>
-                )}
-                {isUserAuthenticated && (
-                  <IonTabButton tab="d" href="/d">
-                    <IonIcon icon={chatbubblesOutline} />
-                    <IonText>Chats</IonText>
-                  </IonTabButton>
-                )} */}
+                    <IonTabButton tab="c" href="/home">
+                      <IonIcon icon={addCircleOutline} />
+                      <IonText>Add</IonText>
+                    </IonTabButton>
+                  )}
+                  {isUserAuthenticated && (
+                    <IonTabButton tab="d" href="/d">
+                      <IonIcon icon={chatbubblesOutline} />
+                      <IonText>Chats</IonText>
+                    </IonTabButton>
+                  )} */}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>
-          </Switch>
+          </Route>
+          {/* </Switch> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
