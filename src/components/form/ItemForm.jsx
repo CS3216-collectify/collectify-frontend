@@ -37,11 +37,7 @@ const ItemForm = (props) => {
     const newUrl = URL.createObjectURL(newFile);
     const newFileData = { imageUrl: newUrl, position: images.length, isNew: true };
     setImages([...images, newFileData]);
-    console.log("Image upload not implemented yet");
-    console.log("file:", newFile);
   };
-
-  console.log("images", images);
 
   const deleteImageHandler = (selectedIndex) => {
     const deletedImage = images[selectedIndex];

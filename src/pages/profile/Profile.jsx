@@ -1,6 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonImg, IonText, IonList, IonInfiniteScroll, IonInfiniteScrollContent, IonLoading, IonAvatar } from "@ionic/react";
+import {
+  IonContent,
+  IonPage,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  IonText,
+  IonList,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonLoading,
+  IonAvatar,
+} from "@ionic/react";
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
@@ -60,7 +73,7 @@ const Profile = () => {
 
   const toggleMode = (mode) => {
     setMode(parseInt(mode));
-  }
+  };
 
   // TODO: add api call for username
   const getUserInformation = useCallback(async () => {
@@ -94,22 +107,22 @@ const Profile = () => {
     if (username || currentUserId) {
       getUserInformation();
     }
-  }, [currentUserId, username]);
+  }, [currentUserId, getUserInformation, username, location]);
 
   const editProfileHandler = () => {
     history.push({
       pathname: "/profile/edit",
       state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName },
     });
-  }
+  };
 
-  if (!currentUserId) {
+  if (!currentUserId && !username) {
     // is guest user
     return (
       <IonPage className="profile">
+        <ProfileToolbar />
         <IonContent className="ion-padding">
-          <ProfileToolbar />
-            <GuestLoginPrompt />
+          <GuestLoginPrompt />
         </IonContent>
       </IonPage>
     );
@@ -137,32 +150,30 @@ const Profile = () => {
                     <b>{"3"}</b>
                   </Text>
                   <br />
-                  <Text size="s">COLLECTIONS</Text>
+                  <Text size="xs">COLLECTIONS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{"15"}</b>
                   </Text>
                   <br />
-                  <Text size="s">ITEMS</Text>
+                  <Text size="xs">ITEMS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{"45"}</b>
                   </Text>
                   <br />
-                  <Text size="s">LIKES</Text>
+                  <Text size="xs">LIKES</Text>
                 </div>
               </IonRow>
 
-              {isOwnProfile && // can edit profile
+              {isOwnProfile && ( // can edit profile
                 // <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
                 <IonRow>
-                  <EditProfileButton
-                    onClick={editProfileHandler}
-                  />
+                  <EditProfileButton onClick={editProfileHandler} />
                 </IonRow>
-              }
+              )}
             </IonCol>
           </IonRow>
 
@@ -176,29 +187,25 @@ const Profile = () => {
             </div>
           </IonRow>
 
-          {isOwnProfile && // Display my collections, liked items, and followed collections
+          {isOwnProfile && ( // Display my collections, liked items, and followed collections
             <>
               <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
-              {mode === LIKED_ITEMS_MODE &&
-                <LikedItems />
-              }
-              {mode === FOLLOWING_COLLECTIONS_MODE &&
-                <FollowedCollections />
-              }
-              {mode === COLLECTIONS_MODE &&
+              {mode === LIKED_ITEMS_MODE && <LikedItems />}
+              {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
+              {mode === COLLECTIONS_MODE && (
                 <IonGrid>
                   <IonRow className="ion-justify-content-end">
                     {/* Direct to AddCollection page */}
                     <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
-                  <ProfileCollections profileUserId={profileUserId}/>
+                  <ProfileCollections profileUserId={profileUserId} />
                 </IonGrid>
-              }
+              )}
             </>
-          }
-          {!isOwnProfile && // Just display collections
-            <ProfileCollections profileUserId={profileUserId}/>
-          }
+          )}
+          {!isOwnProfile && ( // Just display collections
+            <ProfileCollections profileUserId={profileUserId} />
+          )}
         </IonGrid>
       </IonContent>
     </IonPage>

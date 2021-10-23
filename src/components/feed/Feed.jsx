@@ -54,7 +54,7 @@ const Feed = (props) => {
     if (props.userId) {
       loadInitialItems();
     }
-  }, [props.userId]);
+  }, [loadInitialItems, props.userId]);
 
   const fetchNextPage = () => {
     console.log("load next");

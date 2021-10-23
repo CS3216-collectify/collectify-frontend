@@ -1,6 +1,6 @@
 import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
 import useUserContext from "../../hooks/useUserContext";
@@ -16,6 +16,7 @@ import Text from "../../components/text/Text";
 
 const Collection = (props) => {
   const history = useHistory();
+  const location = useLocation();
   // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
   const [title, setTitle] = useState("");
@@ -50,7 +51,7 @@ const Collection = (props) => {
   useEffect(() => {
     setLoading(true);
     loadCollectionData();
-  }, [loadCollectionData]);
+  }, [loadCollectionData, location]);
 
   return (
     <IonPage className="collection">
@@ -60,9 +61,7 @@ const Collection = (props) => {
         <IonGrid fixed>
           <IonRow>
             <Text className="collection-owner">
-              <b>
-                @{ownerUsername} 
-              </b>
+              <b>@{ownerUsername}</b>
             </Text>
           </IonRow>
 

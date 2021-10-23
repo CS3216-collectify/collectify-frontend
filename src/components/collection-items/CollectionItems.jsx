@@ -15,6 +15,7 @@ const CollectionItems = (props) => {
   const [pages, setPages] = useState(-1);
 
   const loadItems = useCallback(async () => {
+    console.log("HI")
     const nextPage = pages + 1;
     try {
       if (!hasMore) {
@@ -24,6 +25,7 @@ const CollectionItems = (props) => {
       if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
         setHasMore(false);
       }
+      console.log([...items, ...retrievedItems])
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {
@@ -32,8 +34,9 @@ const CollectionItems = (props) => {
   }, [collectionId, hasMore, items, pages]);
 
   useEffect(() => {
+    console.log(location.pathname)
     loadItems();
-  }, [loadItems, location]);
+  }, [loadItems, location.pathname]);
 
   const fetchNextPage = () => {
     console.log("load next");

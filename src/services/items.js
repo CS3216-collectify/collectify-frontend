@@ -56,7 +56,6 @@ export const getItemsFromCollection = async (collectionId, offset, limit) => {
 export const getItemFromCollection = async (collectionId, itemId) => {
   console.log("Get Item with collectionId", collectionId, "and itemId", itemId);
   const response = await server.get(`collections/${collectionId}/items/${itemId}/`);
-  console.log(response.data);
 
   // return mockItem;
   return response.data;
@@ -89,9 +88,7 @@ export const postItem = async (collectionId, itemData) => {
     const file = await loadImageFile(imageUrl, i);
     body.append("images", file);
   }
-  console.log(itemData);
 
-  console.log(...body);
   const response = await server.post(`collections/${collectionId}/items/`, body);
   console.log(response);
 
@@ -104,7 +101,6 @@ export const updateItem = async (collectionId, itemId, itemData) => {
   // TODO: How images are updated?
 
   console.log("Update Item with collectionId", collectionId, "and itemId", itemId);
-  console.log(itemData);
 
   const body = new FormData();
   const { itemName, itemDescription, images, deletedImageIds } = itemData;
@@ -124,7 +120,6 @@ export const updateItem = async (collectionId, itemId, itemData) => {
     body.append("deletedImageIds", id);
   }
 
-  console.log(...body);
   await server.patch(`collections/${collectionId}/items/${itemId}/`, body);
 };
 

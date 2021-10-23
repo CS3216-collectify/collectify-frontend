@@ -97,7 +97,7 @@ const ProfileToolbar = ({ username }) => {
                 ? "ion-hide"
                 : ""
             }
-          />{" "}
+          />
         </IonButtons>
         <IonButtons slot="end">
           <IonButton

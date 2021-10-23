@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList } from "@ionic/react";
-import { useHistory, useLocation } from "react-router-dom";
+import { IonContent, IonPage } from "@ionic/react";
 import { StreamChat } from "stream-chat";
 import { Chat, Channel, ChannelList } from "stream-chat-react";
 
