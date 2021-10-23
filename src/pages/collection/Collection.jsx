@@ -6,6 +6,8 @@ import { peopleOutline } from "ionicons/icons";
 import useUserContext from "../../hooks/useUserContext";
 import AddButton from "../../components/button/AddButton";
 import EditButton from "../../components/button/EditButton";
+import UnfollowButton from "../../components/button/UnfollowButton";
+import FollowButton from "../../components/button/FollowButton";
 import CategoryChip from "../../components/chip/CategoryChip";
 import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -13,6 +15,7 @@ import { getCollectionByCollectionId } from "../../services/collections";
 import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
+import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
 
 const Collection = (props) => {
   const history = useHistory();
@@ -25,21 +28,35 @@ const Collection = (props) => {
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
+  const [followed, setFollowed] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
 
   const { currentUserId } = useUserContext();
+
+  const isCollectionOwner = Number(currentUserId) === Number(ownerUserId);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { collectionName, collectionDescription, categoryName, categoryId, userId, ownerUsername } = collectionData;
+      const { 
+        collectionName, 
+        collectionDescription, 
+        categoryName, 
+        categoryId, 
+        userId, 
+        ownerUsername, 
+        isFollowed, 
+        followersCount, 
+      } = collectionData;
       setTitle(collectionName);
       setDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerUserId(userId);
       // setOwnerUsername(ownerUsername);
-      setCategoryId(collectionData.categoryId);
+      setFollowed(isFollowed);
+      setFollowersCount(followersCount);
     } catch (e) {
       console.log(e);
     } finally {
@@ -51,6 +68,26 @@ const Collection = (props) => {
     setLoading(true);
     loadCollectionData();
   }, [loadCollectionData]);
+
+  const followHandler = () => {
+    if (followed || isCollectionOwner) {
+      return;
+    }
+    followByCollectionId(collectionId).then(() => {
+      setFollowersCount(followersCount + 1);
+      setFollowed(true);
+    })
+  }
+
+  const unfollowHandler = () => {
+    if (!followed || isCollectionOwner) {
+      return;
+    }
+    unfollowByCollectionId(collectionId).then(() => {
+      setFollowersCount(followersCount - 1);
+      setFollowed(false);
+    })
+  }
 
   return (
     <IonPage className="collection">
@@ -68,7 +105,7 @@ const Collection = (props) => {
 
               <div className="collection-followers--container">
                 <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-                20 followers
+                {followersCount} followers
               </div>
             </div>
           </IonRow>
@@ -87,8 +124,12 @@ const Collection = (props) => {
               <Text>{description}</Text>
             </IonCol>
           </IonRow>
-          {/* TODO: add follow button */}
-          {Number(currentUserId) === Number(ownerUserId) && (
+          {!isCollectionOwner && (followed ? (
+              <UnfollowButton onClick={unfollowHandler} /> 
+            ):( 
+              <FollowButton onClick={followHandler} />
+          ))}
+          {isCollectionOwner && (
             <IonRow className="ion-justify-content-end">
               <IonCol>
                 <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />

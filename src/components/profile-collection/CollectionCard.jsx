@@ -5,9 +5,9 @@ import { peopleOutline } from "ionicons/icons";
 import "./CollectionCard.scss";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
-const ProfileCollection = (props) => {
+const CollectionCard = (props) => {
   const { collection } = props;
-  const { collectionId, collectionName, collectionDescription, categoryName, coverImages } = collection;
+  const { collectionId, collectionName, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
   const history = useHistory();
 
   return (
@@ -16,7 +16,7 @@ const ProfileCollection = (props) => {
         <Text className="profile-collection--title">{collectionName}</Text>
         <div className="profile-collection-followers--container">
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-          <Text size="xs">20 followers</Text>
+          <Text size="xs">{followersCount} followers</Text>
         </div>
       </div>
       <div className="profile-collection--images">
@@ -47,4 +47,4 @@ const ProfileCollection = (props) => {
   );
 };
 
-export default ProfileCollection;
+export default CollectionCard;
