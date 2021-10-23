@@ -36,7 +36,7 @@ const Feed = (props) => {
       setLoading(true);
       const retrievedItems = await getFeedItems(nextPage * LIMIT, LIMIT);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
-      setItems([...retrievedItems]);
+      setItems(retrievedItems);
       setPages(nextPage);
       setHasMore(updatedHasMore);
     } catch (e) {

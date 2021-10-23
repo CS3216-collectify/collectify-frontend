@@ -95,7 +95,7 @@ const Profile = () => {
     if (username || currentUserId) {
       getUserInformation();
     }
-  }, [currentUserId, username]);
+  }, [currentUserId, username, location]);
 
   const editProfileHandler = () => {
     history.push({

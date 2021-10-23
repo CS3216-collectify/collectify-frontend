@@ -52,7 +52,6 @@ const Item = () => {
   useEffect(() => {
     setLoading(true);
     fetchItemData();
-    console.log("fetech")
   }, [fetchItemData, location]);
 
   const likeHandler = () => {

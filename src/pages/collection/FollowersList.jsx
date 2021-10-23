@@ -1,5 +1,6 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
@@ -8,6 +9,7 @@ import { getFollowersByCollectionId } from "../../services/followers";
 const LIMIT = 18;
 
 const FollowersList = (props) => {
+  const location = useLocation();
   const { collectionId } = useParams();
 
   const [users, setUsers] = useState([]);
@@ -54,7 +56,7 @@ const FollowersList = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, [collectionId]);
+  }, [collectionId, location]);
 
   return (
     <IonPage>

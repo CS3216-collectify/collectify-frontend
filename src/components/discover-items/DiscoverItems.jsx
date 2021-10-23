@@ -27,14 +27,27 @@ const DiscoverItems = (props) => {
     }
   }, [hasMore, items, pages]);
 
+  const loadInitialItems = useCallback(async () => {
+    const nextPage = 0;
+    try {
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT);
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
+      setItems(retrievedItems);
+      setPages(nextPage);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   const fetchNextPage = () => {
     console.log("load next");
     loadItems();
   };
 
   useEffect(() => {
-    loadItems();
-  }, [loadItems]);
+    loadInitialItems();
+  }, [loadInitialItems]);
 
   return <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} />;
 };

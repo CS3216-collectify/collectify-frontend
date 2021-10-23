@@ -1,11 +1,13 @@
 import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
+import { useLocation } from "react-router";
 import { getFollowedCollections } from "../../services/profile";
 import CollectionList from "../profile-collection/CollectionList";
 
 const LIMIT = 10;
 
 const FollowedCollections = (props) => {
+  const location = useLocation();
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [collections, setCollections] = useState([]);
@@ -50,7 +52,7 @@ const FollowedCollections = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, []);
+  }, [location]);
 
   return (
     <>

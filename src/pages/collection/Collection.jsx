@@ -17,8 +17,10 @@ import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
 import FollowersList from "./FollowersList";
+import { useLocation } from "react-router";
 
 const Collection = (props) => {
+  const location = useLocation();
   const history = useHistory();
   // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
@@ -68,7 +70,7 @@ const Collection = (props) => {
   useEffect(() => {
     setLoading(true);
     loadCollectionData();
-  }, [loadCollectionData]);
+  }, [loadCollectionData, location]);
 
   const followHandler = () => {
     if (followed || isCollectionOwner) {

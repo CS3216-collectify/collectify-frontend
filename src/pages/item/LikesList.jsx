@@ -1,6 +1,6 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
 import { getLikesByItemId } from "../../services/likes";
@@ -9,7 +9,7 @@ const LIMIT = 18;
 
 const LikesList = (props) => {
   const { itemId } = useParams();
-
+  const location = useLocation();
   const [users, setUsers] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(false);
@@ -54,7 +54,7 @@ const LikesList = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, [itemId]);
+  }, [itemId, location]);
 
   return (
     <IonPage>
