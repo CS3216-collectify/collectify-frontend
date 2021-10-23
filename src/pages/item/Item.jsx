@@ -64,14 +64,14 @@ const Item = () => {
           setLikesCount(likesCount-1);
         })
         .catch((e) => {
-          setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
+          setToast({ message: "Unable to unlike item. Please try again later.", color: "danger" });
         })
     } else {
       likeByItemId(itemId).then(() => {
         setLiked(true);
         setLikesCount(likesCount+1);
       }).catch(() => {
-        setToast({ message: "Unable to unlike item. Please try again later.", color: "danger" });
+        setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
       })
     }
   }
