@@ -44,6 +44,7 @@ const EditProfile = () => {
       setFirstName(location.state.profileFirstName);
       setLastName(location.state.profileLastName);
       setProfilePicture(location.state.profileProfilePicture);
+      setDescription(location.state.profileDescription);
     }
   }, [location]);
 
