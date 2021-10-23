@@ -20,5 +20,6 @@ export const getLikedItems = async (offset, limit) => {
   };
   console.log("GET /items... string query:", params);
   const res = await server.get("/items", { params });
+  console.log(res);
   return res.data;
 };

@@ -8,21 +8,21 @@ export const getCollections = async (categoryId, userId, offset, limit) => {
     params.category = categoryId;
   }
   const response = await server.get(`collections/`, { params });
-
+  console.log(response);
   return response.data;
 };
 
 export const getCollectionByCollectionId = async (collectionId) => {
   console.log("Get Collection with id", collectionId);
   const response = await server.get(`collections/${collectionId}/`);
-
+  console.log(response);
   return response.data;
 };
 
 export const postCollection = async (data) => {
   console.log("creating new collection...");
   const response = await server.post(`collections/`, data);
-
+  console.log(response);
   return response.data.collectionId;
 };
 

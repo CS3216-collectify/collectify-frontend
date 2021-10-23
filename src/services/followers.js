@@ -8,5 +8,6 @@ export const getFollowersByCollectionId = async (collectionId, offset, limit) =>
     limit
   };
   const res = await server.get("/followers", { params });
+  console.log(res);
   return res.data;
 };
