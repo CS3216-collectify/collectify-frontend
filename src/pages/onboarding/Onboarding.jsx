@@ -9,7 +9,7 @@ import useToastContext from "../../hooks/useToastContext";
 import TextInput from "../../components/text-input/TextInput";
 import UpdateUsernameButton from "../../components/button/UpdateUsernameButton";
 import { getCurrentUser } from "../../services/users";
-import { updateProfile } from "../../services/users";
+import { updateUsername } from "../../services/users";
 import Text from "../../components/text/Text";
 
 // TODO: add redirect? 
@@ -44,7 +44,7 @@ const Onboarding = () => {
       setToast("Username cannot be empty.");
       return;
     }
-    updateProfile(initialUsername, { username: trimmedUsername }).then((res) => {
+    updateUsername(trimmedUsername).then((res) => {
       setToast({ message: "Username updated!", color: "success" });
       history.replace("/home");
     });
