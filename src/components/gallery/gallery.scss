@@ -35,11 +35,13 @@
 }
 
 .image-carousel {
-  ion-slides {
-    width: 100%;
-  }
   ion-img {
     object-fit: contain;
-    width:100%;
+    backdrop-filter: blur(12px);
+    width: 100%;
+  }
+  .image-carousel-image--container {
+    background-size: cover;
+    background-position: center;
   }
 }

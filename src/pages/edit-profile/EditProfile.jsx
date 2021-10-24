@@ -22,12 +22,11 @@ const EditProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
-
   const [description, setDescription] = useState("");
 
-  const validationErrorMessage = msg => {
+  const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });
-  }
+  };
 
   const saveProfile = () => {
     // if (username.length < 8) {
@@ -37,28 +36,38 @@ const EditProfile = () => {
     const trimmedFirstName = firstName.trim();
     const trimmedLastName = lastName.trim();
     const trimmedDescription = description.trim();
-  
+
     if (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15) {
       validationErrorMessage("Your username must be between 8 to 15 characters!");
       return;
     }
-    if (!trimmedFirstName || !trimmedFirstName.trim()) {
+    if (!trimmedFirstName) {
       validationErrorMessage("First Name cannot be empty!");
       return;
     }
 
-    const updatedProfile = { 
-      username: trimmedUsername, 
-      firstName: trimmedFirstName, 
-      lastName: trimmedLastName, 
-      description: trimmedDescription 
+    if (!trimmedDescription) {
+      setToast({ message: "Your profile description cannot be empty.", color: "danger" });
+      return;
+    }
+
+    const updatedProfile = {
+      username: trimmedUsername,
+      firstName: trimmedFirstName,
+      lastName: trimmedLastName,
+      description: trimmedDescription,
     };
 
-    updateProfile(initialUsername, updatedProfile).then((res) => {
-      setToast({ message: "Profile saved!", color: "success" });
-      history.replace('/profile');
-      // window.location.reload();
-    });
+    updateProfile(initialUsername, updatedProfile)
+      .then((res) => {
+        setToast({ message: "Profile saved!", color: "success" });
+        history.replace("/profile");
+        // window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        setToast({ message: "Error", color: "danger" });
+      });
   };
 
   useEffect(() => {
