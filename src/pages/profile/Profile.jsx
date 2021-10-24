@@ -40,7 +40,7 @@ const Profile = () => {
   const history = useHistory();
   const location = useLocation();
   const setToast = useToastContext();
-  const { isUserAuthenticated, isCurrentUserId } = useUserContext();
+  const { isUserAuthenticated, isCurrentUser } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
@@ -56,7 +56,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
 
-  const isOwnProfile = isCurrentUserId(profileUserId);
+  const isOwnProfile = isCurrentUser(profileUserId);
 
   const toggleMode = (mode) => {
     setMode(parseInt(mode));

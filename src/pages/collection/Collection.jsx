@@ -34,9 +34,9 @@ const Collection = (props) => {
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
 
-  const { isCurrentUserId } = useUserContext();
+  const { isCurrentUser } = useUserContext();
 
-  const isCollectionOwner = isCurrentUserId(ownerId);
+  const isCollectionOwner = isCurrentUser(ownerId);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
