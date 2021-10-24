@@ -13,7 +13,7 @@ const groupElements = (arr, interval) => {
 };
 
 const ImageGrid = (props) => {
-  const { onScrollEnd: fetchNextPage, images, listEnded } = props;
+  const { onScrollEnd: fetchNextPage, images = [], listEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
 
