@@ -135,7 +135,7 @@ const Profile = () => {
             </IonCol>
 
             <IonCol className="profile-header--container">
-              <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
+              <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-between">
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{collectionsCount}</b>
