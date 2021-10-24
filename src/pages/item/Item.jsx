@@ -20,10 +20,10 @@ const Item = () => {
   const { isCurrentUser } = useUserContext();
   const setToast = useToastContext();
 
-  const [title, setTitle] = useState("Test Title");
-  const [ownerUsername, setOwnerUsername] = useState("itemOwner");
+  const [title, setTitle] = useState("");
+  const [ownerUsername, setOwnerUsername] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [description, setDescription] = useState("Test Description...");
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [liked, setLiked] = useState(false);

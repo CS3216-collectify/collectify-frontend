@@ -22,12 +22,11 @@ import { useLocation } from "react-router";
 const Collection = (props) => {
   const location = useLocation();
   const history = useHistory();
-  // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [ownerUsername, setOwnerUsername] = useState("Username");
+  const [ownerUsername, setOwnerUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
