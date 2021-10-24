@@ -9,25 +9,25 @@ import EditButton from "../../components/button/EditButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import FollowButton from "../../components/button/FollowButton";
 import CategoryChip from "../../components/chip/CategoryChip";
-import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
 import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
-import FollowersList from "./FollowersList";
 import { useLocation } from "react-router";
+import useToastContext from "../../hooks/useToastContext";
 
 const Collection = (props) => {
+  const setToast = useToastContext();
   const location = useLocation();
   const history = useHistory();
   // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [collectionName, setCollectionName] = useState("");
+  const [collectionDescription, setCollectionDescription] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [ownerUsername, setOwnerUsername] = useState("Username");
+  const [ownerUsername, setOwnerUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
@@ -52,8 +52,8 @@ const Collection = (props) => {
         isFollowed, 
         followersCount, 
       } = collectionData;
-      setTitle(collectionName);
-      setDescription(collectionDescription);
+      setCollectionName(collectionName);
+      setCollectionDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerId(ownerId);
@@ -79,7 +79,9 @@ const Collection = (props) => {
     followByCollectionId(collectionId).then(() => {
       setFollowersCount(followersCount + 1);
       setFollowed(true);
-    })
+    }).catch((e) => {
+      setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
+    });
   }
 
   const unfollowHandler = () => {
@@ -89,7 +91,19 @@ const Collection = (props) => {
     unfollowByCollectionId(collectionId).then(() => {
       setFollowersCount(followersCount - 1);
       setFollowed(false);
-    })
+    }).catch((e) => {
+      setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
+    });
+  }
+
+  const editPageRedirect = () => {
+    const pathname = `/collections/${collectionId}/edit`;
+    const collection = { collectionName, collectionDescription, categoryId };
+    const state = { collection };
+    history.push({
+      pathname,
+      state
+    });
   }
 
   return (
@@ -102,7 +116,7 @@ const Collection = (props) => {
             <div className="collection-title--container">
               <Text size="xl" className="collection--title">
                 <b>
-                  <b>{title}</b>
+                  <b>{collectionName}</b>
                 </b>
               </Text>
 
@@ -124,7 +138,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <Text>{description}</Text>
+              <Text>{collectionDescription}</Text>
             </IonCol>
           </IonRow>
           {!isCollectionOwner && (followed ? (
@@ -138,7 +152,7 @@ const Collection = (props) => {
                 <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />
               </IonCol>
               <IonCol>
-                <EditButton className="collection--button" label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
+                <EditButton className="collection--button" label="Collection" onClick={editPageRedirect} />
               </IonCol>
             </IonRow>
           )}

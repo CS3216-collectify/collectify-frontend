@@ -1,5 +1,6 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
 import CollectionForm from "../../components/form/CollectionForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -11,18 +12,14 @@ const getDefaultCollectionData = () => {
 };
 
 const EditCollection = (props) => {
+  const location = useLocation();
   const history = useHistory();
   const { collectionId } = useParams();
   const [collection, setCollection] = useState(getDefaultCollectionData());
   const [loading, setLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState([]);
 
-  useEffect(() => {
-    setLoading(true);
-    loadExistingData();
-  }, []);
-
-  const loadExistingData = async () => {
+  const loadExistingData = useCallback(async () => {
     setLoading(true);
     try {
       const currentCollection = await getCollectionByCollectionId(collectionId);
@@ -34,7 +31,18 @@ const EditCollection = (props) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [collectionId]);
+
+  useEffect(() => {
+    if (location.state) {
+      console.log("Loading form data from state...");
+      setCollection({ ...location.state.collection });
+    } else {
+      console.log("Fetching form data from server...");
+      setLoading(true);
+      loadExistingData();
+    }
+  }, [loadExistingData, location]);
 
   const editCompleteHandler = async (collection) => {
     setLoading(true);
