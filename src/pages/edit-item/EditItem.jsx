@@ -58,8 +58,8 @@ const EditItem = () => {
     setLoading(true);
     try {
       await deleteItem(collectionId, itemId);
+      setToast({ message: "Successfully deleted item.", color: "success" });
       history.push(`/collections/${collectionId}`);
-      setToast({ message: "Successfully item.", color: "success" });
     } catch (e) {
       setToast({ message: "Failed to delete item.", color: "danger" });
     } finally {

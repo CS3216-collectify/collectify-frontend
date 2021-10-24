@@ -7,13 +7,14 @@ import SelectButton from "../button/SelectButton";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import useToastContext from "../../hooks/useToastContext";
+import DeleteButton from "../button/DeleteButton";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
 };
 
 const CollectionForm = (props) => {
-  const { collectionData = getDefaultCollectionData(), onComplete: completeHandler, categoryOptions = [] } = props;
+  const { collectionData = getDefaultCollectionData(), onComplete: completeHandler, categoryOptions = [], onDelete: deleteHandler } = props;
 
   const [collectionName, setCollectionName] = useState(collectionData.collectionName);
   const [collectionDescription, setCollectionDescription] = useState(collectionData.collectionDescription);
@@ -85,7 +86,12 @@ const CollectionForm = (props) => {
         </IonGrid>
       </IonItem>
       <IonItem>
-        <SaveButton onClick={saveHandler} />
+        <IonGrid fixed>
+          <SaveButton onClick={saveHandler} />
+          {deleteHandler &&
+            <DeleteButton onClick={deleteHandler} />
+          }
+        </IonGrid>
       </IonItem>
     </IonList>
   );
