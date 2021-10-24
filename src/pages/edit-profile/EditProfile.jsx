@@ -44,14 +44,7 @@ const EditProfile = () => {
       return;
     }
 
-    const updatedProfile = {
-      username: trimmedUsername,
-      firstName: trimmedFirstName,
-      lastName: trimmedLastName,
-      description: trimmedDescription,
-    };
-
-    updateProfile(initialUsername, updatedProfile)
+    updateProfile(trimmedUsername, trimmedFirstName, trimmedLastName, trimmedDescription)
       .then((res) => {
         setToast({ message: "Profile saved!", color: "success" });
         history.replace("/profile");

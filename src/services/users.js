@@ -14,8 +14,23 @@ export const getUserByUsername = async (username) => {
   return response.data;
 };
 
-export const updateProfile = async (username, userInfo) => {
-  const response = await server.patch(`api/user/${username}/`, userInfo)
+export const updateProfile = async (username, firstName, lastName, description) => {
+  const body = {
+    username,
+    firstName,
+    lastName,
+    description,
+  }
+  console.log("updating user info with req body...", body);
+  const response = await server.patch("api/user/", body);
   console.log(response);
+};
+
+export const updateUsername = async (username) => {
+  const body = {
+    username,
+  };
+  console.log("updating user info with req body...", body);
+  const response = await server.patch("api/user/", body);
   console.log(response);
 };
