@@ -11,7 +11,7 @@ const SearchBox = (props) => {
   } = props;
 
   return (
-    <IonGrid>
+    <>
       <SearchBar
         onSubmit={submitHandler}
         onCancel={cancelHandler}
@@ -19,7 +19,7 @@ const SearchBox = (props) => {
         showCancel={showCancel}
       />
       {children}
-    </IonGrid>
+    </>
   );
 };
 

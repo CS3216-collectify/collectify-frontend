@@ -22,19 +22,47 @@ const EditProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
-
   const [description, setDescription] = useState("");
+
+  const validationErrorMessage = (msg) => {
+    setToast({ message: msg, color: "danger" });
+  };
 
   const saveProfile = () => {
     // if (username.length < 8) {
     //   setToast({ message: "Your username cannnot be less than 8 characters.", color: "danger" });
     // }
+    const trimmedUsername = username.trim();
+    const trimmedFirstName = firstName.trim();
+    const trimmedLastName = lastName.trim();
+    const trimmedDescription = description.trim();
 
-    updateProfile(initialUsername, { username, firstName, lastName }).then((res) => {
-      setToast({ message: "Profile saved!", color: "success" });
-      history.replace('/profile');
-      // window.location.reload();
-    });
+    if (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15) {
+      validationErrorMessage("Your username must be between 8 to 15 characters!");
+      return;
+    }
+    if (!trimmedFirstName) {
+      validationErrorMessage("First Name cannot be empty!");
+      return;
+    }
+
+    const updatedProfile = {
+      username: trimmedUsername,
+      firstName: trimmedFirstName,
+      lastName: trimmedLastName,
+      description: trimmedDescription,
+    };
+
+    updateProfile(initialUsername, updatedProfile)
+      .then((res) => {
+        setToast({ message: "Profile saved!", color: "success" });
+        history.replace("/profile");
+        // window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        setToast({ message: "Error", color: "danger" });
+      });
   };
 
   useEffect(() => {
@@ -44,6 +72,7 @@ const EditProfile = () => {
       setFirstName(location.state.profileFirstName);
       setLastName(location.state.profileLastName);
       setProfilePicture(location.state.profileProfilePicture);
+      setDescription(location.state.profileDescription);
     }
   }, [location]);
 

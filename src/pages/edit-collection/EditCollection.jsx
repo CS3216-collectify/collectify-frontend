@@ -19,7 +19,7 @@ const EditCollection = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    loadExistingData(); // TODO: Remove timeout
+    loadExistingData();
   }, []);
 
   const loadExistingData = async () => {

@@ -29,7 +29,7 @@ const EditItem = () => {
 
   useEffect(() => {
     setLoading(true);
-    loadExistingData(); // TODO: Remove timeout
+    loadExistingData();
   }, [loadExistingData]);
 
   const editCompleteHandler = async (item) => {
