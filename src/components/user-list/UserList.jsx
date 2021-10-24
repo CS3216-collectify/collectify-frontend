@@ -14,7 +14,7 @@ const UserList = (props) => {
 
   if (listEnded && users && users.length === 0 && emptyMessage) {
     return (
-      <IonGrid className="ion-text-center">
+      <IonGrid className="ion-text-center ion-padding">
         <Text size="xl" >
           {emptyMessage}
         </Text>

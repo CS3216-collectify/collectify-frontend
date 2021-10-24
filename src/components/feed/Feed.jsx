@@ -2,9 +2,10 @@ import HomeItem from "./HomeItem";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import React, { useCallback, useEffect, useState } from "react";
 import { getFeedItems } from "../../services/feed";
-import { IonLoading } from "@ionic/react";
+import { IonGrid, IonLoading, IonRow, IonButton, IonLabel } from "@ionic/react";
 import HorizontalLine from "../line/HorizontalLine";
 import Text from "../text/Text";
+import "./Feed.scss";
 
 const LIMIT = 6;
 
@@ -67,9 +68,16 @@ const Feed = (props) => {
           </React.Fragment>
         ))}
       {((items && items.length === 0) || !items) && !hasMore && (
-        <div className="ion-text-center">
-          <Text size="l">Start following other's collections to stay updated!</Text>
-        </div>
+          <div className="ion-text-center ion-padding">
+            <Text size="xl">Start following some collections to stay updated!</Text>
+            <IonGrid fixed>
+              <IonRow className="ion-justify-content-center ion-margin-top">
+                <IonButton size="small" fill="solid" className="discover-button">
+                  <IonLabel>Discover collections</IonLabel>
+                </IonButton>
+              </IonRow>
+            </IonGrid>
+          </div>
       )}
       <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage} />
     </>

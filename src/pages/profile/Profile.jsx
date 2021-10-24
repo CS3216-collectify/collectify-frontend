@@ -67,12 +67,11 @@ const Profile = () => {
       let res = null;
       setLoading(true);
       if (username) {
-        console.log(username);
         res = await getUserByUsername(username);
       } else if (currentUserId) {
-        console.log(currentUserId);
         res = await getCurrentUser();
       }
+
       if (res) {
         console.log(res);
         setProfileUserId(Number(res.userId));
