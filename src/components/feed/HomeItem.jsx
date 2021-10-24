@@ -20,7 +20,6 @@ const HomeItem = (props) => {
     ownerId,
     ownerName,
     images,
-    coverImage,
     ownerUsername,
     liked: initLiked,
     likesCount: initLikesCount,
@@ -31,11 +30,10 @@ const HomeItem = (props) => {
   const [liked, setLiked] = useState(initLiked);
   const [likesCount, setLikesCount] = useState(initLikesCount);
 
-  const imageUrls = [coverImage];
   const setToast = useToastContext();
 
   // TODO: Use the bottom one once images is implemented
-  // const imageUrls = images.map((img) => img.url);
+  const imageUrls = images.map(({ url, imageUrl = url }) => imageUrl);
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
