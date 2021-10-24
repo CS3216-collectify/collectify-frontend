@@ -5,7 +5,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import "./EditProfile.scss";
 import useToastContext from "../../hooks/useToastContext";
 import TextInput from "../../components/text-input/TextInput";
-import TextArea from "../../components/text-input/TextArea";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import SaveProfileButton from "../../components/button/SaveProfileButton";
 import { getCurrentUser, updateProfile } from "../../services/users";
@@ -30,25 +29,18 @@ const EditProfile = () => {
   };
 
   const saveProfile = () => {
-    // if (username.length < 8) {
-    //   setToast({ message: "Your username cannnot be less than 8 characters.", color: "danger" });
-    // }
     const trimmedUsername = username.trim();
     const trimmedFirstName = firstName.trim();
     const trimmedLastName = lastName.trim();
     const trimmedDescription = description.trim();
 
-    if (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15) {
-      validationErrorMessage("Your username must be between 8 to 15 characters!");
+    if (trimmedUsername !== initialUsername && 
+      (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15)) {
+      validationErrorMessage("Your new username must be between 8 to 15 characters!");
       return;
     }
     if (!trimmedFirstName) {
       validationErrorMessage("First Name cannot be empty!");
-      return;
-    }
-
-    if (!trimmedDescription) {
-      setToast({ message: "Your profile description cannot be empty.", color: "danger" });
       return;
     }
 
