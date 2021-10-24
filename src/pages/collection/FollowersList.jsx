@@ -56,7 +56,7 @@ const FollowersList = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, [collectionId, location]);
+  }, [collectionId, loadInitialPage, location]);
 
   return (
     <IonPage>

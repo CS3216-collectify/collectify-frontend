@@ -5,15 +5,16 @@ import { peopleOutline } from "ionicons/icons";
 import "./CollectionCard.scss";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
+
 const CollectionCard = (props) => {
   const { collection } = props;
   const { collectionId, collectionName, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
   const history = useHistory();
 
   return (
-    <IonList className="profile-collection--container ion-margin-vertical" onClick={() => history.push("/collections/" + collectionId)}>
+    <IonList className="profile-collection--container ion-margin-bottom" onClick={() => history.push("/collections/" + collectionId)}>
       <div className="profile-collection-title--container">
-        <Text className="profile-collection--title">{collectionName}</Text>
+        <Text className="profile-collection--title"><b>{collectionName}</b></Text>
         <div className="profile-collection-followers--container">
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
           <Text size="xs">{followersCount} followers</Text>

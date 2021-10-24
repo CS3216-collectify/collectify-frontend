@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonIcon, IonButton } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams, useLocation } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -6,18 +6,18 @@ import ImageCarousel from "../../components/gallery/ImageCarousel";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getItemFromCollection } from "../../services/items";
 import useUserContext from "../../hooks/useUserContext";
-import { heart, heartOutline } from "ionicons/icons";
 import Text from "../../components/text/Text";
 import LikeButton from "../../components/button/LikeButton";
 import { convertUTCtoLocal } from "../../utils/datetime";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
 import useToastContext from "../../hooks/useToastContext";
+import "./Item.scss";
 
 const Item = () => {
   const history = useHistory();
   const location = useLocation();
   const { collectionId, itemId } = useParams();
-  const { isCurrentUser } = useUserContext();
+  const { isCurrentUser, isUserAuthenticated } = useUserContext();
   const setToast = useToastContext();
 
   const [itemName, setItemName] = useState("");
@@ -34,16 +34,7 @@ const Item = () => {
     setLoading(true);
     try {
       const itemData = await getItemFromCollection(collectionId, itemId);
-      const {
-        itemName,
-        itemDescription,
-        images,
-        ownerId,
-        likesCount,
-        itemCreationDate,
-        ownerUsername,
-        isLiked,
-      } = itemData;
+      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked } = itemData;
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
@@ -66,6 +57,11 @@ const Item = () => {
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to like an item", color: "danger" });
+      return;
+    }
+
     if (liked) {
       unlikeByItemId(itemId)
         .then(() => {
@@ -81,7 +77,7 @@ const Item = () => {
           setLiked(true);
           setLikesCount(likesCount + 1);
         })
-        .catch(() => {
+        .catch((e) => {
           setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
         });
     }
@@ -91,24 +87,26 @@ const Item = () => {
 
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/items/${itemId}/edit`;
-    const images = images.map(img => ({...img})); // deep copy
-    const item = { itemName, itemDescription, images };
+    const _images = images.map((img) => ({ ...img })); // deep copy
+    const item = { itemName, itemDescription, images: _images };
     const state = { item };
     history.push({
       pathname,
       state,
     });
-  }
+  };
 
   return (
-    <IonPage className="profile">
+    <IonPage className="item">
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Item`} />
       <IonContent>
         <IonGrid fixed className="ion-padding">
           <IonRow>
-            <IonCol>
-              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>@{ownerUsername}</Text>
+            <IonCol className="item-username">
+              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>
+                <b>@{ownerUsername}</b>
+              </Text>
             </IonCol>
             <IonCol>
               {isItemOwner && (
@@ -126,24 +124,32 @@ const Item = () => {
 
         <IonGrid fixed className="ion-padding">
           <IonRow>
-            <IonCol size={8}>
-              <IonRow>
-                <Text size="l">{itemName}</Text>
+            <IonCol>
+              <IonRow className="item-title-likes--container">
+                <div>
+                  <Text size="l">
+                    <b>{itemName}</b>
+                  </Text>
+                </div>
+                <div>
+                  <IonCol size={1}>
+                    <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+                  </IonCol>
+                  <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
+                    <Text color="default">{likesCount} likes</Text>
+                  </IonCol>
+                </div>
               </IonRow>
+
               <IonRow>
-                <Text size="s">{convertUTCtoLocal(itemCreationDate)}</Text>
+                <Text>{itemDescription}</Text>
               </IonRow>
-            </IonCol>
-            <IonCol size={1}>
-              <LikeButton liked={liked} onClick={likeHandler} />
-            </IonCol>
-            <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
-              <Text color="default">{likesCount} likes</Text>
             </IonCol>
           </IonRow>
+
           <IonRow>
-            <IonCol>
-              <p>{itemDescription}</p>
+            <IonCol className="ion-text-right">
+              <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
           </IonRow>
         </IonGrid>

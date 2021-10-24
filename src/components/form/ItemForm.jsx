@@ -12,8 +12,7 @@ const getDefaultItemData = () => {
 };
 
 const ItemForm = (props) => {
-  const { itemData = getDefaultItemData(), onComplete: completeHandler } =
-    props;
+  const { itemData = getDefaultItemData(), onComplete: completeHandler } = props;
 
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
@@ -33,17 +32,14 @@ const ItemForm = (props) => {
 
   const newImageHandler = (newFile) => {
     if (images.length > 3) {
-      console.log("Cannot upload more than 4 photos");
+      setToast({ message: "Cannot upload more than 4 photos", color: "danger" });
       return;
     }
+
     const newUrl = URL.createObjectURL(newFile);
     const newFileData = { imageUrl: newUrl, position: images.length, isNew: true };
     setImages([...images, newFileData]);
-    console.log("Image upload not implemented yet");
-    console.log("file:", newFile);
   };
-
-  console.log("images", images);
 
   const deleteImageHandler = (selectedIndex) => {
     const deletedImage = images[selectedIndex];
@@ -53,11 +49,11 @@ const ItemForm = (props) => {
       setDeletedImageIds([...deletedImageIds, deletedImage.imageId]);
     }
     setImages(remainingImages);
-  }
+  };
 
-  const validationErrorMessage = msg => {
+  const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });
-  }
+  };
 
   const saveHandler = () => {
     const trimmedItemName = itemName.trim();
@@ -80,7 +76,7 @@ const ItemForm = (props) => {
       itemName: trimmedItemName,
       itemDescription: trimmedItemDescription,
       images,
-      deletedImageIds
+      deletedImageIds,
     };
     completeHandler(itemToSave);
   };
@@ -88,20 +84,10 @@ const ItemForm = (props) => {
   return (
     <IonList>
       <IonItem>
-        <TextInput
-          label="Item Name"
-          value={itemName}
-          placeholder="Enter item name"
-          onChange={setItemName}
-        />
+        <TextInput label="Item Name" value={itemName} placeholder="Enter item name" onChange={setItemName} />
       </IonItem>
       <IonItem>
-        <TextArea
-          label="Description"
-          value={itemDescription}
-          placeholder="Enter item description"
-          onChange={setItemDescription}
-        />
+        <TextArea label="Description" value={itemDescription} placeholder="Enter item description" onChange={setItemDescription} />
       </IonItem>
       <IonItem>
         <IonGrid fixed>

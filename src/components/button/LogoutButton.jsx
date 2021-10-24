@@ -1,4 +1,4 @@
-import { IonButton, IonLabel } from "@ionic/react";
+import { IonButton } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 
 import "./button.scss";

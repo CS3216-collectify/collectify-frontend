@@ -1,8 +1,9 @@
 import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams, useLocation } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
+import "./Collection.scss";
 import useUserContext from "../../hooks/useUserContext";
 import AddButton from "../../components/button/AddButton";
 import EditButton from "../../components/button/EditButton";
@@ -11,11 +12,9 @@ import FollowButton from "../../components/button/FollowButton";
 import CategoryChip from "../../components/chip/CategoryChip";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
-import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
-import { useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 
 const Collection = (props) => {
@@ -33,7 +32,7 @@ const Collection = (props) => {
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
 
-  const { isCurrentUser } = useUserContext();
+  const { isCurrentUser, isUserAuthenticated } = useUserContext();
 
   const isCollectionOwner = isCurrentUser(ownerId);
 
@@ -41,16 +40,8 @@ const Collection = (props) => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { 
-        collectionName, 
-        collectionDescription, 
-        categoryName, 
-        categoryId, 
-        ownerId, 
-        ownerUsername, 
-        isFollowed, 
-        followersCount, 
-      } = collectionData;
+      const { collectionName, collectionDescription, categoryName, categoryId, ownerId, ownerUsername, isFollowed, followersCount } = collectionData;
+
       setCollectionName(collectionName);
       setCollectionDescription(collectionDescription);
       setCategoryName(categoryName);
@@ -72,28 +63,42 @@ const Collection = (props) => {
   }, [loadCollectionData, location]);
 
   const followHandler = () => {
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to follow a collection", color: "danger" });
+      return;
+    }
+
     if (followed || isCollectionOwner) {
       return;
     }
-    followByCollectionId(collectionId).then(() => {
-      setFollowersCount(followersCount + 1);
-      setFollowed(true);
-    }).catch((e) => {
-      setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
-    });
-  }
+    followByCollectionId(collectionId)
+      .then(() => {
+        setFollowersCount(followersCount + 1);
+        setFollowed(true);
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
+      });
+  };
 
   const unfollowHandler = () => {
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to follow a collection", color: "danger" });
+      return;
+    }
+
     if (!followed || isCollectionOwner) {
       return;
     }
-    unfollowByCollectionId(collectionId).then(() => {
-      setFollowersCount(followersCount - 1);
-      setFollowed(false);
-    }).catch((e) => {
-      setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
-    });
-  }
+    unfollowByCollectionId(collectionId)
+      .then(() => {
+        setFollowersCount(followersCount - 1);
+        setFollowed(false);
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
+      });
+  };
 
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/edit`;
@@ -101,9 +106,9 @@ const Collection = (props) => {
     const state = { collection };
     history.push({
       pathname,
-      state
+      state,
     });
-  }
+  };
 
   return (
     <IonPage className="collection">
@@ -127,9 +132,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow className="ion-justify-content-between">
             <Text size="s" className="collection-owner" onClick={() => history.push(`/profile/${ownerUsername}`)}>
-              <b>
-                by @{ownerUsername} 
-              </b>
+              <b>by @{ownerUsername}</b>
             </Text>
           </IonRow>
           <IonRow className="ion-justify-content-start">
@@ -140,11 +143,7 @@ const Collection = (props) => {
               <Text>{collectionDescription}</Text>
             </IonCol>
           </IonRow>
-          {!isCollectionOwner && (followed ? (
-              <UnfollowButton onClick={unfollowHandler} /> 
-            ):( 
-              <FollowButton onClick={followHandler} />
-          ))}
+          {!isCollectionOwner && (followed ? <UnfollowButton onClick={unfollowHandler} /> : <FollowButton onClick={followHandler} />)}
           {isCollectionOwner && (
             <IonRow className="ion-justify-content-end">
               <IonCol>

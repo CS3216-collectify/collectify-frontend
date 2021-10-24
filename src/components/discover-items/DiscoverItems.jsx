@@ -41,7 +41,6 @@ const DiscoverItems = (props) => {
   }, []);
 
   const fetchNextPage = () => {
-    console.log("load next");
     loadItems();
   };
 

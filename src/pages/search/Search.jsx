@@ -29,7 +29,6 @@ const SEARCH_MODE_TOGGLE_OPTIONS = [
 
 const SearchResults = (props) => {
   const { mode, searchText } = props;
-  console.log("mode:", mode, ", search text:", searchText);
 
   if (!searchText) {
     return (

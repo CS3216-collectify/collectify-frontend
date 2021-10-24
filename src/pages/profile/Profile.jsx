@@ -67,13 +67,12 @@ const Profile = () => {
       let res = null;
       setLoading(true);
       if (username) {
-        console.log(username);
         res = await getUserByUsername(username);
       } else if (isUserAuthenticated) {
         res = await getCurrentUser();
       }
+
       if (res) {
-        console.log(res);
         setProfileUserId(parseInt(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);
@@ -100,7 +99,7 @@ const Profile = () => {
 
   const editProfileHandler = () => {
     history.push({
-      pathname: "/profile/edit",
+      pathname: "/edit-profile",
       state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName, profileDescription },
     });
   };
@@ -110,7 +109,7 @@ const Profile = () => {
     return (
       <IonPage className="profile">
         <IonLoading isOpen={loading} />
-        <IonContent className="ion-padding">
+        <IonContent>
           <ProfileToolbar showMenu={false} username="Guest User" />
           <GuestLoginPrompt />
         </IonContent>
@@ -134,7 +133,7 @@ const Profile = () => {
             </IonCol>
 
             <IonCol className="profile-header--container">
-              <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
+              <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-between">
                 <div className="profile-statistics ion-text-center">
                   <Text>
                     <b>{collectionsCount}</b>

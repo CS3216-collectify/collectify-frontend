@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
@@ -49,10 +49,6 @@ const App = () => {
   useEffect(() => GoogleAuth.init(), []);
   const { isUserAuthenticated } = useUserContext();
 
-  useEffect(() => {
-    console.log(isUserAuthenticated);
-  });
-
   return (
     <IonApp>
       <IonReactRouter>
@@ -66,8 +62,8 @@ const App = () => {
                 {/* TODO: add redirects for guests */}
                 <ProtectedRoute exact path="/home" component={Home} />
                 <Route exact path="/profile" component={Profile} />
+                <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
                 <Route exact path="/profile/:username" component={Profile} />
-                <ProtectedRoute exact path="/profile/edit" component={EditProfile} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/collections/:collectionId" component={Collection} />
                 <ProtectedRoute exact path="/collections/:collectionId/edit" component={EditCollection} />

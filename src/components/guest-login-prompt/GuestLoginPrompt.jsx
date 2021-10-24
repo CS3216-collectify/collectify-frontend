@@ -25,7 +25,7 @@ const GuestLoginPrompt = (props) => {
   };
 
   return (
-    <IonGrid fixed>
+    <IonGrid fixed className="ion-padding">
       <IonRow className="ion-justify-content-center ion-margin-top">
         <Text size="xl" className="ion-text-center">
           Log in to collectify to begin showcasing your collectables to the world!

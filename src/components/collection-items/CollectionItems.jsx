@@ -53,7 +53,6 @@ const CollectionItems = (props) => {
   }, [loadInitialItems, location]);
 
   const fetchNextPage = () => {
-    console.log("load next");
     loadItems();
   };
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList, IonLoading } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList, IonLoading } from "@ionic/react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import "./EditProfile.scss";
@@ -57,8 +57,8 @@ const EditProfile = () => {
         history.replace("/profile");
         // window.location.reload();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        console.log(e);
         setToast({ message: "Error", color: "danger" });
       });
   };
