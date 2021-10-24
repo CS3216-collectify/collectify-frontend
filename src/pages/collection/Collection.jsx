@@ -16,13 +16,14 @@ import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
-import FollowersList from "./FollowersList";
+import useToastContext from "../../hooks/useToastContext";
 import { useLocation } from "react-router";
 
 const Collection = (props) => {
   const location = useLocation();
   const history = useHistory();
-  // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
+  const setToast = useToastContext();
+
   const { collectionId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -42,16 +43,7 @@ const Collection = (props) => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { 
-        collectionName, 
-        collectionDescription, 
-        categoryName, 
-        categoryId, 
-        ownerId, 
-        ownerUsername, 
-        isFollowed, 
-        followersCount, 
-      } = collectionData;
+      const { collectionName, collectionDescription, categoryName, categoryId, ownerId, ownerUsername, isFollowed, followersCount } = collectionData;
       setTitle(collectionName);
       setDescription(collectionDescription);
       setCategoryName(categoryName);
@@ -73,24 +65,34 @@ const Collection = (props) => {
   }, [loadCollectionData, location]);
 
   const followHandler = () => {
+    if (!currentUserId) {
+      setToast({ message: "Please log in to follow a collection", color: "danger" });
+      return;
+    }
+
     if (followed || isCollectionOwner) {
       return;
     }
     followByCollectionId(collectionId).then(() => {
       setFollowersCount(followersCount + 1);
       setFollowed(true);
-    })
-  }
+    });
+  };
 
   const unfollowHandler = () => {
+    if (!currentUserId) {
+      setToast({ message: "Please log in to follow a collection", color: "danger" });
+      return;
+    }
+
     if (!followed || isCollectionOwner) {
       return;
     }
     unfollowByCollectionId(collectionId).then(() => {
       setFollowersCount(followersCount - 1);
       setFollowed(false);
-    })
-  }
+    });
+  };
 
   return (
     <IonPage className="collection">
@@ -114,9 +116,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow className="ion-justify-content-between">
             <Text size="s" className="collection-owner" onClick={() => history.push(`/profile/${ownerUsername}`)}>
-              <b>
-                by @{ownerUsername} 
-              </b>
+              <b>by @{ownerUsername}</b>
             </Text>
           </IonRow>
           <IonRow className="ion-justify-content-start">
@@ -127,11 +127,7 @@ const Collection = (props) => {
               <Text>{description}</Text>
             </IonCol>
           </IonRow>
-          {!isCollectionOwner && (followed ? (
-              <UnfollowButton onClick={unfollowHandler} /> 
-            ):( 
-              <FollowButton onClick={followHandler} />
-          ))}
+          {!isCollectionOwner && (followed ? <UnfollowButton onClick={unfollowHandler} /> : <FollowButton onClick={followHandler} />)}
           {isCollectionOwner && (
             <IonRow className="ion-justify-content-end">
               <IonCol>

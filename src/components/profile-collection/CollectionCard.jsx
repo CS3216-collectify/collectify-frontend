@@ -5,6 +5,7 @@ import { peopleOutline } from "ionicons/icons";
 import "./CollectionCard.scss";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
+
 const CollectionCard = (props) => {
   const { collection } = props;
   const { collectionId, collectionName, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;

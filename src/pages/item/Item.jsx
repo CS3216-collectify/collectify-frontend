@@ -57,6 +57,11 @@ const Item = () => {
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
+    if (!currentUserId) {
+      setToast({ message: "Please log in to like an item", color: "danger" });
+      return;
+    }
+
     if (liked) {
       unlikeByItemId(itemId)
         .then(() => {
@@ -72,7 +77,7 @@ const Item = () => {
           setLiked(true);
           setLikesCount(likesCount + 1);
         })
-        .catch(() => {
+        .catch((e) => {
           setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
         });
     }

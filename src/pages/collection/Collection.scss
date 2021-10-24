@@ -27,4 +27,8 @@
   .collection--button {
     width: 100%;
   }
+
+  ion-chip {
+    pointer-events: none;
+  }
 }
