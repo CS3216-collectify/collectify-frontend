@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
@@ -10,18 +10,18 @@ import GuestLoginButton from "../../components/button/GuestLoginButton";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
-import server from "../../utils/server";
-import { getAccessToken, getIsGuest, getRefreshToken, getUserId, loginGuest } from "../../utils/user";
+import { isGuest, hasAccessTokenStored, hasRefreshTokenStored } from "../../utils/auth/store";
+import { loginGuest } from "../../utils/auth/actions";
 
 const Login = () => {
   const history = useHistory();
   const setToast = useToastContext();
-  const { isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
 
   useEffect(() => {
-    if (getAccessToken() !== null || getRefreshToken() !== null) {
+    if (hasAccessTokenStored() || hasRefreshTokenStored()) {
       history.replace("/home");
-    } else if (getIsGuest() !== null) {
+    } else if (isGuest()) {
       history.replace("/discover");
     } else {
       history.replace("/");
@@ -33,12 +33,10 @@ const Login = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(getUserId());
       history.replace("/home");
     } else if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_ONBOARD) {
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(getUserId());
       history.replace('/onboarding');
     } else {
       // error

@@ -15,14 +15,14 @@ import Text from "../../components/text/Text";
 // TODO: add redirect? 
 // TODO: handle length < 8 and duplciate 
 const Onboarding = () => {
-  const { currentUserId } = useUserContext();
+  const { isUserAuthenticated } = useUserContext();
   const setToast = useToastContext();
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [initialUsername, setInitialUsername] = useState("");
 
   const getUserInformation = useCallback(() => {
-    if (currentUserId) {
+    if (isUserAuthenticated) {
       getCurrentUser()
         .then((res) => {
           console.log(res);
@@ -31,13 +31,13 @@ const Onboarding = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, [currentUserId]);
+  }, [isUserAuthenticated]);
 
   useEffect(() => {
-    if (currentUserId) {
+    if (isUserAuthenticated) {
       getUserInformation();
     }
-  }, [currentUserId, getUserInformation, initialUsername]);
+  }, [isUserAuthenticated, getUserInformation, initialUsername]);
 
   const handleUpdateUsername = () => {
     const trimmedUsername = username.trim();

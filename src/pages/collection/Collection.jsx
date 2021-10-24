@@ -22,7 +22,6 @@ const Collection = (props) => {
   const setToast = useToastContext();
   const location = useLocation();
   const history = useHistory();
-  // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
   const [collectionName, setCollectionName] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
@@ -34,9 +33,9 @@ const Collection = (props) => {
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
 
-  const { currentUserId } = useUserContext();
+  const { isCurrentUser } = useUserContext();
 
-  const isCollectionOwner = Number(currentUserId) === Number(ownerId);
+  const isCollectionOwner = isCurrentUser(ownerId);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);

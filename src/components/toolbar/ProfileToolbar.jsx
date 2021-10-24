@@ -16,21 +16,20 @@ import { search, personCircleOutline, settingsOutline, ellipsisVertical } from "
 import { useHistory, useLocation } from "react-router-dom";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { logoutUser } from "../../utils/user";
+import { logoutUser } from "../../utils/auth/actions";
 
 const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();
   const location = useLocation();
 
   const setToast = useToastContext();
-  const { setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { setIsUserAuthenticated } = useUserContext();
 
   const logoutHandler = () => {
     logoutUser();
     history.replace("/");
     setToast({ message: "Logged out successfully.", color: "success" });
     setIsUserAuthenticated(false);
-    setCurrentUserId(null);
   };
 
   // Menu with items shown when ellipsis icon is pressed

@@ -17,7 +17,7 @@ const Item = () => {
   const history = useHistory();
   const location = useLocation();
   const { collectionId, itemId } = useParams();
-  const { currentUserId } = useUserContext();
+  const { isCurrentUser } = useUserContext();
   const setToast = useToastContext();
 
   const [itemName, setItemName] = useState("");
@@ -87,7 +87,7 @@ const Item = () => {
     }
   };
 
-  const isItemOwner = Number(currentUserId) === Number(ownerId);
+  const isItemOwner = isCurrentUser(ownerId);
 
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/items/${itemId}/edit`;
