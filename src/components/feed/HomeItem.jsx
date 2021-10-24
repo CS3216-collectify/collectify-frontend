@@ -28,8 +28,6 @@ const HomeItem = (props) => {
     itemCreationDate,
   } = itemData;
 
-  const { currentUserId } = useUserContext();
-
   const [liked, setLiked] = useState(initLiked);
   const [likesCount, setLikesCount] = useState(initLikesCount);
 

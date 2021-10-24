@@ -48,7 +48,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     loadInitialItems();
-  }, []);
+  }, [loadInitialItems]);
 
   const fetchNextPage = () => {
     console.log("load next");
@@ -58,22 +58,22 @@ const Feed = (props) => {
   return (
     <>
       <IonLoading isOpen={loading} />
-      {items && items.length > 0 && items.map((item, idx) =>
-        <React.Fragment key={idx}>
-          <HomeItem itemData={item} />
-          <HorizontalLine color="lightgrey"/>
-        </React.Fragment>
-      )}
-      {(items && items.length === 0 || !items) && !hasMore &&
+      {items &&
+        items.length > 0 &&
+        items.map((item, idx) => (
+          <React.Fragment key={idx}>
+            <HomeItem itemData={item} />
+            <HorizontalLine color="lightgrey" />
+          </React.Fragment>
+        ))}
+      {((items && items.length === 0) || !items) && !hasMore && (
         <div className="ion-text-center">
-          <Text size="l" >
-            Start following other's collections to stay updated!
-          </Text>
+          <Text size="l">Start following other's collections to stay updated!</Text>
         </div>
-      }
-      <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage}/>
+      )}
+      <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage} />
     </>
-  )
-}
+  );
+};
 
 export default Feed;

@@ -13,9 +13,7 @@ const Home = () => {
       {/* Ion padding applies 16px  */}
       <IonContent>
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-        <IonGrid fixed>
-          <Feed />
-        </IonGrid>
+        <Feed />
       </IonContent>
     </IonPage>
   );
