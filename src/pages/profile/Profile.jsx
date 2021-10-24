@@ -101,7 +101,7 @@ const Profile = () => {
 
   const editProfileHandler = () => {
     history.push({
-      pathname: "/profile/edit",
+      pathname: "/edit-profile",
       state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName, profileDescription },
     });
   };

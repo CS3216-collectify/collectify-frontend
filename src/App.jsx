@@ -66,8 +66,8 @@ const App = () => {
                 {/* TODO: add redirects for guests */}
                 <ProtectedRoute exact path="/home" component={Home} />
                 <Route exact path="/profile" component={Profile} />
+                <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
                 <Route exact path="/profile/:username" component={Profile} />
-                <ProtectedRoute exact path="/profile/edit" component={EditProfile} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/collections/:collectionId" component={Collection} />
                 <ProtectedRoute exact path="/collections/:collectionId/edit" component={EditCollection} />

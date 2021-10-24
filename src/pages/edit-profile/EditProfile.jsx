@@ -46,11 +46,6 @@ const EditProfile = () => {
       return;
     }
 
-    if (!trimmedDescription) {
-      setToast({ message: "Your profile description cannot be empty.", color: "danger" });
-      return;
-    }
-
     const updatedProfile = {
       username: trimmedUsername,
       firstName: trimmedFirstName,
