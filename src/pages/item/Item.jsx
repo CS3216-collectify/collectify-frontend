@@ -87,7 +87,7 @@ const Item = () => {
         <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol>
-              <Text>@{ownerUsername}</Text>
+              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>@{ownerUsername}</Text>
             </IonCol>
             <IonCol>
               {isItemOwner && (
