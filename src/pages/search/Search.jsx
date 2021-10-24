@@ -6,6 +6,8 @@ import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
+import Text from "../../components/text/Text";
+import "./Search.scss";
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -33,19 +35,17 @@ const SearchResults = (props) => {
   if (!searchText) {
     return (
       <IonGrid>
-        <IonRow className="ion-justify-content-center ion-margin-top">
-          Search for items, collections, or users! 
-        </IonRow>
+        <IonRow className="ion-justify-content-center ion-margin-top">Search for items, collections, or users!</IonRow>
       </IonGrid>
     );
   }
 
   return (
-    <>
+    <div className="ion-padding">
       {mode === USERS_MODE && <UserSearchResults searchText={searchText} />}
       {mode === COLLECTIONS_MODE && <CollectionSearchResults searchText={searchText} />}
       {mode === ITEMS_MODE && <ItemSearchResults searchText={searchText} />}
-    </>
+    </div>
   );
 };
 
@@ -85,7 +85,7 @@ const Search = (props) => {
         {!inactive && (
           <>
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
-            {searchText && <p>Showing results for "{searchText}"</p>}
+            {searchText && <IonRow className="ion-justify-content-center ion-margin-top">Showing results for "{searchText}"</IonRow>}
             <SearchResults mode={mode} searchText={searchText} />
           </>
         )}

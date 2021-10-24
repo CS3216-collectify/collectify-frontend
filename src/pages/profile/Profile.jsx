@@ -95,7 +95,7 @@ const Profile = () => {
     if (username || isUserAuthenticated) {
       getUserInformation();
     }
-  }, [isUserAuthenticated, username, location]);
+  }, [isUserAuthenticated, username, location, getUserInformation]);
 
   const editProfileHandler = () => {
     history.push({

@@ -48,11 +48,10 @@ const EditProfile = () => {
       .then((res) => {
         setToast({ message: "Profile saved!", color: "success" });
         history.replace("/profile");
-        // window.location.reload();
       })
       .catch((e) => {
         console.log(e);
-        setToast({ message: "Error", color: "danger" });
+        setToast({ message: e.data.description[0], color: "danger" });
       });
   };
 

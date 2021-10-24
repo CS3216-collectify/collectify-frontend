@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 import { getCollections } from "../../services/collections";
 import CollectionList from "./CollectionList";
 
-const LIMIT = 10;
+const LIMIT = 3;
 
 const ProfileCollections = (props) => {
   const location = useLocation();

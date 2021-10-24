@@ -20,10 +20,10 @@ const CollectionList = (props) => {
   return (
     <>
       {collections.map((collection, index) => (
-        <>
+        <div key={index}>
           <HorizontalLine color="lightgrey" />
-          <CollectionCard collection={collection} key={index} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
-        </>
+          <CollectionCard collection={collection} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
+        </div>
       ))}
       <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </>

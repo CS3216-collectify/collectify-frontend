@@ -12,8 +12,8 @@ import { getCurrentUser } from "../../services/users";
 import { updateUsername } from "../../services/users";
 import Text from "../../components/text/Text";
 
-// TODO: add redirect? 
-// TODO: handle length < 8 and duplciate 
+// TODO: add redirect?
+// TODO: handle length < 8 and duplciate
 const Onboarding = () => {
   const { isUserAuthenticated } = useUserContext();
   const setToast = useToastContext();
@@ -47,6 +47,9 @@ const Onboarding = () => {
     updateUsername(trimmedUsername).then((res) => {
       setToast({ message: "Username updated!", color: "success" });
       history.replace("/home");
+    }).catch((e) => {
+      console.log(e);
+      setToast({ message: e.data.description[0], color: "danger" });
     });
   };
 
@@ -59,7 +62,7 @@ const Onboarding = () => {
 
         <IonGrid fixed>
           <IonList lines="full">
-              <Text size="l">Please provide a username so the community can identify you.</Text>
+            <Text size="l">Please provide a username so the community can identify you.</Text>
             <IonItem>
               <TextInput label="Username" value={username} onChange={setUsername} placeholder="Type text here" />
             </IonItem>
