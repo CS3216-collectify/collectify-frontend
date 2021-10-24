@@ -4,14 +4,16 @@ import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
 import CollectionForm from "../../components/form/CollectionForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import useToastContext from "../../hooks/useToastContext";
 import { getCategories } from "../../services/categories";
-import { getCollectionByCollectionId, updateCollection } from "../../services/collections";
+import { deleteCollection, getCollectionByCollectionId, updateCollection } from "../../services/collections";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
 };
 
 const EditCollection = (props) => {
+  const setToast = useToastContext();
   const location = useLocation();
   const history = useHistory();
   const { collectionId } = useParams();
@@ -56,13 +58,26 @@ const EditCollection = (props) => {
     }
   };
 
+  const deleteHandler = async () => {
+    setLoading(true);
+    try {
+      await deleteCollection(collectionId);
+      setToast({ message: "Successfully deleted collection.", color: "success" });
+      history.push("/profile");
+    } catch (e) {
+      setToast({ message: "Failed to delete collection.", color: "danger" });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <IonPage>
       <IonLoading isOpen={loading} spinner="crescent"/>
 
       <HomeToolbar title="Edit Collection" />
       <IonContent>
-        <CollectionForm categoryOptions={categoryOptions} onComplete={editCompleteHandler} collectionData={collection} />
+        <CollectionForm categoryOptions={categoryOptions} onComplete={editCompleteHandler} collectionData={collection} onDelete={deleteHandler} />
       </IonContent>
     </IonPage>
   );

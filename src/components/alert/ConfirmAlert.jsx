@@ -6,7 +6,7 @@ const ConfirmAlert = (props) => {
   const {
     title,
     message,
-    isOpen = true,
+    isOpen = false,
     onCancel: cancelHandler,
     onConfirm: confirmHandler,
   } = props;
