@@ -77,7 +77,7 @@ const HomeItem = (props) => {
       </IonGrid>
 
       <IonGrid fixed className="ion-no-padding">
-        <ImageCarousel imageUrls={imageUrls} />
+        <ImageCarousel imageUrls={images.map(i => i.imageUrl)} />
       </IonGrid>
 
       <IonGrid fixed className="ion-padding">
