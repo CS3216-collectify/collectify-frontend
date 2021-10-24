@@ -1,34 +1,8 @@
-import { access } from "fs";
-import server from "./server";
+import server from "../server";
+import { USER_ID_KEY, REFRESH_TOKEN_KEY, ACCESS_TOKEN_KEY, IS_GUEST_KEY, AUTHORIZATION_HEADER } from "./constants";
 
-const USER_ID_KEY = "userId";
-const REFRESH_TOKEN_KEY = "refreshToken";
-const ACCESS_TOKEN_KEY = "accessToken";
-const IS_GUEST_KEY = "isGuest";
-
-const AUTHORIZATION_HEADER = "Authorization";
 const formatAuthorizationValue = (accessToken) => {
   return `Bearer ${accessToken}`;
-};
-
-export const getUserId = () => {
-  // TODO: Null Handling (if userId not in local storage)
-  return localStorage.getItem(USER_ID_KEY);
-};
-
-export const getRefreshToken = () => {
-  // TODO: Null handling
-  return localStorage.getItem(REFRESH_TOKEN_KEY);
-};
-
-export const getAccessToken = () => {
-  // TODO: Null handling
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
-};
-
-export const getIsGuest = () => {
-  // TODO: Null handling
-  return localStorage.getItem(IS_GUEST_KEY);
 };
 
 export const logoutUser = () => {

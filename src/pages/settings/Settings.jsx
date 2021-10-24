@@ -9,7 +9,7 @@ import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
-import { getUserId } from "../../utils/user";
+import { getUserId } from "../../utils/auth/store";
 import Text from "../../components/text/Text";
 
 // Pass user ID and load data\

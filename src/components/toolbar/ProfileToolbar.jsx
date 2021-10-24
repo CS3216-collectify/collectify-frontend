@@ -16,7 +16,7 @@ import { search, personCircleOutline, settingsOutline, ellipsisVertical } from "
 import { useHistory, useLocation } from "react-router-dom";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { logoutUser } from "../../utils/user";
+import { logoutUser } from "../../utils/auth/actions";
 
 const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();

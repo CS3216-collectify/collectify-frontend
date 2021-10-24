@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
-import { getAccessToken, getRefreshToken, getUserId, storeUserId } from "../utils/user";
+import { getUserId, hasAccessTokenStored, hasRefreshTokenStored } from "../utils/auth/store";
+import { storeUserId } from "../utils/auth/actions";
 import { getCurrentUser } from "../services/users";
 
 const UserContext = createContext();
@@ -7,8 +8,7 @@ const UserContext = createContext();
 export default UserContext;
 
 export const UserContextProvider = ({ children }) => {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState((getAccessToken() !== null || getRefreshToken() !== null)); // && getUserId() !== null);
-
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(hasAccessTokenStored() || hasRefreshTokenStored());
   const [currentUserId, setCurrentUserId] = useState(getUserId());
 
   useEffect(() => {

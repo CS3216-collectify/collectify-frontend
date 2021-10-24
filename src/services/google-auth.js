@@ -2,7 +2,7 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import GoogleAuthStatus from "../enums/google-auth-status.enum";
 import server from "../utils/server";
-import { loginUser } from "../utils/user";
+import { loginUser } from "../utils/auth/actions";
 
 export const googleLogin = async () => {
   // {

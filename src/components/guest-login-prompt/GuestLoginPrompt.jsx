@@ -4,7 +4,7 @@ import GoogleLoginButton from "../button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { getUserId } from "../../utils/user";
+import { getUserId } from "../../utils/auth/store";
 import Text from "../text/Text";
 
 const GuestLoginPrompt = (props) => {
