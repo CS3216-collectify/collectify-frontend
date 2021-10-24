@@ -2,10 +2,12 @@ import { getLikedItems } from "../../services/profile";
 import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import ItemGrid from "../collection-items/ItemGrid";
+import { useLocation } from "react-router";
 
 const LIMIT = 18;
 
 const LikedItems = (props) => {
+  const location = useLocation();
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [items, setItems] = useState([]);
@@ -50,7 +52,7 @@ const LikedItems = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, []);
+  }, [location]);
 
   return (
     <>

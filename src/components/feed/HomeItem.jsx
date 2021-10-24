@@ -12,6 +12,8 @@ import ImageCarousel from "../gallery/ImageCarousel";
 import Text from "../text/Text";
 import LikeButton from "../button/LikeButton";
 import { convertUTCtoLocal } from "../../utils/datetime";
+import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import useToastContext from "../../hooks/useToastContext";
 
 const HomeItem = (props) => {
   const history = useHistory();
@@ -24,9 +26,10 @@ const HomeItem = (props) => {
     ownerId,
     ownerName,
     images,
+    coverImage,
     ownerUsername,
     liked: initLiked,
-    likesCount,
+    likesCount: initLikesCount,
     collectionName,
     itemCreationDate,
   } = itemData;
@@ -34,12 +37,33 @@ const HomeItem = (props) => {
   const { currentUserId } = useUserContext();
 
   const [liked, setLiked] = useState(initLiked);
+  const [likesCount, setLikesCount] = useState(initLikesCount);
 
-  const imageUrls = images.map((img) => img.url);
+  const imageUrls = [coverImage];
+  const setToast = useToastContext();
+
+  // TODO: Use the bottom one once images is implemented
+  // const imageUrls = images.map((img) => img.url);
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
-    setLiked(!liked);
+    if (liked) {
+      unlikeByItemId(itemId)
+        .then(() => {
+          setLiked(false);
+          setLikesCount(likesCount - 1);
+        })
+        .catch((e) => {
+          setToast({ message: "Unable to unlike item. Please try again later.", color: "danger" });
+        })
+    } else {
+      likeByItemId(itemId).then(() => {
+        setLiked(true);
+        setLikesCount(likesCount + 1);
+      }).catch(() => {
+        setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
+      })
+    }
   }
 
   const goToItemPage = () => {
@@ -71,8 +95,11 @@ const HomeItem = (props) => {
             </Text>
           </IonRow>
         </IonCol>
-        <IonCol size={4}>
-          <LikeButton liked={liked} likeHandler={likeHandler} likesCount={likesCount} />
+        <IonCol size={1}>
+          <LikeButton liked={liked} onClick={likeHandler} />
+        </IonCol>
+        <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
+          <Text color="default">{likesCount} likes</Text>
         </IonCol>
       </IonRow>
     </IonGrid>

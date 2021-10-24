@@ -13,7 +13,7 @@ import FlexImage from "../../components/image/FlexImage";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Toggle from "../../components/toggle/Toggle";
 import LikedItems from "../../components/liked-items/LikedItems";
-import FollowedCollections from "../../components/followed-collections.jsx/FollowedCollections";
+import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
 
@@ -46,7 +46,6 @@ const Profile = () => {
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
 
-  // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");
   const [profileLastName, setProfileLastName] = useState("");
@@ -55,6 +54,7 @@ const Profile = () => {
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
 
   const isOwnProfile = parseInt(currentUserId) === profileUserId;
 
@@ -80,7 +80,8 @@ const Profile = () => {
         setProfileLastName(res.lastName);
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
-        // setProfileDescription(res.description);
+        setProfileDescription(res.description);
+        setLikesCount(res.likesCount);
       }
     } catch (e) {
       console.log(e);
@@ -94,21 +95,22 @@ const Profile = () => {
     if (username || currentUserId) {
       getUserInformation();
     }
-  }, [currentUserId, username]);
+  }, [currentUserId, username, location]);
 
   const editProfileHandler = () => {
     history.push({
       pathname: "/profile/edit",
-      state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName },
+      state: { profileUsername, profileProfilePicture, profileLastName, profileFirstName, profileDescription },
     });
   }
 
-  if (!currentUserId) {
+  if (!currentUserId && !username) {
     // is guest user
     return (
       <IonPage className="profile">
+        <IonLoading isOpen={loading} />
         <IonContent className="ion-padding">
-          <ProfileToolbar />
+          <ProfileToolbar showMenu={false} username="Guest User" />
             <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -118,7 +120,7 @@ const Profile = () => {
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} />
-      <ProfileToolbar username={profileUsername} />
+      <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
@@ -148,7 +150,7 @@ const Profile = () => {
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
-                    <b>{"45"}</b>
+                    <b>{likesCount}</b>
                   </Text>
                   <br />
                   <Text size="s">LIKES</Text>
@@ -171,8 +173,7 @@ const Profile = () => {
               <b>{profileFirstName + " " + profileLastName}</b>
             </div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate fermentum venenatis. Proin feugiat nisi sit amet quam
-              vestibulum tincidunt. Cras blandit, erat sed accumsan fermentum, mi ante dapibus libero, at ultrices lectus urna eu nisl.
+              {profileDescription}
             </div>
           </IonRow>
 
@@ -188,7 +189,6 @@ const Profile = () => {
               {mode === COLLECTIONS_MODE &&
                 <IonGrid>
                   <IonRow className="ion-justify-content-end">
-                    {/* Direct to AddCollection page */}
                     <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
                   <ProfileCollections profileUserId={profileUserId}/>

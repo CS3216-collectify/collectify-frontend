@@ -19,8 +19,10 @@ const Login = () => {
   const { isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
 
   useEffect(() => {
-    if (getAccessToken() !== null || getRefreshToken() !== null || getIsGuest() !== null) {
+    if (getAccessToken() !== null || getRefreshToken() !== null) {
       history.replace("/home");
+    } else if (getIsGuest() !== null) {
+      history.replace("/discover");
     } else {
       history.replace("/");
     }

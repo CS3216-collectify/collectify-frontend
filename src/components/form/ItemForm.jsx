@@ -5,6 +5,7 @@ import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import UploadButton from "../button/UploadButton";
 import SaveButton from "../button/SaveButton";
+import useToastContext from "../../hooks/useToastContext";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
@@ -19,6 +20,8 @@ const ItemForm = (props) => {
   const [images, setImages] = useState(itemData.images);
   const [deletedImageIds, setDeletedImageIds] = useState([]);
 
+  const setToast = useToastContext();
+
   useEffect(() => {
     if (props.itemData) {
       const { itemName, itemDescription, images } = props.itemData;
@@ -29,7 +32,6 @@ const ItemForm = (props) => {
   }, [props.itemData]);
 
   const newImageHandler = (newFile) => {
-    // TODO: VALIDATION - name and description annot be empty
     if (images.length > 3) {
       console.log("Cannot upload more than 4 photos");
       return;
@@ -53,23 +55,32 @@ const ItemForm = (props) => {
     setImages(remainingImages);
   }
 
+  const validationErrorMessage = msg => {
+    setToast({ message: msg, color: "danger" });
+  }
+
   const saveHandler = () => {
-    // TODO: Input validation
-  
-    // const newImages = images.filter((img) => img.isNew);
-    // const imageUpdates = {
-    //   deletedImageIds,
-    //   newImages,
-    //   images
-    // }
+    const trimmedItemName = itemName.trim();
+    const trimmedItemDescription = itemDescription.trim();
+
+    if (!trimmedItemName) {
+      validationErrorMessage("Name cannot be empty!");
+      return;
+    }
+    if (!trimmedItemDescription) {
+      validationErrorMessage("Description cannot be empty!");
+      return;
+    }
+    if (!images || images.length === 0) {
+      validationErrorMessage("Images cannot be empty!");
+      return;
+    }
 
     const itemToSave = {
-      itemName,
-      itemDescription,
+      itemName: trimmedItemName,
+      itemDescription: trimmedItemDescription,
       images,
       deletedImageIds
-      // imageUpdates
-      // other data
     };
     completeHandler(itemToSave);
   };

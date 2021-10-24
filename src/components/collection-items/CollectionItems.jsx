@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
+import { IonLoading } from "@ionic/react";
 
 const LIMIT = 18;
 
@@ -21,19 +22,35 @@ const CollectionItems = (props) => {
         return;
       }
       const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
-      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
-        setHasMore(false);
-      }
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {
       console.log(e);
+    } finally {
+      // TODO
     }
   }, [collectionId, hasMore, items, pages]);
 
+  const loadInitialItems = useCallback(async () => {
+    const nextPage = 0;
+    try {
+      const retrievedItems = await getItemsFromCollection(collectionId, nextPage * LIMIT, LIMIT);
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
+      setItems(retrievedItems);
+      setPages(nextPage);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      // TODO
+    }
+  }, [collectionId]);
+
   useEffect(() => {
-    loadItems();
-  }, [loadItems, location]);
+    loadInitialItems();
+  }, [loadInitialItems, location]);
 
   const fetchNextPage = () => {
     console.log("load next");

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, createContext } from "react";
+import React, { useCallback, useState, createContext, useEffect } from "react";
 import { IonToast } from "@ionic/react";
 import { getAccessToken, getRefreshToken, getUserId } from "../utils/user";
 
@@ -8,7 +8,7 @@ export default UserContext;
 
 export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(
-    getAccessToken() !== null && getRefreshToken() !== null && getUserId() !== null
+    (getAccessToken() !== null || getRefreshToken() !== null) && getUserId() !== null
   );
 
   const [currentUserId, setCurrentUserId] = useState(getUserId());

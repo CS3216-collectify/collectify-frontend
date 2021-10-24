@@ -4,11 +4,11 @@ import {
 
 const ConfirmAlert = (props) => {
   const {
-    title = "Mock Title",
-    message = "Mock Message",
+    title,
+    message,
     isOpen = true,
-    onCancel: cancelHandler = () => console.log("Clicked cancel"),
-    onConfirm: confirmHandler = () => console.log("Clicked confirm"),
+    onCancel: cancelHandler,
+    onConfirm: confirmHandler,
   } = props;
 
   return (

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 
 import "./DiscoverItems.scss";
 import ItemGrid from "../collection-items/ItemGrid";
-import { getItemsForDiscover } from "../../services/items";
+import { getDiscoverItems } from "../../services/search";
 
 const LIMIT = 18;
 
@@ -17,11 +17,9 @@ const DiscoverItems = (props) => {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = (await getItemsForDiscover(nextPage * LIMIT, LIMIT)).items;
-
-      if ((retrievedItems && retrievedItems.length < LIMIT) || !retrievedItems) {
-        setHasMore(false);
-      }
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT);
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {
@@ -29,14 +27,27 @@ const DiscoverItems = (props) => {
     }
   }, [hasMore, items, pages]);
 
+  const loadInitialItems = useCallback(async () => {
+    const nextPage = 0;
+    try {
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT);
+      const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
+      setHasMore(updatedHasMore);
+      setItems(retrievedItems);
+      setPages(nextPage);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   const fetchNextPage = () => {
     console.log("load next");
     loadItems();
   };
 
   useEffect(() => {
-    loadItems();
-  }, [loadItems]);
+    loadInitialItems();
+  }, [loadInitialItems]);
 
   return <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} />;
 };
