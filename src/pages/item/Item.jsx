@@ -28,7 +28,7 @@ const Item = () => {
   const [images, setImages] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-  const [itemCreationDate, setItemCreationDate] = useState("")
+  const [itemCreationDate, setItemCreationDate] = useState("");
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
@@ -41,7 +41,7 @@ const Item = () => {
       setLikesCount(item.likesCount);
       setItemCreationDate(item.itemCreationDate);
       setOwnerUsername(item.ownerUsername);
-      setLiked(item.isLiked)
+      setLiked(item.isLiked);
     } catch (e) {
       console.log(e);
     } finally {
@@ -60,20 +60,22 @@ const Item = () => {
       unlikeByItemId(itemId)
         .then(() => {
           setLiked(false);
-          setLikesCount(likesCount-1);
+          setLikesCount(likesCount - 1);
         })
         .catch((e) => {
           setToast({ message: "Unable to unlike item. Please try again later.", color: "danger" });
-        })
+        });
     } else {
-      likeByItemId(itemId).then(() => {
-        setLiked(true);
-        setLikesCount(likesCount+1);
-      }).catch(() => {
-        setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
-      })
+      likeByItemId(itemId)
+        .then(() => {
+          setLiked(true);
+          setLikesCount(likesCount + 1);
+        })
+        .catch(() => {
+          setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
+        });
     }
-  }
+  };
 
   const isItemOwner = Number(currentUserId) === Number(ownerId);
 
@@ -81,13 +83,11 @@ const Item = () => {
     <IonPage className="profile">
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Item`} />
-      <IonContent className="ion-padding">
-        <IonGrid fixed>
+      <IonContent>
+        <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol>
-              <Text>
-              @{ownerUsername}
-              </Text>
+              <Text>@{ownerUsername}</Text>
             </IonCol>
             <IonCol>
               {isItemOwner && (
@@ -97,19 +97,23 @@ const Item = () => {
               )}
             </IonCol>
           </IonRow>
+        </IonGrid>
+
+        <IonGrid fixed className="ion-no-padding">
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
+        </IonGrid>
+
+        <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol size={8}>
               <IonRow>
                 <Text size="l">{title}</Text>
               </IonRow>
               <IonRow>
-                <Text size="s">
-                  {convertUTCtoLocal(itemCreationDate)}
-                </Text>
+                <Text size="s">{convertUTCtoLocal(itemCreationDate)}</Text>
               </IonRow>
             </IonCol>
-            <IonCol size={1} >
+            <IonCol size={1}>
               <LikeButton liked={liked} onClick={likeHandler} />
             </IonCol>
             <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>

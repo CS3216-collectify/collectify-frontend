@@ -6,7 +6,7 @@ import NoImageAdded from "../../assets/no-image-added.png";
 
 const FlexImage = (props) => {
   const [loading, setLoading] = useState(true);
-  
+
   return (
     <div className="flex-image">
       <div className={`ion-spinner-container ${loading ? "" : "ion-hide"}`}>

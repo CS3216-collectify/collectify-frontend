@@ -50,7 +50,7 @@ const ProfileCollections = (props) => {
 
   useEffect(() => {
     loadInitialCollections();
-  }, [props.profileUserId, location]);
+  }, [props.profileUserId, location, loadInitialCollections]);
 
   const fetchNextPage = () => {
     console.log("load next");
