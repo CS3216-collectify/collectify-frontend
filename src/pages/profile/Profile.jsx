@@ -73,7 +73,6 @@ const Profile = () => {
       }
 
       if (res) {
-        console.log(res);
         setProfileUserId(Number(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);

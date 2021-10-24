@@ -25,7 +25,6 @@ const Onboarding = () => {
     if (currentUserId) {
       getCurrentUser()
         .then((res) => {
-          console.log(res);
           setInitialUsername(res.username);
           setUsername(res.username);
         })

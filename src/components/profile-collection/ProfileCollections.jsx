@@ -12,7 +12,6 @@ const ProfileCollections = (props) => {
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
 
-  console.log(pages);
   // username = someone elses, userId = my own
   const { profileUserId } = props;
   // should check whether its guest clicking profile tab, or user clicking their own tab, or user viewing others' profile
@@ -53,7 +52,6 @@ const ProfileCollections = (props) => {
   }, [props.profileUserId, location, loadInitialCollections]);
 
   const fetchNextPage = () => {
-    console.log("load next");
     loadUserCollections();
   };
 

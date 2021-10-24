@@ -52,7 +52,6 @@ const Feed = (props) => {
   }, [loadInitialItems]);
 
   const fetchNextPage = () => {
-    console.log("load next");
     loadItems();
   };
 
