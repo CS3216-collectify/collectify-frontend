@@ -46,16 +46,6 @@ const EditProfile = () => {
       return;
     }
 
-    if (username.length < 8) {
-      setToast({ message: "Your username must be at least 8 characters long.", color: "danger" });
-      return;
-    }
-
-    if (firstName.length === 0) {
-      setToast({ message: "Your first name cannot be empty.", color: "danger" });
-      return;
-    }
-
     if (description.length === 0) {
       setToast({ message: "Your profile description cannot be empty.", color: "danger" });
       return;
