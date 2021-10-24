@@ -52,6 +52,8 @@ const Profile = () => {
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [itemsCount, setItemsCount] = useState(0);
+  const [collectionsCount, setCollectionsCount] = useState(0);
 
   const isOwnProfile = parseInt(currentUserId) === profileUserId;
 
@@ -80,6 +82,8 @@ const Profile = () => {
         setProfileProfilePicture(res.pictureUrl);
         setProfileDescription(res.description);
         setLikesCount(res.likesCount);
+        setItemsCount(res.itemsCount);
+        setCollectionsCount(res.collectionsCount);
       }
     } catch (e) {
       console.log(e);
@@ -134,14 +138,14 @@ const Profile = () => {
               <IonRow className="profile-statistics--container ion-align-items-center ion-justify-content-center">
                 <div className="profile-statistics ion-text-center">
                   <Text>
-                    <b>{"3"}</b>
+                    <b>{collectionsCount}</b>
                   </Text>
                   <br />
                   <Text size="xs">COLLECTIONS</Text>
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
-                    <b>{"15"}</b>
+                    <b>{itemsCount}</b>
                   </Text>
                   <br />
                   <Text size="xs">ITEMS</Text>
