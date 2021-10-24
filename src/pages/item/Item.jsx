@@ -12,6 +12,7 @@ import LikeButton from "../../components/button/LikeButton";
 import { convertUTCtoLocal } from "../../utils/datetime";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
 import useToastContext from "../../hooks/useToastContext";
+import "./Item.scss";
 
 const Item = () => {
   const history = useHistory();
@@ -80,14 +81,16 @@ const Item = () => {
   const isItemOwner = Number(currentUserId) === Number(ownerId);
 
   return (
-    <IonPage className="profile">
+    <IonPage className="item">
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Item`} />
       <IonContent>
         <IonGrid fixed className="ion-padding">
           <IonRow>
-            <IonCol>
-              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>@{ownerUsername}</Text>
+            <IonCol className="item-username">
+              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>
+                <b>@{ownerUsername}</b>
+              </Text>
             </IonCol>
             <IonCol>
               {isItemOwner && (
@@ -107,10 +110,12 @@ const Item = () => {
           <IonRow>
             <IonCol size={8}>
               <IonRow>
-                <Text size="l">{title}</Text>
+                <Text size="l">
+                  <b>{title}</b>
+                </Text>
               </IonRow>
               <IonRow>
-                <Text size="s">{convertUTCtoLocal(itemCreationDate)}</Text>
+                <Text>{description}</Text>
               </IonRow>
             </IonCol>
             <IonCol size={1}>
@@ -121,8 +126,8 @@ const Item = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol>
-              <p>{description}</p>
+            <IonCol className="ion-text-right">
+              <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
           </IonRow>
         </IonGrid>
