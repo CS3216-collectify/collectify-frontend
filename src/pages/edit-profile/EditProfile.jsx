@@ -41,12 +41,12 @@ const EditProfile = () => {
       validationErrorMessage("Your username must be between 8 to 15 characters!");
       return;
     }
-    if (!trimmedFirstName || !trimmedFirstName.trim()) {
+    if (!trimmedFirstName) {
       validationErrorMessage("First Name cannot be empty!");
       return;
     }
 
-    if (description.length === 0) {
+    if (!trimmedDescription) {
       setToast({ message: "Your profile description cannot be empty.", color: "danger" });
       return;
     }
