@@ -9,13 +9,13 @@ import useUserContext from "../../hooks/useUserContext";
 import useToastContext from "../../hooks/useToastContext";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
-import { getUserId } from "../../utils/user";
+import { getUserId } from "../../utils/auth/store";
 import Text from "../../components/text/Text";
 
 // Pass user ID and load data\
 // some redirect if accessed by Guest
 const Settings = () => {
-  const { currentUserId, isUserAuthenticated, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
   const setToast = useToastContext();
   const history = useHistory();
 
@@ -24,7 +24,6 @@ const Settings = () => {
       // success
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      setCurrentUserId(getUserId());
       history.replace("/home");
     } else {
       // error
@@ -41,12 +40,12 @@ const Settings = () => {
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
 
         <IonGrid fixed>
-          {!currentUserId && (
+          {!isUserAuthenticated && (
             <Text>
               <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
             </Text>
           )}
-          <IonRow>{currentUserId ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
+          <IonRow>{isUserAuthenticated ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>

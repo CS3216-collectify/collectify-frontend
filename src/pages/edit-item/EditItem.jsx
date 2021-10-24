@@ -44,11 +44,11 @@ const EditItem = () => {
     setLoading(true);
     try {
       await updateItem(collectionId, itemId, item);
-      history.goBack();//(`/collections/${collectionId}/items/${itemId}`);
-    } catch (e) {
-      console.log(e);
-    } finally {
       setLoading(false);
+      history.goBack(); //(`/collections/${collectionId}/items/${itemId}`);
+    } catch (e) {
+      setLoading(false);
+      console.log(e);
     }
   };
 

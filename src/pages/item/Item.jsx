@@ -17,7 +17,7 @@ const Item = () => {
   const history = useHistory();
   const location = useLocation();
   const { collectionId, itemId } = useParams();
-  const { currentUserId } = useUserContext();
+  const { isCurrentUser, isUserAuthenticated } = useUserContext();
   const setToast = useToastContext();
 
   const [itemName, setItemName] = useState("");
@@ -57,7 +57,7 @@ const Item = () => {
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
-    if (!currentUserId) {
+    if (!isUserAuthenticated) {
       setToast({ message: "Please log in to like an item", color: "danger" });
       return;
     }
@@ -83,12 +83,12 @@ const Item = () => {
     }
   };
 
-  const isItemOwner = Number(currentUserId) === Number(ownerId);
+  const isItemOwner = isCurrentUser(ownerId);
 
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/items/${itemId}/edit`;
-    const images = images.map((img) => ({ ...img })); // deep copy
-    const item = { itemName, itemDescription, images };
+    const _images = images.map((img) => ({ ...img })); // deep copy
+    const item = { itemName, itemDescription, images: _images };
     const state = { item };
     history.push({
       pathname,

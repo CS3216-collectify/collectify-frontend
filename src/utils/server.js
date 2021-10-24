@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getRefreshToken, loginUser } from "./user";
-import { logoutUser } from "./user";
+import { getAuthorizationValue, getRefreshToken } from "./auth/store";
+import { loginUser, logoutUser } from "./auth/actions";
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 const REACT_LOGIN_REL_URL = "/";
@@ -11,7 +11,7 @@ const server = axios.create({
   baseURL: SERVER_BASE_URL,
   timeout: 5000,
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    Authorization: getAuthorizationValue(),
   },
 });
 

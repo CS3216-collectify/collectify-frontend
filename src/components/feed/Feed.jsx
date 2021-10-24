@@ -6,10 +6,12 @@ import { IonGrid, IonLoading, IonRow, IonButton, IonLabel } from "@ionic/react";
 import HorizontalLine from "../line/HorizontalLine";
 import Text from "../text/Text";
 import "./Feed.scss";
+import { useHistory } from "react-router";
 
 const LIMIT = 6;
 
 const Feed = (props) => {
+  const history = useHistory();
   const [items, setItems] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
@@ -67,16 +69,16 @@ const Feed = (props) => {
           </React.Fragment>
         ))}
       {((items && items.length === 0) || !items) && !hasMore && (
-          <div className="ion-text-center ion-padding">
-            <Text size="xl">Start following some collections to stay updated!</Text>
-            <IonGrid fixed>
-              <IonRow className="ion-justify-content-center ion-margin-top">
-                <IonButton size="small" fill="solid" className="discover-button">
-                  <IonLabel>Discover collections</IonLabel>
-                </IonButton>
-              </IonRow>
-            </IonGrid>
-          </div>
+        <div className="ion-text-center ion-padding">
+          <Text size="xl">Start following some collections to stay updated!</Text>
+          <IonGrid fixed>
+            <IonRow className="ion-justify-content-center ion-margin-top">
+              <IonButton size="small" fill="solid" className="discover-button" onClick={() => history.push("/discover")}>
+                <IonLabel>Discover collections</IonLabel>
+              </IonButton>
+            </IonRow>
+          </IonGrid>
+        </div>
       )}
       <InfiniteScroll listEnded={!hasMore} onScrollEnd={fetchNextPage} />
     </>

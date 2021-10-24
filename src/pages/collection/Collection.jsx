@@ -21,7 +21,6 @@ const Collection = (props) => {
   const setToast = useToastContext();
   const location = useLocation();
   const history = useHistory();
-
   const { collectionId } = useParams();
   const [collectionName, setCollectionName] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
@@ -33,24 +32,15 @@ const Collection = (props) => {
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
 
-  const { currentUserId } = useUserContext();
+  const { isCurrentUser, isUserAuthenticated } = useUserContext();
 
-  const isCollectionOwner = Number(currentUserId) === Number(ownerId);
+  const isCollectionOwner = isCurrentUser(ownerId);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { 
-        collectionName, 
-        collectionDescription, 
-        categoryName, 
-        categoryId, 
-        ownerId, 
-        ownerUsername, 
-        isFollowed, 
-        followersCount, 
-      } = collectionData;
+      const { collectionName, collectionDescription, categoryName, categoryId, ownerId, ownerUsername, isFollowed, followersCount } = collectionData;
 
       setCollectionName(collectionName);
       setCollectionDescription(collectionDescription);
@@ -73,7 +63,7 @@ const Collection = (props) => {
   }, [loadCollectionData, location]);
 
   const followHandler = () => {
-    if (!currentUserId) {
+    if (!isUserAuthenticated) {
       setToast({ message: "Please log in to follow a collection", color: "danger" });
       return;
     }
@@ -81,16 +71,18 @@ const Collection = (props) => {
     if (followed || isCollectionOwner) {
       return;
     }
-    followByCollectionId(collectionId).then(() => {
-      setFollowersCount(followersCount + 1);
-      setFollowed(true);
-    }).catch((e) => {
-      setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
-    });
-  }
+    followByCollectionId(collectionId)
+      .then(() => {
+        setFollowersCount(followersCount + 1);
+        setFollowed(true);
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
+      });
+  };
 
   const unfollowHandler = () => {
-    if (!currentUserId) {
+    if (!isUserAuthenticated) {
       setToast({ message: "Please log in to follow a collection", color: "danger" });
       return;
     }
@@ -98,13 +90,15 @@ const Collection = (props) => {
     if (!followed || isCollectionOwner) {
       return;
     }
-    unfollowByCollectionId(collectionId).then(() => {
-      setFollowersCount(followersCount - 1);
-      setFollowed(false);
-    }).catch((e) => {
-      setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
-    });
-  }
+    unfollowByCollectionId(collectionId)
+      .then(() => {
+        setFollowersCount(followersCount - 1);
+        setFollowed(false);
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
+      });
+  };
 
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/edit`;
@@ -112,9 +106,9 @@ const Collection = (props) => {
     const state = { collection };
     history.push({
       pathname,
-      state
+      state,
     });
-  }
+  };
 
   return (
     <IonPage className="collection">
