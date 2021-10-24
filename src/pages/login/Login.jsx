@@ -55,7 +55,7 @@ const Login = () => {
       <IonContent className="ion-padding">
         <IonGrid fixed className="login--grid">
           <IonRow className="ion-justify-content-center">
-            <Logo />
+            <Logo className="logo"/>
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
             <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />

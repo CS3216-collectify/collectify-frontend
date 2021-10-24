@@ -7,7 +7,13 @@
     justify-content: center;
 
     ion-row.ion-margin-top {
-        margin-top: 40px;
+    flex-direction: column;
+    margin-top: 40px;
     }
+  }
+
+  .logo {
+    width: 150px;
+    height: 150px;
   }
 }
