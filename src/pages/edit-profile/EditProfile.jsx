@@ -24,10 +24,27 @@ const EditProfile = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const [description, setDescription] = useState("");
 
+  const validationErrorMessage = (msg) => {
+    setToast({ message: msg, color: "danger" });
+  };
+
   const saveProfile = () => {
     // if (username.length < 8) {
     //   setToast({ message: "Your username cannnot be less than 8 characters.", color: "danger" });
     // }
+    const trimmedUsername = username.trim();
+    const trimmedFirstName = firstName.trim();
+    const trimmedLastName = lastName.trim();
+    const trimmedDescription = description.trim();
+
+    if (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15) {
+      validationErrorMessage("Your username must be between 8 to 15 characters!");
+      return;
+    }
+    if (!trimmedFirstName || !trimmedFirstName.trim()) {
+      validationErrorMessage("First Name cannot be empty!");
+      return;
+    }
 
     if (username.length < 8) {
       setToast({ message: "Your username must be at least 8 characters long.", color: "danger" });
@@ -44,7 +61,14 @@ const EditProfile = () => {
       return;
     }
 
-    updateProfile(initialUsername, { username, firstName, lastName, description })
+    const updatedProfile = {
+      username: trimmedUsername,
+      firstName: trimmedFirstName,
+      lastName: trimmedLastName,
+      description: trimmedDescription,
+    };
+
+    updateProfile(initialUsername, updatedProfile)
       .then((res) => {
         setToast({ message: "Profile saved!", color: "success" });
         history.replace("/profile");

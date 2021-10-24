@@ -1,32 +1,17 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
-import {
-  IonContent,
-  IonPage,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonImg,
-  IonText,
-  IonList,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  IonLoading,
-  IonAvatar,
-} from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonLoading } from "@ionic/react";
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
-import useToastContext from "../../hooks/useToastContext";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import EditProfileButton from "../../components/button/EditProfileButton";
-import LogoutButton from "../../components/button/LogoutButton";
 import AddButton from "../../components/button/AddButton";
 import { getCurrentUser, getUserByUsername } from "../../services/users";
 import FlexImage from "../../components/image/FlexImage";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Toggle from "../../components/toggle/Toggle";
 import LikedItems from "../../components/liked-items/LikedItems";
-import FollowedCollections from "../../components/followed-collections.jsx/FollowedCollections";
+import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
 
@@ -52,14 +37,12 @@ const MODE_SELECT_OPTIONS = [
 const Profile = () => {
   const history = useHistory();
   const location = useLocation();
-  const setToast = useToastContext();
-  const { currentUserId, setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { currentUserId } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
 
-  // TODO : add profile description and pass to EditProfile
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");
   const [profileLastName, setProfileLastName] = useState("");
@@ -68,6 +51,7 @@ const Profile = () => {
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
   const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
 
   const isOwnProfile = parseInt(currentUserId) === profileUserId;
 
@@ -95,6 +79,7 @@ const Profile = () => {
         setProfileUsername(res.username);
         setProfileProfilePicture(res.pictureUrl);
         setProfileDescription(res.description);
+        setLikesCount(res.likesCount);
       }
     } catch (e) {
       console.log(e);
@@ -108,7 +93,7 @@ const Profile = () => {
     if (username || currentUserId) {
       getUserInformation();
     }
-  }, [currentUserId, getUserInformation, username, location]);
+  }, [currentUserId, username, location, getUserInformation]);
 
   const editProfileHandler = () => {
     history.push({
@@ -121,8 +106,9 @@ const Profile = () => {
     // is guest user
     return (
       <IonPage className="profile">
+        <IonLoading isOpen={loading} />
         <IonContent className="ion-padding">
-          <ProfileToolbar />
+          <ProfileToolbar showMenu={false} username="Guest User" />
           <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -132,7 +118,7 @@ const Profile = () => {
   return (
     <IonPage className="profile">
       <IonLoading isOpen={loading} />
-      <ProfileToolbar username={profileUsername} />
+      <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
       <IonContent>
@@ -162,7 +148,7 @@ const Profile = () => {
                 </div>
                 <div className="profile-statistics ion-text-center">
                   <Text>
-                    <b>{"45"}</b>
+                    <b>{likesCount}</b>
                   </Text>
                   <br />
                   <Text size="xs">LIKES</Text>
@@ -196,7 +182,6 @@ const Profile = () => {
               {mode === COLLECTIONS_MODE && (
                 <>
                   <IonRow className="ion-justify-content-end">
-                    {/* Direct to AddCollection page */}
                     <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
                   <ProfileCollections profileUserId={profileUserId} />

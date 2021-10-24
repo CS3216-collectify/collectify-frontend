@@ -3,15 +3,9 @@ import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/re
 
 import "./Home.scss";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import useUserContext from "../../hooks/useUserContext";
 import Feed from "../../components/feed/Feed";
 
 const Home = () => {
-  const [name, setName] = useState("");
-  const x = useUserContext();
-
-  const { userId = 1 } = x;
-
   return (
     <IonPage>
       <HomeToolbar title="collectify" />
@@ -19,7 +13,9 @@ const Home = () => {
       {/* Ion padding applies 16px  */}
       <IonContent>
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-        <Feed userId={userId} />
+        <IonGrid fixed>
+          <Feed />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

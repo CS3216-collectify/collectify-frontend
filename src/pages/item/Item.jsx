@@ -10,12 +10,15 @@ import { heart, heartOutline } from "ionicons/icons";
 import Text from "../../components/text/Text";
 import LikeButton from "../../components/button/LikeButton";
 import { convertUTCtoLocal } from "../../utils/datetime";
+import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import useToastContext from "../../hooks/useToastContext";
 
 const Item = () => {
   const history = useHistory();
   const location = useLocation();
   const { collectionId, itemId } = useParams();
   const { currentUserId } = useUserContext();
+  const setToast = useToastContext();
 
   const [title, setTitle] = useState("Test Title");
   const [ownerUsername, setOwnerUsername] = useState("itemOwner");
@@ -32,12 +35,13 @@ const Item = () => {
     try {
       const item = await getItemFromCollection(collectionId, itemId);
       setTitle(item.itemName);
-      setDescription(item.description);
+      setDescription(item.itemDescription);
       setImages(item.images);
       setOwnerId(item.ownerId);
       setLikesCount(item.likesCount);
       setItemCreationDate(item.itemCreationDate);
       setOwnerUsername(item.ownerUsername);
+      setLiked(item.isLiked);
     } catch (e) {
       console.log(e);
     } finally {
@@ -48,13 +52,29 @@ const Item = () => {
   useEffect(() => {
     setLoading(true);
     fetchItemData();
-    console.log("fetech");
   }, [fetchItemData, location]);
 
   const likeHandler = () => {
-    // TODO: handle api call
-
-    setLiked(!liked);
+    // api call to like, if user is authenticated
+    if (liked) {
+      unlikeByItemId(itemId)
+        .then(() => {
+          setLiked(false);
+          setLikesCount(likesCount - 1);
+        })
+        .catch((e) => {
+          setToast({ message: "Unable to unlike item. Please try again later.", color: "danger" });
+        });
+    } else {
+      likeByItemId(itemId)
+        .then(() => {
+          setLiked(true);
+          setLikesCount(likesCount + 1);
+        })
+        .catch(() => {
+          setToast({ message: "Unable to like item. Please try again later.", color: "danger" });
+        });
+    }
   };
 
   const isItemOwner = Number(currentUserId) === Number(ownerId);
@@ -93,8 +113,11 @@ const Item = () => {
                 <Text size="s">{convertUTCtoLocal(itemCreationDate)}</Text>
               </IonRow>
             </IonCol>
-            <IonCol size={4}>
-              <LikeButton liked={liked} likeHandler={likeHandler} likesCount={likesCount} />
+            <IonCol size={1}>
+              <LikeButton liked={liked} onClick={likeHandler} />
+            </IonCol>
+            <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
+              <Text color="default">{likesCount} likes</Text>
             </IonCol>
           </IonRow>
           <IonRow>

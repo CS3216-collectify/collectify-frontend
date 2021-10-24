@@ -6,7 +6,7 @@ const UserContext = createContext();
 export default UserContext;
 
 export const UserContextProvider = ({ children }) => {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(getAccessToken() !== null && getRefreshToken() !== null && getUserId() !== null);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState((getAccessToken() !== null || getRefreshToken() !== null) && getUserId() !== null);
 
   const [currentUserId, setCurrentUserId] = useState(getUserId());
 

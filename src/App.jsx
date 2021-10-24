@@ -40,6 +40,10 @@ import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 import Discover from "./pages/discover/Discover";
 import Onboarding from "./pages/onboarding/Onboarding";
+import FollowersList from "./pages/collection/FollowersList";
+import LikesList from "./pages/item/LikesList";
+import { Redirect } from "react-router";
+import ProtectedRoute from "./components/route/ProtectedRoute";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -55,54 +59,58 @@ const App = () => {
         <IonRouterOutlet>
           {/* <Switch> */}
           <Route exact path="/" component={Login} />
-          <Route exact path="/onboarding" component={Onboarding} />
+          <ProtectedRoute exact path="/onboarding" component={Onboarding} />
+          <Route>
+            <IonTabs>
+              <IonRouterOutlet>
+                {/* TODO: add redirects for guests */}
+                <ProtectedRoute exact path="/home" component={Home} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/:username" component={Profile} />
+                <ProtectedRoute exact path="/profile/edit" component={EditProfile} />
+                <Route exact path="/settings" component={Settings} />
+                <Route exact path="/collections/:collectionId" component={Collection} />
+                <ProtectedRoute exact path="/collections/:collectionId/edit" component={EditCollection} />
+                <ProtectedRoute exact path="/add-collections" component={AddCollection} />
+                <ProtectedRoute exact path="/collections/:collectionId/add" component={AddItem} />
+                <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
+                <Route exact path="/items/:itemId/likes" component={LikesList} />
+                <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
+                <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
+                <Route exact path="/discover" component={Discover} />
+                <Redirect to="/" />
+              </IonRouterOutlet>
 
-          <IonTabs>
-            <IonRouterOutlet>
-              {/* TODO: add redirects for guests */}
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/profile" component={Profile} />
-              <Route exact path="/profile/:username" component={Profile} />
-              <Route exact path="/profile/edit" component={EditProfile} />
-              <Route exact path="/settings" component={Settings} />
-              <Route exact path="/collections/:collectionId" component={Collection} />
-              <Route exact path="/collections/:collectionId/edit" component={EditCollection} />
-              <Route exact path="/add-collections" component={AddCollection} />
-              <Route exact path="/collections/:collectionId/add" component={AddItem} />
-              <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
-              <Route exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
-              <Route exact path="/discover" component={Discover} />
-            </IonRouterOutlet>
-
-            <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
-              {isUserAuthenticated && (
-                <IonTabButton tab="home" href="/home">
-                  <IonIcon icon={homeOutline} />
-                  <IonText>Home</IonText>
-                </IonTabButton>
-              )}
-              <IonTabButton tab="b" href="/discover">
-                <IonIcon icon={searchOutline} />
-                <IonText>Discover</IonText>
-              </IonTabButton>
-              {/* {isUserAuthenticated && (
-                  <IonTabButton tab="c" href="/home">
-                    <IonIcon icon={addCircleOutline} />
-                    <IonText>Add</IonText>
+              <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
+                {isUserAuthenticated && (
+                  <IonTabButton tab="home" href="/home">
+                    <IonIcon icon={homeOutline} />
+                    <IonText>Home</IonText>
                   </IonTabButton>
                 )}
-                {isUserAuthenticated && (
-                  <IonTabButton tab="d" href="/d">
-                    <IonIcon icon={chatbubblesOutline} />
-                    <IonText>Chats</IonText>
-                  </IonTabButton>
-                )} */}
-              <IonTabButton tab="user-profile" href="/profile">
-                <IonIcon icon={personCircleOutline} />
-                <IonText>Profile</IonText>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
+                <IonTabButton tab="b" href="/discover">
+                  <IonIcon icon={searchOutline} />
+                  <IonText>Discover</IonText>
+                </IonTabButton>
+                {/* {isUserAuthenticated && (
+                    <IonTabButton tab="c" href="/home">
+                      <IonIcon icon={addCircleOutline} />
+                      <IonText>Add</IonText>
+                    </IonTabButton>
+                  )}
+                  {isUserAuthenticated && (
+                    <IonTabButton tab="d" href="/d">
+                      <IonIcon icon={chatbubblesOutline} />
+                      <IonText>Chats</IonText>
+                    </IonTabButton>
+                  )} */}
+                <IonTabButton tab="user-profile" href="/profile">
+                  <IonIcon icon={personCircleOutline} />
+                  <IonText>Profile</IonText>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </Route>
           {/* </Switch> */}
         </IonRouterOutlet>
       </IonReactRouter>

@@ -25,7 +25,7 @@ const AddCollection = () => {
 
   useEffect(() => {
     setLoading(true);
-    loadCategoryOptions(); // TODO: Remove timeout
+    loadCategoryOptions();
   }, []);
 
   const loadCategoryOptions = async () => {
