@@ -53,7 +53,7 @@ const CollectionForm = (props) => {
       return;
     }
     if (categoryId === null) {
-      validationErrorMessage("Please select at least one category!");
+      validationErrorMessage("Please select a category!");
       return;
     }
     const collectionToSave = {
