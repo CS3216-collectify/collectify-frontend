@@ -4,7 +4,8 @@ import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
 import ItemForm from "../../components/form/ItemForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import { getItemFromCollection, updateItem } from "../../services/items";
+import useToastContext from "../../hooks/useToastContext";
+import { deleteItem, getItemFromCollection, updateItem } from "../../services/items";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
@@ -13,6 +14,7 @@ const getDefaultItemData = () => {
 const EditItem = () => {
   const location = useLocation();
   const history = useHistory();
+  const setToast = useToastContext();
   const { collectionId, itemId } = useParams();
   const [item, setItem] = useState(getDefaultItemData());
   const [loading, setLoading] = useState(false);
@@ -52,12 +54,25 @@ const EditItem = () => {
     }
   };
 
+  const deleteHandler = async () => {
+    setLoading(true);
+    try {
+      await deleteItem(collectionId, itemId);
+      history.push(`/collections/${collectionId}`);
+      setToast({ message: "Successfully item.", color: "success" });
+    } catch (e) {
+      setToast({ message: "Failed to delete item.", color: "danger" });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <IonPage>
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
-        <ItemForm onComplete={editCompleteHandler} itemData={item} />
+        <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
       </IonContent>
     </IonPage>
   );

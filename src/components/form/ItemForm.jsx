@@ -5,6 +5,7 @@ import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import UploadButton from "../button/UploadButton";
 import SaveButton from "../button/SaveButton";
+import DeleteButton from "../button/DeleteButton";
 import useToastContext from "../../hooks/useToastContext";
 
 const getDefaultItemData = () => {
@@ -12,7 +13,7 @@ const getDefaultItemData = () => {
 };
 
 const ItemForm = (props) => {
-  const { itemData = getDefaultItemData(), onComplete: completeHandler } = props;
+  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete: deleteHandler } = props;
 
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
@@ -99,7 +100,12 @@ const ItemForm = (props) => {
         </IonGrid>
       </IonItem>
       <IonItem>
-        <SaveButton onClick={saveHandler} />
+        <IonGrid fixed>
+          <SaveButton onClick={saveHandler} />
+          {deleteHandler &&
+            <DeleteButton onClick={deleteHandler} />
+          }
+        </IonGrid>
       </IonItem>
     </IonList>
   );
