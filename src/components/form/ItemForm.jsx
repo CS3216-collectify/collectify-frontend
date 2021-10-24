@@ -7,18 +7,20 @@ import UploadButton from "../button/UploadButton";
 import SaveButton from "../button/SaveButton";
 import DeleteButton from "../button/DeleteButton";
 import useToastContext from "../../hooks/useToastContext";
+import ConfirmAlert from "../alert/ConfirmAlert";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
 };
 
 const ItemForm = (props) => {
-  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete: deleteHandler } = props;
+  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
 
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
   const [deletedImageIds, setDeletedImageIds] = useState([]);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const setToast = useToastContext();
 
@@ -82,8 +84,22 @@ const ItemForm = (props) => {
     completeHandler(itemToSave);
   };
 
+  const deleteHandler = () => {
+    if (!onDelete) {
+      return;
+    }
+    onDelete().then(() => setDeleteConfirm(false));
+  }
+
   return (
     <IonList>
+      <ConfirmAlert 
+        title="Delete Item?"
+        message="This action cannot be undone."
+        isOpen={deleteConfirm}
+        onCancel={() => setDeleteConfirm(false)}
+        onConfirm={deleteHandler}
+      />
       <IonItem>
         <TextInput label="Item Name" value={itemName} placeholder="Enter item name" onChange={setItemName} />
       </IonItem>
@@ -102,8 +118,8 @@ const ItemForm = (props) => {
       <IonItem>
         <IonGrid fixed>
           <SaveButton onClick={saveHandler} />
-          {deleteHandler &&
-            <DeleteButton onClick={deleteHandler} />
+          {onDelete &&
+            <DeleteButton onClick={() => setDeleteConfirm(true)} />
           }
         </IonGrid>
       </IonItem>
