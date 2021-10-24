@@ -1,11 +1,8 @@
 .profile-collection--container {
-  min-width: 300px;
   .profile-collection-title--container {
     display: flex;
     justify-content: space-between;
 
-    .profile-collection--title {
-    }
     .profile-collection-followers--container {
       font-size: var(--xs-font-size);
       display: inline-block;
@@ -16,10 +13,6 @@
         margin-right: 4px;
       }
     }
-  }
-
-  .profile-collection--desc {
-    font-size: 14px;
   }
 
   .profile-collection--images {
@@ -37,16 +30,17 @@
       margin-left: 4px;
       margin-right: 4px;
     }
-    
+
     .profile-collection-empty-images {
       font-size: 12px;
       text-align: center;
-      margin:auto;
+      margin: auto;
       color: #808080;
     }
   }
 
   .profile-collection-categories--container {
+    margin-top: 8px;
     ion-chip {
       pointer-events: none;
       ion-label {

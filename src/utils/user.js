@@ -1,4 +1,3 @@
-import { access } from "fs";
 import server from "./server";
 
 const USER_ID_KEY = "userId";

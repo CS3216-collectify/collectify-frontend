@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 
 import "./Home.scss";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";

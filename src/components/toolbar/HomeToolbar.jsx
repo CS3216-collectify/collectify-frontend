@@ -1,40 +1,9 @@
-import { useState } from "react";
 import { useHistory, useLocation } from "react-router";
 
-import {
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonItem,
-  IonListHeader,
-  IonList,
-  IonBackButton,
-  IonHeader,
-  useIonPopover,
-} from "@ionic/react";
+import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonBackButton, IonHeader } from "@ionic/react";
 import { search, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
 
 const HomeToolbar = ({ title }) => {
-  // Menu with items shown when ellipsis icon is pressed
-  // const PopoverList: React.FC<{
-  //   onHide: () => void,
-  // }> = ({ onHide }) => (
-  //   <IonList>
-  //     <IonListHeader>Popover Content</IonListHeader>
-  //     <IonItem button>Learn Ionic</IonItem>
-  //     <IonItem button>Documentation</IonItem>
-  //     <IonItem button>Showcase</IonItem>
-  //     <IonItem button>GitHub Repo</IonItem>
-  //     <IonItem lines="none" detail={false} button onClick={onHide}>
-  //       Close
-  //     </IonItem>
-  //   </IonList>
-  // );
-
-  // const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
-
   const history = useHistory();
   const location = useLocation();
 

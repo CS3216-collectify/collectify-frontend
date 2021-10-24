@@ -1,23 +1,21 @@
 import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams, useLocation } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
+import "./Collection.scss";
 import useUserContext from "../../hooks/useUserContext";
 import AddButton from "../../components/button/AddButton";
 import EditButton from "../../components/button/EditButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import FollowButton from "../../components/button/FollowButton";
 import CategoryChip from "../../components/chip/CategoryChip";
-import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
-import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
 import useToastContext from "../../hooks/useToastContext";
-import { useLocation } from "react-router";
 
 const Collection = (props) => {
   const location = useLocation();

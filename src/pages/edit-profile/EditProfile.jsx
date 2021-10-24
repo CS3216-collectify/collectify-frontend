@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList } from "@ionic/react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import "./EditProfile.scss";
 import useToastContext from "../../hooks/useToastContext";
 import TextInput from "../../components/text-input/TextInput";
-import TextArea from "../../components/text-input/TextArea";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import SaveProfileButton from "../../components/button/SaveProfileButton";
 import { updateProfile } from "../../services/users";

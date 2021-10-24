@@ -1,6 +1,13 @@
 .item {
   .item-username {
-     align-self: center;
+    align-self: center;
+  }
+  .item-title-likes--container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .item-like-button {
+    vertical-align: middle;
   }
 }
 .top-margin-s {

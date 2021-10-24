@@ -1,7 +1,6 @@
-import { IonButton, IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
+import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import useUserContext from "../../hooks/useUserContext";
 import ImageCarousel from "../gallery/ImageCarousel";
 import Text from "../text/Text";
 import LikeButton from "../button/LikeButton";
@@ -31,9 +30,6 @@ const HomeItem = (props) => {
   const [likesCount, setLikesCount] = useState(initLikesCount);
 
   const setToast = useToastContext();
-
-  // TODO: Use the bottom one once images is implemented
-  const imageUrls = images.map(({ url, imageUrl = url }) => imageUrl);
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
@@ -75,7 +71,7 @@ const HomeItem = (props) => {
       </IonGrid>
 
       <IonGrid fixed className="ion-no-padding">
-        <ImageCarousel imageUrls={images.map(i => i.imageUrl)} />
+        <ImageCarousel imageUrls={images.map((i) => i.imageUrl)} />
       </IonGrid>
 
       <IonGrid fixed className="ion-padding">

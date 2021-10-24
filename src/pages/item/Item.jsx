@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonIcon, IonButton } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams, useLocation } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -6,7 +6,6 @@ import ImageCarousel from "../../components/gallery/ImageCarousel";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getItemFromCollection } from "../../services/items";
 import useUserContext from "../../hooks/useUserContext";
-import { heart, heartOutline } from "ionicons/icons";
 import Text from "../../components/text/Text";
 import LikeButton from "../../components/button/LikeButton";
 import { convertUTCtoLocal } from "../../utils/datetime";
@@ -113,23 +112,29 @@ const Item = () => {
 
         <IonGrid fixed className="ion-padding">
           <IonRow>
-            <IonCol size={8}>
-              <IonRow>
-                <Text size="l">
-                  <b>{title}</b>
-                </Text>
+            <IonCol>
+              <IonRow className="item-title-likes--container">
+                <div>
+                  <Text size="l">
+                    <b>{title}</b>
+                  </Text>
+                </div>
+                <div>
+                  <IonCol size={1}>
+                    <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+                  </IonCol>
+                  <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
+                    <Text color="default">{likesCount} likes</Text>
+                  </IonCol>
+                </div>
               </IonRow>
+
               <IonRow>
                 <Text>{description}</Text>
               </IonRow>
             </IonCol>
-            <IonCol size={1}>
-              <LikeButton liked={liked} onClick={likeHandler} />
-            </IonCol>
-            <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
-              <Text color="default">{likesCount} likes</Text>
-            </IonCol>
           </IonRow>
+
           <IonRow>
             <IonCol className="ion-text-right">
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>

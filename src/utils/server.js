@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken, getRefreshToken, loginUser } from "./user";
+import { getRefreshToken, loginUser } from "./user";
 import { logoutUser } from "./user";
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;

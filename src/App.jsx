@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { useEffect } from "react";
+import {  Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
