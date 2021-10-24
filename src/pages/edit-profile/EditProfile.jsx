@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonItem, IonList, IonLoading } from "@ionic/react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import "./EditProfile.scss";
@@ -8,7 +8,7 @@ import TextInput from "../../components/text-input/TextInput";
 import TextArea from "../../components/text-input/TextArea";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import SaveProfileButton from "../../components/button/SaveProfileButton";
-import { updateProfile } from "../../services/users";
+import { getCurrentUser, updateProfile } from "../../services/users";
 
 // Pass user ID and load data\
 // some redirect if accessed by Guest
@@ -23,6 +23,7 @@ const EditProfile = () => {
   const [lastName, setLastName] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });
@@ -72,17 +73,34 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (location.state) {
-      setInitialUsername(location.state.profileUsername);
-      setUsername(location.state.profileUsername);
-      setFirstName(location.state.profileFirstName);
-      setLastName(location.state.profileLastName);
-      setProfilePicture(location.state.profileProfilePicture);
-      setDescription(location.state.profileDescription);
+      const { profileUsername, profileFirstName, profileLastName, profileProfilePicture, profileDescription } = location.state;
+      setInitialUsername(profileUsername);
+      setUsername(profileUsername);
+      setFirstName(profileFirstName);
+      setLastName(profileLastName);
+      setProfilePicture(profileProfilePicture);
+      setDescription(profileDescription);
+    } else {
+      setLoading(true);
+      getCurrentUser().then((data) => {
+        const { username, firstName, lastName, pictureUrl, description } = data;
+        setInitialUsername(username);
+        setUsername(username);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setProfilePicture(pictureUrl);
+        setDescription(description);
+      }).catch((e) => {
+        setToast({ message: "Unable to load profile info", color: "danger" });
+      }).finally(() => {
+        setLoading(false);
+      })
     }
   }, [location]);
 
   return (
     <IonPage>
+      <IonLoading isOpen={loading} />
       <HomeToolbar title="Edit Profile" />
 
       {/* Ion padding applies 16px  */}

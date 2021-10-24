@@ -1,5 +1,6 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
+import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
 import ItemForm from "../../components/form/ItemForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -10,6 +11,7 @@ const getDefaultItemData = () => {
 };
 
 const EditItem = () => {
+  const location = useLocation();
   const history = useHistory();
   const { collectionId, itemId } = useParams();
   const [item, setItem] = useState(getDefaultItemData());
@@ -28,9 +30,15 @@ const EditItem = () => {
   }, [collectionId, itemId]);
 
   useEffect(() => {
-    setLoading(true);
-    loadExistingData();
-  }, [loadExistingData]);
+    if (location.state) {
+      console.log("Loading form data from state...");
+      setItem({ ...location.state.item });
+    } else {
+      console.log("Fetching form data from server...");
+      setLoading(true);
+      loadExistingData();
+    }
+  }, [loadExistingData, location]);
 
   const editCompleteHandler = async (item) => {
     setLoading(true);
