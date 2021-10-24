@@ -20,10 +20,10 @@ const Item = () => {
   const { currentUserId } = useUserContext();
   const setToast = useToastContext();
 
-  const [title, setTitle] = useState("Test Title");
-  const [ownerUsername, setOwnerUsername] = useState("itemOwner");
+  const [itemName, setItemName] = useState("");
+  const [ownerUsername, setOwnerUsername] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [description, setDescription] = useState("Test Description...");
+  const [itemDescription, setItemDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [liked, setLiked] = useState(false);
@@ -33,15 +33,16 @@ const Item = () => {
   const fetchItemData = useCallback(async () => {
     setLoading(true);
     try {
-      const item = await getItemFromCollection(collectionId, itemId);
-      setTitle(item.itemName);
-      setDescription(item.itemDescription);
-      setImages(item.images);
-      setOwnerId(item.ownerId);
-      setLikesCount(item.likesCount);
-      setItemCreationDate(item.itemCreationDate);
-      setOwnerUsername(item.ownerUsername);
-      setLiked(item.isLiked);
+      const itemData = await getItemFromCollection(collectionId, itemId);
+      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked } = itemData;
+      setItemName(itemName);
+      setItemDescription(itemDescription);
+      setImages(images);
+      setOwnerId(ownerId);
+      setLikesCount(likesCount);
+      setItemCreationDate(itemCreationDate);
+      setOwnerUsername(ownerUsername);
+      setLiked(isLiked);
     } catch (e) {
       console.log(e);
     } finally {
@@ -84,6 +85,17 @@ const Item = () => {
 
   const isItemOwner = Number(currentUserId) === Number(ownerId);
 
+  const editPageRedirect = () => {
+    const pathname = `/collections/${collectionId}/items/${itemId}/edit`;
+    const images = images.map((img) => ({ ...img })); // deep copy
+    const item = { itemName, itemDescription, images };
+    const state = { item };
+    history.push({
+      pathname,
+      state,
+    });
+  };
+
   return (
     <IonPage className="item">
       <IonLoading isOpen={loading} spinner="crescent" />
@@ -99,7 +111,7 @@ const Item = () => {
             <IonCol>
               {isItemOwner && (
                 <IonRow className="ion-justify-content-end">
-                  <EditButton label="Item" onClick={() => history.push(`/collections/${collectionId}/items/${itemId}/edit`)} />
+                  <EditButton label="Item" onClick={editPageRedirect} />
                 </IonRow>
               )}
             </IonCol>
@@ -116,7 +128,7 @@ const Item = () => {
               <IonRow className="item-title-likes--container">
                 <div>
                   <Text size="l">
-                    <b>{title}</b>
+                    <b>{itemName}</b>
                   </Text>
                 </div>
                 <div>
@@ -130,7 +142,7 @@ const Item = () => {
               </IonRow>
 
               <IonRow>
-                <Text>{description}</Text>
+                <Text>{itemDescription}</Text>
               </IonRow>
             </IonCol>
           </IonRow>

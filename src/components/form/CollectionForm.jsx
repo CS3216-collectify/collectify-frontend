@@ -17,7 +17,7 @@ const CollectionForm = (props) => {
 
   const [collectionName, setCollectionName] = useState(collectionData.collectionName);
   const [collectionDescription, setCollectionDescription] = useState(collectionData.collectionDescription);
-  const [categoryId, setCategory] = useState(null);
+  const [categoryId, setCategory] = useState(collectionData.categoryId);
 
   useEffect(() => {
     if (props.collectionData) {

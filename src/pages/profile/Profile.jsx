@@ -109,7 +109,7 @@ const Profile = () => {
     return (
       <IonPage className="profile">
         <IonLoading isOpen={loading} />
-        <IonContent className="ion-padding">
+        <IonContent>
           <ProfileToolbar showMenu={false} username="Guest User" />
           <GuestLoginPrompt />
         </IonContent>

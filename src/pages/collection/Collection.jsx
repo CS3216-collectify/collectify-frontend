@@ -18,15 +18,15 @@ import { followByCollectionId, unfollowByCollectionId } from "../../services/fol
 import useToastContext from "../../hooks/useToastContext";
 
 const Collection = (props) => {
+  const setToast = useToastContext();
   const location = useLocation();
   const history = useHistory();
-  const setToast = useToastContext();
 
   const { collectionId } = useParams();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [collectionName, setCollectionName] = useState("");
+  const [collectionDescription, setCollectionDescription] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [ownerUsername, setOwnerUsername] = useState("Username");
+  const [ownerUsername, setOwnerUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
@@ -41,9 +41,19 @@ const Collection = (props) => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { collectionName, collectionDescription, categoryName, categoryId, ownerId, ownerUsername, isFollowed, followersCount } = collectionData;
-      setTitle(collectionName);
-      setDescription(collectionDescription);
+      const { 
+        collectionName, 
+        collectionDescription, 
+        categoryName, 
+        categoryId, 
+        ownerId, 
+        ownerUsername, 
+        isFollowed, 
+        followersCount, 
+      } = collectionData;
+
+      setCollectionName(collectionName);
+      setCollectionDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerId(ownerId);
@@ -74,8 +84,10 @@ const Collection = (props) => {
     followByCollectionId(collectionId).then(() => {
       setFollowersCount(followersCount + 1);
       setFollowed(true);
+    }).catch((e) => {
+      setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
     });
-  };
+  }
 
   const unfollowHandler = () => {
     if (!currentUserId) {
@@ -89,8 +101,20 @@ const Collection = (props) => {
     unfollowByCollectionId(collectionId).then(() => {
       setFollowersCount(followersCount - 1);
       setFollowed(false);
+    }).catch((e) => {
+      setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
     });
-  };
+  }
+
+  const editPageRedirect = () => {
+    const pathname = `/collections/${collectionId}/edit`;
+    const collection = { collectionName, collectionDescription, categoryId };
+    const state = { collection };
+    history.push({
+      pathname,
+      state
+    });
+  }
 
   return (
     <IonPage className="collection">
@@ -102,7 +126,7 @@ const Collection = (props) => {
             <div className="collection-title--container">
               <Text size="xl" className="collection--title">
                 <b>
-                  <b>{title}</b>
+                  <b>{collectionName}</b>
                 </b>
               </Text>
 
@@ -122,7 +146,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <Text>{description}</Text>
+              <Text>{collectionDescription}</Text>
             </IonCol>
           </IonRow>
           {!isCollectionOwner && (followed ? <UnfollowButton onClick={unfollowHandler} /> : <FollowButton onClick={followHandler} />)}
@@ -132,7 +156,7 @@ const Collection = (props) => {
                 <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />
               </IonCol>
               <IonCol>
-                <EditButton className="collection--button" label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
+                <EditButton className="collection--button" label="Collection" onClick={editPageRedirect} />
               </IonCol>
             </IonRow>
           )}
