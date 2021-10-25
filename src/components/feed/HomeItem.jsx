@@ -20,7 +20,7 @@ const HomeItem = (props) => {
     ownerName,
     images,
     ownerUsername,
-    liked: initLiked,
+    isLiked: initLiked,
     likesCount: initLikesCount,
     collectionName,
     itemCreationDate,
