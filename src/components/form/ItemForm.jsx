@@ -9,6 +9,10 @@ import DeleteButton from "../button/DeleteButton";
 import useToastContext from "../../hooks/useToastContext";
 import ConfirmAlert from "../alert/ConfirmAlert";
 
+const MEDIA_LIMIT = 4; // can tweak
+const MEGABYTE = 1048576;
+const MAX_FILE_SIZE = 10 * MEGABYTE;
+
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
 };
@@ -34,11 +38,14 @@ const ItemForm = (props) => {
   }, [props.itemData]);
 
   const newImageHandler = (newFile) => {
-    if (images.length > 3) {
+    if (images.length >= MEDIA_LIMIT) {
       setToast({ message: "Cannot upload more than 4 photos", color: "danger" });
       return;
     }
-
+    if (newFile.size > MAX_FILE_SIZE) {
+      setToast({ message: "Image file should not exceed 10MB.", color: "danger" });
+      return;
+    }
     const newUrl = URL.createObjectURL(newFile);
     const newFileData = { imageUrl: newUrl, position: images.length, isNew: true };
     setImages([...images, newFileData]);
