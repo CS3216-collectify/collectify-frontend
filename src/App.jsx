@@ -88,13 +88,13 @@ const App = () => {
                   <IonIcon icon={searchOutline} />
                   <IonText>Discover</IonText>
                 </IonTabButton>
-                {/* {isUserAuthenticated && (
+                {isUserAuthenticated && (
                     <IonTabButton tab="c" href="/home">
                       <IonIcon icon={addCircleOutline} />
                       <IonText>Add</IonText>
                     </IonTabButton>
                   )}
-                  {isUserAuthenticated && (
+                  {/* {isUserAuthenticated && (
                     <IonTabButton tab="d" href="/d">
                       <IonIcon icon={chatbubblesOutline} />
                       <IonText>Chats</IonText>
