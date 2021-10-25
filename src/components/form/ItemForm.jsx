@@ -1,6 +1,8 @@
 import { IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import UploadButton from "../button/UploadButton";
@@ -18,6 +20,8 @@ const getDefaultItemData = () => {
 };
 
 const ItemForm = (props) => {
+  const location = useLocation();
+
   const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
 
   const [itemName, setItemName] = useState(itemData.itemName);
@@ -34,8 +38,12 @@ const ItemForm = (props) => {
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
+    } else {
+      setItemName("");
+      setItemDescription("");
+      setImages([]);
     }
-  }, [props.itemData]);
+  }, [props.itemData, location]);
 
   const newImageHandler = (newFile) => {
     if (images.length >= MEDIA_LIMIT) {
@@ -96,11 +104,11 @@ const ItemForm = (props) => {
       return;
     }
     onDelete().then(() => setDeleteConfirm(false));
-  }
+  };
 
   return (
     <IonList>
-      <ConfirmAlert 
+      <ConfirmAlert
         title="Delete Item?"
         message="This action cannot be undone."
         isOpen={deleteConfirm}
@@ -125,9 +133,7 @@ const ItemForm = (props) => {
       <IonItem>
         <IonGrid fixed>
           <SaveButton onClick={saveHandler} />
-          {onDelete &&
-            <DeleteButton onClick={() => setDeleteConfirm(true)} />
-          }
+          {onDelete && <DeleteButton onClick={() => setDeleteConfirm(true)} />}
         </IonGrid>
       </IonItem>
     </IonList>

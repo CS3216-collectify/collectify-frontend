@@ -32,9 +32,13 @@ export const UserContextProvider = ({ children }) => {
 
   const isCurrentUser = (userId) => {
     return parseInt(currentUserId) === parseInt(userId);
-  }
+  };
+
+  const getCurrentUserId = () => {
+    return parseInt(currentUserId);
+  };
 
   return (
-    <UserContext.Provider value={{ isUserAuthenticated, isCurrentUser, setIsUserAuthenticated }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ isUserAuthenticated, isCurrentUser, setIsUserAuthenticated, getCurrentUserId }}>{children}</UserContext.Provider>
   );
 };

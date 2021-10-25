@@ -44,6 +44,7 @@ import FollowersList from "./pages/collection/FollowersList";
 import LikesList from "./pages/item/LikesList";
 import { Redirect } from "react-router";
 import ProtectedRoute from "./components/route/ProtectedRoute";
+import Add from "./pages/add/Add";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -70,6 +71,7 @@ const App = () => {
                 <ProtectedRoute exact path="/add-collections" component={AddCollection} />
                 <ProtectedRoute exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
+                <Route exact path="/add" component={Add} />
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
@@ -84,17 +86,17 @@ const App = () => {
                     <IonText>Home</IonText>
                   </IonTabButton>
                 )}
-                <IonTabButton tab="b" href="/discover">
+                <IonTabButton tab="discover" href="/discover">
                   <IonIcon icon={searchOutline} />
                   <IonText>Discover</IonText>
                 </IonTabButton>
                 {isUserAuthenticated && (
-                    <IonTabButton tab="c" href="/home">
-                      <IonIcon icon={addCircleOutline} />
-                      <IonText>Add</IonText>
-                    </IonTabButton>
-                  )}
-                  {/* {isUserAuthenticated && (
+                  <IonTabButton tab="add" href="/add">
+                    <IonIcon icon={addCircleOutline} />
+                    <IonText>Add</IonText>
+                  </IonTabButton>
+                )}
+                {/* {isUserAuthenticated && (
                     <IonTabButton tab="d" href="/d">
                       <IonIcon icon={chatbubblesOutline} />
                       <IonText>Chats</IonText>

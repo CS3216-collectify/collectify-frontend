@@ -1,5 +1,6 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { useHistory } from "react-router";
 import CollectionForm from "../../components/form/CollectionForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -8,6 +9,7 @@ import { postCollection } from "../../services/collections";
 
 const AddCollection = () => {
   const history = useHistory();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState([]);
 
@@ -15,7 +17,12 @@ const AddCollection = () => {
     setLoading(true);
     try {
       const collectionId = await postCollection(collection);
-      history.replace(`/collections/${collectionId}`);
+
+      if (location.state && location.state.redirectToAdd) {
+        history.goBack();
+      } else {
+        history.replace(`/collections/${collectionId}`);
+      }
     } catch (e) {
       console.log(e);
     } finally {
@@ -44,10 +51,7 @@ const AddCollection = () => {
     <IonPage>
       <HomeToolbar title="Add Collection" />
       <IonContent>
-        <CollectionForm
-          onComplete={addCollectionHandler}
-          categoryOptions={categoryOptions}
-        />
+        <CollectionForm onComplete={addCollectionHandler} categoryOptions={categoryOptions} />
       </IonContent>
     </IonPage>
   );
