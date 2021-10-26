@@ -6,6 +6,10 @@
   ion-col {
     padding: 2px;
   }
+
+  ion-img::part(image) {
+    border-radius: 8px;
+  }
 }
 
 .single-row-3 {
