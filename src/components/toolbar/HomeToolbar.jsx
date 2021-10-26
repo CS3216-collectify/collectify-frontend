@@ -1,9 +1,12 @@
 import { useHistory, useLocation } from "react-router";
 
-import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonBackButton, IonHeader } from "@ionic/react";
+import { IonToolbar, IonButtons, IonButton, IonIcon, IonBackButton, IonHeader, IonImg, IonText } from "@ionic/react";
 import { search, homeOutline, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import Logo from "../../assets/favicon.png";
 
+import "./Toolbar.scss";
 import useUserContext from "../../hooks/useUserContext";
+import Text from "../../components/text/Text";
 
 const HomeToolbar = ({ title }) => {
   const history = useHistory();
@@ -18,7 +21,10 @@ const HomeToolbar = ({ title }) => {
     <IonHeader>
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>{title}</IonTitle>
+        <div className="toolbar-title--container">
+          <IonImg className="toolbar-logo" src={Logo} />
+          <Text size="xl"> {title}</Text>
+        </div>
 
         <IonButtons slot="end">
           {isUserAuthenticated && (
@@ -48,7 +54,11 @@ const HomeToolbar = ({ title }) => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <IonTitle>{title}</IonTitle>
+        <div className="toolbar-title--container">
+          <IonImg className="toolbar-logo" src={Logo} />
+          <Text size="xl"> {title}</Text>
+        </div>
+
         <IonButtons slot="start">
           {/* <IonBackButton defaultHref="home" /> */}
           <IonBackButton
