@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { IonGrid, IonLoading, IonRow, IonButton, IonLabel } from "@ionic/react";
 
 import "./Feed.scss";
@@ -9,11 +9,14 @@ import { getFeedItems } from "../../services/feed";
 import HorizontalLine from "../line/HorizontalLine";
 import Text from "../text/Text";
 import { ReactComponent as FollowCollections } from "../../assets/follow-collections.svg";
+import DiscoverGif from "../../assets/discover.gif";
+import FlexImage from "../image/FlexImage";
 
 const LIMIT = 6;
 
 const Feed = (props) => {
   const history = useHistory();
+  const location = useLocation();
   const [items, setItems] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
@@ -53,7 +56,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     loadInitialItems();
-  }, [loadInitialItems]);
+  }, [loadInitialItems, location]);
 
   const fetchNextPage = () => {
     loadItems();
@@ -78,7 +81,7 @@ const Feed = (props) => {
               <IonButton size="small" fill="solid" className="discover-button" onClick={() => history.push("/discover")}>
                 <IonLabel>Discover collections</IonLabel>
               </IonButton>
-              <FollowCollections />
+              <FlexImage src={DiscoverGif} />
             </IonRow>
           </IonGrid>
         </div>
