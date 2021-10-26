@@ -56,7 +56,7 @@ const SelectCollectionList = (props) => {
           <div className="radio-collection--container" key={index}>
             <HorizontalLine color="lightgrey" />
             <div className="radio-collection">
-              <IonRadio className="collection-radio" value={collection.collectionId} />
+              <IonRadio mode="md" className="collection-radio" value={collection.collectionId} />
               <CollectionCard collection={collection} />
             </div>
           </div>

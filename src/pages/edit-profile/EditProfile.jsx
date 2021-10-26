@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList, IonLoading } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList, IonLoading, IonAvatar, IonImg, IonCol } from "@ionic/react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import "./EditProfile.scss";
 import useToastContext from "../../hooks/useToastContext";
 import TextInput from "../../components/text-input/TextInput";
+import TextArea from "../../components/text-input/TextArea";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import SaveProfileButton from "../../components/button/SaveProfileButton";
+import UploadButton from "../../components/button/UploadButton";
 import { getCurrentUser, updateProfile } from "../../services/users";
 import SavingGif from "../../assets/saving.gif";
 import FlexImage from "../../components/image/FlexImage";
+
+const MEGABYTE = 1048576;
+const MAX_FILE_SIZE = 10 * MEGABYTE;
 
 // Pass user ID and load data\
 // some redirect if accessed by Guest
@@ -25,6 +30,7 @@ const EditProfile = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pictureWasUpdated, setPictureWasUpdated] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   const validationErrorMessage = (msg) => {
@@ -46,7 +52,12 @@ const EditProfile = () => {
       return;
     }
 
-    await updateProfile(trimmedUsername, trimmedFirstName, trimmedLastName, trimmedDescription)
+    let profilePictureUpdate = null;
+    if (pictureWasUpdated) {
+      profilePictureUpdate = profilePicture;
+    }
+
+    await updateProfile(trimmedUsername, trimmedFirstName, trimmedLastName, trimmedDescription, profilePictureUpdate)
       .then((res) => {
         setUploading(true);
         setTimeout(() => {
@@ -91,6 +102,18 @@ const EditProfile = () => {
     }
   }, [location, setToast]);
 
+  const profilePhotoChangeHandler = (newFile) => {
+    if (!newFile) {
+      return;
+    }
+    if (newFile.size > MAX_FILE_SIZE) {
+      setToast({ message: "Image must not be more than 10MB.", color: "danger" })
+    }
+    const newUrl = URL.createObjectURL(newFile);
+    setProfilePicture(newUrl);
+    setPictureWasUpdated(true);
+  }
+
   return (
     <IonPage>
       <IonLoading isOpen={loading} />
@@ -99,13 +122,18 @@ const EditProfile = () => {
       {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-
         {uploading ? (
           <div className="uploading--container">
             <FlexImage src={SavingGif} />
           </div>
         ) : (
           <IonGrid fixed>
+            <IonRow className="ion-justify-content-between ion-align-items-center">
+              <IonCol size="auto">
+                <FlexImage className="profile--img" src={profilePicture} />
+              </IonCol>
+              <UploadButton label="Change Profile Photo" onChange={profilePhotoChangeHandler} />
+            </IonRow>
             <IonList lines="full">
               <IonItem>
                 <TextInput label="Username" value={username} onChange={setUsername} placeholder="Type text here" />

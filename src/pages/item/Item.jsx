@@ -111,7 +111,7 @@ const Item = () => {
             <IonCol>
               {isItemOwner && (
                 <IonRow className="ion-justify-content-end">
-                  <EditButton label="Item" onClick={editPageRedirect} />
+                  <EditButton label="Item" onClick={editPageRedirect} fill="outline" />
                 </IonRow>
               )}
             </IonCol>
