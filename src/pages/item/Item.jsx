@@ -43,10 +43,10 @@ const Item = () => {
       setItemCreationDate(itemCreationDate);
       setOwnerUsername(ownerUsername);
       setLiked(isLiked);
+      setLoading(false);
     } catch (e) {
       console.log(e);
     } finally {
-      setLoading(false);
     }
   }, [collectionId, itemId]);
 

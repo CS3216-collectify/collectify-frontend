@@ -45,6 +45,7 @@ import LikesList from "./pages/item/LikesList";
 import { Redirect } from "react-router";
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import Add from "./pages/add/Add";
+import NotFound from "./pages/not-found/NotFound";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
@@ -76,6 +77,7 @@ const App = () => {
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/discover" component={Discover} />
+                <Route exact path="/not-found" component={NotFound} />
                 <Redirect to="/" />
               </IonRouterOutlet>
 
