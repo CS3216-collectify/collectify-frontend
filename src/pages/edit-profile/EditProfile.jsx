@@ -8,6 +8,8 @@ import TextInput from "../../components/text-input/TextInput";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import SaveProfileButton from "../../components/button/SaveProfileButton";
 import { getCurrentUser, updateProfile } from "../../services/users";
+import SavingGif from "../../assets/saving.gif";
+import FlexImage from "../../components/image/FlexImage";
 
 // Pass user ID and load data\
 // some redirect if accessed by Guest
@@ -23,19 +25,19 @@ const EditProfile = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });
   };
 
-  const saveProfile = () => {
+  const saveProfile = async () => {
     const trimmedUsername = username.trim();
     const trimmedFirstName = firstName.trim();
     const trimmedLastName = lastName.trim();
     const trimmedDescription = description.trim();
 
-    if (trimmedUsername !== initialUsername && 
-      (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15)) {
+    if (trimmedUsername !== initialUsername && (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15)) {
       validationErrorMessage("Your new username must be between 8 to 15 characters!");
       return;
     }
@@ -44,13 +46,17 @@ const EditProfile = () => {
       return;
     }
 
-    updateProfile(trimmedUsername, trimmedFirstName, trimmedLastName, trimmedDescription)
+    await updateProfile(trimmedUsername, trimmedFirstName, trimmedLastName, trimmedDescription)
       .then((res) => {
-        setToast({ message: "Profile saved!", color: "success" });
-        history.replace("/profile");
+        setUploading(true);
+        setTimeout(() => {
+          setUploading(false);
+          setToast({ message: "Profile saved!", color: "success" });
+          history.replace("/profile");
+        }, 1500);
       })
       .catch((e) => {
-        console.log(e);
+        setUploading(false);
         setToast({ message: e.data.description[0], color: "danger" });
       });
   };
@@ -66,21 +72,24 @@ const EditProfile = () => {
       setDescription(profileDescription);
     } else {
       setLoading(true);
-      getCurrentUser().then((data) => {
-        const { username, firstName, lastName, pictureUrl, description } = data;
-        setInitialUsername(username);
-        setUsername(username);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setProfilePicture(pictureUrl);
-        setDescription(description);
-      }).catch((e) => {
-        setToast({ message: "Unable to load profile info", color: "danger" });
-      }).finally(() => {
-        setLoading(false);
-      })
+      getCurrentUser()
+        .then((data) => {
+          const { username, firstName, lastName, pictureUrl, description } = data;
+          setInitialUsername(username);
+          setUsername(username);
+          setFirstName(firstName);
+          setLastName(lastName);
+          setProfilePicture(pictureUrl);
+          setDescription(description);
+        })
+        .catch((e) => {
+          setToast({ message: "Unable to load profile info", color: "danger" });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [location]);
+  }, [location, setToast]);
 
   return (
     <IonPage>
@@ -91,25 +100,31 @@ const EditProfile = () => {
       <IonContent className="ion-padding">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
 
-        <IonGrid fixed>
-          <IonList lines="full">
-            <IonItem>
-              <TextInput label="Username" value={username} onChange={setUsername} placeholder="Type text here" />
-            </IonItem>
-            <IonItem>
-              <TextInput label="First Name" value={firstName} onChange={setFirstName} placeholder="Type text here" />
-            </IonItem>
-            <IonItem>
-              <TextInput label="Last Name" value={lastName} onChange={setLastName} placeholder="Type text here" />
-            </IonItem>
-            <IonItem>
-              <TextInput label="Description" value={description} onChange={setDescription} placeholder="Type text here" />
-            </IonItem>
-          </IonList>
-          <IonRow>
-            <SaveProfileButton onClick={saveProfile} />
-          </IonRow>
-        </IonGrid>
+        {uploading ? (
+          <div className="uploading--container">
+            <FlexImage src={SavingGif} />
+          </div>
+        ) : (
+          <IonGrid fixed>
+            <IonList lines="full">
+              <IonItem>
+                <TextInput label="Username" value={username} onChange={setUsername} placeholder="Type text here" />
+              </IonItem>
+              <IonItem>
+                <TextInput label="First Name" value={firstName} onChange={setFirstName} placeholder="Type text here" />
+              </IonItem>
+              <IonItem>
+                <TextInput label="Last Name" value={lastName} onChange={setLastName} placeholder="Type text here" />
+              </IonItem>
+              <IonItem>
+                <TextInput label="Description" value={description} onChange={setDescription} placeholder="Type text here" />
+              </IonItem>
+            </IonList>
+            <IonRow>
+              <SaveProfileButton onClick={saveProfile} />
+            </IonRow>
+          </IonGrid>
+        )}
       </IonContent>
     </IonPage>
   );

@@ -20,7 +20,7 @@ const UploadButton = ({ onChange: changeHandler }) => {
       <input
         id="my-image-input"
         type="file"
-        accept="image/png, image/jpg"
+        accept="image/*"
         onChange={inputHandler}
         multiple={false}
         hidden={true}

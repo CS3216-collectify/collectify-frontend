@@ -92,7 +92,7 @@ const Profile = () => {
   }, [isUserAuthenticated, username]);
 
   useEffect(() => {
-    if (username || isUserAuthenticated) {
+    if ((username || isUserAuthenticated) && location.pathname.startsWith("/profile")) {
       getUserInformation();
     }
   }, [isUserAuthenticated, username, location, getUserInformation]);

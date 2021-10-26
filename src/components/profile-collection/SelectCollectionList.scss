@@ -1,0 +1,16 @@
+.select-collection-list {
+  .radio-collection--container {
+    .radio-collection {
+      display: flex;
+      flex-direction: row;
+      .collection-radio {
+        margin: auto 20px auto 0;
+      }
+    }
+  }
+}
+
+.add-new-collection-button {
+  margin-top: 16px;
+  flex: 1;
+}

@@ -7,6 +7,9 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import { getCategories } from "../../services/categories";
 import { deleteCollection, getCollectionByCollectionId, updateCollection } from "../../services/collections";
+import FlexImage from "../../components/image/FlexImage";
+import SavingGif from "../../assets/saving.gif";
+import DeletingGif from "../../assets/deleting.gif";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -20,6 +23,8 @@ const EditCollection = (props) => {
   const [collection, setCollection] = useState(getDefaultCollectionData());
   const [loading, setLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const loadExistingData = useCallback(async () => {
     setLoading(true);
@@ -47,37 +52,56 @@ const EditCollection = (props) => {
   }, [loadExistingData, location]);
 
   const editCompleteHandler = async (collection) => {
-    setLoading(true);
     try {
-      await updateCollection(collectionId, collection);
-      history.goBack();
+      setUploading(true);
+      await updateCollection(collectionId, collection).then((itemId) => {
+        setTimeout(() => {
+          setUploading(false);
+          setToast({ message: "Collection updated successfully", color: "success" });
+          history.goBack();
+        }, 1500);
+      });
     } catch (e) {
-      console.log(e);
+      setUploading(false);
+      setToast({ message: "Failed to update collection.", color: "danger" });
     } finally {
-      setLoading(false);
     }
   };
 
   const deleteHandler = async () => {
-    setLoading(true);
     try {
-      await deleteCollection(collectionId);
-      setToast({ message: "Successfully deleted collection.", color: "success" });
-      history.push("/profile");
+      setDeleting(true);
+      await deleteCollection(collectionId).then(() => {
+        setTimeout(() => {
+          setDeleting(false);
+          setToast({ message: "Successfully deleted collection.", color: "success" });
+          history.push("/profile");
+        }, 2400);
+      });
     } catch (e) {
+      setDeleting(false);
       setToast({ message: "Failed to delete collection.", color: "danger" });
     } finally {
-      setLoading(false);
     }
-  }
+  };
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent"/>
+      <IonLoading isOpen={loading} spinner="crescent" />
 
       <HomeToolbar title="Edit Collection" />
       <IonContent>
-        <CollectionForm categoryOptions={categoryOptions} onComplete={editCompleteHandler} collectionData={collection} onDelete={deleteHandler} />
+        {uploading ? (
+          <div className="uploading--container">
+            <FlexImage src={SavingGif} />
+          </div>
+        ) : deleting ? (
+          <div className="uploading--container">
+            <FlexImage src={DeletingGif} />
+          </div>
+        ) : (
+          <CollectionForm categoryOptions={categoryOptions} onComplete={editCompleteHandler} collectionData={collection} onDelete={deleteHandler} />
+        )}
       </IonContent>
     </IonPage>
   );
