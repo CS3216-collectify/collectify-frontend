@@ -1,12 +1,14 @@
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import { IonGrid, IonLoading, IonRow, IonButton, IonLabel } from "@ionic/react";
+
+import "./Feed.scss";
 import HomeItem from "./HomeItem";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
-import React, { useCallback, useEffect, useState } from "react";
 import { getFeedItems } from "../../services/feed";
-import { IonGrid, IonLoading, IonRow, IonButton, IonLabel } from "@ionic/react";
 import HorizontalLine from "../line/HorizontalLine";
 import Text from "../text/Text";
-import "./Feed.scss";
-import { useHistory } from "react-router";
+import { ReactComponent as FollowCollections } from "../../assets/follow-collections.svg";
 
 const LIMIT = 6;
 
@@ -76,6 +78,7 @@ const Feed = (props) => {
               <IonButton size="small" fill="solid" className="discover-button" onClick={() => history.push("/discover")}>
                 <IonLabel>Discover collections</IonLabel>
               </IonButton>
+              <FollowCollections />
             </IonRow>
           </IonGrid>
         </div>

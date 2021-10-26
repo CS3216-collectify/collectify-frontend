@@ -1,11 +1,14 @@
 import { useHistory, useLocation } from "react-router";
 
 import { IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonBackButton, IonHeader } from "@ionic/react";
-import { search, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import { search, homeOutline, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+
+import useUserContext from "../../hooks/useUserContext";
 
 const HomeToolbar = ({ title }) => {
   const history = useHistory();
   const location = useLocation();
+  const { isUserAuthenticated } = useUserContext();
 
   const handleButtonClick = (path) => {
     history.push(`/${path}`);
@@ -18,6 +21,11 @@ const HomeToolbar = ({ title }) => {
         <IonTitle>{title}</IonTitle>
 
         <IonButtons slot="end">
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("")}>
+              <IonIcon size="small" slot="icon-only" icon={homeOutline} />
+            </IonButton>
+          )}
           <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="small" slot="icon-only" icon={search} />
           </IonButton>
@@ -30,9 +38,11 @@ const HomeToolbar = ({ title }) => {
           <IonButton onClick={() => handleButtonClick("profile")}>
             <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
-          <IonButton onClick={() => handleButtonClick("settings")}>
-            <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
-          </IonButton>
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("settings")}>
+              <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
+            </IonButton>
+          )}
         </IonButtons>
       </IonToolbar>
 
