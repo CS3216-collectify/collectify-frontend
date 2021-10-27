@@ -11,7 +11,7 @@ const getAvatarGroup = (members) => {
   if (members.length === 1) {
     return (
       <div className='messaging__channel-header__avatars'>
-        <Avatar image={members[0].user?.image} name={members[0].user?.id} size={40} />;
+        <Avatar image={members[0].user?.image} name={members[0].user?.name || members[0].user?.id} size={40} />;
       </div>
     );
   }
