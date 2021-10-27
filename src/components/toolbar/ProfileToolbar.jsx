@@ -12,25 +12,24 @@ import {
   useIonPopover,
   IonText,
 } from "@ionic/react";
-import { search, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import { search, homeOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { logoutUser } from "../../utils/user";
+import { logoutUser } from "../../utils/auth/actions";
 
 const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();
   const location = useLocation();
 
   const setToast = useToastContext();
-  const { setIsUserAuthenticated, setCurrentUserId } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
 
   const logoutHandler = () => {
     logoutUser();
     history.replace("/");
     setToast({ message: "Logged out successfully.", color: "success" });
     setIsUserAuthenticated(false);
-    setCurrentUserId(null);
   };
 
   // Menu with items shown when ellipsis icon is pressed
@@ -46,10 +45,15 @@ const ProfileToolbar = ({ username, showMenu }) => {
       >
         Settings
       </IonItem>
-      <IonItem lines="none" detail={false} button onClick={() => {
-        onHide();
-        logoutHandler();
-      }}>
+      <IonItem
+        lines="none"
+        detail={false}
+        button
+        onClick={() => {
+          onHide();
+          logoutHandler();
+        }}
+      >
         <IonText color="danger">Logout</IonText>
       </IonItem>
     </IonList>
@@ -68,6 +72,11 @@ const ProfileToolbar = ({ username, showMenu }) => {
         <IonTitle>{username}</IonTitle>
 
         <IonButtons slot="end">
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("")}>
+              <IonIcon size="small" slot="icon-only" icon={homeOutline} />
+            </IonButton>
+          )}
           <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="small" slot="icon-only" icon={search} />
           </IonButton>
@@ -80,9 +89,11 @@ const ProfileToolbar = ({ username, showMenu }) => {
           <IonButton onClick={() => handleButtonClick("profile")}>
             <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
-          <IonButton onClick={() => handleButtonClick("settings")}>
-            <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
-          </IonButton>
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("settings")}>
+              <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
+            </IonButton>
+          )}
         </IonButtons>
       </IonToolbar>
 

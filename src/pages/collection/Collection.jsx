@@ -3,56 +3,47 @@ import { useEffect, useState, useCallback } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
+import "./Collection.scss";
 import useUserContext from "../../hooks/useUserContext";
 import AddButton from "../../components/button/AddButton";
 import EditButton from "../../components/button/EditButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import FollowButton from "../../components/button/FollowButton";
 import CategoryChip from "../../components/chip/CategoryChip";
-import ImageGrid from "../../components/gallery/ImageGrid";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { getCollectionByCollectionId } from "../../services/collections";
-import "./Collection.scss";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
-import FollowersList from "./FollowersList";
+import useToastContext from "../../hooks/useToastContext";
 
 const Collection = (props) => {
+  const setToast = useToastContext();
   const location = useLocation();
   const history = useHistory();
-  // const { title = "Test Collection", ownerName = "Test", ownerUsername = "test", description = "Test Collection Description..." } = props;
   const { collectionId } = useParams();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [collectionName, setCollectionName] = useState("");
+  const [collectionDescription, setCollectionDescription] = useState("");
   const [ownerId, setOwnerId] = useState(null);
-  const [ownerUsername, setOwnerUsername] = useState("Username");
+  const [ownerUsername, setOwnerUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
 
-  const { currentUserId } = useUserContext();
+  const { isCurrentUser, isUserAuthenticated } = useUserContext();
 
-  const isCollectionOwner = Number(currentUserId) === Number(ownerId);
+  const isCollectionOwner = isCurrentUser(ownerId);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
     try {
       const collectionData = await getCollectionByCollectionId(collectionId);
-      const { 
-        collectionName, 
-        collectionDescription, 
-        categoryName, 
-        categoryId, 
-        ownerId, 
-        ownerUsername, 
-        isFollowed, 
-        followersCount, 
-      } = collectionData;
-      setTitle(collectionName);
-      setDescription(collectionDescription);
+      const { collectionName, collectionDescription, categoryName, categoryId, ownerId, ownerUsername, isFollowed, followersCount } = collectionData;
+
+      setCollectionName(collectionName);
+      setCollectionDescription(collectionDescription);
       setCategoryName(categoryName);
       setCategoryId(categoryId);
       setOwnerId(ownerId);
@@ -72,24 +63,52 @@ const Collection = (props) => {
   }, [loadCollectionData, location]);
 
   const followHandler = () => {
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to follow a collection", color: "danger" });
+      return;
+    }
+
     if (followed || isCollectionOwner) {
       return;
     }
-    followByCollectionId(collectionId).then(() => {
-      setFollowersCount(followersCount + 1);
-      setFollowed(true);
-    })
-  }
+    followByCollectionId(collectionId)
+      .then(() => {
+        setFollowersCount(followersCount + 1);
+        setFollowed(true);
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to follow collection. Please try again later.", color: "danger" });
+      });
+  };
 
   const unfollowHandler = () => {
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to follow a collection", color: "danger" });
+      return;
+    }
+
     if (!followed || isCollectionOwner) {
       return;
     }
-    unfollowByCollectionId(collectionId).then(() => {
-      setFollowersCount(followersCount - 1);
-      setFollowed(false);
-    })
-  }
+    unfollowByCollectionId(collectionId)
+      .then(() => {
+        setFollowersCount(followersCount - 1);
+        setFollowed(false);
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to unfollow collection. Please try again later.", color: "danger" });
+      });
+  };
+
+  const editPageRedirect = () => {
+    const pathname = `/collections/${collectionId}/edit`;
+    const collection = { collectionName, collectionDescription, categoryId };
+    const state = { collection };
+    history.push({
+      pathname,
+      state,
+    });
+  };
 
   return (
     <IonPage className="collection">
@@ -101,7 +120,7 @@ const Collection = (props) => {
             <div className="collection-title--container">
               <Text size="xl" className="collection--title">
                 <b>
-                  <b>{title}</b>
+                  <b>{collectionName}</b>
                 </b>
               </Text>
 
@@ -113,9 +132,7 @@ const Collection = (props) => {
           </IonRow>
           <IonRow className="ion-justify-content-between">
             <Text size="s" className="collection-owner" onClick={() => history.push(`/profile/${ownerUsername}`)}>
-              <b>
-                by @{ownerUsername} 
-              </b>
+              <b>by @{ownerUsername}</b>
             </Text>
           </IonRow>
           <IonRow className="ion-justify-content-start">
@@ -123,21 +140,17 @@ const Collection = (props) => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <Text>{description}</Text>
+              <Text>{collectionDescription}</Text>
             </IonCol>
           </IonRow>
-          {!isCollectionOwner && (followed ? (
-              <UnfollowButton onClick={unfollowHandler} /> 
-            ):( 
-              <FollowButton onClick={followHandler} />
-          ))}
+          {!isCollectionOwner && (followed ? <UnfollowButton onClick={unfollowHandler} /> : <FollowButton onClick={followHandler} />)}
           {isCollectionOwner && (
             <IonRow className="ion-justify-content-end">
               <IonCol>
                 <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />
               </IonCol>
               <IonCol>
-                <EditButton className="collection--button" label="Collection" onClick={() => history.push(`/collections/${collectionId}/edit`)} />
+                <EditButton className="collection--button" label="Collection" onClick={editPageRedirect} />
               </IonCol>
             </IonRow>
           )}

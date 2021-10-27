@@ -1,0 +1,13 @@
+.toolbar-title--container {
+    display: flex;
+    flex-direction: row;
+    
+  .toolbar-logo {
+    height: 40px;
+    margin-left: 16px;
+  }
+  ion-text {
+      padding-left: 12px;
+      margin:auto 0;
+  }
+}

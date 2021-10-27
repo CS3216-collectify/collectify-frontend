@@ -6,6 +6,10 @@
   ion-col {
     padding: 2px;
   }
+
+  ion-img::part(image) {
+    border-radius: 8px;
+  }
 }
 
 .single-row-3 {
@@ -37,11 +41,13 @@
 .image-carousel {
   ion-img {
     object-fit: contain;
-    backdrop-filter: blur(12px);
+    // backdrop-filter: blur(200px);
+    // -webkit-backdrop-filter: blur(200px);
     width: 100%;
   }
   .image-carousel-image--container {
     background-size: cover;
     background-position: center;
+    background-image: url("../../assets//blur.png");
   }
 }

@@ -7,17 +7,20 @@ import SelectButton from "../button/SelectButton";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import useToastContext from "../../hooks/useToastContext";
+import DeleteButton from "../button/DeleteButton";
+import ConfirmAlert from "../alert/ConfirmAlert";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
 };
 
 const CollectionForm = (props) => {
-  const { collectionData = getDefaultCollectionData(), onComplete: completeHandler, categoryOptions = [] } = props;
+  const { collectionData = getDefaultCollectionData(), onComplete: completeHandler, categoryOptions = [], onDelete } = props;
 
   const [collectionName, setCollectionName] = useState(collectionData.collectionName);
   const [collectionDescription, setCollectionDescription] = useState(collectionData.collectionDescription);
-  const [categoryId, setCategory] = useState(null);
+  const [categoryId, setCategory] = useState(collectionData.categoryId);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (props.collectionData) {
@@ -64,8 +67,22 @@ const CollectionForm = (props) => {
     completeHandler(collectionToSave);
   };
 
+  const deleteHandler = () => {
+    if (!onDelete) {
+      return;
+    }
+    onDelete().then(() => setDeleteConfirm(false));
+  }
+
   return (
     <IonList>
+      <ConfirmAlert 
+        title="Delete Collection?"
+        message="This action cannot be undone."
+        isOpen={deleteConfirm}
+        onCancel={() => setDeleteConfirm(false)}
+        onConfirm={deleteHandler}
+      />
       <IonItem>
         <TextInput label="Collection Title" value={collectionName} placeholder="Enter a title" onChange={setCollectionName} />
       </IonItem>
@@ -85,7 +102,12 @@ const CollectionForm = (props) => {
         </IonGrid>
       </IonItem>
       <IonItem>
-        <SaveButton onClick={saveHandler} />
+        <IonGrid fixed>
+          <SaveButton onClick={saveHandler} />
+          {onDelete &&
+            <DeleteButton onClick={() => setDeleteConfirm(true)} />
+          }
+        </IonGrid>
       </IonItem>
     </IonList>
   );

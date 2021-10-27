@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getAccessToken, getRefreshToken, loginUser } from "./user";
-import { logoutUser } from "./user";
+import { getAuthorizationValue, getRefreshToken } from "./auth/store";
+import { loginUser, logoutUser } from "./auth/actions";
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 const REACT_LOGIN_REL_URL = "/";
@@ -11,7 +11,7 @@ const server = axios.create({
   baseURL: SERVER_BASE_URL,
   timeout: 5000,
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    Authorization: getAuthorizationValue(),
   },
 });
 
@@ -32,8 +32,7 @@ server.interceptors.response.use(
     }
 
     if (error.response.status === 404) {
-      console.log("404: Redirecting to home...");
-      window.location.href = REACT_LOGIN_REL_URL;
+      window.location.href = "/not-found";
     }
 
     if (error.response.status === 401) {

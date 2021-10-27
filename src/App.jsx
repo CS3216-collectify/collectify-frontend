@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
@@ -45,14 +45,12 @@ import FollowersList from "./pages/collection/FollowersList";
 import LikesList from "./pages/item/LikesList";
 import { Redirect } from "react-router";
 import ProtectedRoute from "./components/route/ProtectedRoute";
+import Add from "./pages/add/Add";
+import NotFound from "./pages/not-found/NotFound";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
   const { isUserAuthenticated } = useUserContext();
-
-  useEffect(() => {
-    console.log(isUserAuthenticated);
-  });
 
   return (
     <IonApp>
@@ -75,11 +73,13 @@ const App = () => {
                 <ProtectedRoute exact path="/add-collections" component={AddCollection} />
                 <ProtectedRoute exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
+                <Route exact path="/add" component={Add} />
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
                 <Route exact path="/chat" component={CollectifyChat} />
                 <Route exact path="/discover" component={Discover} />
+                <Route exact path="/not-found" component={NotFound} />
                 <Redirect to="/" />
               </IonRouterOutlet>
 
@@ -90,22 +90,22 @@ const App = () => {
                     <IonText>Home</IonText>
                   </IonTabButton>
                 )}
-                <IonTabButton tab="b" href="/discover">
+                <IonTabButton tab="discover" href="/discover">
                   <IonIcon icon={searchOutline} />
                   <IonText>Discover</IonText>
                 </IonTabButton>
-                {/* {isUserAuthenticated && (
-                    <IonTabButton tab="c" href="/home">
-                      <IonIcon icon={addCircleOutline} />
-                      <IonText>Add</IonText>
-                    </IonTabButton>
-                  )}
-                  {isUserAuthenticated && (
-                    <IonTabButton tab="d" href="/d">
+                {isUserAuthenticated && (
+                  <IonTabButton tab="add" href="/add">
+                    <IonIcon icon={addCircleOutline} />
+                    <IonText>Add</IonText>
+                  </IonTabButton>
+                )}
+                {isUserAuthenticated && (
+                    <IonTabButton tab="d" href="/chat">
                       <IonIcon icon={chatbubblesOutline} />
                       <IonText>Chats</IonText>
                     </IonTabButton>
-                  )} */}
+                  )}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>

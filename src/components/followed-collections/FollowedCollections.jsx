@@ -52,7 +52,7 @@ const FollowedCollections = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, [location]);
+  }, [loadInitialPage, location]);
 
   return (
     <>

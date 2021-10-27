@@ -1,24 +1,34 @@
 import { IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import UploadButton from "../button/UploadButton";
 import SaveButton from "../button/SaveButton";
+import DeleteButton from "../button/DeleteButton";
 import useToastContext from "../../hooks/useToastContext";
+import ConfirmAlert from "../alert/ConfirmAlert";
+
+const MEDIA_LIMIT = 4; // can tweak
+const MEGABYTE = 1048576;
+const MAX_FILE_SIZE = 10 * MEGABYTE;
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
 };
 
 const ItemForm = (props) => {
-  const { itemData = getDefaultItemData(), onComplete: completeHandler } =
-    props;
+  const location = useLocation();
+
+  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
 
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
   const [deletedImageIds, setDeletedImageIds] = useState([]);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const setToast = useToastContext();
 
@@ -28,12 +38,20 @@ const ItemForm = (props) => {
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
+    } else {
+      setItemName("");
+      setItemDescription("");
+      setImages([]);
     }
-  }, [props.itemData]);
+  }, [props.itemData, location]);
 
   const newImageHandler = (newFile) => {
-    if (images.length > 3) {
-      console.log("Cannot upload more than 4 photos");
+    if (images.length >= MEDIA_LIMIT) {
+      setToast({ message: "Cannot upload more than 4 photos", color: "danger" });
+      return;
+    }
+    if (newFile.size > MAX_FILE_SIZE) {
+      setToast({ message: "Image file should not exceed 10MB.", color: "danger" });
       return;
     }
     const newUrl = URL.createObjectURL(newFile);
@@ -49,11 +67,11 @@ const ItemForm = (props) => {
       setDeletedImageIds([...deletedImageIds, deletedImage.imageId]);
     }
     setImages(remainingImages);
-  }
+  };
 
-  const validationErrorMessage = msg => {
+  const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });
-  }
+  };
 
   const saveHandler = () => {
     const trimmedItemName = itemName.trim();
@@ -76,28 +94,32 @@ const ItemForm = (props) => {
       itemName: trimmedItemName,
       itemDescription: trimmedItemDescription,
       images,
-      deletedImageIds
+      deletedImageIds,
     };
     completeHandler(itemToSave);
   };
 
+  const deleteHandler = () => {
+    if (!onDelete) {
+      return;
+    }
+    onDelete().then(() => setDeleteConfirm(false));
+  };
+
   return (
     <IonList>
+      <ConfirmAlert
+        title="Delete Item?"
+        message="This action cannot be undone."
+        isOpen={deleteConfirm}
+        onCancel={() => setDeleteConfirm(false)}
+        onConfirm={deleteHandler}
+      />
       <IonItem>
-        <TextInput
-          label="Item Name"
-          value={itemName}
-          placeholder="Enter item name"
-          onChange={setItemName}
-        />
+        <TextInput label="Item Name" value={itemName} placeholder="Enter item name" onChange={setItemName} />
       </IonItem>
       <IonItem>
-        <TextArea
-          label="Description"
-          value={itemDescription}
-          placeholder="Enter item description"
-          onChange={setItemDescription}
-        />
+        <TextArea label="Description" value={itemDescription} placeholder="Enter item description" onChange={setItemDescription} />
       </IonItem>
       <IonItem>
         <IonGrid fixed>
@@ -109,7 +131,10 @@ const ItemForm = (props) => {
         </IonGrid>
       </IonItem>
       <IonItem>
-        <SaveButton onClick={saveHandler} />
+        <IonGrid fixed>
+          <SaveButton onClick={saveHandler} />
+          {onDelete && <DeleteButton onClick={() => setDeleteConfirm(true)} />}
+        </IonGrid>
       </IonItem>
     </IonList>
   );

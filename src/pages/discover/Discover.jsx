@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
-import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
+import { IonContent, IonPage, IonGrid } from "@ionic/react";
 
 import "./Discover.scss";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";

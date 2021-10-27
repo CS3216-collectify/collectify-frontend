@@ -54,7 +54,7 @@ const LikesList = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, [itemId, location]);
+  }, [itemId, loadInitialPage, location]);
 
   return (
     <IonPage>

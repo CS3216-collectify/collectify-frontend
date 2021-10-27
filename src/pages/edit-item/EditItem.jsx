@@ -1,19 +1,28 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
+import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
 import ItemForm from "../../components/form/ItemForm";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import { getItemFromCollection, updateItem } from "../../services/items";
+import useToastContext from "../../hooks/useToastContext";
+import { deleteItem, getItemFromCollection, updateItem } from "../../services/items";
+import FlexImage from "../../components/image/FlexImage";
+import SavingGif from "../../assets/saving.gif";
+import DeletingGif from "../../assets/deleting.gif";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
 };
 
 const EditItem = () => {
+  const location = useLocation();
   const history = useHistory();
+  const setToast = useToastContext();
   const { collectionId, itemId } = useParams();
   const [item, setItem] = useState(getDefaultItemData());
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const loadExistingData = useCallback(async () => {
     setLoading(true);
@@ -28,19 +37,46 @@ const EditItem = () => {
   }, [collectionId, itemId]);
 
   useEffect(() => {
-    setLoading(true);
-    loadExistingData();
-  }, [loadExistingData]);
+    if (location.state) {
+      console.log("Loading form data from state...");
+      setItem({ ...location.state.item });
+    } else {
+      console.log("Fetching form data from server...");
+      setLoading(true);
+      loadExistingData();
+    }
+  }, [loadExistingData, location]);
 
   const editCompleteHandler = async (item) => {
-    setLoading(true);
     try {
-      await updateItem(collectionId, itemId, item);
-      history.goBack();//(`/collections/${collectionId}/items/${itemId}`);
+      setUploading(true);
+      await updateItem(collectionId, itemId, item).then(() => {
+        setTimeout(() => {
+          setUploading(false);
+          setToast({ message: "Item updated successfully", color: "success" });
+          history.goBack();
+        }, 1500);
+      });
     } catch (e) {
-      console.log(e);
+      setUploading(false);
+      setToast({ message: "Failed to update item.", color: "danger" });
+    }
+  };
+
+  const deleteHandler = async () => {
+    try {
+      setDeleting(true);
+      await deleteItem(collectionId, itemId).then(() => {
+        setTimeout(() => {
+          setDeleting(false);
+          setToast({ message: "Successfully deleted item.", color: "success" });
+          history.replace(`/collections/${collectionId}`);
+        }, 2400);
+      });
+    } catch (e) {
+      setDeleting(false);
+      setToast({ message: "Failed to delete item.", color: "danger" });
     } finally {
-      setLoading(false);
     }
   };
 
@@ -49,7 +85,17 @@ const EditItem = () => {
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
-        <ItemForm onComplete={editCompleteHandler} itemData={item} />
+        {uploading ? (
+          <div className="uploading--container">
+            <FlexImage src={SavingGif} />
+          </div>
+        ) : deleting ? (
+          <div className="uploading--container">
+            <FlexImage src={DeletingGif} />
+          </div>
+        ) : (
+          <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
+        )}
       </IonContent>
     </IonPage>
   );

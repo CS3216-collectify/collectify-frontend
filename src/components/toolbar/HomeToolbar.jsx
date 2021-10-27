@@ -1,42 +1,17 @@
-import { useState } from "react";
 import { useHistory, useLocation } from "react-router";
 
-import {
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonItem,
-  IonListHeader,
-  IonList,
-  IonBackButton,
-  IonHeader,
-  useIonPopover,
-} from "@ionic/react";
-import { search, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import { IonToolbar, IonButtons, IonButton, IonIcon, IonBackButton, IonHeader, IonImg, IonText } from "@ionic/react";
+import { search, homeOutline, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import Logo from "../../assets/favicon.png";
+
+import "./Toolbar.scss";
+import useUserContext from "../../hooks/useUserContext";
+import Text from "../../components/text/Text";
 
 const HomeToolbar = ({ title }) => {
-  // Menu with items shown when ellipsis icon is pressed
-  // const PopoverList: React.FC<{
-  //   onHide: () => void,
-  // }> = ({ onHide }) => (
-  //   <IonList>
-  //     <IonListHeader>Popover Content</IonListHeader>
-  //     <IonItem button>Learn Ionic</IonItem>
-  //     <IonItem button>Documentation</IonItem>
-  //     <IonItem button>Showcase</IonItem>
-  //     <IonItem button>GitHub Repo</IonItem>
-  //     <IonItem lines="none" detail={false} button onClick={onHide}>
-  //       Close
-  //     </IonItem>
-  //   </IonList>
-  // );
-
-  // const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
-
   const history = useHistory();
   const location = useLocation();
+  const { isUserAuthenticated } = useUserContext();
 
   const handleButtonClick = (path) => {
     history.push(`/${path}`);
@@ -46,9 +21,17 @@ const HomeToolbar = ({ title }) => {
     <IonHeader>
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>{title}</IonTitle>
+        <div className="toolbar-title--container">
+          <IonImg className="toolbar-logo" src={Logo} />
+          <Text size="xl"> {title}</Text>
+        </div>
 
         <IonButtons slot="end">
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("")}>
+              <IonIcon size="small" slot="icon-only" icon={homeOutline} />
+            </IonButton>
+          )}
           <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="small" slot="icon-only" icon={search} />
           </IonButton>
@@ -61,15 +44,21 @@ const HomeToolbar = ({ title }) => {
           <IonButton onClick={() => handleButtonClick("profile")}>
             <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
-          <IonButton onClick={() => handleButtonClick("settings")}>
-            <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
-          </IonButton>
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("settings")}>
+              <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
+            </IonButton>
+          )}
         </IonButtons>
       </IonToolbar>
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <IonTitle>{title}</IonTitle>
+        <div className="toolbar-title--container">
+          <IonImg className="toolbar-logo" src={Logo} />
+          <Text size="xl"> {title}</Text>
+        </div>
+
         <IonButtons slot="start">
           {/* <IonBackButton defaultHref="home" /> */}
           <IonBackButton

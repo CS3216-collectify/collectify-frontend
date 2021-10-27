@@ -37,7 +37,7 @@ const MODE_SELECT_OPTIONS = [
 const Profile = () => {
   const history = useHistory();
   const location = useLocation();
-  const { currentUserId } = useUserContext();
+  const { isUserAuthenticated, isCurrentUser } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
@@ -55,7 +55,7 @@ const Profile = () => {
   const [itemsCount, setItemsCount] = useState(0);
   const [collectionsCount, setCollectionsCount] = useState(0);
 
-  const isOwnProfile = parseInt(currentUserId) === profileUserId;
+  const isOwnProfile = isCurrentUser(profileUserId);
 
   const toggleMode = (mode) => {
     setMode(parseInt(mode));
@@ -67,15 +67,13 @@ const Profile = () => {
       let res = null;
       setLoading(true);
       if (username) {
-        console.log(username);
         res = await getUserByUsername(username);
-      } else if (currentUserId) {
-        console.log(currentUserId);
+      } else if (isUserAuthenticated) {
         res = await getCurrentUser();
       }
+
       if (res) {
-        console.log(res);
-        setProfileUserId(Number(res.userId));
+        setProfileUserId(parseInt(res.userId));
         setProfileFirstName(res.firstName);
         setProfileLastName(res.lastName);
         setProfileUsername(res.username);
@@ -91,13 +89,13 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentUserId, username]);
+  }, [isUserAuthenticated, username]);
 
   useEffect(() => {
-    if (username || currentUserId) {
+    if ((username || isUserAuthenticated) && location.pathname.startsWith("/profile")) {
       getUserInformation();
     }
-  }, [currentUserId, username, location, getUserInformation]);
+  }, [isUserAuthenticated, username, location, getUserInformation]);
 
   const editProfileHandler = () => {
     history.push({
@@ -106,12 +104,12 @@ const Profile = () => {
     });
   };
 
-  if (!currentUserId && !username) {
+  if (!isUserAuthenticated && !username) {
     // is guest user
     return (
       <IonPage className="profile">
         <IonLoading isOpen={loading} />
-        <IonContent className="ion-padding">
+        <IonContent>
           <ProfileToolbar showMenu={false} username="Guest User" />
           <GuestLoginPrompt />
         </IonContent>

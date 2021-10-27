@@ -45,6 +45,7 @@ const CollectifyChat = () => {
   const [isMobileNavVisible, setMobileNav] = useState(false);
   const [theme, setTheme] = useState("light");
 
+  // redirect if not logged in
   useEffect(() => {
     const initChat = async () => {
       const client = StreamChat.getInstance(apiKey);
@@ -79,6 +80,7 @@ const CollectifyChat = () => {
     window.addEventListener("message", handleThemeChange);
     return () => window.removeEventListener("message", handleThemeChange);
   }, []);
+
   useEffect(() => {
     const mobileChannelList = document.querySelector("#mobile-channel-list");
     if (isMobileNavVisible && mobileChannelList) {
@@ -104,8 +106,8 @@ const CollectifyChat = () => {
 
       //   if (content && container) {
       //   }
-        const doc = document.documentElement;
-        doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
+      const doc = document.documentElement;
+      doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
     };
     setTimeout(() => {
       setAppHeight();

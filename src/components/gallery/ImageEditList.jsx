@@ -22,7 +22,7 @@ const groupElements = (arr, interval) => {
 
 const ImageEditList = (props) => {
   const setToast = useToastContext();
-  const { images, onDelete: deleteImageHandler } = props;
+  const { images = [], onDelete: deleteImageHandler } = props;
 
   const groupsOfFour = groupElements(images, 4);
 

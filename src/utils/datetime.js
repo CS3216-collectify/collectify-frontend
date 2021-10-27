@@ -4,5 +4,5 @@ export const convertUTCtoLocal = (timestamp) => {
   return moment
     .utc(timestamp)
     .local()
-    .format("DD MMM YYYY, HH:mm A");
+    .format("DD MMM YYYY, hh:mm A");
 }
