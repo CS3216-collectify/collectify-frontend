@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { logChatPromiseExecution } from 'stream-chat';
 import {
   MessageList,
@@ -6,17 +6,44 @@ import {
   Thread,
   Window,
   useChannelActionContext,
+  useChatContext
 } from 'stream-chat-react';
 
 import { MessagingChannelHeader, MessagingInput } from '../../components';
 
 import { GiphyContext } from '../../Chat';
+import { useLocation } from 'react-router';
+import useUserContext from '../../../../hooks/useUserContext';
+import useToastContext from '../../../../hooks/useToastContext';
 
 export const ChannelInner = (props) => {
+  const location = useLocation();
+  const { chatClient } = useUserContext();
+  const setToast = useToastContext();
+  const { setActiveChannel } = useChatContext();
   const { theme, toggleMobile } = props;
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
+
+  useEffect(() => {
+    if (location.state?.recipient) {
+      const { recipient: recipientId } = location.state;
+      delete location.state?.recipient;
+      console.log(recipientId);
+      if (chatClient.userID === recipientId) {
+        return;
+      }
+      const channel = chatClient.channel("messaging", {
+        members: [chatClient.userID, recipientId],
+      });
+      channel.create().then((res) => {
+        setActiveChannel(channel);
+      }).catch((e) => {
+        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+      });
+    }
+  }, [location]);
 
   const overrideSubmitHandler = (message) => {
     let updatedMessage;

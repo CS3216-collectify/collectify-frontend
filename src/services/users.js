@@ -7,6 +7,15 @@ export const getCurrentUser = async () => {
   return response.data;
 };
 
+// TODO: CHANGE TO API TOKEN CALL
+export const getChatUserInfo = async () => {
+  // TODO: STILL WRONG DATA!!!
+  const user = await getCurrentUser();
+  const { userId: chatId, username: chatName, pictureUrl, chatToken = "8yw2v8gyt57c" } = user;
+  const chatUser = { chatId, chatName, pictureUrl, chatToken };
+  return chatUser;
+};
+
 export const getUserByUsername = async (username) => {
   console.log("Get user data of user" + username);
   const response = await server.get(`api/user/${username}/`);

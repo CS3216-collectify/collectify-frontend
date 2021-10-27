@@ -14,6 +14,7 @@ import LikedItems from "../../components/liked-items/LikedItems";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
+import { useChatContext } from 'stream-chat-react';
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -104,6 +105,15 @@ const Profile = () => {
     });
   };
 
+  const chatHandler = async () => {
+    if (isOwnProfile) {
+      return;
+    }
+    const pathname = "/chat";
+    const state = { recipient: profileUserId.toString() }
+    history.push({ pathname, state });
+  }
+
   if (!isUserAuthenticated && !username) {
     // is guest user
     return (
@@ -164,15 +174,7 @@ const Profile = () => {
                 </IonRow>
               )}
               {!isOwnProfile && (
-                <IonButton
-                  onClick={async () => {
-                    // handle own profile
-                    const channel = chatClient.channel("messaging", {
-                      members: [chatClient.userID, `${profileUserId}`],
-                    });
-                    await channel.create();
-                  }}
-                >
+                <IonButton fill="outline" onClick={chatHandler}>
                   Chat
                 </IonButton>
               )}
