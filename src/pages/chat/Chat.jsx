@@ -81,7 +81,7 @@ const CollectifyChat = () => {
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(!isCreating)} toggleMobile={toggleMobile} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(!isCreating)} toggleMobile={() => setMobileNav(false)} />}
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} />}
             />
           </div>

@@ -11,7 +11,16 @@ export const getCurrentUser = async () => {
 export const getChatUserInfo = async () => {
   // TODO: STILL WRONG DATA!!!
   const user = await getCurrentUser();
-  const { userId: chatId, username: chatName, pictureUrl, chatToken = "8yw2v8gyt57c" } = user;
+  const { 
+    userId: chatId, 
+    username, 
+    firstName, 
+    lastName, 
+    chatName = `${firstName} ${lastName} (@${username})`, 
+    pictureUrl, 
+    chatToken = "8yw2v8gyt57c" 
+  } = user;
+
   const chatUser = { chatId, chatName, pictureUrl, chatToken };
   return chatUser;
 };
