@@ -44,10 +44,6 @@ export const UserContextProvider = ({ children }) => {
       }
     }
 
-    if (currentUserId && isUserAuthenticated) {
-      initChat();
-    }
-
     if (!isUserAuthenticated) {
       setCurrentUserId(null);
       chatClient?.disconnectUser();
@@ -55,13 +51,15 @@ export const UserContextProvider = ({ children }) => {
     }
 
     return () => chatClient?.disconnectUser();
-  }, [chatClient, currentUserId, initChat, isUserAuthenticated]);
+  }, [chatClient, currentUserId, isUserAuthenticated]);
 
-  // useEffect(() => {
-  //   if (chatClient === null && currentUserId) {
-  //     initChat();
-  //   }
-  // }, [chatClient, currentUserId, initChat]);
+  useEffect(() => {
+    if (chatClient === null && currentUserId) {
+      initChat();
+    }
+
+    return () => chatClient?.disconnectUser();
+  }, [chatClient, currentUserId, initChat]);
 
   const isCurrentUser = (userId) => {
     return parseInt(currentUserId) === parseInt(userId);
