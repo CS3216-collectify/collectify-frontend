@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { IonContent, IonPage } from "@ionic/react";
-import { StreamChat } from "stream-chat";
+import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { Chat, Channel, ChannelList } from "stream-chat-react";
 import useUserContext from "../../hooks/useUserContext";
 
@@ -28,7 +27,6 @@ const CollectifyChat = () => {
   const [giphyState, setGiphyState] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isMobileNavVisible, setMobileNav] = useState(false);
-  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     const mobileChannelList = document.querySelector("#mobile-channel-list");
@@ -76,9 +74,8 @@ const CollectifyChat = () => {
   return (
     <IonPage>
       <HomeToolbar title="Chat" />
-
       <IonContent class="chat-content">
-        <Chat client={chatClient} theme={`messaging ${theme}`}>
+        <Chat client={chatClient} theme="messaging light">
           <div id="mobile-channel-list" onClick={toggleMobile}>
             <ChannelList
               filters={filters}
@@ -88,7 +85,7 @@ const CollectifyChat = () => {
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} />}
             />
           </div>
-          <div>
+          {/* <div> */}
             <Channel
               Input={MessagingInput}
               maxNumberOfFiles={10}
@@ -99,10 +96,10 @@ const CollectifyChat = () => {
             >
               {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
               <GiphyContext.Provider value={giphyContextValue}>
-                <ChannelInner theme={theme} toggleMobile={toggleMobile} />
+                <ChannelInner theme="light" toggleMobile={toggleMobile} />
               </GiphyContext.Provider>
             </Channel>
-          </div>
+          {/* </div> */}
         </Chat>
       </IonContent>
     </IonPage>
