@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { Chat, Channel, ChannelList } from "stream-chat-react";
 import useUserContext from "../../hooks/useUserContext";
 
@@ -27,6 +27,7 @@ const CollectifyChat = () => {
   const [giphyState, setGiphyState] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isMobileNavVisible, setMobileNav] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const mobileChannelList = document.querySelector("#mobile-channel-list");
@@ -42,6 +43,7 @@ const CollectifyChat = () => {
   // TODO: find a better way to update the height
   useLayoutEffect(() => {
     const setAppHeight = () => {
+      setLoading(true);
       var content = document.querySelector("ion-content");
       var container = document.querySelector(".str-chat");
       console.log(content, container, content?.offsetHeight);
@@ -55,6 +57,7 @@ const CollectifyChat = () => {
       //   }
       const doc = document.documentElement;
       doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
+      setLoading(false);
     };
     setTimeout(() => {
       setAppHeight();
@@ -69,7 +72,16 @@ const CollectifyChat = () => {
 
   const giphyContextValue = { giphyState, setGiphyState };
 
-  if (!chatClient) return <IonPage>asdasd</IonPage>;
+  if (!chatClient || loading) {
+    return (
+      <IonPage>
+        <HomeToolbar title="Chat" />
+        <IonContent class="chat-content">
+          <IonLoading isOpen={true} />
+        </IonContent>
+      </IonPage>
+    );
+  }
 
   return (
     <IonPage>
@@ -81,7 +93,7 @@ const CollectifyChat = () => {
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(!isCreating)} toggleMobile={() => setMobileNav(false)} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} toggleMobile={() => setMobileNav(false)} />}
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} />}
             />
           </div>

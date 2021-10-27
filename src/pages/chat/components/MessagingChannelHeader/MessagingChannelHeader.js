@@ -8,7 +8,6 @@ import { TypingIndicator } from '../TypingIndicator/TypingIndicator';
 import { ChannelInfoIcon, ChannelSaveIcon, getCleanImage, HamburgerIcon } from '../../assets';
 
 const getAvatarGroup = (members) => {
-  console.log(members);
   if (members.length === 1) {
     return (
       <div className='messaging__channel-header__avatars'>
