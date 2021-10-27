@@ -3,6 +3,7 @@ import { arrowBack, close } from 'ionicons/icons';
 import _debounce from 'lodash.debounce';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Avatar, useChatContext } from 'stream-chat-react';
+import useToastContext from '../../../../hooks/useToastContext';
 import './CreateChannel.css';
 
 const UserResult = ({ user }) => (
@@ -17,6 +18,7 @@ const UserResult = ({ user }) => (
 );
 
 const CreateChannel = ({ onClose, toggleMobile }) => {
+  const setToast = useToastContext();
   const { client, setActiveChannel } = useChatContext();
 
   const [focusedUser, setFocusedUser] = useState(undefined);
@@ -89,21 +91,23 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
     }
   }, [inputText]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const createChannel = async () => {
+  const createChannel = async (selectedUser) => {
     if (!selectedUser) return;
     console.log("creating channel...");
     const selectedUserId = selectedUser.id;
 
-    const conversation = await client.channel('messaging', {
-      members: [selectedUserId, client.userID],
-    });
+    try {
+      const conversation = await client.channel('messaging', {
+        members: [client.userID, selectedUserId],
+      });
 
-    await conversation.watch();
-
-    setActiveChannel(conversation);
-    setSelectedUser([]);
-    setUsers([]);
-    onClose();
+      await conversation.watch();
+      setActiveChannel(conversation);
+      setSelectedUser(null);
+      onClose();
+    } catch (e) {
+      setToast({ message: "Unable to open chat. Please try again.", color: "danger" });
+    }
   };
 
   const addUser = (user) => {
@@ -181,11 +185,11 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
             }
           </div>
         </div>
-        <IonRow className="ion-justify-content-right ion-margin-top">
+        {/* <IonRow className="ion-justify-content-right ion-margin-top">
           <button className='create-channel-button' onClick={createChannel}>
             Start Chat
           </button>
-        </IonRow>
+        </IonRow> */}
       </header>
       {inputText && (
         <main>
@@ -194,10 +198,8 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
               <div>
                 {users.map((user, i) => (
                   <div
-                    className={`messaging-create-channel__user-result ${
-                      focusedUser === i && 'focused'
-                    }`}
-                    onClick={() => addUser(user)}
+                    className="messaging-create-channel__user-result"
+                    onClick={() => createChannel(user)}
                     key={user.id}
                   >
                     <UserResult user={user} />
