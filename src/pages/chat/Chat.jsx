@@ -48,6 +48,11 @@ const CollectifyChat = () => {
       var container = document.querySelector(".str-chat");
       console.log(content, container, content?.offsetHeight);
 
+      if (content?.offsetHeight === 0) {
+        setLoading(false);
+        return;
+      }
+
       //   while (!content || !container) {
       // content = document.querySelector("ion-content");
       // container = document.querySelector(".str-chat__container");
