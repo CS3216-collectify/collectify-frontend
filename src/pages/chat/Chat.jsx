@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import { Chat, Channel, ChannelList } from "stream-chat-react";
 import useUserContext from "../../hooks/useUserContext";
 
@@ -81,7 +81,7 @@ const CollectifyChat = () => {
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(!isCreating)} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(!isCreating)} toggleMobile={toggleMobile} />}
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} />}
             />
           </div>
