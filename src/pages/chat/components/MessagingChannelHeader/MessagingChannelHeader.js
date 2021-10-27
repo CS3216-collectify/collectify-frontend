@@ -174,16 +174,7 @@ const MessagingChannelHeader = (props) => {
         <HamburgerIcon />
       </div>
       {getAvatarGroup(members)}
-      {!isEditing ? (
-        <div className='channel-header__name'>{channelName || title}</div>
-      ) : (
-        <EditHeader />
-      )}
-      <div className='messaging__channel-header__right'>
-        <TypingIndicator />
-        {channelName !== 'Social Demo' &&
-          (!isEditing ? <ChannelInfoIcon {...{ isEditing, setIsEditing }} /> : <ChannelSaveIcon />)}
-      </div>
+      <div className='channel-header__name'>{channelName || title}</div>
     </div>
   );
 };
