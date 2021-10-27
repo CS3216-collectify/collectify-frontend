@@ -52,7 +52,7 @@ const LikedItems = (props) => {
 
   useEffect(() => {
     loadInitialPage();
-  }, [location]);
+  }, [loadInitialPage, location]);
 
   return (
     <>

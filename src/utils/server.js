@@ -31,11 +31,9 @@ server.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // TODO: Debug 404
-    // if (error.response.status === 404) {
-    //   console.log("404: Redirecting to home...");
-    //   window.location.href = REACT_LOGIN_REL_URL;
-    // }
+    if (error.response.status === 404) {
+      window.location.href = "/not-found";
+    }
 
     if (error.response.status === 401) {
       const refreshToken = getRefreshToken();

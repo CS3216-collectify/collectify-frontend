@@ -29,3 +29,10 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+resources/android/icon
+resources/android/splash
+resources/ios/icon
+resources/ios/splash
+resources/windows/icon
+resources/windows/splash
