@@ -1,5 +1,6 @@
 import { IonAvatar, IonCol, IonImg, IonItem, IonLabel } from "@ionic/react";
 import { useHistory } from "react-router";
+import noProfileImage from "../../assets/no-profile-image.png";
 
 const UserCard = (props) => {
   const history = useHistory();
@@ -12,7 +13,7 @@ const UserCard = (props) => {
   return (
     <IonItem onClick={clickHandler}>
       <IonAvatar>
-        <IonImg src={pictureUrl} />
+        <IonImg src={pictureUrl || noProfileImage} />
       </IonAvatar>
       <IonCol>
         <IonLabel>@{username}</IonLabel>

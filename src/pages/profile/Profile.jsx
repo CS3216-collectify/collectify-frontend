@@ -14,6 +14,7 @@ import LikedItems from "../../components/liked-items/LikedItems";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
+import noProfileImage from "../../assets/no-profile-image.png";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -129,7 +130,7 @@ const Profile = () => {
           <IonRow>
             <IonCol size="auto">
               {/* <Logo className="profile--img"/> */}
-              <FlexImage className="profile--img" src={profileProfilePicture} />
+              <FlexImage className="profile--img" src={profileProfilePicture || noProfileImage} />
             </IonCol>
 
             <IonCol className="profile-header--container">
