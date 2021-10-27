@@ -21,7 +21,7 @@ export const ChannelInner = (props) => {
   const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { setActiveChannel } = useChatContext();
-  const { theme, toggleMobile } = props;
+  const { theme, toggleMobile, setLoading } = props;
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
@@ -37,11 +37,14 @@ export const ChannelInner = (props) => {
       const channel = chatClient.channel("messaging", {
         members: [chatClient.userID, recipientId],
       });
+      setLoading(true);
       channel.create().then((res) => {
         setActiveChannel(channel);
+        setLoading(false);
       }).catch((e) => {
+        setLoading(false);
         setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-      });
+      })
     }
   }, [location]);
 
