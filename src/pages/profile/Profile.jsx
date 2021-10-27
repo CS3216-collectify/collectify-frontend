@@ -14,7 +14,6 @@ import LikedItems from "../../components/liked-items/LikedItems";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
-import { useChatContext } from 'stream-chat-react';
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
