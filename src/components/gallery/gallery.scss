@@ -41,12 +41,13 @@
 .image-carousel {
   ion-img {
     object-fit: contain;
-    backdrop-filter: blur(200px);
-    -webkit-backdrop-filter: blur(200px);
+    // backdrop-filter: blur(200px);
+    // -webkit-backdrop-filter: blur(200px);
     width: 100%;
   }
   .image-carousel-image--container {
     background-size: cover;
     background-position: center;
+    background-image: url("../../assets//blur.png");
   }
 }
