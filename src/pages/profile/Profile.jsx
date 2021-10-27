@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonLoading } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonLoading, IonButton } from "@ionic/react";
 import "./Profile.scss";
 import useUserContext from "../../hooks/useUserContext";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
@@ -37,7 +37,7 @@ const MODE_SELECT_OPTIONS = [
 const Profile = () => {
   const history = useHistory();
   const location = useLocation();
-  const { isUserAuthenticated, isCurrentUser } = useUserContext();
+  const { isUserAuthenticated, isCurrentUser, chatClient } = useUserContext();
 
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
@@ -162,6 +162,19 @@ const Profile = () => {
                 <IonRow>
                   <EditProfileButton onClick={editProfileHandler} />
                 </IonRow>
+              )}
+              {!isOwnProfile && (
+                <IonButton
+                  onClick={async () => {
+                    // handle own profile
+                    const channel = chatClient.channel("messaging", {
+                      members: [chatClient.userID, `${profileUserId}`],
+                    });
+                    await channel.create();
+                  }}
+                >
+                  Chat
+                </IonButton>
               )}
             </IonCol>
           </IonRow>

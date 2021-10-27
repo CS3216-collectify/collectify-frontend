@@ -101,11 +101,11 @@ const App = () => {
                   </IonTabButton>
                 )}
                 {isUserAuthenticated && (
-                    <IonTabButton tab="d" href="/chat">
-                      <IonIcon icon={chatbubblesOutline} />
-                      <IonText>Chats</IonText>
-                    </IonTabButton>
-                  )}
+                  <IonTabButton tab="d" href="/chat">
+                    <IonIcon icon={chatbubblesOutline} />
+                    <IonText>Chats</IonText>
+                  </IonTabButton>
+                )}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>
