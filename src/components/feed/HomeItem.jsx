@@ -66,7 +66,7 @@ const HomeItem = (props) => {
     <>
       <IonGrid fixed className="ion-padding">
         <IonRow>
-          <Text onClick={goToUserProfilePage}>@{ownerUsername}</Text>
+          <Text onClick={goToUserProfilePage}><b>@{ownerUsername}</b></Text>
         </IonRow>
       </IonGrid>
 
@@ -79,7 +79,7 @@ const HomeItem = (props) => {
           <IonCol size={8}>
             <IonRow>
               <Text size="l" onClick={goToItemPage}>
-                {itemName}
+                <b>{itemName}</b>
               </Text>
             </IonRow>
             <IonRow>
