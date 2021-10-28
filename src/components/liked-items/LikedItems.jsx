@@ -61,6 +61,7 @@ const LikedItems = (props) => {
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 
         items={items} 
+        emptyMessage="You have not liked any items!"
       />
     </>
   )
