@@ -14,7 +14,7 @@ export const UserContextProvider = ({ children }) => {
   const [chatClient, setChatClient] = useState(null);
 
   const initChat = useCallback(async () => {
-    const client = StreamChat.getInstance("8yw2v8gyt57c");
+    const client = StreamChat.getInstance(process.env.REACT_APP_CHAT_API_KEY);
 
     // API call to backend to get token and image
     await client.connectUser(
