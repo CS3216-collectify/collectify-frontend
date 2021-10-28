@@ -46,11 +46,11 @@ const ItemForm = (props) => {
   }, [props.itemData, location]);
 
   const newImageHandler = (newFile) => {
-    if (images.length >= MEDIA_LIMIT) {
-      setToast({ message: "Cannot upload more than 4 photos", color: "danger" });
+    if (!newFile) {
       return;
     }
-    if (!newFile) {
+    if (images.length >= MEDIA_LIMIT) {
+      setToast({ message: "Cannot upload more than 4 photos", color: "danger" });
       return;
     }
     if (newFile.size > MAX_FILE_SIZE) {
