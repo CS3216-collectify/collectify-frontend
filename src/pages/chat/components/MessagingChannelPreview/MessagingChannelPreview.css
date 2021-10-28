@@ -61,6 +61,18 @@
   white-space: nowrap;
 }
 
+.channel-preview__content-username {
+  font-family: Helvetica Neue, sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  color: #000000;
+  margin: 0;
+  max-width: 158px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .str-chat.dark .channel-preview__content-name {
   color: #ffffff;
 }

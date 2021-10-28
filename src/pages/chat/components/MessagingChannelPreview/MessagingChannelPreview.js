@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { Avatar, ChatContext } from 'stream-chat-react';
-import { getCleanImage } from '../../assets';
 import noProfileImage from "../../../../assets/no-profile-image.png";
-
+import { getCleanImage } from '../../assets';
 import './MessagingChannelPreview.css';
 
 const getAvatarGroup = (members) => {
@@ -134,6 +133,16 @@ const getChannelName = (members) => {
   return `${members[0]?.user.name || defaultName}, ${members[1]?.user.name || defaultName}`;
 };
 
+const getChannelUsername = (members) => {
+  const defaultName = 'usernaem';
+
+  if (!members.length || members.length === 1) {
+    return members[0]?.user.username || members[0]?.user.id;
+  }
+
+  return `${members[0]?.user.username || members[0]?.user.id}`;
+};
+
 const MessagingChannelPreview = (props) => {
   const { channel, latestMessage, setActiveChannel, setIsCreating } = props;
 
@@ -143,6 +152,7 @@ const MessagingChannelPreview = (props) => {
     ({ user }) => user.id !== client.userID,
   );
 
+  console.log(latestMessage?.props?.source)
   return (
     <div
       className={
@@ -159,11 +169,11 @@ const MessagingChannelPreview = (props) => {
       <div className='channel-preview__content-wrapper'>
         <div className='channel-preview__content-top'>
           <p className='channel-preview__content-name'>
-            {channel.data.name || getChannelName(members)}
+            {channel.data.name || getChannelName(members)} <span className='channel-preview__content-username'>@{getChannelUsername(members)}</span>
           </p>
           <p className='channel-preview__content-time'>{getTimeStamp(channel)}</p>
         </div>
-        <p className='channel-preview__content-message'>{latestMessage || 'Send a message'}</p>
+        <p className='channel-preview__content-message'>{latestMessage?.props?.source || 'Empty chat'}</p>
       </div>
     </div>
   );
