@@ -1,17 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, useChannelStateContext, useChatContext } from 'stream-chat-react';
+import noProfileImage from "../../../../assets/no-profile-image.png";
 
 import './MessagingChannelHeader.css';
 
 import { TypingIndicator } from '../TypingIndicator/TypingIndicator';
 
 import { ChannelInfoIcon, ChannelSaveIcon, getCleanImage, HamburgerIcon } from '../../assets';
+import { IonCol, IonRow } from '@ionic/react';
+import Text from '../../../../components/text/Text';
+import { useHistory } from 'react-router';
 
 const getAvatarGroup = (members) => {
   if (members.length === 1) {
     return (
       <div className='messaging__channel-header__avatars'>
-        <Avatar image={members[0].user?.image} name={members[0].user?.name || members[0].user?.id} size={40} />;
+        <Avatar image={members[0].user?.image || noProfileImage} name={members[0].user?.name || members[0].user?.id} size={40} />;
       </div>
     );
   }
@@ -107,12 +111,14 @@ const getAvatarGroup = (members) => {
 };
 
 const MessagingChannelHeader = (props) => {
+  const history = useHistory();
   const { client } = useChatContext();
   const { channel } = useChannelStateContext();
 
   const [channelName, setChannelName] = useState(channel?.data.name || '');
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState('');
+  const [username, setUsername] = useState('');
 
   const inputRef = useRef();
 
@@ -144,6 +150,9 @@ const MessagingChannelHeader = (props) => {
       setTitle(
         members.map((member) => member.user?.name || member.user?.id || 'Unnamed User').join(', '),
       );
+      setUsername(
+        members.map((member) => member.user?.username || member.user?.id || 'Unnamed User').join(', '),
+      );
     }
   }, [channelName, members]);
 
@@ -167,13 +176,26 @@ const MessagingChannelHeader = (props) => {
     </form>
   );
 
+  const goToHistoryPage = () => {
+    history.push(`/profile/${username}`);
+  }
+
   return (
     <div className='messaging__channel-header'>
       <div id='mobile-nav-icon' className={`${props.theme}`} onClick={() => props.toggleMobile()}>
         <HamburgerIcon />
       </div>
-      {getAvatarGroup(members)}
-      <div className='channel-header__name'>{channelName || title}</div>
+      <span onClick={goToHistoryPage}>
+        {getAvatarGroup(members)}
+      </span>
+      <IonCol onClick={goToHistoryPage}>
+        <IonRow>
+          <Text size="l">
+            <b>{channelName || title}</b>
+          </Text>
+        </IonRow>
+        <Text size="s">@{username}</Text>
+      </IonCol>
     </div>
   );
 };

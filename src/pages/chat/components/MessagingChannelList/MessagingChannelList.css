@@ -36,6 +36,14 @@
   color: #000;
 }
 
+.messaging__channel-list__header__username {
+  display: flex;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000;
+}
+
 .str-chat.dark .messaging__channel-list__header__name {
   color: white;
 }
