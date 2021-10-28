@@ -109,7 +109,6 @@ const Profile = () => {
     // is guest user
     return (
       <IonPage className="profile">
-        <IonLoading isOpen={loading} />
         <IonContent>
           <ProfileToolbar showMenu={false} username="Guest User" />
           <GuestLoginPrompt />
@@ -120,7 +119,6 @@ const Profile = () => {
 
   return (
     <IonPage className="profile">
-      <IonLoading isOpen={loading} />
       <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
@@ -184,8 +182,8 @@ const Profile = () => {
               {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
               {mode === COLLECTIONS_MODE && (
                 <>
-                  <IonRow className="ion-justify-content-end">
-                    <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
+                  <IonRow className="add-collection--container ion-justify-content-end">
+                    <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
                   <ProfileCollections profileUserId={profileUserId} />
                 </>

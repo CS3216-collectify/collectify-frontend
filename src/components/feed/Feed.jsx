@@ -64,7 +64,6 @@ const Feed = (props) => {
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       {items &&
         items.length > 0 &&
         items.map((item, idx) => (

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { searchCollections } from "../../services/search";
 import CollectionList from "../profile-collection/CollectionList";
 
-const LIMIT = 10;
+const LIMIT = 8;
 
 const CollectionSearchResultDisplay = (props) => {
   const { searchText } = props;
@@ -56,11 +56,10 @@ const CollectionSearchResultDisplay = (props) => {
     if (props.searchText) {
       loadInitialPage();
     }
-  }, [props.searchText]);
+  }, [loadInitialPage, props.searchText]);
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       <CollectionList 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 

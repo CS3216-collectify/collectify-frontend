@@ -1,4 +1,4 @@
-import { IonGrid, IonItem, IonLabel, IonList, IonRow, IonCol } from "@ionic/react";
+import { IonGrid, IonItem, IonList, IonRow, IonCol } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -85,13 +85,12 @@ const ItemForm = (props) => {
       validationErrorMessage("Name cannot be empty!");
       return;
     }
-    if (!trimmedItemDescription) {
-      validationErrorMessage("Description cannot be empty!");
-      return;
-    }
     if (!images || images.length === 0) {
       validationErrorMessage("Images cannot be empty!");
       return;
+    }
+    if (trimmedItemName.length > 30) {
+      validationErrorMessage("Name must be shorter 30 characters!");
     }
 
     const itemToSave = {
@@ -119,34 +118,34 @@ const ItemForm = (props) => {
         onCancel={() => setDeleteConfirm(false)}
         onConfirm={deleteHandler}
       />
-        <IonGrid fixed>
-      <IonItem>
-        <TextInput label="Item Name" value={itemName} placeholder="Enter item name" onChange={setItemName} />
-      </IonItem>
-      <IonItem>
-        <TextArea label="Description" value={itemDescription} placeholder="Enter item description" onChange={setItemDescription} />
-      </IonItem>
+      <IonGrid fixed>
+        <IonItem>
+          <TextInput label="Item Name" value={itemName} placeholder="Enter item name" onChange={setItemName} />
+        </IonItem>
+        <IonItem>
+          <TextArea label="Description" value={itemDescription} placeholder="Enter item description" onChange={setItemDescription} />
+        </IonItem>
 
-      <IonItem>
-        <div>
-          <Text size="xs">Photos</Text>
-          <ImageEditList images={images} onDelete={deleteImageHandler} />
-          <IonRow className="ion-justify-content-end">
-            <UploadButton onChange={newImageHandler} />
-          </IonRow>
-        </div>
-      </IonItem>
-      
-      <IonRow className="ion-full-width save-delete-buttons--container">
-        {onDelete && (
+        <IonItem>
+          <div>
+            <Text size="xs">Photos</Text>
+            <ImageEditList images={images} onDelete={deleteImageHandler} />
+            <IonRow className="ion-justify-content-end">
+              <UploadButton onChange={newImageHandler} />
+            </IonRow>
+          </div>
+        </IonItem>
+
+        <IonRow className="ion-full-width save-delete-buttons--container">
+          {onDelete && (
+            <IonCol size={6}>
+              <DeleteButton onClick={() => setDeleteConfirm(true)} />
+            </IonCol>
+          )}
           <IonCol size={6}>
-            <DeleteButton onClick={() => setDeleteConfirm(true)} />
+            <SaveButton onClick={saveHandler} />
           </IonCol>
-        )}
-        <IonCol size={6}>
-          <SaveButton onClick={saveHandler} />
-        </IonCol>
-      </IonRow>
+        </IonRow>
       </IonGrid>
     </IonList>
   );

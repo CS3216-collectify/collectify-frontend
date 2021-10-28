@@ -56,7 +56,6 @@ const LikedItems = (props) => {
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       <ItemGrid 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 

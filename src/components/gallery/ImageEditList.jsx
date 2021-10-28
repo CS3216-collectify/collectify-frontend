@@ -1,11 +1,8 @@
-import { IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
-import React, { useState } from "react";
-import FlexImage from "../image/FlexImage";
+import { IonCol, IonIcon, IonRow } from "@ionic/react";
 import { trashBin } from "ionicons/icons";
+import React from "react";
+import FlexImage from "../image/FlexImage";
 import "./gallery.scss";
-import useToastContext from "../../hooks/useToastContext";
-
-const LIMIT = 4;
 
 const groupElements = (arr, interval) => {
   var groups = [];
@@ -16,7 +13,6 @@ const groupElements = (arr, interval) => {
 };
 
 const ImageEditList = (props) => {
-  const setToast = useToastContext();
   const { images = [], onDelete: deleteImageHandler } = props;
 
   const groupsOfFour = groupElements(images, 4);

@@ -113,7 +113,6 @@ const Collection = (props) => {
 
   return (
     <IonPage className="collection">
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Collection`} />
       <IonContent className="ion-padding">
         <IonGrid fixed>

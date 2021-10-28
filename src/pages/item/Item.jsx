@@ -98,11 +98,10 @@ const Item = () => {
 
   const goToCollectionPage = () => {
     history.push(`/collections/${collectionId}`);
-  }
+  };
 
   return (
     <IonPage className="item">
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Item`} />
       <IonContent>
         <IonGrid fixed className="ion-padding">
@@ -118,13 +117,13 @@ const Item = () => {
                   <EditButton label="Item" onClick={editPageRedirect} fill="outline" />
                 </IonRow>
               )}
-              {!isItemOwner &&
+              {!isItemOwner && (
                 <IonRow className="ion-justify-content-end">
                   <IonButton size="small" onClick={goToCollectionPage} fill="outline">
                     <IonLabel>View Collection</IonLabel>
                   </IonButton>
                 </IonRow>
-              }
+              )}
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -143,7 +142,7 @@ const Item = () => {
                   </Text>
                 </div>
                 <div>
-                  <IonCol size={1}>
+                  <IonCol className="like-button--column" size={1}>
                     <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
                   </IonCol>
                   <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
@@ -159,7 +158,7 @@ const Item = () => {
           </IonRow>
 
           <IonRow>
-            <IonCol className="ion-text-right">
+            <IonCol className="ion-text-left">
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
           </IonRow>

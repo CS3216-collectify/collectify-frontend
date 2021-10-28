@@ -52,10 +52,6 @@ const CollectionForm = (props) => {
       validationErrorMessage("Name cannot be empty!");
       return;
     }
-    if (!trimmedCollectionDescription) {
-      validationErrorMessage("Description cannot be empty!");
-      return;
-    }
     if (categoryId === null) {
       validationErrorMessage("Please select a category!");
       return;
@@ -93,11 +89,10 @@ const CollectionForm = (props) => {
         </IonItem>
 
         <IonRow className="ion-justify-content-start">
+          <SelectButton onChange={setCategory} options={selectOptions} buttonLabel="Select Category" selectLabel="Categories" />
           <IonCol>{categoryId && <CategoryChip name={convertCategoryIdToName(categoryId)} onDelete={() => setCategory(null)} />}</IonCol>
         </IonRow>
-        <IonRow className="ion-full-width">
-          <SelectButton onChange={setCategory} options={selectOptions} buttonLabel="Select Category" selectLabel="Categories" />
-        </IonRow>
+        <IonRow className="ion-full-width"></IonRow>
 
         <IonRow className="ion-full-width save-delete-buttons--container">
           {onDelete && (
@@ -105,7 +100,7 @@ const CollectionForm = (props) => {
               <DeleteButton onClick={() => setDeleteConfirm(true)} />
             </IonCol>
           )}
-          <IonCol size={6} className="ion-full-width">
+          <IonCol size={onDelete ? 6 : 12} className="ion-full-width">
             <SaveButton onClick={saveHandler} />
           </IonCol>
         </IonRow>

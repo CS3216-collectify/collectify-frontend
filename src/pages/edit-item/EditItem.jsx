@@ -83,7 +83,6 @@ const EditItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
         {uploading ? (

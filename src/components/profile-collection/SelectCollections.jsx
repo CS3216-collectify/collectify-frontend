@@ -1,14 +1,12 @@
+import { IonRow } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { IonRow, IonFab, IonFabButton, IonIcon } from "@ionic/react";
-import { add } from "ionicons/icons";
-
 import { getCollections } from "../../services/collections";
-import SelectCollectionList from "./SelectCollectionList";
 import Text from "../text/Text";
-import HorizontalLine from "../line/HorizontalLine";
+import SelectCollectionList from "./SelectCollectionList";
 
-const LIMIT = 10;
+
+const LIMIT = 6;
 
 const SelectCollections = (props) => {
   const location = useLocation();

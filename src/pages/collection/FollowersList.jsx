@@ -62,7 +62,6 @@ const FollowersList = (props) => {
     <IonPage>
       <HomeToolbar title={`Followers`} />
       <IonContent>
-        <IonLoading isOpen={loading} />
         <UserList 
           users={users} 
           onScrollEnded={loadNextPage} 

@@ -33,7 +33,6 @@ const AddItem = () => {
 
   return (
     <IonPage>
-      {/* <IonLoading isOpen={loading} spinner="crescent" /> */}
       <HomeToolbar title="Add Item" />
       <IonContent>
         {uploading ? (

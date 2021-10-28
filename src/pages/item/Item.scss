@@ -5,6 +5,7 @@
   .item-title-likes--container {
     width: 100%;
     justify-content: space-between;
+    margin-bottom: 8px;
   }
   .item-like-button {
     vertical-align: middle;
@@ -12,4 +13,7 @@
 }
 .top-margin-s {
   margin-top: -20px;
+}
+.like-button--column {
+  padding-right: 0;
 }

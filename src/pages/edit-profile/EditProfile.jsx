@@ -116,7 +116,6 @@ const EditProfile = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} />
       <HomeToolbar title="Edit Profile" />
 
       {/* Ion padding applies 16px  */}
