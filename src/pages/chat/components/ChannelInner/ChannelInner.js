@@ -26,14 +26,14 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
 
   const { imageUrl, name, link } = chatItem;
   return (
-    <IonItem >
+    <IonItem color="light">
       <IonCol onClick={onClick}>
         <IonThumbnail>
           <IonImg src={imageUrl} />
         </IonThumbnail>
       </IonCol>
       <IonCol  onClick={onClick}>
-        <Text>
+        <Text size="l">
           {name}
         </Text>
       </IonCol>
