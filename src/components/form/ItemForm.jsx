@@ -50,6 +50,9 @@ const ItemForm = (props) => {
       setToast({ message: "Cannot upload more than 4 photos", color: "danger" });
       return;
     }
+    if (!newFile) {
+      return;
+    }
     if (newFile.size > MAX_FILE_SIZE) {
       setToast({ message: "Image file should not exceed 10MB.", color: "danger" });
       return;
