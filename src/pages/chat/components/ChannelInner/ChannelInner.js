@@ -55,12 +55,12 @@ export const ChannelInner = (props) => {
   const { sendMessage } = useChannelActionContext();
 
   useEffect(() => {
-    console.log("TEST");
-    setChatItem({
-      name: "My Item", 
-      link: "/profile",
-      imageUrl: "https://us-east.stream-io-cdn.com/1148587/images/1b72a963-d3f8-4563-a427-5a218c24c890.no-profile-image.png?ro=0&Expires=1636640990&Signature=SLTzdSK3QYyNsmHEcGsjnscCNzUqrSNN9~FKIymk71ym6fKbwjhBVLhqmQk4rQZYHR1~kx9cH8VYLy~3lk3ITMKULckGWN3CQA4ImyC7yejKKLhAPjYlhoFfcc~Md7GtfdHoqEVaeuT7iG8wmSmh0GUaxDSna8UzeRPI9C~hb0qXefFk5CbsteGNpKo9h6QKimebS3KWiWwrYosyfdE14WjdKV1oxHzdqpKesLjxWH-Ga3bzqPKKplMT6quWKeBlE5U1tZ0l5GqZKPtZh0VFN7-lLtt8aXUgDT-fkaqQ~PCT9RdRKwI8fhU4h-Jm5HfSyslgGeDloQsVFCI6LBVY-A__&Key-Pair-Id=APKAIHG36VEWPDULE23Q",
-    })
+    // console.log("TEST");
+    // setChatItem({
+    //   name: "My Item", 
+    //   link: "/profile",
+    //   imageUrl: "https://us-east.stream-io-cdn.com/1148587/images/1b72a963-d3f8-4563-a427-5a218c24c890.no-profile-image.png?ro=0&Expires=1636640990&Signature=SLTzdSK3QYyNsmHEcGsjnscCNzUqrSNN9~FKIymk71ym6fKbwjhBVLhqmQk4rQZYHR1~kx9cH8VYLy~3lk3ITMKULckGWN3CQA4ImyC7yejKKLhAPjYlhoFfcc~Md7GtfdHoqEVaeuT7iG8wmSmh0GUaxDSna8UzeRPI9C~hb0qXefFk5CbsteGNpKo9h6QKimebS3KWiWwrYosyfdE14WjdKV1oxHzdqpKesLjxWH-Ga3bzqPKKplMT6quWKeBlE5U1tZ0l5GqZKPtZh0VFN7-lLtt8aXUgDT-fkaqQ~PCT9RdRKwI8fhU4h-Jm5HfSyslgGeDloQsVFCI6LBVY-A__&Key-Pair-Id=APKAIHG36VEWPDULE23Q",
+    // })
     if (location.state?.chatItem) {
       const { chatItem } = location.state;
       delete location.state?.chatItem;
