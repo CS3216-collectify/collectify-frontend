@@ -27,17 +27,18 @@ const CustomMessage = (props) => {
   if (decodedItem) {
     const { imageUrl, link, name, text } = decodedItem;
     if (imageUrl && link && name) {
+      console.log(link);
       return (
         <IonRow class={`ion-justify-content-${isMessageOwner ? "end" : "start"}`}>
           <IonCol size={8}>
-            <IonCard>
-            {/* <IonCard onClick={() => history.push(link)}> */}
+            <IonCard onClick={() => history.push(link)}>
               <IonImg src={imageUrl} />
               <IonCardHeader>
-                <IonCardSubtitle>{name}</IonCardSubtitle>
+                <Text size="l"><b>{name}</b></Text>
+                {/* <IonCardSubtitle>{name}</IonCardSubtitle> */}
               </IonCardHeader>
               <IonCardContent>
-                <Text color="black">{text}</Text>
+                <Text size="m">{text}</Text>
               </IonCardContent>
             </IonCard>
           </IonCol>
