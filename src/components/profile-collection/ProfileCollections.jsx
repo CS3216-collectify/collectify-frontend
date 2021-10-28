@@ -60,7 +60,7 @@ const ProfileCollections = (props) => {
         onScrollEnd={fetchNextPage} 
         listEnded={!hasMore} 
         collections={collections} 
-        emptyMessage="Start adding new collections!"
+        emptyMessage="No collections found!"
       />
   )
 }

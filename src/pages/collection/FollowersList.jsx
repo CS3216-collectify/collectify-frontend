@@ -67,7 +67,7 @@ const FollowersList = (props) => {
           users={users} 
           onScrollEnded={loadNextPage} 
           listEnded={loadInitialPage} 
-          emptyMessage="Be the first one to follow this collection!"
+          emptyMessage="No one following this collection" 
         />
       </IonContent>
     </IonPage>
