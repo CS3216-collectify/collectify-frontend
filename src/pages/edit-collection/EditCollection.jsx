@@ -29,17 +29,26 @@ const EditCollection = (props) => {
   const loadExistingData = useCallback(async () => {
     setLoading(true);
     try {
-      console.log("SUPPPPP");
       const currentCollection = await getCollectionByCollectionId(collectionId);
-      const options = await getCategories();
       setCollection(currentCollection);
-      setCategoryOptions(options);
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
   }, [collectionId]);
+
+  const loadCategories = useCallback(async () => {
+    setLoading(true);
+    try {
+      const options = await getCategories();
+      setCategoryOptions(options);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (location.state) {
@@ -51,6 +60,7 @@ const EditCollection = (props) => {
         loadExistingData();
       }
     }
+    loadCategories();
   }, [loadExistingData, location]);
 
   const editCompleteHandler = async (collection) => {
