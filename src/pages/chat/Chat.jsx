@@ -41,37 +41,38 @@ const CollectifyChat = () => {
   }, [isMobileNavVisible]);
 
   // TODO: find a better way to update the height
-  useLayoutEffect(() => {
-    const setAppHeight = () => {
-      setLoading(true);
-      var content = document.querySelector("ion-content");
-      var container = document.querySelector(".str-chat");
-      console.log(content, container, content?.offsetHeight);
+  // useLayoutEffect(() => {
+  //   const setAppHeight = () => {
+  //     setLoading(true);
+  //     var content = document.querySelector("ion-content");
+  //     var container = document.querySelector(".str-chat");
+  //     console.log(content, container, content?.offsetHeight);
 
-      if (!content?.offsetHeight) {
-        setLoading(false);
-        return;
-      }
+  //     if (!content?.offsetHeight) {
+  //       setLoading(false);
+  //       return;
+  //     }
 
-      //   while (!content || !container) {
-      // content = document.querySelector("ion-content");
-      // container = document.querySelector(".str-chat__container");
-      //   }
+  //     //   while (!content || !container) {
+  //     // content = document.querySelector("ion-content");
+  //     // container = document.querySelector(".str-chat__container");
+  //     //   }
 
-      //   if (content && container) {
-      //   }
-      const doc = document.documentElement;
-      doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
-      setLoading(false);
-    };
-    setTimeout(() => {
-      setAppHeight();
+  //     //   if (content && container) {
+  //     //   }
+  //     const doc = document.documentElement;
+  //     console.log(content.offsetHeight)
+  //     doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
+  //     setLoading(false);
+  //   };
+  //   setTimeout(() => {
+  //     setAppHeight();
 
-      window.addEventListener("resize", setAppHeight);
-    }, 2000);
+  //     window.addEventListener("resize", setAppHeight);
+  //   }, 2000);
 
-    return () => window.removeEventListener("resize", setAppHeight);
-  }, []);
+  //   return () => window.removeEventListener("resize", setAppHeight);
+  // }, []);
 
   const toggleMobile = () => setMobileNav(!isMobileNavVisible);
 

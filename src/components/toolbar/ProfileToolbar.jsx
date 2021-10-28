@@ -12,7 +12,7 @@ import {
   useIonPopover,
   IonText,
 } from "@ionic/react";
-import { search, homeOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
+import { search, homeOutline, personCircleOutline, settingsOutline, ellipsisVertical, addCircleOutline, chatbubblesOutline } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
@@ -80,12 +80,12 @@ const ProfileToolbar = ({ username, showMenu }) => {
           <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="small" slot="icon-only" icon={search} />
           </IonButton>
-          {/* <IonButton onClick={() => handleButtonClick("add")}>
+          <IonButton onClick={() => handleButtonClick("add")}>
             <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           <IonButton onClick={() => handleButtonClick("chat")}>
             <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
-          </IonButton> */}
+          </IonButton>
           <IonButton onClick={() => handleButtonClick("profile")}>
             <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
           </IonButton>

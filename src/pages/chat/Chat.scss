@@ -7,11 +7,14 @@
   overflow: hidden;
 
   .str-chat {
-    height: var(--chat-height);
+    height: 100%;
   }
   .str-chat.str-chat-channel.messaging {
     background: #fafafa;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.06), 0px 2px 30px rgba(0, 0, 0, 0.1);
+  }
+  .str-chat-channel-list {
+    height: 100%;
   }
 
   .dark.str-chat.str-chat-channel.messaging {
@@ -76,6 +79,10 @@
     padding: 20px;
   }
 
+  #mobile-channel-list {
+    padding-bottom: 50px;
+  }
+
   /* Mobile View */
   @media screen and (max-width: 576px) {
     /*
@@ -90,7 +97,7 @@
 
     #mobile-channel-list {
       width: 100vw;
-      height: 100vh;
+      height: 100%;
       position: fixed;
       // top: 0;
       // left: 0;

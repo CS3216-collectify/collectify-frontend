@@ -35,12 +35,12 @@ const HomeToolbar = ({ title }) => {
           <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="small" slot="icon-only" icon={search} />
           </IonButton>
-          {/* <IonButton onClick={() => handleButtonClick("add")}>
+          <IonButton onClick={() => handleButtonClick("add")}>
             <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           <IonButton onClick={() => handleButtonClick("chat")}>
             <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
-          </IonButton> */}
+          </IonButton>
           <IonButton onClick={() => handleButtonClick("profile")}>
             <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
