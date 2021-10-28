@@ -3,6 +3,7 @@ import { Avatar, useChatContext } from "stream-chat-react";
 
 import "./MessagingChannelList.css";
 import { SkeletonLoader } from "./SkeletonLoader";
+import noProfileImage from "../../../../assets/no-profile-image.png";
 
 import { CreateChannelIcon } from "../../assets";
 import streamLogo from "../../assets/stream.png";
@@ -43,7 +44,7 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
     return (
       <div className="messaging__channel-list">
         <div className="messaging__channel-list__header">
-          <Avatar image={image} name={name} size={40} />
+          <Avatar image={image || noProfileImage} name={name} size={40} />
           <div className="messaging__channel-list__header__name">{name || id}</div>
           <button className="messaging__channel-list__header__button" onClick={onCreateChannel}>
             <CreateChannelIcon />

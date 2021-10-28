@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { Avatar, ChatContext } from 'stream-chat-react';
 import { getCleanImage } from '../../assets';
+import noProfileImage from "../../../../assets/no-profile-image.png";
 
 import './MessagingChannelPreview.css';
 
 const getAvatarGroup = (members) => {
   if (members.length === 1) {
-    return <Avatar image={members[0].user?.image} name={members[0].user?.name || members[0].user?.id} size={40} />;
+    return <Avatar image={members[0].user?.image || noProfileImage} name={members[0].user?.name || members[0].user?.id} size={40} />;
   }
 
   if (members.length === 2) {
