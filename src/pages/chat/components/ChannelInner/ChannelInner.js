@@ -82,17 +82,10 @@ export const ChannelInner = (props) => {
       const { chatItem } = newState;
       console.log(chatItem);
       setChatItem(chatItem);
-      
-      delete newState.chatItem;
-      history.replace({
-        ...history.location,
-        newState,
-      });
-      console.log(location.state);
     } else {
       setChatItem(null);
     }
-  }, [history, location]);
+  }, [location]);
 
   const overrideSubmitHandler = (message) => {
     console.log(message);
