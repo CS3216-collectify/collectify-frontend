@@ -16,12 +16,12 @@ export const getChatUserInfo = async () => {
     username,
     firstName,
     lastName,
-    chatName = `${firstName} ${lastName} (@${username})`,
+    chatName = `${firstName} ${lastName}`,
     pictureUrl,
     chatToken = "PUT CHAT TOKEN HERE",
   } = user;
 
-  const chatUser = { chatId, chatName, pictureUrl, chatToken };
+  const chatUser = { chatId, chatName, pictureUrl, chatToken, username };
   return chatUser;
 };
 

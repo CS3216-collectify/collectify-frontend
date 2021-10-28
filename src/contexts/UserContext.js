@@ -21,13 +21,14 @@ export const UserContextProvider = ({ children }) => {
     }
     const chatUser = await getChatUserInfo();
     const client = StreamChat.getInstance(STREAM_CHAT_TOKEN);
-    const { chatId, chatName, pictureUrl, chatToken } = chatUser;
+    const { chatId, chatName, pictureUrl, chatToken, username } = chatUser;
 
     await client.connectUser(
       {
         id: chatId.toString(),
-        name: chatName,
-        image: pictureUrl,
+        name: chatName, // TODO: Remove, only backend change
+        username, // TODO: REMOVE
+        image: pictureUrl, // TODO: REMOVE
       },
       // TODO: Use chatToken after integration
       client.devToken(`${currentUserId}`)
