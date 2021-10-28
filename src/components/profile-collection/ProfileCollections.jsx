@@ -48,21 +48,16 @@ const ProfileCollections = (props) => {
   }, [profileUserId]);
 
   useEffect(() => {
-    loadInitialCollections();
+    if (location.pathname.startsWith("/profile")) {
+      loadInitialCollections();
+    }
   }, [props.profileUserId, location, loadInitialCollections]);
 
   const fetchNextPage = () => {
     loadUserCollections();
   };
 
-  return (
-      <CollectionList 
-        onScrollEnd={fetchNextPage} 
-        listEnded={!hasMore} 
-        collections={collections} 
-        emptyMessage="No collections found!"
-      />
-  )
-}
+  return <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="No collections found!" />;
+};
 
 export default ProfileCollections;

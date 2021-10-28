@@ -29,6 +29,7 @@ const EditCollection = (props) => {
   const loadExistingData = useCallback(async () => {
     setLoading(true);
     try {
+      console.log("SUPPPPP");
       const currentCollection = await getCollectionByCollectionId(collectionId);
       const options = await getCategories();
       setCollection(currentCollection);
@@ -45,9 +46,10 @@ const EditCollection = (props) => {
       console.log("Loading form data from state...");
       setCollection({ ...location.state.collection });
     } else {
-      console.log("Fetching form data from server...");
-      setLoading(true);
-      loadExistingData();
+      if (location.pathname.startsWith("/collections/")) {
+        console.log("Fetching form data from server...");
+        loadExistingData();
+      }
     }
   }, [loadExistingData, location]);
 
@@ -71,12 +73,11 @@ const EditCollection = (props) => {
   const deleteHandler = async () => {
     try {
       setDeleting(true);
-      console.log("ASDASDADD");
       await deleteCollection(collectionId).then(() => {
         setTimeout(() => {
           setDeleting(false);
           setToast({ message: "Successfully deleted collection.", color: "success" });
-          history.push("/profile");
+          history.replace("/profile");
         }, 2400);
       });
     } catch (e) {

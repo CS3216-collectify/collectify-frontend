@@ -58,8 +58,9 @@ const Collection = (props) => {
   }, [collectionId]);
 
   useEffect(() => {
-    setLoading(true);
-    loadCollectionData();
+    if (location.pathname.startsWith("/collections/")) {
+      loadCollectionData();
+    }
   }, [loadCollectionData, location]);
 
   const followHandler = () => {

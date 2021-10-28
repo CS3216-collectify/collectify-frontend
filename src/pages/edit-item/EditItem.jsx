@@ -41,9 +41,10 @@ const EditItem = () => {
       console.log("Loading form data from state...");
       setItem({ ...location.state.item });
     } else {
-      console.log("Fetching form data from server...");
-      setLoading(true);
-      loadExistingData();
+      if (location.pathname.startsWith("/collections/")) {
+        console.log("Fetching form data from server...");
+        loadExistingData();
+      }
     }
   }, [loadExistingData, location]);
 
@@ -85,17 +86,17 @@ const EditItem = () => {
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
-          {uploading ? (
-            <div className="uploading--container">
-              <FlexImage src={SavingGif} />
-            </div>
-          ) : deleting ? (
-            <div className="uploading--container">
-              <FlexImage src={DeletingGif} />
-            </div>
-          ) : (
-            <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
-          )}
+        {uploading ? (
+          <div className="uploading--container">
+            <FlexImage src={SavingGif} />
+          </div>
+        ) : deleting ? (
+          <div className="uploading--container">
+            <FlexImage src={DeletingGif} />
+          </div>
+        ) : (
+          <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
+        )}
       </IonContent>
     </IonPage>
   );
