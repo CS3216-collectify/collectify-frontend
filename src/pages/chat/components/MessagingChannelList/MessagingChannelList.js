@@ -8,11 +8,12 @@ import noProfileImage from "../../../../assets/no-profile-image.png";
 import { CreateChannelIcon } from "../../assets";
 import streamLogo from "../../assets/stream.png";
 import { useLocation } from "react-router";
+import { IonCol } from "@ionic/react";
 
 const MessagingChannelList = ({ children, error = false, loading, onCreateChannel, toggleMobile }) => {
   const location = useLocation();
   const { client, setActiveChannel } = useChatContext();
-  const { id, image = streamLogo, name = "Example User" } = client.user || {};
+  const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
   useEffect(() => {
     if (location.state?.recipient) {
@@ -45,7 +46,10 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
       <div className="messaging__channel-list">
         <div className="messaging__channel-list__header">
           <Avatar image={image || noProfileImage} name={name} size={40} />
-          <div className="messaging__channel-list__header__name">{name || id}</div>
+          <IonCol>
+            <div className="messaging__channel-list__header__name">{name || id}</div>
+            <div className="messaging__channel-list__header__username">@{username || id}</div>
+          </IonCol>
           <button className="messaging__channel-list__header__button" onClick={onCreateChannel}>
             <CreateChannelIcon />
           </button>
