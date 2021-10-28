@@ -6,10 +6,18 @@ import { SkeletonLoader } from "./SkeletonLoader";
 
 import { CreateChannelIcon } from "../../assets";
 import streamLogo from "../../assets/stream.png";
+import { useLocation } from "react-router";
 
-const MessagingChannelList = ({ children, error = false, loading, onCreateChannel }) => {
+const MessagingChannelList = ({ children, error = false, loading, onCreateChannel, toggleMobile }) => {
+  const location = useLocation();
   const { client, setActiveChannel } = useChatContext();
   const { id, image = streamLogo, name = "Example User" } = client.user || {};
+
+  useEffect(() => {
+    if (location.state?.recipient) {
+      toggleMobile();
+    }
+  }, [location]);
 
   useEffect(() => {
     const getChannels = async (client) => {

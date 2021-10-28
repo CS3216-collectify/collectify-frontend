@@ -104,6 +104,15 @@ const Profile = () => {
     });
   };
 
+  const chatHandler = async () => {
+    if (isOwnProfile) {
+      return;
+    }
+    const pathname = "/chat";
+    const state = { recipient: profileUserId.toString() }
+    history.push({ pathname, state });
+  }
+
   if (!isUserAuthenticated && !username) {
     // is guest user
     return (
@@ -164,15 +173,7 @@ const Profile = () => {
                 </IonRow>
               )}
               {!isOwnProfile && (
-                <IonButton
-                  onClick={async () => {
-                    // handle own profile
-                    const channel = chatClient.channel("messaging", {
-                      members: [chatClient.userID, `${profileUserId}`],
-                    });
-                    await channel.create();
-                  }}
-                >
+                <IonButton fill="outline" onClick={chatHandler}>
                   Chat
                 </IonButton>
               )}
