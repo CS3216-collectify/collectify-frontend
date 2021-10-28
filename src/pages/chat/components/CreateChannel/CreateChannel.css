@@ -321,7 +321,8 @@
 
   .close-mobile-create {
     display: unset;
-    margin-top: 20px;
+    margin-top: 15px;
+    margin-right: 10px;
     cursor: pointer;
     flex: 1;
   }

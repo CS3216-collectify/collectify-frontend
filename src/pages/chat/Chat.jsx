@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { IonContent, IonPage } from "@ionic/react";
-import { StreamChat } from "stream-chat";
+import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import { Chat, Channel, ChannelList } from "stream-chat-react";
 import useUserContext from "../../hooks/useUserContext";
 
@@ -28,7 +27,7 @@ const CollectifyChat = () => {
   const [giphyState, setGiphyState] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isMobileNavVisible, setMobileNav] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const mobileChannelList = document.querySelector("#mobile-channel-list");
@@ -44,9 +43,15 @@ const CollectifyChat = () => {
   // TODO: find a better way to update the height
   useLayoutEffect(() => {
     const setAppHeight = () => {
+      setLoading(true);
       var content = document.querySelector("ion-content");
       var container = document.querySelector(".str-chat");
       console.log(content, container, content?.offsetHeight);
+
+      if (!content?.offsetHeight) {
+        setLoading(false);
+        return;
+      }
 
       //   while (!content || !container) {
       // content = document.querySelector("ion-content");
@@ -57,6 +62,7 @@ const CollectifyChat = () => {
       //   }
       const doc = document.documentElement;
       doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
+      setLoading(false);
     };
     setTimeout(() => {
       setAppHeight();
@@ -71,24 +77,32 @@ const CollectifyChat = () => {
 
   const giphyContextValue = { giphyState, setGiphyState };
 
-  if (!chatClient) return <IonPage>asdasd</IonPage>;
+  if (!chatClient || loading) {
+    return (
+      <IonPage>
+        <HomeToolbar title="Chat" />
+        <IonContent class="chat-content">
+          <IonLoading isOpen={true} />
+        </IonContent>
+      </IonPage>
+    );
+  }
 
   return (
     <IonPage>
       <HomeToolbar title="Chat" />
-
       <IonContent class="chat-content">
-        <Chat client={chatClient} theme={`messaging ${theme}`}>
+        <Chat client={chatClient} theme="messaging light">
           <div id="mobile-channel-list" onClick={toggleMobile}>
             <ChannelList
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(!isCreating)} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} toggleMobile={() => setMobileNav(false)} />}
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} />}
             />
           </div>
-          <div>
+          {/* <div> */}
             <Channel
               Input={MessagingInput}
               maxNumberOfFiles={10}
@@ -99,10 +113,10 @@ const CollectifyChat = () => {
             >
               {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
               <GiphyContext.Provider value={giphyContextValue}>
-                <ChannelInner theme={theme} toggleMobile={toggleMobile} />
+                <ChannelInner theme="light" toggleMobile={toggleMobile} />
               </GiphyContext.Provider>
             </Channel>
-          </div>
+          {/* </div> */}
         </Chat>
       </IonContent>
     </IonPage>

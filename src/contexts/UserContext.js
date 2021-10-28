@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect, useCallback } from "react";
 import { getUserId, hasAccessTokenStored, hasRefreshTokenStored } from "../utils/auth/store";
 import { storeUserId } from "../utils/auth/actions";
-import { getCurrentUser } from "../services/users";
+import { getChatUserInfo, getCurrentUser } from "../services/users";
 import { StreamChat } from "stream-chat";
 
 const UserContext = createContext();
@@ -14,14 +14,18 @@ export const UserContextProvider = ({ children }) => {
   const [chatClient, setChatClient] = useState(null);
 
   const initChat = useCallback(async () => {
-    const client = StreamChat.getInstance(process.env.REACT_APP_CHAT_API_KEY);
+    if (!currentUserId) {
+      return;
+    }
+    const chatUser = await getChatUserInfo();
+    const { chatId, chatName, pictureUrl, chatToken } = chatUser;
 
-    // API call to backend to get token and image
+    const client = StreamChat.getInstance(chatToken);
     await client.connectUser(
       {
-        id: `${currentUserId}`,
-        name: "John Doe" + currentUserId,
-        image: "https://getstream.io/random_svg/?name=John",
+        id: chatId.toString(),
+        name: chatName,
+        image: pictureUrl,
       },
       client.devToken(`${currentUserId}`)
     );
@@ -44,10 +48,6 @@ export const UserContextProvider = ({ children }) => {
       }
     }
 
-    if (currentUserId && isUserAuthenticated) {
-      initChat();
-    }
-
     if (!isUserAuthenticated) {
       setCurrentUserId(null);
       chatClient?.disconnectUser();
@@ -55,13 +55,15 @@ export const UserContextProvider = ({ children }) => {
     }
 
     return () => chatClient?.disconnectUser();
-  }, [chatClient, currentUserId, initChat, isUserAuthenticated]);
+  }, [chatClient, currentUserId, isUserAuthenticated]);
 
-  // useEffect(() => {
-  //   if (chatClient === null && currentUserId) {
-  //     initChat();
-  //   }
-  // }, [chatClient, currentUserId, initChat]);
+  useEffect(() => {
+    if (chatClient === null && currentUserId) {
+      initChat();
+    }
+
+    return () => chatClient?.disconnectUser();
+  }, [chatClient, currentUserId, initChat]);
 
   const isCurrentUser = (userId) => {
     return parseInt(currentUserId) === parseInt(userId);

@@ -1,9 +1,9 @@
+import { IonChip, IonIcon, IonRow } from '@ionic/react';
+import { arrowBack, close } from 'ionicons/icons';
+import _debounce from 'lodash.debounce';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Avatar, useChatContext } from 'stream-chat-react';
-import _debounce from 'lodash.debounce';
-
-import { XButton, XButtonBackground } from '../../assets';
-
+import useToastContext from '../../../../hooks/useToastContext';
 import './CreateChannel.css';
 
 const UserResult = ({ user }) => (
@@ -18,6 +18,7 @@ const UserResult = ({ user }) => (
 );
 
 const CreateChannel = ({ onClose, toggleMobile }) => {
+  const setToast = useToastContext();
   const { client, setActiveChannel } = useChatContext();
 
   const [focusedUser, setFocusedUser] = useState(undefined);
@@ -25,12 +26,13 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
   const [resultsOpen, setResultsOpen] = useState(false);
   const [searchEmpty, setSearchEmpty] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
 
   const inputRef = useRef();
 
   const clearState = () => {
+    console.log("state cleared");
     setInputText('');
     setResultsOpen(false);
     setSearchEmpty(false);
@@ -84,41 +86,42 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
 
   useEffect(() => {
     if (inputText) {
-      findUsersDebounce();
+      findUsers();
+      // findUsersDebounce();
     }
   }, [inputText]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const createChannel = async () => {
-    const selectedUsersIds = selectedUsers.map((u) => u.id);
+  const createChannel = async (selectedUser) => {
+    if (!selectedUser) return;
+    console.log("creating channel...");
+    const selectedUserId = selectedUser.id;
 
-    if (!selectedUsersIds.length) return;
+    try {
+      const conversation = await client.channel('messaging', {
+        members: [client.userID, selectedUserId],
+      });
 
-    const conversation = await client.channel('messaging', {
-      members: [...selectedUsersIds, client.userID],
-    });
-
-    await conversation.watch();
-
-    setActiveChannel(conversation);
-    setSelectedUsers([]);
-    setUsers([]);
-    onClose();
+      await conversation.watch();
+      setActiveChannel(conversation);
+      setSelectedUser(null);
+      onClose();
+    } catch (e) {
+      setToast({ message: "Unable to open chat. Please try again.", color: "danger" });
+    }
   };
 
-  const addUser = (u) => {
-    const isAlreadyAdded = selectedUsers.find((user) => user.id === u.id);
+  const addUser = (user) => {
+    const isAlreadyAdded = selectedUser && selectedUser.id === user.id // selectedUser.find((user) => user.id === u.id);
     if (isAlreadyAdded) return;
 
-    setSelectedUsers([...selectedUsers, u]);
+    setSelectedUser(user);
     setResultsOpen(false);
     setInputText('');
     inputRef.current.focus();
   };
 
-  const removeUser = (user) => {
-    const newUsers = selectedUsers.filter((item) => item.id !== user.id);
-    setSelectedUsers(newUsers);
-    inputRef.current.focus();
+  const removeUser = () => {
+    setSelectedUser(null);
   };
 
   const handleKeyDown = useCallback(
@@ -156,41 +159,37 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
     <div className='messaging-create-channel'>
       <header>
         <div className='messaging-create-channel__left'>
+          <div className='close-mobile-create' onClick={() => toggleMobile()}>
+            <IonIcon size="large" icon={arrowBack} className="ion-margin-right" />
+          </div>
           <div className='messaging-create-channel__left-text'>To: </div>
           <div className='users-input-container'>
-            {!!selectedUsers?.length && (
-              <div className='messaging-create-channel__users'>
-                {selectedUsers.map((user) => (
-                  <div
-                    className='messaging-create-channel__user'
-                    onClick={() => removeUser(user)}
-                    key={user.id}
-                  >
-                    <div className='messaging-create-channel__user-text'>{user.name}</div>
-                    <XButton />
-                  </div>
-                ))}
-              </div>
-            )}
-            <form onSubmit={addUser}>
-              <input
-                autoFocus
-                ref={inputRef}
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder={!selectedUsers.length ? 'Start typing for suggestions' : ''}
-                type='text'
-                className='messaging-create-channel__input'
-              />
-            </form>
-          </div>
-          <div className='close-mobile-create' onClick={() => toggleMobile()}>
-            <XButtonBackground />
+            {selectedUser &&
+              <IonChip onClick={removeUser}>
+                <div className='messaging-create-channel__user-text'>{selectedUser.name}</div>
+                <IonIcon icon={close} />
+              </IonChip>
+            }
+            {!selectedUser &&
+              <form onSubmit={addUser}>
+                <input
+                  autoFocus
+                  ref={inputRef}
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder={!selectedUser ? 'Start typing for suggestions' : ''}
+                  type='text'
+                  className='messaging-create-channel__input'
+                />
+              </form>
+            }
           </div>
         </div>
-        <button className='create-channel-button' onClick={createChannel}>
-          Start chat
-        </button>
+        {/* <IonRow className="ion-justify-content-right ion-margin-top">
+          <button className='create-channel-button' onClick={createChannel}>
+            Start Chat
+          </button>
+        </IonRow> */}
       </header>
       {inputText && (
         <main>
@@ -199,10 +198,8 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
               <div>
                 {users.map((user, i) => (
                   <div
-                    className={`messaging-create-channel__user-result ${
-                      focusedUser === i && 'focused'
-                    }`}
-                    onClick={() => addUser(user)}
+                    className="messaging-create-channel__user-result"
+                    onClick={() => createChannel(user)}
                     key={user.id}
                   >
                     <UserResult user={user} />
@@ -218,7 +215,7 @@ const CreateChannel = ({ onClose, toggleMobile }) => {
                 }}
                 className='messaging-create-channel__user-result empty'
               >
-                No people found...
+                No users found...
               </div>
             )}
           </ul>

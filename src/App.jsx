@@ -77,7 +77,7 @@ const App = () => {
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
-                <Route exact path="/chat" component={CollectifyChat} />
+                <ProtectedRoute exact path="/chat" component={CollectifyChat} />
                 <Route exact path="/discover" component={Discover} />
                 <Route exact path="/not-found" component={NotFound} />
                 <Redirect to="/" />
