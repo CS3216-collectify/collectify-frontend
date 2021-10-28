@@ -22,10 +22,6 @@ const ImageEditList = (props) => {
   const groupsOfFour = groupElements(images, 4);
 
   const safeDeleteHandler = (idx) => {
-    if (images.length < 2) {
-      setToast({ message: "Please upload another image before deleting this image.", color: "danger" });
-      return;
-    }
     deleteImageHandler(idx);
   };
 
