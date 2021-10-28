@@ -8,3 +8,9 @@
 .unfollow-button {
   flex: 1;
 }
+
+.delete-button, .save-button {
+  ion-icon {
+    margin-right: 4px;
+  }
+}

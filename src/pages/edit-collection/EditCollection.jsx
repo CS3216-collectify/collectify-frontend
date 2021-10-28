@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -29,6 +29,7 @@ const EditCollection = (props) => {
   const loadExistingData = useCallback(async () => {
     setLoading(true);
     try {
+      console.log("SUPPPPP");
       const currentCollection = await getCollectionByCollectionId(collectionId);
       const options = await getCategories();
       setCollection(currentCollection);
@@ -45,9 +46,10 @@ const EditCollection = (props) => {
       console.log("Loading form data from state...");
       setCollection({ ...location.state.collection });
     } else {
-      console.log("Fetching form data from server...");
-      setLoading(true);
-      loadExistingData();
+      if (location.pathname.startsWith("/collections/")) {
+        console.log("Fetching form data from server...");
+        loadExistingData();
+      }
     }
   }, [loadExistingData, location]);
 
@@ -75,7 +77,7 @@ const EditCollection = (props) => {
         setTimeout(() => {
           setDeleting(false);
           setToast({ message: "Successfully deleted collection.", color: "success" });
-          history.push("/profile");
+          history.replace("/profile");
         }, 2400);
       });
     } catch (e) {

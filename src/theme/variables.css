@@ -97,6 +97,10 @@ http://ionicframework.com/docs/theming/ */
   --ion-grid-width-xl: 540px;
 }
 
+.ion-full-width {
+  width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors

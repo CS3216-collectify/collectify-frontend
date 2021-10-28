@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -41,9 +41,10 @@ const EditItem = () => {
       console.log("Loading form data from state...");
       setItem({ ...location.state.item });
     } else {
-      console.log("Fetching form data from server...");
-      setLoading(true);
-      loadExistingData();
+      if (location.pathname.startsWith("/collections/")) {
+        console.log("Fetching form data from server...");
+        loadExistingData();
+      }
     }
   }, [loadExistingData, location]);
 
