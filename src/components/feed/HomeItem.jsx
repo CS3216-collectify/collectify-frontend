@@ -1,4 +1,4 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonLabel, IonRow } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import ImageCarousel from "../gallery/ImageCarousel";
@@ -62,11 +62,19 @@ const HomeItem = (props) => {
     history.push(`/profile/${ownerUsername}`);
   };
 
+  const goToCollectionPage = () => {
+    history.push(`/collections/${collectionId}`);
+  }
   return (
     <>
       <IonGrid fixed className="ion-padding">
-        <IonRow>
+        <IonRow className="ion-justify-content-between">
+          <IonCol>
           <Text onClick={goToUserProfilePage}>@{ownerUsername}</Text>
+          </IonCol>
+          <IonButton size="small" onClick={goToCollectionPage} fill="outline">
+            <IonLabel>View Collection</IonLabel>
+          </IonButton>
         </IonRow>
       </IonGrid>
 

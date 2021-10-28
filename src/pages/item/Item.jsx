@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonButton, IonLabel } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams, useLocation } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -96,6 +96,10 @@ const Item = () => {
     });
   };
 
+  const goToCollectionPage = () => {
+    history.push(`/collections/${collectionId}`);
+  }
+
   return (
     <IonPage className="item">
       <IonLoading isOpen={loading} spinner="crescent" />
@@ -114,6 +118,13 @@ const Item = () => {
                   <EditButton label="Item" onClick={editPageRedirect} fill="outline" />
                 </IonRow>
               )}
+              {!isItemOwner &&
+                <IonRow className="ion-justify-content-end">
+                  <IonButton size="small" onClick={goToCollectionPage} fill="outline">
+                    <IonLabel>View Collection</IonLabel>
+                  </IonButton>
+                </IonRow>
+              }
             </IonCol>
           </IonRow>
         </IonGrid>
