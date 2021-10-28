@@ -52,7 +52,9 @@ const SelectCollections = (props) => {
   }, [profileUserId]);
 
   useEffect(() => {
-    loadInitialCollections();
+    if (location.pathname === "/add") {
+      loadInitialCollections();
+    }
   }, [props.profileUserId, location, loadInitialCollections]);
 
   const fetchNextPage = () => {
@@ -66,12 +68,7 @@ const SelectCollections = (props) => {
           Please select an existing collection or create a new collection to add your item to.
         </Text>
       </IonRow>
-      <SelectCollectionList
-        onScrollEnd={fetchNextPage}
-        listEnded={!hasMore}
-        collections={collections}
-        emptyMessage="Start adding new collections!"
-      />
+      <SelectCollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="Start adding new collections!" />
     </>
   );
 };

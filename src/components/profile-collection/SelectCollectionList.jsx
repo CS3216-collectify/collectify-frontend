@@ -22,9 +22,17 @@ const SelectCollectionList = (props) => {
 
   if (listEnded && collections && collections.length === 0 && emptyMessage) {
     return (
-      <IonGrid className="ion-text-center">
-        <Text size="xl">{emptyMessage}</Text>
-      </IonGrid>
+      <>
+        <IonRow>
+          <IonButton
+            className="add-new-collection-button"
+            fill="outline"
+            onClick={() => history.push({ pathname: "/add-collections", state: { redirectToAdd: true } })}
+          >
+            + Add a new collection
+          </IonButton>
+        </IonRow>
+      </>
     );
   }
 
