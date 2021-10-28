@@ -19,7 +19,7 @@ const Settings = () => {
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
 
         <IonGrid fixed>
-          <Text>Any feedback or suggestions? Please send us an email!</Text>
+          <Text size="l">Any feedback or suggestions? Please send us an email!</Text>
           <IonRow className="mail-to-button--container">
             <IonButton className="mail-to-button" href="mailto:cs3216collectify@gmail.com">
               Contact us
