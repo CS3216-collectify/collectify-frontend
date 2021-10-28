@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { logChatPromiseExecution } from 'stream-chat';
 import {
   MessageList,
@@ -22,9 +22,26 @@ export const ChannelInner = (props) => {
   const setToast = useToastContext();
   const { setActiveChannel } = useChatContext();
   const { theme, toggleMobile } = props;
+  const [chatItem, setChatItem] = useState(null);
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
+
+  useEffect(() => {
+    console.log("TEST");
+    setChatItem({
+      name: "My Item", 
+      link: "Item Link",
+      imageUrl: "https://us-east.stream-io-cdn.com/1148587/images/1b72a963-d3f8-4563-a427-5a218c24c890.no-profile-image.png?ro=0&Expires=1636640990&Signature=SLTzdSK3QYyNsmHEcGsjnscCNzUqrSNN9~FKIymk71ym6fKbwjhBVLhqmQk4rQZYHR1~kx9cH8VYLy~3lk3ITMKULckGWN3CQA4ImyC7yejKKLhAPjYlhoFfcc~Md7GtfdHoqEVaeuT7iG8wmSmh0GUaxDSna8UzeRPI9C~hb0qXefFk5CbsteGNpKo9h6QKimebS3KWiWwrYosyfdE14WjdKV1oxHzdqpKesLjxWH-Ga3bzqPKKplMT6quWKeBlE5U1tZ0l5GqZKPtZh0VFN7-lLtt8aXUgDT-fkaqQ~PCT9RdRKwI8fhU4h-Jm5HfSyslgGeDloQsVFCI6LBVY-A__&Key-Pair-Id=APKAIHG36VEWPDULE23Q",
+    })
+    if (location.state?.chatItem) {
+      const { chatItem } = location.state;
+      delete location.state?.chatItem;
+      console.log(chatItem);
+      setChatItem(chatItem);
+      delete location.state?.chatItem;
+    }
+  }, [location]);
 
   useEffect(() => {
     if (location.state?.recipient) {
@@ -46,11 +63,19 @@ export const ChannelInner = (props) => {
   }, [location]);
 
   const overrideSubmitHandler = (message) => {
+    console.log(message);
     let updatedMessage;
 
     if (message.attachments?.length && message.text?.startsWith('/giphy')) {
       const updatedText = message.text.replace('/giphy', '');
       updatedMessage = { ...message, text: updatedText };
+    }
+
+    if (chatItem) {
+      const chatItemWithMessage = { ...chatItem, text: message?.text }
+      const updatedText = JSON.stringify(chatItemWithMessage);
+      updatedMessage = { ...message, text: updatedText };
+      setChatItem(null);
     }
 
     if (giphyState) {
