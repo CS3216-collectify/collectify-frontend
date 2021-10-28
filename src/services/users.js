@@ -18,7 +18,7 @@ export const getChatUserInfo = async () => {
     lastName,
     chatName = `${firstName} ${lastName} (@${username})`,
     pictureUrl,
-    chatToken = process.env.REACT_APP_CHAT_API_KEY,
+    chatToken = "PUT CHAT TOKEN HERE",
   } = user;
 
   const chatUser = { chatId, chatName, pictureUrl, chatToken };

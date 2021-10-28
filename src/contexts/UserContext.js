@@ -8,6 +8,8 @@ const UserContext = createContext();
 
 export default UserContext;
 
+const STREAM_CHAT_TOKEN = process.env.REACT_APP_CHAT_API_KEY;
+
 export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(hasAccessTokenStored() || hasRefreshTokenStored());
   const [currentUserId, setCurrentUserId] = useState(getUserId());
@@ -18,15 +20,16 @@ export const UserContextProvider = ({ children }) => {
       return;
     }
     const chatUser = await getChatUserInfo();
+    const client = StreamChat.getInstance(STREAM_CHAT_TOKEN);
     const { chatId, chatName, pictureUrl, chatToken } = chatUser;
 
-    const client = StreamChat.getInstance(chatToken);
     await client.connectUser(
       {
         id: chatId.toString(),
         name: chatName,
         image: pictureUrl,
       },
+      // TODO: Use chatToken after integration
       client.devToken(`${currentUserId}`)
     );
 
