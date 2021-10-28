@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -85,17 +85,17 @@ const EditItem = () => {
       <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
-        {uploading ? (
-          <div className="uploading--container">
-            <FlexImage src={SavingGif} />
-          </div>
-        ) : deleting ? (
-          <div className="uploading--container">
-            <FlexImage src={DeletingGif} />
-          </div>
-        ) : (
-          <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
-        )}
+          {uploading ? (
+            <div className="uploading--container">
+              <FlexImage src={SavingGif} />
+            </div>
+          ) : deleting ? (
+            <div className="uploading--container">
+              <FlexImage src={DeletingGif} />
+            </div>
+          ) : (
+            <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
+          )}
       </IonContent>
     </IonPage>
   );

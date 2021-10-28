@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -71,6 +71,7 @@ const EditCollection = (props) => {
   const deleteHandler = async () => {
     try {
       setDeleting(true);
+      console.log("ASDASDADD");
       await deleteCollection(collectionId).then(() => {
         setTimeout(() => {
           setDeleting(false);

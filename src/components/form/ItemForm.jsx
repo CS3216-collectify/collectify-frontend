@@ -1,4 +1,4 @@
-import { IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonGrid, IonItem, IonLabel, IonList, IonRow, IonCol } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -10,6 +10,7 @@ import SaveButton from "../button/SaveButton";
 import DeleteButton from "../button/DeleteButton";
 import useToastContext from "../../hooks/useToastContext";
 import ConfirmAlert from "../alert/ConfirmAlert";
+import Text from "../text/Text";
 
 const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
@@ -107,7 +108,7 @@ const ItemForm = (props) => {
   };
 
   return (
-    <IonList>
+    <IonList className="item-form">
       <ConfirmAlert
         title="Delete Item?"
         message="This action cannot be undone."
@@ -115,27 +116,35 @@ const ItemForm = (props) => {
         onCancel={() => setDeleteConfirm(false)}
         onConfirm={deleteHandler}
       />
+        <IonGrid fixed>
       <IonItem>
         <TextInput label="Item Name" value={itemName} placeholder="Enter item name" onChange={setItemName} />
       </IonItem>
       <IonItem>
         <TextArea label="Description" value={itemDescription} placeholder="Enter item description" onChange={setItemDescription} />
       </IonItem>
+
       <IonItem>
-        <IonGrid fixed>
-          <IonLabel>Photos</IonLabel>
+        <div>
+          <Text size="xs">Photos</Text>
           <ImageEditList images={images} onDelete={deleteImageHandler} />
           <IonRow className="ion-justify-content-end">
             <UploadButton onChange={newImageHandler} />
           </IonRow>
-        </IonGrid>
+        </div>
       </IonItem>
-      <IonItem>
-        <IonGrid fixed>
+      
+      <IonRow className="ion-full-width save-delete-buttons--container">
+        {onDelete && (
+          <IonCol size={6}>
+            <DeleteButton onClick={() => setDeleteConfirm(true)} />
+          </IonCol>
+        )}
+        <IonCol size={6}>
           <SaveButton onClick={saveHandler} />
-          {onDelete && <DeleteButton onClick={() => setDeleteConfirm(true)} />}
-        </IonGrid>
-      </IonItem>
+        </IonCol>
+      </IonRow>
+      </IonGrid>
     </IonList>
   );
 };
