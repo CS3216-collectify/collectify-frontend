@@ -1,7 +1,6 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonGrid, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
 import { getFollowersByCollectionId } from "../../services/followers";
@@ -24,7 +23,7 @@ const FollowersList = (props) => {
     try {
       const nextPage = pages + 1;
       const fetchedUsers = await getFollowersByCollectionId(collectionId, nextPage * LIMIT, LIMIT);
-      const updatedUsers = [...users, ...fetchedUsers] 
+      const updatedUsers = [...users, ...fetchedUsers];
       const updatedHasMore = fetchedUsers && fetchedUsers.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
@@ -62,15 +61,10 @@ const FollowersList = (props) => {
     <IonPage>
       <HomeToolbar title={`Followers`} />
       <IonContent>
-        <UserList 
-          users={users} 
-          onScrollEnded={loadNextPage} 
-          listEnded={loadInitialPage} 
-          emptyMessage="No one following this collection" 
-        />
+          <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one following this collection" />
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
 export default FollowersList;
