@@ -127,10 +127,10 @@ const ItemForm = (props) => {
         </IonItem>
 
         <IonItem>
-          <div>
+          <div className="add-photos--container">
             <Text size="xs">Photos</Text>
             <ImageEditList images={images} onDelete={deleteImageHandler} />
-            <IonRow className="ion-justify-content-end">
+            <IonRow  className="ion-justify-content-center">
               <UploadButton onChange={newImageHandler} />
             </IonRow>
           </div>
@@ -142,7 +142,7 @@ const ItemForm = (props) => {
               <DeleteButton onClick={() => setDeleteConfirm(true)} />
             </IonCol>
           )}
-          <IonCol size={6}>
+          <IonCol size={onDelete ? 6 : 12}>
             <SaveButton onClick={saveHandler} />
           </IonCol>
         </IonRow>

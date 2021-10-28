@@ -9,7 +9,7 @@ const SelectButton = ({ buttonLabel, selectLabel, onChange: selectHandler, optio
 
   return (
     <>
-      <IonButton size="small" fill="clear" onClick={() => document.getElementById("cat-select").click()} className="select-button">
+      <IonButton size="medium" fill="clear" onClick={() => document.getElementById("cat-select").click()} className="select-button">
         {buttonLabel}
       </IonButton>
       <IonLabel hidden={true}>{selectLabel}</IonLabel>

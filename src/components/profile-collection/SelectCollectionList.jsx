@@ -40,7 +40,7 @@ const SelectCollectionList = (props) => {
     <>
       <IonRow>
         <IonButton
-          className="add-new-collection-button"
+          className="add-new-item-button"
           fill="solid"
           onClick={() => history.push(`/collections/${collectionId}/add`)}
           disabled={collectionId === null}
@@ -62,7 +62,6 @@ const SelectCollectionList = (props) => {
       <IonRadioGroup className="select-collection-list" value={collectionId} onIonChange={(e) => setCollectionId(e.detail.value)}>
         {collections.map((collection, index) => (
           <div className="radio-collection--container" key={index}>
-            <HorizontalLine color="lightgrey" />
             <div className="radio-collection">
               <IonRadio mode="md" className="collection-radio" value={collection.collectionId} />
               <CollectionCard collection={collection} />
