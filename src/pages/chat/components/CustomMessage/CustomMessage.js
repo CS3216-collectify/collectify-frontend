@@ -1,12 +1,9 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonGrid, IonImg, IonItem, IonList, IonRow, IonThumbnail } from '@ionic/react';
 import React from 'react';
-import { MessageSimple } from 'stream-chat-react';
-import Text from '../../../../components/text/Text';
-import { useMessageContext, useChatContext } from 'stream-chat-react';
-
-import './CustomMessage.css';
-import useUserContext from '../../../../hooks/useUserContext';
 import { useHistory } from 'react-router';
+import { MessageSimple, useChatContext, useMessageContext } from 'stream-chat-react';
+import useUserContext from '../../../../hooks/useUserContext';
+import './CustomMessage.css';
+import ItemMessageFromOther from './ItemMessageFromOther';
 
 const CustomMessage = (props) => {
   const history = useHistory();
@@ -16,35 +13,18 @@ const CustomMessage = (props) => {
 
   const isMessageOwner = isCurrentUser(message.user.id);
 
-  let decodedItem = null;
-  try {
-    decodedItem = JSON.parse(message.text);
-  } catch (e) {
-  }
-
-  if (decodedItem) {
-    const { imageUrl, link, name, text } = decodedItem;
+  if (message?.chatItem) {
+    const { imageUrl, link, name } = message?.chatItem;
     if (imageUrl && link && name) {
-      console.log(link);
-      return (
-        <IonRow class={`ion-justify-content-${isMessageOwner ? "end" : "start"}`}>
-          <IonCol size={8}>
-            <IonCard onClick={() => history.push(link)}>
-              <IonImg src={imageUrl} />
-              <IonCardHeader>
-                <Text size="l"><b>{name}</b></Text>
-                {/* <IonCardSubtitle>{name}</IonCardSubtitle> */}
-              </IonCardHeader>
-              <IonCardContent>
-                <Text size="m">{text}</Text>
-              </IonCardContent>
-            </IonCard>
-          </IonCol>
-        </IonRow>
-      );
+      if (!isMessageOwner) {
+        return (
+          <ItemMessageFromOther message={message} />
+        );
+      }
     }
   }
 
+  console.log(message);
   return (
     <>
       <MessageSimple {...props} />
@@ -52,4 +32,58 @@ const CustomMessage = (props) => {
   );
 };
 
-export default CustomMessage;
+export default React.memo(CustomMessage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <div className="str-chat__message-inner">
+            <div className="str-chat__message-text">
+                
+            </div>
+            
+            <div class="str-chat__message-text-inner str-chat__message-simple-text-inner">
+              <div>
+                <p>s</p>
+              </div>
+            </div>
+            <div className="str-chat__message-data str-chat__message-simple-data">
+              <time class="str-chat__message-simple-timestamp">
+                Today 
+              </time>
+            </div> 
+          </div>*/}
+          {/* <IonCol size={8}>
+            <IonCard onClick={() => history.push(link)}>
+              <IonImg src={imageUrl} />
+              <IonCardHeader>
+                <Text size="l"><b>{name}</b></Text>
+              </IonCardHeader>
+              <IonCardContent>
+                <Text size="m">{text}</Text>
+              </IonCardContent>
+            </IonCard>
+          </IonCol> */}
+
+
