@@ -89,12 +89,12 @@ const HomeItem = (props) => {
       <IonGrid fixed className="ion-padding">
         <IonRow>
           <IonCol size={9}>
-            <Text size="l" onClick={goToItemPage}>
+            <Text className="clickable" size="l" onClick={goToItemPage}>
               <b>{itemName}</b>
             </Text>
           </IonCol>
 
-          <IonCol>
+          <IonCol size={3}>
             <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
             <Text color="default">{likesCount} likes</Text>
           </IonCol>
@@ -105,10 +105,10 @@ const HomeItem = (props) => {
             <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
           </IonCol>
 
-          <IonCol>
+          <IonCol size={3}>
             <div className="tradable--container">
-              <IonIcon icon={peopleOutline} className="item-tradable-icon" />
-              <Text>
+              <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
+              <Text size="s">
                 <b>Tradable</b>
               </Text>
             </div>

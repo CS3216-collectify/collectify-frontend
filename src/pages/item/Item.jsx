@@ -157,7 +157,7 @@ const Item = () => {
               </Text>
             </IonCol>
 
-            <IonCol>
+            <IonCol size={3}>
               <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
               <Text color="default">{likesCount} likes</Text>
             </IonCol>
@@ -168,10 +168,10 @@ const Item = () => {
               <Text>{itemDescription}</Text>
             </IonCol>
 
-            <IonCol className="item-tradable">
+            <IonCol size={3} className="item-tradable">
               <div className="tradable--container">
-                <IonIcon icon={peopleOutline} className="item-tradable-icon" />
-                <Text>
+                <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
+                <Text size="s">
                   <b>Tradable</b>
                 </Text>
               </div>
@@ -183,7 +183,7 @@ const Item = () => {
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
 
-            <IonCol>
+            <IonCol size={3}>
               <IonButton size="small" onClick={() => openChatWithItem()}>
                 <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
                 <IonLabel>Chat</IonLabel>
