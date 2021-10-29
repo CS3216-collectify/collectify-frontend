@@ -12,6 +12,9 @@ import Text from '../../../../components/text/Text';
 import { useHistory } from 'react-router';
 
 const getAvatarGroup = (members) => {
+  if (members.length === 0) {
+    return <Avatar image={noProfileImage} name="Deleted User" size={40} />;
+  }
   if (members.length === 1) {
     return (
       <div className='messaging__channel-header__avatars'>
@@ -147,12 +150,17 @@ const MessagingChannelHeader = (props) => {
 
   useEffect(() => {
     if (!channelName) {
-      setTitle(
-        members.map((member) => member.user?.name || member.user?.id || 'Unnamed User').join(', '),
-      );
-      setUsername(
-        members.map((member) => member.user?.username || member.user?.id || 'Unnamed User').join(', '),
-      );
+      if (members.length) {
+        setTitle(
+          members.map((member) => member.user?.name || member.user?.id || 'Deleted User').join(', '),
+        );
+        setUsername(
+          members.map((member) => member.user?.username || member.user?.id || 'Deleted User').join(', '),
+        );
+      } else {
+        setTitle('Deleted User');
+        setUsername('');
+      }
     }
   }, [channelName, members]);
 
@@ -191,10 +199,10 @@ const MessagingChannelHeader = (props) => {
       <IonCol onClick={goToHistoryPage}>
         <IonRow>
           <Text size="l">
-            <b>{channelName || title}</b>
+            <b>{title}</b>
           </Text>
         </IonRow>
-        <Text size="s">@{username}</Text>
+        <Text size="s">{username ? `@${username}` : ''}</Text>
       </IonCol>
     </div>
   );
