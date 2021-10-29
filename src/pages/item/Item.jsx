@@ -30,12 +30,13 @@ const Item = () => {
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [itemCreationDate, setItemCreationDate] = useState("");
+  const [isTradable, setIsTradable] = useState("");
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
     try {
       const itemData = await getItemFromCollection(collectionId, itemId);
-      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked } = itemData;
+      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked, isTradable } = itemData;
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
@@ -44,6 +45,7 @@ const Item = () => {
       setItemCreationDate(itemCreationDate);
       setOwnerUsername(ownerUsername);
       setLiked(isLiked);
+      setIsTradable(isTradable);
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -91,7 +93,7 @@ const Item = () => {
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/items/${itemId}/edit`;
     const _images = images.map((img) => ({ ...img })); // deep copy
-    const item = { itemName, itemDescription, images: _images };
+    const item = { itemName, itemDescription, images: _images, isTradable };
     const state = { item };
     history.push({
       pathname,
@@ -167,28 +169,30 @@ const Item = () => {
             <IonCol size={9}>
               <Text>{itemDescription}</Text>
             </IonCol>
-
-            <IonCol size={3} className="item-tradable">
-              <div className="tradable--container">
-                <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
-                <Text size="s">
-                  <b>Tradable</b>
-                </Text>
-              </div>
-            </IonCol>
+            {isTradable && (
+              <IonCol size={3} className="item-tradable">
+                <div className="tradable--container">
+                  <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
+                  <Text size="s">
+                    <b>Tradable</b>
+                  </Text>
+                </div>
+              </IonCol>
+            )}
           </IonRow>
 
           <IonRow>
             <IonCol className="ion-align-items-center" size={9}>
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
-
-            <IonCol size={3}>
-              <IonButton size="small" onClick={() => openChatWithItem()}>
-                <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
-                <IonLabel>Chat</IonLabel>
-              </IonButton>
-            </IonCol>
+            {!isItemOwner && (
+              <IonCol size={3}>
+                <IonButton size="small" onClick={() => openChatWithItem()}>
+                  <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
+                  <IonLabel>Chat</IonLabel>
+                </IonButton>
+              </IonCol>
+            )}
           </IonRow>
         </IonGrid>
       </IonContent>
