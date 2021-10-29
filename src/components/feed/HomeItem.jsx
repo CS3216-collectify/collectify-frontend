@@ -85,12 +85,11 @@ const HomeItem = (props) => {
       <IonGrid fixed className="ion-no-padding">
         <ImageCarousel imageUrls={images.map((i) => i.imageUrl)} />
       </IonGrid>
- 
 
       <IonGrid fixed className="ion-padding">
         <IonRow>
           <IonCol size={9}>
-            <Text size="l">
+            <Text size="l" onClick={goToItemPage}>
               <b>{itemName}</b>
             </Text>
           </IonCol>
@@ -100,7 +99,6 @@ const HomeItem = (props) => {
             <Text color="default">{likesCount} likes</Text>
           </IonCol>
         </IonRow>
- 
 
         <IonRow>
           <IonCol className="ion-align-items-center" size={9}>

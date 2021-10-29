@@ -103,6 +103,20 @@ const Item = () => {
     history.push(`/collections/${collectionId}`);
   };
 
+  const openChatWithItem = () => {
+    const pathname = "/chat";
+    const state = {
+      recipient: ownerId.toString(),
+      chatItem: {
+        name: itemName,
+        link: `/collections/${collectionId}/items/${itemId}`,
+        imageUrl: images[0].imageUrl,
+      },
+    };
+    console.log(state);
+    history.push({ pathname, state });
+  };
+
   return (
     <IonPage className="item">
       <HomeToolbar title={`Item`} />
@@ -170,7 +184,7 @@ const Item = () => {
             </IonCol>
 
             <IonCol>
-              <IonButton size="small">
+              <IonButton size="small" onClick={() => openChatWithItem()}>
                 <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
                 <IonLabel>Chat</IonLabel>
               </IonButton>
