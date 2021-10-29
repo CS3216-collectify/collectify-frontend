@@ -22,7 +22,7 @@ const ImageGrid = (props) => {
       {groupsOfThree.map((grp, idx) => (
         <IonRow key={idx}>
           {grp.map((img, idx) => (
-            <IonCol key={idx} size={4} onClick={img.clickHandler}>
+            <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
               <FlexImage src={img.url} />
             </IonCol>
           ))}

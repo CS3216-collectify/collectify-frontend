@@ -28,7 +28,7 @@ const ImageEditList = (props) => {
           {grp.map(({ imageUrl }, idx) => (
             <IonCol className="edit-item-images" size={3} key={idx}>
               <FlexImage src={imageUrl} />
-              <IonIcon size="large" color="danger" onClick={() => safeDeleteHandler(idx)} className="delete-icon" icon={trashBin} />
+              <IonIcon size="large" color="danger" onClick={() => safeDeleteHandler(idx)} className="delete-icon clickable" icon={trashBin} />
             </IonCol>
           ))}
         </IonRow>

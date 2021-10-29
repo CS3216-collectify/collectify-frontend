@@ -71,7 +71,7 @@ const HomeItem = (props) => {
       <IonGrid fixed className="ion-padding">
         <IonRow className="ion-justify-content-between">
           <IonCol>
-            <Text onClick={goToUserProfilePage}><b>@{ownerUsername}</b></Text>
+            <Text className="clickable" onClick={goToUserProfilePage}><b>@{ownerUsername}</b></Text>
           </IonCol>
           <IonButton size="small" onClick={goToCollectionPage} fill="outline">
             <IonLabel>View Collection</IonLabel>
@@ -88,7 +88,7 @@ const HomeItem = (props) => {
           <IonCol>
             <IonRow className="ion-justify-content-between">
               <div className="ion-no-padding" size={9}>
-                <Text size="l" onClick={goToItemPage}>
+                <Text className="clickable" size="l" onClick={goToItemPage}>
                   <b>{itemName}</b>
                 </Text>
               </div>
@@ -98,7 +98,7 @@ const HomeItem = (props) => {
                     <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
                   </IonCol>
                   <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
-                    <Text color="default">{likesCount} likes</Text>
+                    <Text className="clickable" color="default">{likesCount} likes</Text>
                   </IonCol>
                 </div>
             </IonRow>
