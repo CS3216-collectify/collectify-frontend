@@ -13,7 +13,11 @@ import { useHistory } from 'react-router';
 
 const getAvatarGroup = (members) => {
   if (members.length === 0) {
-    return <Avatar image={noProfileImage} name="Deleted User" size={40} />;
+    return (
+      <div className='messaging__channel-header__avatars'>
+        <Avatar image={noProfileImage} name="Deleted User" size={40} />
+      </div>
+    );
   }
   if (members.length === 1) {
     return (
@@ -149,18 +153,16 @@ const MessagingChannelHeader = (props) => {
   }, [isEditing]);
 
   useEffect(() => {
-    if (!channelName) {
-      if (members.length) {
-        setTitle(
-          members.map((member) => member.user?.name || member.user?.id || 'Deleted User').join(', '),
-        );
-        setUsername(
-          members.map((member) => member.user?.username || member.user?.id || 'Deleted User').join(', '),
-        );
-      } else {
-        setTitle('Deleted User');
-        setUsername('');
-      }
+    if (members.length) {
+      setTitle(
+        members.map((member) => member.user?.name || member.user?.id || 'Deleted User').join(', '),
+      );
+      setUsername(
+        members.map((member) => member.user?.username || member.user?.id || 'Deleted User').join(', '),
+      );
+    } else {
+      setTitle('Deleted User');
+      setUsername('');
     }
   }, [channelName, members]);
 
