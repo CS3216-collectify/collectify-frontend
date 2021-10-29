@@ -8,8 +8,7 @@ const ItemMessageFromMe = (props) => {
   const history = useHistory();
 
   const { message } = props;
-  const { chatItem, text = '' } = message;
-  const { imageUrl = '', name = '', link = '/not-found' } = chatItem;
+  const { chatItem = null, text = '' } = message;
 
   return (
     <li className="str-chat__li str-chat__li--single">
@@ -17,9 +16,7 @@ const ItemMessageFromMe = (props) => {
         <div className="str-chat__message str-chat__message--me">
           <div>
           <div className={`str-chat__message-text-inner str-chat__message-simple-text-inner`}> 
-            {chatItem &&
-              <ChatItemCard name={name} link={link} imageUrl={imageUrl} />
-            }
+            <ChatItemCard chatItem={chatItem}/>
             <p>{text}</p>
           </div>
           <div className="str-chat__message-data str-chat__message-simple-data">

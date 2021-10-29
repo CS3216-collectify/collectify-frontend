@@ -14,27 +14,22 @@ const CustomMessage = (props) => {
 
   const isMessageOwner = isCurrentUser(message.user.id);
 
-  if (message?.chatItem) {
-    const { imageUrl, link, name } = message?.chatItem;
-    if (imageUrl && link && name) {
-      if (!isMessageOwner) {
-        return (
-          <ItemMessageFromOther message={message} />
-        );
-      } else {
-        return (
-          <ItemMessageFromMe message={message} />
-        )
-      }
-    }
-  }
+  if (!isMessageOwner) {
+    return (
+      <ItemMessageFromOther message={message} />
+    );
+  } 
 
-  console.log(message);
   return (
-    <>
-      <MessageSimple {...props} />
-    </>
-  );
+    <ItemMessageFromMe message={message} />
+  )
+
+  // console.log(message);
+  // return (
+  //   <>
+  //     <MessageSimple {...props} />
+  //   </>
+  // );
 };
 
 export default React.memo(CustomMessage);

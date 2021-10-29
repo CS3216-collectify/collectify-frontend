@@ -5,7 +5,13 @@ import Text from '../../../../components/text/Text';
 
 const ChatItemCard = (props) => {
   const history = useHistory();
-  const { name, imageUrl, link } = props;
+  const { chatItem } = props;
+
+  if (!chatItem) {
+    return null;
+  }
+
+  const { imageUrl, link, name } = chatItem;
 
   return (
     <IonCard onClick={() => history.push(link ? link : '/not-found' )}>
