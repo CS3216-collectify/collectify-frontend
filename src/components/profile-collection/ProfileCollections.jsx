@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 import { getCollections } from "../../services/collections";
 import CollectionList from "./CollectionList";
 
-const LIMIT = 10;
+const LIMIT = 6;
 
 const ProfileCollections = (props) => {
   const location = useLocation();
@@ -48,21 +48,16 @@ const ProfileCollections = (props) => {
   }, [profileUserId]);
 
   useEffect(() => {
-    loadInitialCollections();
+    if (location.pathname.startsWith("/profile")) {
+      loadInitialCollections();
+    }
   }, [props.profileUserId, location, loadInitialCollections]);
 
   const fetchNextPage = () => {
     loadUserCollections();
   };
 
-  return (
-      <CollectionList 
-        onScrollEnd={fetchNextPage} 
-        listEnded={!hasMore} 
-        collections={collections} 
-        emptyMessage="Start adding new collections!"
-      />
-  )
-}
+  return <CollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="No collections found!" />;
+};
 
 export default ProfileCollections;

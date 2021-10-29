@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -40,9 +40,8 @@ const EditItem = () => {
     if (location.state) {
       console.log("Loading form data from state...");
       setItem({ ...location.state.item });
-    } else {
+    } else if (location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}/edit`)) {
       console.log("Fetching form data from server...");
-      setLoading(true);
       loadExistingData();
     }
   }, [loadExistingData, location]);
@@ -82,7 +81,6 @@ const EditItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
         {uploading ? (

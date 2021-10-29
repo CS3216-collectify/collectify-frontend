@@ -14,6 +14,7 @@ import LikedItems from "../../components/liked-items/LikedItems";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
+import noProfileImage from "../../assets/no-profile-image.png";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -108,7 +109,6 @@ const Profile = () => {
     // is guest user
     return (
       <IonPage className="profile">
-        <IonLoading isOpen={loading} />
         <IonContent>
           <ProfileToolbar showMenu={false} username="Guest User" />
           <GuestLoginPrompt />
@@ -119,7 +119,6 @@ const Profile = () => {
 
   return (
     <IonPage className="profile">
-      <IonLoading isOpen={loading} />
       <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
 
       {/* Ion padding applies 16px  */}
@@ -129,7 +128,7 @@ const Profile = () => {
           <IonRow>
             <IonCol size="auto">
               {/* <Logo className="profile--img"/> */}
-              <FlexImage className="profile--img" src={profileProfilePicture} />
+              <FlexImage className="profile--img" src={profileProfilePicture || noProfileImage} />
             </IonCol>
 
             <IonCol className="profile-header--container">
@@ -183,8 +182,8 @@ const Profile = () => {
               {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
               {mode === COLLECTIONS_MODE && (
                 <>
-                  <IonRow className="ion-justify-content-end">
-                    <AddButton label="Collection" onClick={() => history.push("/add-collections")} />
+                  <IonRow className="add-collection--container ion-justify-content-end">
+                    <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
                   </IonRow>
                   <ProfileCollections profileUserId={profileUserId} />
                 </>

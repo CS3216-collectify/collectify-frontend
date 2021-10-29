@@ -1,12 +1,13 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonLabel, IonRow } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import useToastContext from "../../hooks/useToastContext";
+import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import { convertUTCtoLocal } from "../../utils/datetime";
+import LikeButton from "../button/LikeButton";
 import ImageCarousel from "../gallery/ImageCarousel";
 import Text from "../text/Text";
-import LikeButton from "../button/LikeButton";
-import { convertUTCtoLocal } from "../../utils/datetime";
-import { likeByItemId, unlikeByItemId } from "../../services/likes";
-import useToastContext from "../../hooks/useToastContext";
+import "./HomeItem.scss";
 
 const HomeItem = (props) => {
   const history = useHistory();
@@ -62,11 +63,19 @@ const HomeItem = (props) => {
     history.push(`/profile/${ownerUsername}`);
   };
 
+  const goToCollectionPage = () => {
+    history.push(`/collections/${collectionId}`);
+  };
   return (
     <>
       <IonGrid fixed className="ion-padding">
-        <IonRow>
-          <Text onClick={goToUserProfilePage}><b>@{ownerUsername}</b></Text>
+        <IonRow className="ion-justify-content-between">
+          <IonCol>
+            <Text onClick={goToUserProfilePage}><b>@{ownerUsername}</b></Text>
+          </IonCol>
+          <IonButton size="small" onClick={goToCollectionPage} fill="outline">
+            <IonLabel>View Collection</IonLabel>
+          </IonButton>
         </IonRow>
       </IonGrid>
 
@@ -76,21 +85,26 @@ const HomeItem = (props) => {
 
       <IonGrid fixed className="ion-padding">
         <IonRow>
-          <IonCol size={8}>
-            <IonRow>
-              <Text size="l" onClick={goToItemPage}>
-                <b>{itemName}</b>
-              </Text>
+          <IonCol>
+            <IonRow className="ion-justify-content-between">
+              <div className="ion-no-padding" size={9}>
+                <Text size="l" onClick={goToItemPage}>
+                  <b>{itemName}</b>
+                </Text>
+              </div>
+
+              <div>
+                  <IonCol className="like-button--column" size={1}>
+                    <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+                  </IonCol>
+                  <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
+                    <Text color="default">{likesCount} likes</Text>
+                  </IonCol>
+                </div>
             </IonRow>
-            <IonRow>
-              <Text size="s">{convertUTCtoLocal(itemCreationDate)}</Text>
+            <IonRow className="home-item-date">
+              <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonRow>
-          </IonCol>
-          <IonCol size={1}>
-            <LikeButton liked={liked} onClick={likeHandler} />
-          </IonCol>
-          <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
-            <Text color="default">{likesCount} likes</Text>
           </IonCol>
         </IonRow>
       </IonGrid>

@@ -9,6 +9,7 @@ import TextInput from "../text-input/TextInput";
 import useToastContext from "../../hooks/useToastContext";
 import DeleteButton from "../button/DeleteButton";
 import ConfirmAlert from "../alert/ConfirmAlert";
+import "./Form.scss";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -40,19 +41,15 @@ const CollectionForm = (props) => {
 
   const setToast = useToastContext();
 
-  const validationErrorMessage = msg => {
+  const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });
-  }
+  };
 
   const saveHandler = () => {
     const trimmedCollectionName = collectionName.trim();
     const trimmedCollectionDescription = collectionDescription.trim();
     if (!trimmedCollectionName) {
       validationErrorMessage("Name cannot be empty!");
-      return;
-    }
-    if (!trimmedCollectionDescription) {
-      validationErrorMessage("Description cannot be empty!");
       return;
     }
     if (categoryId === null) {
@@ -72,43 +69,42 @@ const CollectionForm = (props) => {
       return;
     }
     onDelete().then(() => setDeleteConfirm(false));
-  }
+  };
 
   return (
-    <IonList>
-      <ConfirmAlert 
+    <IonList className="collection-form">
+      <ConfirmAlert
         title="Delete Collection?"
         message="This action cannot be undone."
         isOpen={deleteConfirm}
         onCancel={() => setDeleteConfirm(false)}
         onConfirm={deleteHandler}
-      />
-      <IonItem>
-        <TextInput label="Collection Title" value={collectionName} placeholder="Enter a title" onChange={setCollectionName} />
-      </IonItem>
-      <IonItem>
-        <TextArea label="Summary" value={collectionDescription} placeholder="Enter collection summary" onChange={setCollectionDescription} />
-      </IonItem>
-      <IonItem>
+      />{" "}
+      <IonGrid fixed>
+        <IonItem>
+          <TextInput label="Collection Title" value={collectionName} placeholder="Enter a title" onChange={setCollectionName} />
+        </IonItem>
+        <IonItem>
+          <TextArea label="Summary" value={collectionDescription} placeholder="Enter collection summary" onChange={setCollectionDescription} />
+        </IonItem>
+
         <IonRow className="ion-justify-content-start">
+          <SelectButton onChange={setCategory} options={selectOptions} buttonLabel="Select Category" selectLabel="Categories" />
           <IonCol>{categoryId && <CategoryChip name={convertCategoryIdToName(categoryId)} onDelete={() => setCategory(null)} />}</IonCol>
         </IonRow>
-      </IonItem>
-      <IonItem>
-        <IonGrid fixed>
-          <IonRow className="ion-justify-content-end">
-            <SelectButton onChange={setCategory} options={selectOptions} buttonLabel="Select Category" selectLabel="Categories" />
-          </IonRow>
-        </IonGrid>
-      </IonItem>
-      <IonItem>
-        <IonGrid fixed>
-          <SaveButton onClick={saveHandler} />
-          {onDelete &&
-            <DeleteButton onClick={() => setDeleteConfirm(true)} />
-          }
-        </IonGrid>
-      </IonItem>
+        <IonRow className="ion-full-width"></IonRow>
+
+        <IonRow className="ion-full-width save-delete-buttons--container">
+          {onDelete && (
+            <IonCol size={6} className="ion-full-width">
+              <DeleteButton onClick={() => setDeleteConfirm(true)} />
+            </IonCol>
+          )}
+          <IonCol size={onDelete ? 6 : 12} className="ion-full-width">
+            <SaveButton onClick={saveHandler} />
+          </IonCol>
+        </IonRow>
+      </IonGrid>
     </IonList>
   );
 };

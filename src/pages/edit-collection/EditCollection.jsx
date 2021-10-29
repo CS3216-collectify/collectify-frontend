@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -30,9 +30,7 @@ const EditCollection = (props) => {
     setLoading(true);
     try {
       const currentCollection = await getCollectionByCollectionId(collectionId);
-      const options = await getCategories();
       setCollection(currentCollection);
-      setCategoryOptions(options);
     } catch (e) {
       console.log(e);
     } finally {
@@ -40,15 +38,29 @@ const EditCollection = (props) => {
     }
   }, [collectionId]);
 
+  const loadCategories = useCallback(async () => {
+    setLoading(true);
+    try {
+      const options = await getCategories();
+      setCategoryOptions(options);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (location.state) {
       console.log("Loading form data from state...");
       setCollection({ ...location.state.collection });
     } else {
-      console.log("Fetching form data from server...");
-      setLoading(true);
-      loadExistingData();
+      if (location.pathname.startsWith("/collections/")) {
+        console.log("Fetching form data from server...");
+        loadExistingData();
+      }
     }
+    loadCategories();
   }, [loadExistingData, location]);
 
   const editCompleteHandler = async (collection) => {
@@ -75,7 +87,7 @@ const EditCollection = (props) => {
         setTimeout(() => {
           setDeleting(false);
           setToast({ message: "Successfully deleted collection.", color: "success" });
-          history.push("/profile");
+          history.replace("/profile");
         }, 2400);
       });
     } catch (e) {
@@ -87,7 +99,6 @@ const EditCollection = (props) => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent" />
 
       <HomeToolbar title="Edit Collection" />
       <IonContent>

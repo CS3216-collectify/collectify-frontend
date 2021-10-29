@@ -13,16 +13,22 @@ const CollectionCard = (props) => {
 
   const collectionCardOnclick = () => {
     if (props.onClick) {
-      return props.onClick()
-    } 
-  }
+      return props.onClick();
+    }
+  };
   return (
     <IonList className="profile-collection--container ion-margin-bottom" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
         <Text className="profile-collection--title">
           <b>{collectionName}</b>
         </Text>
-        <div className="profile-collection-followers--container">
+        <div
+          className="profile-collection-followers--container"
+          onClick={(e) => {
+            e.stopPropagation();
+            history.push(`/collections/${collectionId}/followers`);
+          }}
+        >
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
           <Text size="xs">{followersCount} followers</Text>
         </div>

@@ -56,11 +56,11 @@ const LikedItems = (props) => {
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       <ItemGrid 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 
         items={items} 
+        emptyMessage="You have not liked any items!"
       />
     </>
   )

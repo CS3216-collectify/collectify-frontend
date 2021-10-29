@@ -58,8 +58,9 @@ const Collection = (props) => {
   }, [collectionId]);
 
   useEffect(() => {
-    setLoading(true);
-    loadCollectionData();
+    if (location.pathname.startsWith("/collections/")) {
+      loadCollectionData();
+    }
   }, [loadCollectionData, location]);
 
   const followHandler = () => {
@@ -112,7 +113,6 @@ const Collection = (props) => {
 
   return (
     <IonPage className="collection">
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Collection`} />
       <IonContent className="ion-padding">
         <IonGrid fixed>

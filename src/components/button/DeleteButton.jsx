@@ -6,9 +6,9 @@ import './button.scss';
 
 const DeleteButton = ({ onClick }) => {
   return (
-    <IonButton size="small" color="danger" onClick={onClick}>
+    <IonButton size="medium" fill="outline" color="danger" onClick={onClick} className="delete-button">
       <IonIcon size="small" slot="icon-only" icon={trashOutline} />
-      Delete
+      <Text size="m">Delete</Text>
     </IonButton>
   );
 };

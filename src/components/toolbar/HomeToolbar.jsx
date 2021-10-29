@@ -29,24 +29,24 @@ const HomeToolbar = ({ title }) => {
         <IonButtons slot="end">
           {isUserAuthenticated && (
             <IonButton onClick={() => handleButtonClick("")}>
-              <IonIcon size="small" slot="icon-only" icon={homeOutline} />
+              <IonIcon size="medium" slot="icon-only" icon={homeOutline} />
             </IonButton>
           )}
           <IonButton onClick={() => handleButtonClick("discover")}>
-            <IonIcon size="small" slot="icon-only" icon={search} />
+            <IonIcon size="medium" slot="icon-only" icon={search} />
           </IonButton>
-          {/* <IonButton onClick={() => handleButtonClick("add")}>
-            <IonIcon size="small" slot="icon-only" icon={addCircleOutline} />
+          <IonButton onClick={() => handleButtonClick("add")}>
+            <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
-          <IonButton onClick={() => handleButtonClick("chat")}>
-            <IonIcon size="small" slot="icon-only" icon={chatbubblesOutline} />
+          {/* <IonButton onClick={() => handleButtonClick("chat")}>
+            <IonIcon size="medium" slot="icon-only" icon={chatbubblesOutline} />
           </IonButton> */}
           <IonButton onClick={() => handleButtonClick("profile")}>
-            <IonIcon size="small" slot="icon-only" icon={personCircleOutline} />
+            <IonIcon size="medium" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
             <IonButton onClick={() => handleButtonClick("settings")}>
-              <IonIcon size="small" slot="icon-only" icon={settingsOutline} />
+              <IonIcon size="medium" slot="icon-only" icon={settingsOutline} />
             </IonButton>
           )}
         </IonButtons>
@@ -77,7 +77,7 @@ const HomeToolbar = ({ title }) => {
               })
             }
           >
-            <IonIcon size="small" slot="icon-only" icon={ellipsisVertical} />
+            <IonIcon size="medium" slot="icon-only" icon={ellipsisVertical} />
           </IonButton>
         </IonButtons> */}
       </IonToolbar>

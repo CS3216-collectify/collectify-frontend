@@ -1,0 +1,25 @@
+.collection-form,
+.item-form {
+  width: 100%;
+
+  .save-delete-buttons--container {
+  }
+  .save-button,
+  .delete-button,
+  .select-button {
+    width: 100%;
+    margin: auto;
+    margin-top: 12px;
+  }
+
+  .select-button {
+      width: 50%;
+      margin-right: 0;
+      padding-left:4px;
+      padding-right: 4px;
+  }
+  .add-photos--container  {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}

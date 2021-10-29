@@ -60,7 +60,6 @@ const LikesList = (props) => {
     <IonPage>
       <HomeToolbar title={`Likes`} />
       <IonContent>
-        <IonLoading isOpen={loading} />
         <UserList 
           users={users} 
           onScrollEnded={loadNextPage} 
