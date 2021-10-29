@@ -10,6 +10,7 @@ import { deleteCollection, getCollectionByCollectionId, updateCollection } from 
 import FlexImage from "../../components/image/FlexImage";
 import SavingGif from "../../assets/saving.gif";
 import DeletingGif from "../../assets/deleting.gif";
+import useUserContext from "../../hooks/useUserContext";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -18,6 +19,7 @@ const getDefaultCollectionData = () => {
 const EditCollection = (props) => {
   const setToast = useToastContext();
   const location = useLocation();
+  const { isCurrentUser } = useUserContext();
   const history = useHistory();
   const { collectionId } = useParams();
   const [collection, setCollection] = useState(getDefaultCollectionData());
@@ -30,6 +32,10 @@ const EditCollection = (props) => {
     setLoading(true);
     try {
       const currentCollection = await getCollectionByCollectionId(collectionId);
+      if (!isCurrentUser(currentCollection.ownerId)) {
+        history.push(`/collections/${collectionId}`);
+        return;
+      }
       setCollection(currentCollection);
     } catch (e) {
       console.log(e);
@@ -54,11 +60,9 @@ const EditCollection = (props) => {
     if (location.state) {
       console.log("Loading form data from state...");
       setCollection({ ...location.state.collection });
-    } else {
-      if (location.pathname.startsWith("/collections/")) {
-        console.log("Fetching form data from server...");
-        loadExistingData();
-      }
+    } else if (collectionId && location.pathname.startsWith(`/collections/${collectionId}/edit`)) {
+      console.log("Fetching form data from server...");
+      loadExistingData();
     }
     loadCategories();
   }, [loadExistingData, location]);
