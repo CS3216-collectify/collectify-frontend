@@ -109,7 +109,7 @@ const Item = () => {
         <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol className="item-username">
-              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>
+              <Text className="clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
                 <b>@{ownerUsername}</b>
               </Text>
             </IonCol>
@@ -147,7 +147,7 @@ const Item = () => {
                   <IonCol className="like-button--column" size={1}>
                     <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
                   </IonCol>
-                  <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
+                  <IonCol size={3} className="clickable" onClick={() => history.push(`/items/${itemId}/likes`)}>
                     <Text color="default">{likesCount} likes</Text>
                   </IonCol>
                 </div>

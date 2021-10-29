@@ -4,7 +4,7 @@ import { heart, heartOutline } from "ionicons/icons";
 const LikeButton = (props) => {
   const { onClick: likeHandler, liked, className } = props;
 
-  return <IonIcon size="small" icon={liked ? heart : heartOutline} onClick={likeHandler} color="danger" className={className} />;
+  return <IonIcon size="small" icon={liked ? heart : heartOutline} onClick={likeHandler} color="danger" className={`${className} clickable`} />;
 };
 
 export default LikeButton;

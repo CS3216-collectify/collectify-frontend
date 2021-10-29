@@ -17,13 +17,13 @@ const CollectionCard = (props) => {
     }
   };
   return (
-    <IonList className="profile-collection--container ion-margin-bottom" onClick={() => collectionCardOnclick()}>
+    <IonList className="profile-collection--container ion-margin-bottom clickable" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
         <Text className="profile-collection--title">
           <b>{collectionName}</b>
         </Text>
         <div
-          className="profile-collection-followers--container"
+          className="profile-collection-followers--container clickable"
           onClick={(e) => {
             e.stopPropagation();
             history.push(`/collections/${collectionId}/followers`);
