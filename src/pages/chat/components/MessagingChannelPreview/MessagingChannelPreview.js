@@ -159,14 +159,7 @@ const MessagingChannelPreview = (props) => {
     ({ user }) => user.id !== client.userID,
   );
 
-  let messagePreview = latestMessage?.props?.source;
-  try {
-    const decodedItem = JSON.parse(messagePreview);
-    if (decodedItem?.text) {
-      messagePreview = decodedItem?.text;
-    }
-  } catch {
-  }
+  const messagePreview = latestMessage?.props?.source;
 
   let username = getChannelUsername(members);
   username = username ? `@${username}` : '';
