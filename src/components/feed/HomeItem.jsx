@@ -102,7 +102,6 @@ const HomeItem = (props) => {
                   </IonCol>
                 </div>
             </IonRow>
-
             <IonRow className="home-item-date">
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonRow>
