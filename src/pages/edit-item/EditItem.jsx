@@ -40,11 +40,9 @@ const EditItem = () => {
     if (location.state) {
       console.log("Loading form data from state...");
       setItem({ ...location.state.item });
-    } else {
-      if (location.pathname.startsWith("/collections/")) {
-        console.log("Fetching form data from server...");
-        loadExistingData();
-      }
+    } else if (location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}/edit`)) {
+      console.log("Fetching form data from server...");
+      loadExistingData();
     }
   }, [loadExistingData, location]);
 

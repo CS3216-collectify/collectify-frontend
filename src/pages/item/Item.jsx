@@ -51,8 +51,10 @@ const Item = () => {
   }, [collectionId, itemId]);
 
   useEffect(() => {
-    setLoading(true);
-    fetchItemData();
+    if (location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}`)) {
+      setLoading(true);
+      fetchItemData();
+    }
   }, [fetchItemData, location]);
 
   const likeHandler = () => {
