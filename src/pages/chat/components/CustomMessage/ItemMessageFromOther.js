@@ -1,13 +1,11 @@
-import { IonCard, IonCardHeader, IonImg } from '@ionic/react';
+import { IonImg } from '@ionic/react';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { MessageTimestamp } from 'stream-chat-react';
-import Text from '../../../../components/text/Text';
+import ChatItemCard from './ChatItemCard';
 import './CustomMessage.css';
 
 const ItemMessageFromOther = (props) => {
-  const history = useHistory();
-
   const { message } = props;
   const { chatItem, text = '' } = message;
   const { imageUrl = '', name = '', link = '/not-found' } = chatItem;
@@ -26,12 +24,9 @@ const ItemMessageFromOther = (props) => {
           </div>
           <div>
           <div className={`str-chat__message-text-inner str-chat__message-simple-text-inner`}> {/*` ion-justify-content-${isMessageOwner ? "end" : "start"}`}>*/}
-            <IonCard onClick={() => history.push(link)}>
-              <IonImg src={imageUrl} />
-              <IonCardHeader>
-                <Text size="xs"><b>{name}</b></Text>
-              </IonCardHeader>
-            </IonCard>
+            {chatItem &&
+              <ChatItemCard name={name} link={link} imageUrl={imageUrl} />
+            }
             <p>{text}</p>
           </div>
           <div className="str-chat__message-data str-chat__message-simple-data">
