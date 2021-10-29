@@ -70,12 +70,14 @@ export const ChannelInner = (props) => {
       }).catch((e) => {
         setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
       })
-    }
-    if (location.state?.chatItem) {
-      const newState = { ...location.state };
-      const { chatItem } = newState;
-      console.log(chatItem);
-      setChatItem(chatItem);
+      if (location.state?.chatItem) {
+        const newState = { ...location.state };
+        const { chatItem } = newState;
+        console.log(chatItem);
+        setChatItem(chatItem);
+      }
+      console.log("clearing state history...")
+      history.replace({...history.location, state: {}})
     }
   }, [location]);
 
