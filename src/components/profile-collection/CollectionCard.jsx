@@ -53,9 +53,11 @@ const CollectionCard = (props) => {
       </div>
       <div className="profile-collection-categories--container">
         {/* A collection only has a single category */}
-        <IonChip>
-          <IonLabel>{categoryName}</IonLabel>
-        </IonChip>
+        {categoryName &&
+          <IonChip>
+            <IonLabel>{categoryName}</IonLabel>
+          </IonChip>
+        }
       </div>
     </IonList>
   );

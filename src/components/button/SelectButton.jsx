@@ -5,7 +5,9 @@ import "./button.scss";
 // options param must contain an array of { value, text }
 const SelectButton = ({ buttonLabel, selectLabel, onChange: selectHandler, options }) => {
   // display by alphabetical, case-insensitive text order
-  const sortedByTextOptions = options.sort((a, b) => (a.text.toLowerCase() <= b.text.toLowerCase() ? -1 : 1));
+  const sortedByTextOptions = 
+    options
+      .sort((a, b) => (a.text.toLowerCase() === "others" ? 1 : -1));
 
   return (
     <>
