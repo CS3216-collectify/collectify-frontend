@@ -21,7 +21,7 @@ const ItemMessageFromOther = (props) => {
           </div>
         </div>
         <div>
-        <div className={`str-chat__message-text-inner str-chat__message-simple-text-inner`}> {/*` ion-justify-content-${isMessageOwner ? "end" : "start"}`}>*/}
+        <div className={`str-chat__message-text-inner str-chat__message-simple-text-inner`}> 
           <ChatItemCard chatItem={chatItem} />
           <p>{text}</p>
         </div>
