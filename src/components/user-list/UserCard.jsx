@@ -11,7 +11,7 @@ const UserCard = (props) => {
   }
 
   return (
-    <IonItem onClick={clickHandler}>
+    <IonItem className="clickable" onClick={clickHandler}>
       <IonAvatar>
         <IonImg src={pictureUrl || noProfileImage} />
       </IonAvatar>
