@@ -97,9 +97,10 @@ export const ChannelInner = (props) => {
     }
 
     if (chatItem) {
-      const chatItemWithMessage = { ...chatItem, text: message?.text }
-      const updatedText = JSON.stringify(chatItemWithMessage);
-      updatedMessage = { ...message, text: updatedText };
+      updatedMessage = { ...message, chatItem: chatItem };
+      // const chatItemWithMessage = { ...chatItem, text: message?.text }
+      // const updatedText = JSON.stringify(chatItemWithMessage);
+      // updatedMessage = { ...message, text: updatedText };
       setChatItem(null);
     }
 
@@ -124,7 +125,7 @@ export const ChannelInner = (props) => {
           : undefined,
       };
 
-      const sendMessagePromise = sendMessage(messageToSend);
+      const sendMessagePromise = channel.sendMessage(messageToSend);
       logChatPromiseExecution(sendMessagePromise, 'send message');
     }
 
