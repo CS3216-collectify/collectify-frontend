@@ -152,7 +152,14 @@ const MessagingChannelPreview = (props) => {
     ({ user }) => user.id !== client.userID,
   );
 
-  console.log(latestMessage?.props?.source)
+  let messagePreview = latestMessage?.props?.source;
+  try {
+    const decodedItem = JSON.parse(messagePreview);
+    if (decodedItem?.text) {
+      messagePreview = decodedItem?.text;
+    }
+  } catch {
+  }
   return (
     <div
       className={
@@ -173,7 +180,7 @@ const MessagingChannelPreview = (props) => {
           </p>
           <p className='channel-preview__content-time'>{getTimeStamp(channel)}</p>
         </div>
-        <p className='channel-preview__content-message'>{latestMessage?.props?.source || 'Empty chat'}</p>
+        <p className='channel-preview__content-message'>{messagePreview || 'Empty chat'}</p>
       </div>
     </div>
   );
