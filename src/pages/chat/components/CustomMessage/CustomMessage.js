@@ -7,9 +7,7 @@ import ItemMessageFromMe from './ItemMessageFromMe';
 import ItemMessageFromOther from './ItemMessageFromOther';
 
 const CustomMessage = (props) => {
-  const history = useHistory();
   const { message } = useMessageContext();
-  const { channel } = useChatContext();
   const { isCurrentUser } = useUserContext();
 
   const isMessageOwner = isCurrentUser(message.user.id);
@@ -23,13 +21,6 @@ const CustomMessage = (props) => {
   return (
     <ItemMessageFromMe message={message} />
   )
-
-  // console.log(message);
-  // return (
-  //   <>
-  //     <MessageSimple {...props} />
-  //   </>
-  // );
 };
 
 export default React.memo(CustomMessage);
