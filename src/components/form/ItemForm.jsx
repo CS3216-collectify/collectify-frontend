@@ -1,4 +1,4 @@
-import { IonGrid, IonItem, IonList, IonRow, IonCol } from "@ionic/react";
+import { IonGrid, IonItem, IonList, IonRow, IonCol, IonToggle } from "@ionic/react";
 import ImageEditList from "../gallery/ImageEditList";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -24,25 +24,29 @@ const ItemForm = (props) => {
   const location = useLocation();
 
   const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
-
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
   const [deletedImageIds, setDeletedImageIds] = useState([]);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [isTradable, setIsTradable] = useState(itemData.isTradable);
 
   const setToast = useToastContext();
 
   useEffect(() => {
     if (props.itemData) {
-      const { itemName, itemDescription, images } = props.itemData;
+      const { itemName, itemDescription, images,isTradable } = props.itemData;
+      console.log(props.itemData);
+
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
+      setIsTradable(isTradable)
     } else {
       setItemName("");
       setItemDescription("");
       setImages([]);
+      setIsTradable(false)
     }
   }, [props.itemData, location]);
 
@@ -99,7 +103,9 @@ const ItemForm = (props) => {
       itemDescription: trimmedItemDescription,
       images,
       deletedImageIds,
+      isTradable,
     };
+    console.log(itemToSave);
     completeHandler(itemToSave);
   };
 
@@ -131,10 +137,15 @@ const ItemForm = (props) => {
           <div className="add-photos--container">
             <Text size="xs">Photos</Text>
             <ImageEditList images={images} onDelete={deleteImageHandler} />
-            <IonRow  className="ion-justify-content-center">
+            <IonRow className="ion-justify-content-center">
               <UploadButton onChange={newImageHandler} />
             </IonRow>
           </div>
+        </IonItem>
+
+        <IonItem>
+          <Text size="xs">Is this item tradable?</Text>
+          <IonToggle slot="end" color="primary" checked={isTradable} onIonChange={(e) => setIsTradable(e.detail.checked)} />
         </IonItem>
 
         <IonRow className="ion-full-width save-delete-buttons--container">

@@ -40,7 +40,7 @@ const EditItem = () => {
     } finally {
       setLoading(false);
     }
-  }, [collectionId, itemId]);
+  }, [collectionId, history, isCurrentUser, itemId]);
 
   useEffect(() => {
     if (location.state) {
@@ -50,7 +50,7 @@ const EditItem = () => {
       console.log("Fetching form data from server...");
       loadExistingData();
     }
-  }, [loadExistingData, location]);
+  }, [collectionId, itemId, loadExistingData, location]);
 
   const editCompleteHandler = async (item) => {
     try {

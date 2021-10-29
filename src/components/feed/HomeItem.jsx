@@ -26,10 +26,12 @@ const HomeItem = (props) => {
     likesCount: initLikesCount,
     collectionName,
     itemCreationDate,
+    isTradable: initIsTradable,
   } = itemData;
 
   const [liked, setLiked] = useState(initLiked);
   const [likesCount, setLikesCount] = useState(initLikesCount);
+  const [isTradable, setIsTradable] = useState(initIsTradable);
 
   const setToast = useToastContext();
 
@@ -105,14 +107,16 @@ const HomeItem = (props) => {
             <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
           </IonCol>
 
-          <IonCol>
-            <div className="tradable--container">
-              <IonIcon icon={peopleOutline} className="item-tradable-icon" />
-              <Text>
-                <b>Tradable</b>
-              </Text>
-            </div>
-          </IonCol>
+          {isTradable && (
+            <IonCol>
+              <div className="tradable--container">
+                <IonIcon icon={peopleOutline} className="item-tradable-icon" />
+                <Text>
+                  <b>Tradable</b>
+                </Text>
+              </div>
+            </IonCol>
+          )}
         </IonRow>
       </IonGrid>
     </>

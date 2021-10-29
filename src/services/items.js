@@ -34,11 +34,12 @@ const loadImageFile = async (url, idx) => {
 
 export const postItem = async (collectionId, itemData) => {
   console.log("Post Item for collectionId", collectionId);
-  const { itemName, itemDescription, images } = itemData;
+  const { itemName, itemDescription, images, isTradable } = itemData;
 
   const body = new FormData();
   body.append("itemName", itemName);
   body.append("itemDescription", itemDescription);
+  body.append("isTradable", isTradable);
 
   for (let i = 0; i < images.length; i++) {
     const { imageUrl } = images[i];
@@ -56,10 +57,11 @@ export const updateItem = async (collectionId, itemId, itemData) => {
   console.log("Update Item with collectionId", collectionId, "and itemId", itemId);
 
   const body = new FormData();
-  const { itemName, itemDescription, images, deletedImageIds } = itemData;
+  const { itemName, itemDescription, images, deletedImageIds, isTradable } = itemData;
   body.append("itemName", itemName);
   body.append("itemDescription", itemDescription);
-
+  body.append("isTradable", isTradable);
+  
   for (let i = 0; i < images.length; i++) {
     const { imageUrl, isNew } = images[i];
     if (!isNew) {
