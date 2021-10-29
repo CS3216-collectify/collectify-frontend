@@ -185,6 +185,9 @@ const MessagingChannelHeader = (props) => {
   );
 
   const goToHistoryPage = () => {
+    if (props.disabled) {
+      return;
+    }
     history.push(`/profile/${username}`);
   }
 

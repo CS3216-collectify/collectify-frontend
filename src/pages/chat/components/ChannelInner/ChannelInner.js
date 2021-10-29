@@ -137,7 +137,7 @@ export const ChannelInner = (props) => {
   return (
     <>
       <Window>
-        <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} />
+        <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} disabled={channel?.data?.member_count < 2} />
         <MessageList messageActions={actions} />
         <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
         {channel?.data?.member_count >= 2 &&
