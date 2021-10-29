@@ -5,6 +5,9 @@ import { getCleanImage } from '../../assets';
 import './MessagingChannelPreview.css';
 
 const getAvatarGroup = (members) => {
+  if (members.length === 0) {
+    return <Avatar image={noProfileImage} name="Deleted User" size={40} />;
+  }
   if (members.length === 1) {
     return <Avatar image={members[0].user?.image || noProfileImage} name={members[0].user?.name || members[0].user?.id} size={40} />;
   }
@@ -124,7 +127,7 @@ const getTimeStamp = (channel) => {
 };
 
 const getChannelName = (members) => {
-  const defaultName = 'Johnny Blaze';
+  const defaultName = 'Deleted User';
 
   if (!members.length || members.length === 1) {
     return members[0]?.user.name || defaultName;
@@ -134,10 +137,14 @@ const getChannelName = (members) => {
 };
 
 const getChannelUsername = (members) => {
-  const defaultName = 'usernaem';
+  const defaultName = '';
+
+  if (!members.length) {
+    return '';
+  }
 
   if (!members.length || members.length === 1) {
-    return members[0]?.user.username || members[0]?.user.id;
+    return members[0]?.user?.username || members[0]?.user?.id;
   }
 
   return `${members[0]?.user.username || members[0]?.user.id}`;
@@ -152,7 +159,18 @@ const MessagingChannelPreview = (props) => {
     ({ user }) => user.id !== client.userID,
   );
 
-  console.log(latestMessage?.props?.source)
+  let messagePreview = latestMessage?.props?.source;
+  try {
+    const decodedItem = JSON.parse(messagePreview);
+    if (decodedItem?.text) {
+      messagePreview = decodedItem?.text;
+    }
+  } catch {
+  }
+
+  let username = getChannelUsername(members);
+  username = username ? `@${username}` : '';
+
   return (
     <div
       className={
@@ -169,11 +187,11 @@ const MessagingChannelPreview = (props) => {
       <div className='channel-preview__content-wrapper'>
         <div className='channel-preview__content-top'>
           <p className='channel-preview__content-name'>
-            {channel.data.name || getChannelName(members)} <span className='channel-preview__content-username'>@{getChannelUsername(members)}</span>
+            {channel.data.name || getChannelName(members)} <span className='channel-preview__content-username'>{username}</span>
           </p>
           <p className='channel-preview__content-time'>{getTimeStamp(channel)}</p>
         </div>
-        <p className='channel-preview__content-message'>{latestMessage?.props?.source || 'Empty chat'}</p>
+        <p className='channel-preview__content-message'>{messagePreview || 'Empty chat'}</p>
       </div>
     </div>
   );

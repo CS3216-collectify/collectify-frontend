@@ -32,7 +32,8 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
       });
 
       channels.map((channel) => {
-        console.log(channel.data.name, channel.cid);
+        console.log(channel);
+        // console.log(channel.data.name, channel.cid);
       });
     };
 
