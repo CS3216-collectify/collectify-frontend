@@ -70,3 +70,8 @@ export const updateUsername = async (username) => {
   const response = await server.patch("api/user/", body);
   console.log(response);
 };
+
+export const deleteCurrentUser = async () => {
+  const response = await server.delete(`api/user/`);
+  return;
+}

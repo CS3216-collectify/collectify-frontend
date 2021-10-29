@@ -14,6 +14,7 @@ const UploadButton = ({ onChange: changeHandler, label = "Add Photos" }) => {
       <IonButton
         fill="outline"
         onClick={() => document.getElementById("my-image-input").click()}
+        size="medium"
       >
         {label}
       </IonButton>

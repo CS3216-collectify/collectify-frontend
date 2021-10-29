@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 import { getFollowedCollections } from "../../services/profile";
 import CollectionList from "../profile-collection/CollectionList";
 
-const LIMIT = 10;
+const LIMIT = 6;
 
 const FollowedCollections = (props) => {
   const location = useLocation();
@@ -56,7 +56,6 @@ const FollowedCollections = (props) => {
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       <CollectionList 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 

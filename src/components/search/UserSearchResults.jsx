@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { searchUsers } from "../../services/search";
 import UserList from "../user-list/UserList";
 
-const LIMIT = 20;
+const LIMIT = 18;
 
 const UserSearchResultDisplay = (props) => {
   const { searchText } = props;
@@ -56,11 +56,10 @@ const UserSearchResultDisplay = (props) => {
     if (props.searchText) {
       loadInitialPage();
     }
-  }, [props.searchText]);
+  }, [loadInitialPage, props.searchText]);
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       <UserList 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 

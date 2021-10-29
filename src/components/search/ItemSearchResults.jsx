@@ -56,11 +56,10 @@ const ItemSearchResultDisplay = (props) => {
     if (props.searchText) {
       loadInitialPage();
     }
-  }, [props.searchText]);
+  }, [loadInitialPage, props.searchText]);
 
   return (
     <>
-      <IonLoading isOpen={loading} />
       <ItemGrid 
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 

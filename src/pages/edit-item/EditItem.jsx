@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -9,6 +9,7 @@ import { deleteItem, getItemFromCollection, updateItem } from "../../services/it
 import FlexImage from "../../components/image/FlexImage";
 import SavingGif from "../../assets/saving.gif";
 import DeletingGif from "../../assets/deleting.gif";
+import useUserContext from "../../hooks/useUserContext";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
@@ -16,6 +17,7 @@ const getDefaultItemData = () => {
 
 const EditItem = () => {
   const location = useLocation();
+  const { isCurrentUser } = useUserContext();
   const history = useHistory();
   const setToast = useToastContext();
   const { collectionId, itemId } = useParams();
@@ -28,6 +30,10 @@ const EditItem = () => {
     setLoading(true);
     try {
       const currentItem = await getItemFromCollection(collectionId, itemId);
+      if (!isCurrentUser(currentItem.ownerId)) {
+        history.push(`/collections/${collectionId}/items/${itemId}`);
+        return;
+      }
       setItem(currentItem);
     } catch (e) {
       console.log(e);
@@ -40,9 +46,8 @@ const EditItem = () => {
     if (location.state) {
       console.log("Loading form data from state...");
       setItem({ ...location.state.item });
-    } else {
+    } else if (collectionId && itemId && location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}/edit`)) {
       console.log("Fetching form data from server...");
-      setLoading(true);
       loadExistingData();
     }
   }, [loadExistingData, location]);
@@ -82,7 +87,6 @@ const EditItem = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title="Edit Item" />
       <IonContent>
         {uploading ? (

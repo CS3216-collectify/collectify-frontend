@@ -116,7 +116,6 @@ const EditProfile = () => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} />
       <HomeToolbar title="Edit Profile" />
 
       {/* Ion padding applies 16px  */}
@@ -145,7 +144,7 @@ const EditProfile = () => {
                 <TextInput label="Last Name" value={lastName} onChange={setLastName} placeholder="Type text here" />
               </IonItem>
               <IonItem>
-                <TextInput label="Description" value={description} onChange={setDescription} placeholder="Type text here" />
+                <TextArea label="Description" value={description} onChange={setDescription} placeholder="Type text here" />
               </IonItem>
             </IonList>
             <IonRow>

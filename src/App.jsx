@@ -73,7 +73,7 @@ const App = () => {
                 <ProtectedRoute exact path="/add-collections" component={AddCollection} />
                 <ProtectedRoute exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
-                <Route exact path="/add" component={Add} />
+                <ProtectedRoute exact path="/add" component={Add} />
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />

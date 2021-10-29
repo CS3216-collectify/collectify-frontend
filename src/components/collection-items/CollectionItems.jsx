@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
-import { IonLoading } from "@ionic/react";
 
 const LIMIT = 18;
 
 const CollectionItems = (props) => {
-  const history = useHistory();
   const location = useLocation();
 
   const { collectionId = 1 } = props;

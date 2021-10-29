@@ -1,5 +1,9 @@
 .profile-collection--container {
   flex: 1;
+  background-color: rgba(231, 233, 255, 0.527);
+  padding: 8px;
+  border-radius: 12px;
+
   .profile-collection-title--container {
     display: flex;
     justify-content: space-between;

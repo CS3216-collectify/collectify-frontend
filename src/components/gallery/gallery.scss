@@ -39,6 +39,7 @@
 }
 
 .image-carousel {
+  margin-bottom: 8px;
   ion-img {
     object-fit: contain;
     // backdrop-filter: blur(200px);
@@ -49,5 +50,15 @@
     background-size: cover;
     background-position: center;
     background-image: url("../../assets//blur.png");
+  }
+}
+
+.edit-item-images {
+  flex-direction: row;
+
+  ion-icon {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
   }
 }

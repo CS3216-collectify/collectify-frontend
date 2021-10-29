@@ -21,7 +21,6 @@ const CollectionList = (props) => {
     <>
       {collections.map((collection, index) => (
         <div key={index}>
-          <HorizontalLine color="lightgrey" />
           <CollectionCard collection={collection} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
         </div>
       ))}

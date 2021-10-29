@@ -58,8 +58,9 @@ const Collection = (props) => {
   }, [collectionId]);
 
   useEffect(() => {
-    setLoading(true);
-    loadCollectionData();
+    if (location.pathname.startsWith("/collections/")) {
+      loadCollectionData();
+    }
   }, [loadCollectionData, location]);
 
   const followHandler = () => {
@@ -112,7 +113,6 @@ const Collection = (props) => {
 
   return (
     <IonPage className="collection">
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Collection`} />
       <IonContent className="ion-padding">
         <IonGrid fixed>
@@ -124,14 +124,14 @@ const Collection = (props) => {
                 </b>
               </Text>
 
-              <div className="collection-followers--container" onClick={() => history.push(`/collections/${collectionId}/followers`)}>
+              <div className="collection-followers--container clickable" onClick={() => history.push(`/collections/${collectionId}/followers`)}>
                 <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
                 <Text size="xs">{followersCount} followers</Text>
               </div>
             </div>
           </IonRow>
           <IonRow className="ion-justify-content-between">
-            <Text size="s" className="collection-owner" onClick={() => history.push(`/profile/${ownerUsername}`)}>
+            <Text size="s" className="collection-owner clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
               <b>by @{ownerUsername}</b>
             </Text>
           </IonRow>

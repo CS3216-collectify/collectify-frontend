@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonButton, IonLabel, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams, useLocation } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -12,6 +12,7 @@ import { convertUTCtoLocal } from "../../utils/datetime";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
 import useToastContext from "../../hooks/useToastContext";
 import "./Item.scss";
+import { chatbubblesOutline, peopleOutline } from "ionicons/icons";
 
 const Item = () => {
   const history = useHistory();
@@ -51,9 +52,11 @@ const Item = () => {
   }, [collectionId, itemId]);
 
   useEffect(() => {
-    setLoading(true);
-    fetchItemData();
-  }, [fetchItemData, location]);
+    if (location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}`)) {
+      setLoading(true);
+      fetchItemData();
+    }
+  }, [collectionId, fetchItemData, itemId, location]);
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
@@ -96,15 +99,18 @@ const Item = () => {
     });
   };
 
+  const goToCollectionPage = () => {
+    history.push(`/collections/${collectionId}`);
+  };
+
   return (
     <IonPage className="item">
-      <IonLoading isOpen={loading} spinner="crescent" />
       <HomeToolbar title={`Item`} />
       <IonContent>
         <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol className="item-username">
-              <Text onClick={() => history.push(`/profile/${ownerUsername}`)}>
+              <Text className="clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
                 <b>@{ownerUsername}</b>
               </Text>
             </IonCol>
@@ -112,6 +118,13 @@ const Item = () => {
               {isItemOwner && (
                 <IonRow className="ion-justify-content-end">
                   <EditButton label="Item" onClick={editPageRedirect} fill="outline" />
+                </IonRow>
+              )}
+              {!isItemOwner && (
+                <IonRow className="ion-justify-content-end">
+                  <IonButton size="small" onClick={goToCollectionPage} fill="outline">
+                    <IonLabel>View Collection</IonLabel>
+                  </IonButton>
                 </IonRow>
               )}
             </IonCol>
@@ -124,32 +137,43 @@ const Item = () => {
 
         <IonGrid fixed className="ion-padding">
           <IonRow>
-            <IonCol>
-              <IonRow className="item-title-likes--container">
-                <div>
-                  <Text size="l">
-                    <b>{itemName}</b>
-                  </Text>
-                </div>
-                <div>
-                  <IonCol size={1}>
-                    <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-                  </IonCol>
-                  <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
-                    <Text color="default">{likesCount} likes</Text>
-                  </IonCol>
-                </div>
-              </IonRow>
+            <IonCol size={9}>
+              <Text size="l">
+                <b>{itemName}</b>
+              </Text>
+            </IonCol>
 
-              <IonRow>
-                <Text>{itemDescription}</Text>
-              </IonRow>
+            <IonCol>
+              <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+              <Text color="default">{likesCount} likes</Text>
             </IonCol>
           </IonRow>
 
           <IonRow>
-            <IonCol className="ion-text-right">
+            <IonCol size={9}>
+              <Text>{itemDescription}</Text>
+            </IonCol>
+
+            <IonCol className="item-tradable">
+              <div className="tradable--container">
+                <IonIcon icon={peopleOutline} className="item-tradable-icon" />
+                <Text>
+                  <b>Tradable</b>
+                </Text>
+              </div>
+            </IonCol>
+          </IonRow>
+
+          <IonRow>
+            <IonCol className="ion-align-items-center" size={9}>
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
+            </IonCol>
+
+            <IonCol>
+              <IonButton size="small">
+                <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
+                <IonLabel>Chat</IonLabel>
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>

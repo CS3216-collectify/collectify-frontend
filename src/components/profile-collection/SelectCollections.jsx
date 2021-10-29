@@ -1,14 +1,12 @@
+import { IonRow } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { IonRow, IonFab, IonFabButton, IonIcon } from "@ionic/react";
-import { add } from "ionicons/icons";
-
 import { getCollections } from "../../services/collections";
-import SelectCollectionList from "./SelectCollectionList";
 import Text from "../text/Text";
-import HorizontalLine from "../line/HorizontalLine";
+import SelectCollectionList from "./SelectCollectionList";
 
-const LIMIT = 10;
+
+const LIMIT = 6;
 
 const SelectCollections = (props) => {
   const location = useLocation();
@@ -52,7 +50,9 @@ const SelectCollections = (props) => {
   }, [profileUserId]);
 
   useEffect(() => {
-    loadInitialCollections();
+    if (location.pathname === "/add") {
+      loadInitialCollections();
+    }
   }, [props.profileUserId, location, loadInitialCollections]);
 
   const fetchNextPage = () => {
@@ -66,12 +66,7 @@ const SelectCollections = (props) => {
           Please select an existing collection or create a new collection to add your item to.
         </Text>
       </IonRow>
-      <SelectCollectionList
-        onScrollEnd={fetchNextPage}
-        listEnded={!hasMore}
-        collections={collections}
-        emptyMessage="Start adding new collections!"
-      />
+      <SelectCollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="Start adding new collections!" />
     </>
   );
 };

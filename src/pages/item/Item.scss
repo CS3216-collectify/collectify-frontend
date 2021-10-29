@@ -6,10 +6,26 @@
     width: 100%;
     justify-content: space-between;
   }
+
   .item-like-button {
     vertical-align: middle;
   }
 }
 .top-margin-s {
   margin-top: -20px;
+}
+.item-chat-icon {
+  margin-right: 4px;
+}
+
+.item-tradable .tradable--container {
+  position: absolute;
+  bottom: 0;
+}
+.tradable--container {
+  color: rgb(10, 51, 161);
+
+  .item-tradable-icon {
+    vertical-align: middle;
+  }
 }

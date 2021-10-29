@@ -3,7 +3,7 @@ import "./button.scss";
 
 const AddButton = ({ label, className, onClick: addHandler }) => {
   return (
-    <IonButton size="small" onClick={addHandler} className={className} fill="outline">
+    <IonButton size="medium" onClick={addHandler} className={className} fill="outline">
       <IonLabel>Add {label}</IonLabel>
     </IonButton>
   );

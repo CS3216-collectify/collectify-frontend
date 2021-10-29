@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useHistory, useParams } from "react-router";
@@ -10,6 +10,7 @@ import { deleteCollection, getCollectionByCollectionId, updateCollection } from 
 import FlexImage from "../../components/image/FlexImage";
 import SavingGif from "../../assets/saving.gif";
 import DeletingGif from "../../assets/deleting.gif";
+import useUserContext from "../../hooks/useUserContext";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -18,6 +19,7 @@ const getDefaultCollectionData = () => {
 const EditCollection = (props) => {
   const setToast = useToastContext();
   const location = useLocation();
+  const { isCurrentUser } = useUserContext();
   const history = useHistory();
   const { collectionId } = useParams();
   const [collection, setCollection] = useState(getDefaultCollectionData());
@@ -30,9 +32,11 @@ const EditCollection = (props) => {
     setLoading(true);
     try {
       const currentCollection = await getCollectionByCollectionId(collectionId);
-      const options = await getCategories();
+      if (!isCurrentUser(currentCollection.ownerId)) {
+        history.push(`/collections/${collectionId}`);
+        return;
+      }
       setCollection(currentCollection);
-      setCategoryOptions(options);
     } catch (e) {
       console.log(e);
     } finally {
@@ -40,15 +44,27 @@ const EditCollection = (props) => {
     }
   }, [collectionId]);
 
+  const loadCategories = useCallback(async () => {
+    setLoading(true);
+    try {
+      const options = await getCategories();
+      setCategoryOptions(options);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (location.state) {
       console.log("Loading form data from state...");
       setCollection({ ...location.state.collection });
-    } else {
+    } else if (collectionId && location.pathname.startsWith(`/collections/${collectionId}/edit`)) {
       console.log("Fetching form data from server...");
-      setLoading(true);
       loadExistingData();
     }
+    loadCategories();
   }, [loadExistingData, location]);
 
   const editCompleteHandler = async (collection) => {
@@ -75,7 +91,7 @@ const EditCollection = (props) => {
         setTimeout(() => {
           setDeleting(false);
           setToast({ message: "Successfully deleted collection.", color: "success" });
-          history.push("/profile");
+          history.replace("/profile");
         }, 2400);
       });
     } catch (e) {
@@ -87,7 +103,6 @@ const EditCollection = (props) => {
 
   return (
     <IonPage>
-      <IonLoading isOpen={loading} spinner="crescent" />
 
       <HomeToolbar title="Edit Collection" />
       <IonContent>
