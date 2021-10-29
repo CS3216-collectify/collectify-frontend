@@ -52,6 +52,10 @@ const CollectionForm = (props) => {
       validationErrorMessage("Name cannot be empty!");
       return;
     }
+    if (trimmedCollectionName.length > 70) {
+      validationErrorMessage("Name must be less than 70 characters long!");
+      return;
+    }
     if (categoryId === null) {
       validationErrorMessage("Please select a category!");
       return;

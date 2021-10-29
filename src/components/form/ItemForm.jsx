@@ -85,12 +85,13 @@ const ItemForm = (props) => {
       validationErrorMessage("Name cannot be empty!");
       return;
     }
+    if (trimmedItemName.length > 70) {
+      validationErrorMessage("Name must be less than 70 characters long!");
+      return;
+    }
     if (!images || images.length === 0) {
       validationErrorMessage("Images cannot be empty!");
       return;
-    }
-    if (trimmedItemName.length > 30) {
-      validationErrorMessage("Name must be shorter 30 characters!");
     }
 
     const itemToSave = {
