@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { MessageSimple, useChatContext, useMessageContext } from 'stream-chat-react';
 import useUserContext from '../../../../hooks/useUserContext';
 import './CustomMessage.css';
+import ItemMessageFromMe from './ItemMessageFromMe';
 import ItemMessageFromOther from './ItemMessageFromOther';
 
 const CustomMessage = (props) => {
@@ -20,6 +21,10 @@ const CustomMessage = (props) => {
         return (
           <ItemMessageFromOther message={message} />
         );
+      } else {
+        return (
+          <ItemMessageFromMe message={message} />
+        )
       }
     }
   }
