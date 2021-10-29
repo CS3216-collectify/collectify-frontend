@@ -16,8 +16,6 @@ const CustomMessage = (props) => {
 
   const isMessageOwner = isCurrentUser(message.user.id);
 
-  console.log(channel.state.members);
-
   let decodedItem = null;
   try {
     decodedItem = JSON.parse(message.text);

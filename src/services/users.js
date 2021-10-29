@@ -2,27 +2,15 @@ import server from "../utils/server";
 
 export const getCurrentUser = async () => {
   console.log("Get user data of logged in user");
-  const response = await server.get(`api/user/`);
+  const response = await server.get("api/user/");
   console.log(response);
   return response.data;
 };
 
-// TODO: CHANGE TO API TOKEN CALL
 export const getChatUserInfo = async () => {
-  // TODO: STILL WRONG DATA!!!
-  const user = await getCurrentUser();
-  const {
-    userId: chatId,
-    username,
-    firstName,
-    lastName,
-    chatName = `${firstName} ${lastName}`,
-    pictureUrl,
-    chatToken = "PUT CHAT TOKEN HERE",
-  } = user;
-
-  const chatUser = { chatId, chatName, pictureUrl, chatToken, username };
-  return chatUser;
+  const response = await server.post("/chat/");
+  console.log("POST /chat response", response);
+  return response.data;
 };
 
 export const getUserByUsername = async (username) => {
