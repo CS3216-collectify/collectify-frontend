@@ -21,7 +21,7 @@ const Settings = () => {
 
         <IonGrid fixed>
           <Text size="l">Any feedback or suggestions? Please send us an email!</Text>
-          <IonRow className="mail-to-button--container ion-margin-top">
+          <IonRow className="mail-to-button--container ion-margin-vertical">
             <IonButton className="mail-to-button" href="mailto:cs3216collectify@gmail.com">
               Contact us
             </IonButton>
@@ -32,8 +32,8 @@ const Settings = () => {
               <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
             </Text>
           )}
-          <IonRow>{isUserAuthenticated ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
-          <IonRow>{isUserAuthenticated && <DeleteAccountButton />}</IonRow>
+          <IonRow className="ion-margin-vertical">{isUserAuthenticated ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
+          <IonRow className="ion-margin-vertical">{isUserAuthenticated && <DeleteAccountButton />}</IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
