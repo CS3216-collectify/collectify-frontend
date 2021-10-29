@@ -47,7 +47,7 @@ export const ChannelInner = (props) => {
   const location = useLocation();
   const { chatClient } = useUserContext();
   const setToast = useToastContext();
-  const { setActiveChannel } = useChatContext();
+  const { setActiveChannel, channel } = useChatContext();
   const { theme, toggleMobile } = props;
   const [chatItem, setChatItem] = useState(null);
 
@@ -140,7 +140,7 @@ export const ChannelInner = (props) => {
         <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} />
         <MessageList messageActions={actions} />
         <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
-        <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
+        <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} disabled={channel?.data?.member_count < 2} />
       </Window>
       <Thread Input={MessagingInput} />
     </>
