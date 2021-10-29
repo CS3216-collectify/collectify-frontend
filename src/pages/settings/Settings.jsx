@@ -1,6 +1,7 @@
 import { IonButton, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
 import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import LogoutButton from "../../components/button/LogoutButton";
+import DeleteAccountButton from "../../components/button/DeleteAccountButton";
 import Text from "../../components/text/Text";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useUserContext from "../../hooks/useUserContext";
@@ -15,12 +16,12 @@ const Settings = () => {
     <IonPage className="settings">
       <HomeToolbar title="Settings" />
       {/* Ion padding applies 16px  */}
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding ion-text-center">
         {/* IonGrid with fixed property does not allow width to stretch in desktop */}
 
         <IonGrid fixed>
           <Text size="l">Any feedback or suggestions? Please send us an email!</Text>
-          <IonRow className="mail-to-button--container">
+          <IonRow className="mail-to-button--container ion-margin-top">
             <IonButton className="mail-to-button" href="mailto:cs3216collectify@gmail.com">
               Contact us
             </IonButton>
@@ -32,6 +33,7 @@ const Settings = () => {
             </Text>
           )}
           <IonRow>{isUserAuthenticated ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
+          <IonRow>{isUserAuthenticated && <DeleteAccountButton />}</IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
