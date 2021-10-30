@@ -151,7 +151,7 @@ const getChannelUsername = (members) => {
 };
 
 const MessagingChannelPreview = (props) => {
-  const { channel, latestMessage, setActiveChannel, setIsCreating } = props;
+  const { channel, latestMessage, setActiveChannel, setIsCreating, closeNav } = props;
 
   const { channel: activeChannel, client } = useContext(ChatContext);
 
@@ -174,6 +174,7 @@ const MessagingChannelPreview = (props) => {
       onClick={() => {
         setIsCreating(false);
         setActiveChannel(channel);
+        closeNav();
       }}
     >
       {getAvatarGroup(members)}

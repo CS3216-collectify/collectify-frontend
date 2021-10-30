@@ -26,55 +26,23 @@ const CollectifyChat = () => {
 
   const [giphyState, setGiphyState] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const [isMobileNavVisible, setMobileNav] = useState(false);
+  const [isMobileNavVisible, setMobileNav] = useState(true);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const mobileChannelList = document.querySelector("#mobile-channel-list");
     if (isMobileNavVisible && mobileChannelList) {
-      mobileChannelList.classList.add("show");
       document.body.style.overflow = "hidden";
     } else if (!isMobileNavVisible && mobileChannelList) {
-      mobileChannelList.classList.remove("show");
       document.body.style.overflow = "auto";
     }
   }, [isMobileNavVisible]);
 
-  // TODO: find a better way to update the height
-  // useLayoutEffect(() => {
-  //   const setAppHeight = () => {
-  //     setLoading(true);
-  //     var content = document.querySelector("ion-content");
-  //     var container = document.querySelector(".str-chat");
-  //     console.log(content, container, content?.offsetHeight);
+  const mobileChannelListClasses = isMobileNavVisible ? "show" : "";
 
-  //     if (!content?.offsetHeight) {
-  //       setLoading(false);
-  //       return;
-  //     }
-
-  //     //   while (!content || !container) {
-  //     // content = document.querySelector("ion-content");
-  //     // container = document.querySelector(".str-chat__container");
-  //     //   }
-
-  //     //   if (content && container) {
-  //     //   }
-  //     const doc = document.documentElement;
-  //     console.log(content.offsetHeight)
-  //     doc.style.setProperty("--chat-height", `${content.offsetHeight}px`);
-  //     setLoading(false);
-  //   };
-  //   setTimeout(() => {
-  //     setAppHeight();
-
-  //     window.addEventListener("resize", setAppHeight);
-  //   }, 2000);
-
-  //   return () => window.removeEventListener("resize", setAppHeight);
-  // }, []);
-
-  const toggleMobile = () => setMobileNav(!isMobileNavVisible);
+  const toggleMobile = () => {
+    setMobileNav(!isMobileNavVisible);
+  }
 
   const giphyContextValue = { giphyState, setGiphyState };
 
@@ -89,35 +57,42 @@ const CollectifyChat = () => {
     );
   }
 
+  const closeMobileNav = () => {
+    console.log("closing mobile...");
+    setMobileNav(false);
+  }
+  const openMobileNav = () => {
+    console.log("opening mobile...");
+    setMobileNav(true);
+  }
+  
   return (
     <IonPage>
       <HomeToolbar title="Chat" />
       <IonContent class="chat-content">
         <Chat client={chatClient} theme="messaging light">
-          <div id="mobile-channel-list" onClick={toggleMobile}>
+          <div id="mobile-channel-list" className={mobileChannelListClasses}>
             <ChannelList
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} toggleMobile={() => setMobileNav(false)} />}
-              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} toggleMobile={closeMobileNav} />}
+              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} />}
             />
           </div>
-          {/* <div> */}
-            <Channel
-              Input={MessagingInput}
-              maxNumberOfFiles={10}
-              Message={CustomMessage}
-              multipleUploads={true}
-              ThreadHeader={MessagingThreadHeader}
-              TypingIndicator={() => null}
-            >
-              {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
-              <GiphyContext.Provider value={giphyContextValue}>
-                <ChannelInner theme="light" toggleMobile={toggleMobile} />
-              </GiphyContext.Provider>
-            </Channel>
-          {/* </div> */}
+          <Channel
+            Input={MessagingInput}
+            maxNumberOfFiles={10}
+            Message={CustomMessage}
+            multipleUploads={true}
+            ThreadHeader={MessagingThreadHeader}
+            TypingIndicator={() => null}
+          >
+            {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
+            <GiphyContext.Provider value={giphyContextValue}>
+              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav}/>
+            </GiphyContext.Provider>
+          </Channel>
         </Chat>
       </IonContent>
     </IonPage>

@@ -33,7 +33,6 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
 
       channels.map((channel) => {
         console.log(channel);
-        // console.log(channel.data.name, channel.cid);
       });
     };
 
@@ -51,7 +50,10 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
             <div className="messaging__channel-list__header__name">{name || id}</div>
             <div className="messaging__channel-list__header__username">@{username || id}</div>
           </IonCol>
-          <button className="messaging__channel-list__header__button" onClick={onCreateChannel}>
+          <button className="messaging__channel-list__header__button" onClick={() => {
+            onCreateChannel();
+            toggleMobile();
+          }}>
             <CreateChannelIcon />
           </button>
         </div>

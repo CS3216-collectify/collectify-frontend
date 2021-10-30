@@ -48,7 +48,7 @@ export const ChannelInner = (props) => {
   const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
-  const { theme, toggleMobile } = props;
+  const { theme, closeNav, openNav } = props;
   const [chatItem, setChatItem] = useState(null);
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
@@ -72,6 +72,7 @@ export const ChannelInner = (props) => {
       });
       await channel.watch().then((res) => {
         setActiveChannel(channel);
+        closeNav();
       }).catch((e) => {
         setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
       })
@@ -134,7 +135,7 @@ export const ChannelInner = (props) => {
   return (
     <>
       <Window>
-        <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} disabled={channel?.data?.member_count < 2} />
+        <MessagingChannelHeader theme={theme} toggleMobile={openNav} disabled={channel?.data?.member_count < 2} />
         <MessageList messageActions={actions} />
         <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
         {channel?.data?.member_count >= 2 &&
