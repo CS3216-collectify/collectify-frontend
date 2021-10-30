@@ -55,6 +55,7 @@ export const ChannelInner = (props) => {
   const overrideSubmitHandler = (message) => {
     console.log(message);
     let updatedMessage;
+    let customData = {};
 
     if (message.attachments?.length && message.text?.startsWith('/giphy')) {
       const updatedText = message.text.replace('/giphy', '');
@@ -62,7 +63,7 @@ export const ChannelInner = (props) => {
     }
 
     if (chatItem) {
-      updatedMessage = { ...message, chatItem: chatItem };
+      customData.chatItem = chatItem;
       setChatItem(null);
     }
 
@@ -87,7 +88,7 @@ export const ChannelInner = (props) => {
           : undefined,
       };
 
-      const sendMessagePromise = channel?.sendMessage(messageToSend);
+      const sendMessagePromise = sendMessage(messageToSend, customData);
       logChatPromiseExecution(sendMessagePromise, 'send message');
     }
 
