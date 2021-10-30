@@ -90,7 +90,7 @@ const CollectifyChat = () => {
           >
             {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
             <GiphyContext.Provider value={giphyContextValue}>
-              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav}/>
+              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav} isNavOpen={isMobileNavVisible} />
             </GiphyContext.Provider>
           </Channel>
         </Chat>

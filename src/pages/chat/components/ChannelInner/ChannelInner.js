@@ -48,14 +48,14 @@ export const ChannelInner = (props) => {
   const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
-  const { theme, closeNav, openNav } = props;
+  const { theme, closeNav, openNav, isNavOpen } = props;
   const [chatItem, setChatItem] = useState(null);
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
 
   useEffect(async () => {
-    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+    if (!isNavOpen && location.state?.recipient && location.pathname.startsWith("/chat")) {
       if (location.state?.chatItem) {
         const newState = { ...location.state };
         const { chatItem } = newState;

@@ -16,6 +16,12 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
   useEffect(() => {
+    if (location.state?.recipient) {
+      toggleMobile();
+    }
+  }, [location]);
+
+  useEffect(() => {
     const getChannels = async (client) => {
       const filter = { type: "messaging", members: { $in: [client.userID] } };
       const sort = [{ last_message_at: -1 }];
