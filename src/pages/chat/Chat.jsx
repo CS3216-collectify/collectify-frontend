@@ -65,7 +65,7 @@ const CollectifyChat = () => {
               sort={sort}
               options={options}
               List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} closeNav={closeMobileNav} setChatItem={setChatItem} />}
-              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} />}
+              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} setChatItem={setChatItem} chatItem={chatItem} />}
             />
           </div>
           {isCreating && <CreateChannel openNav={openMobileNav} onClose={() => setIsCreating(false)} />}
