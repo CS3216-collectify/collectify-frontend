@@ -80,7 +80,7 @@ const MessagingInput = () => {
       >
         <SendIcon />
       </div>
-      <EmojiPicker />
+      <EmojiPicker small={true}/>
     </div>
   );
 };
