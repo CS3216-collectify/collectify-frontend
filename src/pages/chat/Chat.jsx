@@ -81,7 +81,7 @@ const CollectifyChat = () => {
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} />}
             />
           </div>
-          {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
+          {isCreating && <CreateChannel closeNav={closeMobileNav} onClose={() => setIsCreating(false)} />}
           <Channel
             Input={MessagingInput}
             maxNumberOfFiles={10}
