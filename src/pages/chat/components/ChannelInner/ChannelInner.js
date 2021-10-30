@@ -54,10 +54,15 @@ export const ChannelInner = (props) => {
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
 
-  useEffect(() => {
-    if (location.state?.recipient) {
+  useEffect(async () => {
+    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+      if (location.state?.chatItem) {
+        const newState = { ...location.state };
+        const { chatItem } = newState;
+        console.log(chatItem);
+        setChatItem(chatItem);
+      }
       const { recipient: recipientId } = location.state;
-      delete location.state?.recipient;
       console.log(recipientId);
       if (chatClient.userID === recipientId) {
         return;
@@ -65,25 +70,19 @@ export const ChannelInner = (props) => {
       const channel = chatClient.channel("messaging", {
         members: [chatClient.userID, recipientId],
       });
-      channel.watch().then((res) => {
+      await channel.watch().then((res) => {
         setActiveChannel(channel);
       }).catch((e) => {
         setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
       })
-      if (location.state?.chatItem) {
-        const newState = { ...location.state };
-        const { chatItem } = newState;
-        console.log(chatItem);
-        setChatItem(chatItem);
-      }
-      console.log("clearing state history...")
+      console.log("clearing state history1...");
       history.replace({...history.location, state: {}})
     }
   }, [location]);
 
   useEffect(() => {
-    if (!chatItem) {
-      console.log("clearing state history...");
+    if (!chatItem && location.pathname.startsWith("/chat")) {
+      console.log("clearing state history2...");
       history.replace({...history.location, state: {}})
     }
   }, [history, chatItem]);
@@ -98,9 +97,7 @@ export const ChannelInner = (props) => {
     }
 
     if (chatItem) {
-      const chatItemWithMessage = { ...chatItem, text: message?.text }
-      const updatedText = JSON.stringify(chatItemWithMessage);
-      updatedMessage = { ...message, text: updatedText };
+      updatedMessage = { ...message, chatItem: chatItem };
       setChatItem(null);
     }
 
@@ -125,7 +122,7 @@ export const ChannelInner = (props) => {
           : undefined,
       };
 
-      const sendMessagePromise = sendMessage(messageToSend);
+      const sendMessagePromise = channel?.sendMessage(messageToSend);
       logChatPromiseExecution(sendMessagePromise, 'send message');
     }
 
