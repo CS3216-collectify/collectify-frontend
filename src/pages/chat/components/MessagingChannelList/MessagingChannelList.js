@@ -1,23 +1,44 @@
+import { IonCol } from "@ionic/react";
 import React, { useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
 import { Avatar, useChatContext } from "stream-chat-react";
-
-import "./MessagingChannelList.css";
-import { SkeletonLoader } from "./SkeletonLoader";
 import noProfileImage from "../../../../assets/no-profile-image.png";
-
+import useToastContext from "../../../../hooks/useToastContext";
+import useUserContext from "../../../../hooks/useUserContext";
 import { CreateChannelIcon } from "../../assets";
 import streamLogo from "../../assets/stream.png";
-import { useLocation } from "react-router";
-import { IonCol } from "@ionic/react";
+import "./MessagingChannelList.css";
+import { SkeletonLoader } from "./SkeletonLoader";
 
-const MessagingChannelList = ({ children, error = false, loading, onCreateChannel, toggleMobile }) => {
+const MessagingChannelList = ({ children, error = false, loading, onCreateChannel, closeNav, setChatItem }) => {
   const location = useLocation();
+  const history = useHistory();
   const { client, setActiveChannel } = useChatContext();
+  const { chatClient } = useUserContext();
+  const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
-  useEffect(() => {
-    if (location.state?.recipient) {
-      toggleMobile();
+  useEffect(async () => {
+    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+      console.log("Processing recipient and chat...");
+      const { recipient: recipientId } = location.state;
+      console.log(recipientId);
+      if (chatClient.userID === recipientId) {
+        return;
+      }
+      const channel = chatClient.channel("messaging", {
+        members: [chatClient.userID, recipientId],
+      });
+      await channel.watch().then((res) => {
+        setActiveChannel(channel);
+        if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
+          setChatItem(location.state?.chatItem);
+          closeNav();
+        }
+      }).catch((e) => {
+        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+      })
+      history.replace({...history.location, state: {}})
     }
   }, [location]);
 
@@ -52,7 +73,7 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
           </IonCol>
           <button className="messaging__channel-list__header__button" onClick={() => {
             onCreateChannel();
-            toggleMobile();
+            closeNav();
           }}>
             <CreateChannelIcon />
           </button>

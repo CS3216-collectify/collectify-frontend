@@ -28,6 +28,7 @@ const CollectifyChat = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isMobileNavVisible, setMobileNav] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [chatItem, setChatItem] = useState(null);
 
   useEffect(() => {
     const mobileChannelList = document.querySelector("#mobile-channel-list");
@@ -76,10 +77,11 @@ const CollectifyChat = () => {
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} toggleMobile={closeMobileNav} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} closeNav={closeMobileNav} setChatItem={setChatItem} />}
               Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} />}
             />
           </div>
+          {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
           <Channel
             Input={MessagingInput}
             maxNumberOfFiles={10}
@@ -88,9 +90,8 @@ const CollectifyChat = () => {
             ThreadHeader={MessagingThreadHeader}
             TypingIndicator={() => null}
           >
-            {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
             <GiphyContext.Provider value={giphyContextValue}>
-              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav} isNavOpen={isMobileNavVisible} />
+              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav} isNavOpen={isMobileNavVisible} chatItem={chatItem} setChatItem={setChatItem} />
             </GiphyContext.Provider>
           </Channel>
         </Chat>
