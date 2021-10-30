@@ -1,23 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { logChatPromiseExecution } from 'stream-chat';
-import {
-  MessageList,
-  MessageInput,
-  Thread,
-  Window,
-  useChannelActionContext,
-  useChatContext
-} from 'stream-chat-react';
+import React, { useContext, useEffect, useState } from "react";
+import { logChatPromiseExecution } from "stream-chat";
+import { MessageList, MessageInput, Thread, Window, useChannelActionContext, useChatContext } from "stream-chat-react";
 
-import { MessagingChannelHeader, MessagingInput } from '../../components';
+import { MessagingChannelHeader, MessagingInput } from "../../components";
 
-import { GiphyContext } from '../../Chat';
-import { useHistory, useLocation } from 'react-router';
-import useUserContext from '../../../../hooks/useUserContext';
-import useToastContext from '../../../../hooks/useToastContext';
-import { IonCol, IonIcon, IonImg, IonItem, IonList, IonThumbnail } from '@ionic/react';
-import Text from '../../../../components/text/Text';
-import { close } from 'ionicons/icons';
+import { GiphyContext } from "../../Chat";
+import { useHistory, useLocation } from "react-router";
+import useUserContext from "../../../../hooks/useUserContext";
+import useToastContext from "../../../../hooks/useToastContext";
+import { IonCol, IonIcon, IonImg, IonItem, IonList, IonThumbnail } from "@ionic/react";
+import Text from "../../../../components/text/Text";
+import { close } from "ionicons/icons";
 
 const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
   if (!chatItem) {
@@ -32,15 +25,13 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
           <IonImg src={imageUrl} />
         </IonThumbnail>
       </IonCol>
-      <IonCol  onClick={onClick}>
-        <Text size="l">
-          {name}
-        </Text>
+      <IonCol onClick={onClick}>
+        <Text size="l">{name}</Text>
       </IonCol>
       <IonIcon icon={close} onClick={closeHandler} />
     </IonItem>
-  )
-}
+  );
+};
 
 export const ChannelInner = (props) => {
   const history = useHistory();
@@ -54,45 +45,51 @@ export const ChannelInner = (props) => {
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
 
-  useEffect(async () => {
-    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
-      if (location.state?.chatItem) {
-        const newState = { ...location.state };
-        const { chatItem } = newState;
-        console.log(chatItem);
-        setChatItem(chatItem);
+  useEffect(() => {
+    const fun = async () => {
+      if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+        if (location.state?.chatItem) {
+          const newState = { ...location.state };
+          const { chatItem } = newState;
+          console.log(chatItem);
+          setChatItem(chatItem);
+        }
+        const { recipient: recipientId } = location.state;
+        console.log(recipientId);
+        if (chatClient.userID === recipientId) {
+          return;
+        }
+        const channel = chatClient.channel("messaging", {
+          members: [chatClient.userID, recipientId],
+        });
+        await channel
+          .watch()
+          .then((res) => {
+            setActiveChannel(channel);
+          })
+          .catch((e) => {
+            setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+          });
+        console.log("clearing state history1...");
+        history.replace({ ...history.location, state: {} });
       }
-      const { recipient: recipientId } = location.state;
-      console.log(recipientId);
-      if (chatClient.userID === recipientId) {
-        return;
-      }
-      const channel = chatClient.channel("messaging", {
-        members: [chatClient.userID, recipientId],
-      });
-      await channel.watch().then((res) => {
-        setActiveChannel(channel);
-      }).catch((e) => {
-        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-      })
-      console.log("clearing state history1...");
-      history.replace({...history.location, state: {}})
-    }
-  }, [location]);
+    };
+    fun();
+  }, [chatClient, history, location, setActiveChannel, setToast]);
 
   useEffect(() => {
     if (!chatItem && location.pathname.startsWith("/chat")) {
       console.log("clearing state history2...");
-      history.replace({...history.location, state: {}})
+      history.replace({ ...history.location, state: {} });
     }
-  }, [history, chatItem]);
+  }, [history, chatItem, location.pathname]);
 
   const overrideSubmitHandler = (message) => {
     console.log(message);
     let updatedMessage;
 
-    if (message.attachments?.length && message.text?.startsWith('/giphy')) {
-      const updatedText = message.text.replace('/giphy', '');
+    if (message.attachments?.length && message.text?.startsWith("/giphy")) {
+      const updatedText = message.text.replace("/giphy", "");
       updatedMessage = { ...message, text: updatedText };
     }
 
@@ -123,23 +120,21 @@ export const ChannelInner = (props) => {
       };
 
       const sendMessagePromise = channel?.sendMessage(messageToSend);
-      logChatPromiseExecution(sendMessagePromise, 'send message');
+      logChatPromiseExecution(sendMessagePromise, "send message");
     }
 
     setGiphyState(false);
   };
 
-  const actions = ['delete', 'edit', 'flag', 'mute', 'react', 'reply'];
+  const actions = ["delete", "edit", "flag", "mute", "react", "reply"];
 
   return (
     <>
       <Window>
         <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} disabled={channel?.data?.member_count < 2} />
         <MessageList messageActions={actions} />
-        <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
-        {channel?.data?.member_count >= 2 &&
-          <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
-        }
+        <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)} />
+        {channel?.data?.member_count >= 2 && <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />}
       </Window>
       <Thread Input={MessagingInput} />
     </>
