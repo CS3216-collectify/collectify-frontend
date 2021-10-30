@@ -45,52 +45,17 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
 export const ChannelInner = (props) => {
   const history = useHistory();
   const location = useLocation();
-  const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
-  const { theme, closeNav, openNav, isNavOpen } = props;
-  const [chatItem, setChatItem] = useState(null);
+  const { theme, closeNav, openNav, isNavOpen, chatItem, setChatItem } = props;
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
 
-  useEffect(async () => {
-    if (!isNavOpen && location.state?.recipient && location.pathname.startsWith("/chat")) {
-      if (location.state?.chatItem) {
-        const newState = { ...location.state };
-        const { chatItem } = newState;
-        console.log(chatItem);
-        setChatItem(chatItem);
-      }
-      const { recipient: recipientId } = location.state;
-      console.log(recipientId);
-      if (chatClient.userID === recipientId) {
-        return;
-      }
-      const channel = chatClient.channel("messaging", {
-        members: [chatClient.userID, recipientId],
-      });
-      await channel.watch().then((res) => {
-        setActiveChannel(channel);
-        closeNav();
-      }).catch((e) => {
-        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-      })
-      console.log("clearing state history1...");
-      history.replace({...history.location, state: {}})
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (!chatItem && location.pathname.startsWith("/chat")) {
-      console.log("clearing state history2...");
-      history.replace({...history.location, state: {}})
-    }
-  }, [history, chatItem]);
-
   const overrideSubmitHandler = (message) => {
     console.log(message);
     let updatedMessage;
+    let customData = {};
 
     if (message.attachments?.length && message.text?.startsWith('/giphy')) {
       const updatedText = message.text.replace('/giphy', '');
@@ -98,7 +63,7 @@ export const ChannelInner = (props) => {
     }
 
     if (chatItem) {
-      updatedMessage = { ...message, chatItem: chatItem };
+      customData.chatItem = chatItem;
       setChatItem(null);
     }
 
@@ -123,7 +88,7 @@ export const ChannelInner = (props) => {
           : undefined,
       };
 
-      const sendMessagePromise = channel?.sendMessage(messageToSend);
+      const sendMessagePromise = sendMessage(messageToSend, customData);
       logChatPromiseExecution(sendMessagePromise, 'send message');
     }
 
@@ -135,11 +100,11 @@ export const ChannelInner = (props) => {
   return (
     <>
       <Window>
-        <MessagingChannelHeader theme={theme} toggleMobile={openNav} disabled={channel?.data?.member_count < 2} />
+        <MessagingChannelHeader theme={theme} openNav={openNav} disabled={channel?.data?.member_count < 2} />
         <MessageList messageActions={actions} />
         <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
         {channel?.data?.member_count >= 2 &&
-          <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
+          <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} disableMentions />
         }
       </Window>
       <Thread Input={MessagingInput} />

@@ -28,21 +28,9 @@ const CollectifyChat = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isMobileNavVisible, setMobileNav] = useState(true);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const mobileChannelList = document.querySelector("#mobile-channel-list");
-    if (isMobileNavVisible && mobileChannelList) {
-      document.body.style.overflow = "hidden";
-    } else if (!isMobileNavVisible && mobileChannelList) {
-      document.body.style.overflow = "auto";
-    }
-  }, [isMobileNavVisible]);
+  const [chatItem, setChatItem] = useState(null);
 
   const mobileChannelListClasses = isMobileNavVisible ? "show" : "";
-
-  const toggleMobile = () => {
-    setMobileNav(!isMobileNavVisible);
-  }
 
   const giphyContextValue = { giphyState, setGiphyState };
 
@@ -76,10 +64,11 @@ const CollectifyChat = () => {
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} toggleMobile={closeMobileNav} />}
-              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} />}
+              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} closeNav={closeMobileNav} setChatItem={setChatItem} />}
+              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} setChatItem={setChatItem} chatItem={chatItem} />}
             />
           </div>
+          {isCreating && <CreateChannel openNav={openMobileNav} onClose={() => setIsCreating(false)} />}
           <Channel
             Input={MessagingInput}
             maxNumberOfFiles={10}
@@ -88,9 +77,8 @@ const CollectifyChat = () => {
             ThreadHeader={MessagingThreadHeader}
             TypingIndicator={() => null}
           >
-            {isCreating && <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />}
             <GiphyContext.Provider value={giphyContextValue}>
-              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav} isNavOpen={isMobileNavVisible} />
+              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav} isNavOpen={isMobileNavVisible} chatItem={chatItem} setChatItem={setChatItem} />
             </GiphyContext.Provider>
           </Channel>
         </Chat>

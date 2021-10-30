@@ -8,9 +8,9 @@ import ItemMessageFromOther from './ItemMessageFromOther';
 
 const CustomMessage = (props) => {
   const { message } = useMessageContext();
-  const { isCurrentUser } = useUserContext();
+  const { client } = useChatContext();
 
-  const isMessageOwner = isCurrentUser(message.user.id);
+  const isMessageOwner = client.userID === message.user.id;
 
   if (!isMessageOwner) {
     return (
