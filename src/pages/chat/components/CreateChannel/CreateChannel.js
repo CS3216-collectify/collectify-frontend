@@ -18,7 +18,7 @@ const UserResult = ({ user }) => (
   </li>
 );
 
-const CreateChannel = ({ onClose, closeNav }) => {
+const CreateChannel = ({ onClose, openNav }) => {
   const setToast = useToastContext();
   const { client, setActiveChannel } = useChatContext();
 
@@ -160,7 +160,7 @@ const CreateChannel = ({ onClose, closeNav }) => {
     <div className='messaging-create-channel'>
       <header>
         <div className='messaging-create-channel__left'>
-          <div className='close-mobile-create' onClick={closeNav}>
+          <div className='close-mobile-create' onClick={openNav}>
             <IonIcon size="large" icon={arrowBack} className="ion-margin-right" />
           </div>
           <div className='messaging-create-channel__left-text'>To: </div>
