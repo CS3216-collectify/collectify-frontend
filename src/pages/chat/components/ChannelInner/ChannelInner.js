@@ -104,7 +104,7 @@ export const ChannelInner = (props) => {
         <MessageList messageActions={actions} />
         <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
         {channel?.data?.member_count >= 2 &&
-          <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
+          <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} disableMentions />
         }
       </Window>
       <Thread Input={MessagingInput} />
