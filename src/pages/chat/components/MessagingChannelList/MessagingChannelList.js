@@ -33,8 +33,8 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
         setActiveChannel(channel);
         if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
           setChatItem(location.state?.chatItem);
-          closeNav();
         }
+        closeNav();
       }).catch((e) => {
         setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
       })
