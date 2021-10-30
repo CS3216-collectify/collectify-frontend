@@ -35,9 +35,6 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
 
 export const ChannelInner = (props) => {
   const history = useHistory();
-  const location = useLocation();
-  const { chatClient } = useUserContext();
-  const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
   const { theme, closeNav, openNav, isNavOpen, chatItem, setChatItem } = props;
 
