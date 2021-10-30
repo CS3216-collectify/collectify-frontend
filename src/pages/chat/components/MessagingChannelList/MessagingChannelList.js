@@ -14,21 +14,20 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const location = useLocation();
   const history = useHistory();
   const { client, setActiveChannel } = useChatContext();
-  const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
   useEffect(() => {
-    const fun = async () => {
+    const loadRecipientChat = async () => {
       if (location.state?.recipient && location.pathname.startsWith("/chat")) {
         console.log("Processing recipient and chat...");
         const { recipient: recipientId } = location.state;
         console.log(recipientId);
-        if (chatClient.userID === recipientId) {
+        if (client.userID === recipientId) {
           return;
         }
-        const channel = chatClient.channel("messaging", {
-          members: [chatClient.userID, recipientId],
+        const channel = client.channel("messaging", {
+          members: [client.userID, recipientId],
         });
         await channel
           .watch()
@@ -36,8 +35,8 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
             setActiveChannel(channel);
             if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
               setChatItem(location.state?.chatItem);
-              closeNav();
             }
+            closeNav();
           })
           .catch((e) => {
             setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
@@ -45,8 +44,8 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
         history.replace({ ...history.location, state: {} });
       }
     };
-    fun()
-  }, [chatClient, closeNav, history, location, setActiveChannel, setChatItem, setToast]);
+    loadRecipientChat();
+  }, [client, closeNav, history, location, setActiveChannel, setChatItem, setToast]);
 
   useEffect(() => {
     const getChannels = async (client) => {

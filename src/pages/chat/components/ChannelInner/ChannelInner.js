@@ -1,6 +1,6 @@
 import { IonCol, IonIcon, IonImg, IonItem, IonThumbnail } from "@ionic/react";
 import { close } from "ionicons/icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import { logChatPromiseExecution } from "stream-chat";
 import { MessageInput, MessageList, Thread, useChannelActionContext, useChatContext, Window } from "stream-chat-react";
@@ -35,15 +35,21 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
 
 export const ChannelInner = (props) => {
   const history = useHistory();
+  const location = useLocation();
+  const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
   const { theme, closeNav, openNav, isNavOpen, chatItem, setChatItem } = props;
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
 
+  useEffect(()=>{
+    console.log(channel)
+  })
   const overrideSubmitHandler = (message) => {
     console.log(message);
     let updatedMessage;
+    let customData = {};
 
     if (message.attachments?.length && message.text?.startsWith("/giphy")) {
       const updatedText = message.text.replace("/giphy", "");
@@ -51,7 +57,7 @@ export const ChannelInner = (props) => {
     }
 
     if (chatItem) {
-      updatedMessage = { ...message, chatItem: chatItem };
+      customData.chatItem = chatItem;
       setChatItem(null);
     }
 
@@ -76,8 +82,8 @@ export const ChannelInner = (props) => {
           : undefined,
       };
 
-      const sendMessagePromise = channel?.sendMessage(messageToSend);
-      logChatPromiseExecution(sendMessagePromise, "send message");
+      const sendMessagePromise = sendMessage(messageToSend, customData);
+      logChatPromiseExecution(sendMessagePromise, 'send message');
     }
 
     setGiphyState(false);
