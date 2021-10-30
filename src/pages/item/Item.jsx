@@ -116,7 +116,7 @@ const Item = () => {
       },
     };
     console.log(state);
-    history.push({ pathname, state });
+    history.push({ pathname: pathname, state: state });
   };
 
   return (

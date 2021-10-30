@@ -20,7 +20,7 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
   const { imageUrl, name, link } = chatItem;
   return (
     <IonItem color="light">
-      <IonCol onClick={onClick}>
+      <IonCol size={2} onClick={onClick}>
         <IonThumbnail>
           <IonImg src={imageUrl} />
         </IonThumbnail>
@@ -39,7 +39,7 @@ export const ChannelInner = (props) => {
   const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
-  const { theme, toggleMobile } = props;
+  const { theme, closeNav, openNav, isNavOpen } = props;
   const [chatItem, setChatItem] = useState(null);
 
   const { giphyState, setGiphyState } = useContext(GiphyContext);
@@ -47,7 +47,10 @@ export const ChannelInner = (props) => {
 
   useEffect(() => {
     const fun = async () => {
-      if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+      console.log(location.state);
+      console.log(isNavOpen, location.pathname);
+      if (!isNavOpen && location.state?.recipient && location.pathname.startsWith("/chat")) {
+        console.log("IM HERE");
         if (location.state?.chatItem) {
           const newState = { ...location.state };
           const { chatItem } = newState;
@@ -66,16 +69,17 @@ export const ChannelInner = (props) => {
           .watch()
           .then((res) => {
             setActiveChannel(channel);
+            closeNav();
+            console.log("clearing state history1...");
+            history.replace({ ...history.location, state: {} });
           })
           .catch((e) => {
             setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
           });
-        console.log("clearing state history1...");
-        history.replace({ ...history.location, state: {} });
       }
     };
     fun();
-  }, [chatClient, history, location, setActiveChannel, setToast]);
+  }, [chatClient, closeNav, history, isNavOpen, location, setActiveChannel, setToast]);
 
   useEffect(() => {
     if (!chatItem && location.pathname.startsWith("/chat")) {
@@ -131,7 +135,7 @@ export const ChannelInner = (props) => {
   return (
     <>
       <Window>
-        <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} disabled={channel?.data?.member_count < 2} />
+        <MessagingChannelHeader theme={theme} toggleMobile={openNav} disabled={channel?.data?.member_count < 2} />
         <MessageList messageActions={actions} />
         <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)} />
         {channel?.data?.member_count >= 2 && <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />}
