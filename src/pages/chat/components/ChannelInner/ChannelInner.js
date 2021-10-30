@@ -10,8 +10,6 @@ import useUserContext from "../../../../hooks/useUserContext";
 import { GiphyContext } from "../../Chat";
 import { MessagingChannelHeader, MessagingInput } from "../../components";
 
-
-
 const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
   if (!chatItem) {
     return null;
@@ -43,9 +41,6 @@ export const ChannelInner = (props) => {
   const { giphyState, setGiphyState } = useContext(GiphyContext);
   const { sendMessage } = useChannelActionContext();
 
-  useEffect(()=>{
-    console.log(channel)
-  })
   const overrideSubmitHandler = (message) => {
     console.log(message);
     let updatedMessage;
@@ -83,7 +78,7 @@ export const ChannelInner = (props) => {
       };
 
       const sendMessagePromise = sendMessage(messageToSend, customData);
-      logChatPromiseExecution(sendMessagePromise, 'send message');
+      logChatPromiseExecution(sendMessagePromise, "send message");
     }
 
     setGiphyState(false);
