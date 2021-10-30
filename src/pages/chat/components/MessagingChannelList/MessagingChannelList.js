@@ -66,12 +66,14 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
     return (
       <div className="messaging__channel-list">
         <div className="messaging__channel-list__header">
-          <Avatar image={image || noProfileImage} name={name} size={40} />
-          <IonCol>
+          <span className="clickable">
+            <Avatar image={image || noProfileImage} name={name} size={40} onClick={() => history.push("/profile")} />
+          </span>
+          <IonCol className="clickable" onClick={() => history.push("/profile")}>
             <div className="messaging__channel-list__header__name">{name || id}</div>
             <div className="messaging__channel-list__header__username">@{username || id}</div>
           </IonCol>
-          <button className="messaging__channel-list__header__button" onClick={() => {
+          <button className="clickable messaging__channel-list__header__button" onClick={() => {
             onCreateChannel();
             closeNav();
           }}>

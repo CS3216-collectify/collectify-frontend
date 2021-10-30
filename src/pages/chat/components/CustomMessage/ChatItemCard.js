@@ -14,7 +14,7 @@ const ChatItemCard = (props) => {
   const { imageUrl, link, name } = chatItem;
 
   return (
-    <IonCard onClick={() => history.push(link ? link : '/not-found' )}>
+    <IonCard className="clickable" onClick={() => history.push(link ? link : '/not-found' )}>
       <IonImg src={imageUrl} />
       <IonCardHeader>
         <Text size="xs"><b>{name}</b></Text>
