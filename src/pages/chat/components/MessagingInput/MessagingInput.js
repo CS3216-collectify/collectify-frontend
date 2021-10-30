@@ -57,7 +57,7 @@ const MessagingInput = () => {
       >
         <EmojiIcon />
       </div>
-      <ImageDropzone
+      {/* <ImageDropzone
         accept={acceptedFiles}
         handleFiles={messageInput.uploadNewFiles}
         multiple={multipleUploads}
@@ -65,13 +65,13 @@ const MessagingInput = () => {
           (maxNumberOfFiles !== undefined && messageInput.numberOfUploads >= maxNumberOfFiles) ||
           giphyState
         }
-      >
+      > */}
         <div className='messaging-input__input-wrapper'>
           {giphyState && !messageInput.numberOfUploads && <GiphyIcon />}
-          <UploadsPreview />
+          {/* <UploadsPreview /> */}
           <ChatAutoComplete onChange={onChange} rows={1} placeholder='Send a message' />
         </div>
-      </ImageDropzone>
+      {/* </ImageDropzone> */}
       <div
         className='messaging-input__button'
         role='button'
