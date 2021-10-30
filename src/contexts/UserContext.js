@@ -31,6 +31,15 @@ export const UserContextProvider = ({ children }) => {
     );
 
     setChatClient(client);
+
+    if (Number(client.userID) !== 25) {
+      console.log(client);
+      const channel = client.channel("messaging", {
+        members: [client.userID, "25"],
+      });
+      // Here, 'travel' will be the channel ID
+      await channel.create();
+    }
   }, [currentUserId]);
 
   useEffect(() => {
