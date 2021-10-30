@@ -53,7 +53,6 @@ export const ChannelInner = (props) => {
   const { sendMessage } = useChannelActionContext();
 
   const overrideSubmitHandler = (message) => {
-    console.log(message);
     let updatedMessage;
     let customData = {};
 

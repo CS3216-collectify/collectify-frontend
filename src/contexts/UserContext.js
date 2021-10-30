@@ -39,10 +39,8 @@ export const UserContextProvider = ({ children }) => {
       if (storedUserId) {
         setCurrentUserId(storedUserId);
       } else {
-        console.log("Fetching user id data...");
         getCurrentUser().then((res) => {
           setCurrentUserId(res.userId);
-          console.log("Current User ID is", res.userId);
           storeUserId(res.userId);
         });
       }

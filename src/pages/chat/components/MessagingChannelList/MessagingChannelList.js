@@ -19,9 +19,7 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
 
   useEffect(async () => {
     if (location.state?.recipient && location.pathname.startsWith("/chat")) {
-      console.log("Processing recipient and chat...");
       const { recipient: recipientId } = location.state;
-      console.log(recipientId);
       if (client.userID === recipientId) {
         return;
       }
@@ -41,25 +39,28 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
     }
   }, [location]);
 
-  useEffect(() => {
-    const getChannels = async (client) => {
-      const filter = { type: "messaging", members: { $in: [client.userID] } };
-      const sort = [{ last_message_at: -1 }];
+  // TODO: When I tested, this useEffect doesnt seem to do anything (as expected based on the code)
+  // In any case, I commented out first so that we can easily revert
 
-      const channels = await client.queryChannels(filter, sort, {
-        watch: true, // this is the default
-        state: true,
-      });
+  // useEffect(() => {
+  //   const getChannels = async (client) => {
+  //     const filter = { type: "messaging", members: { $in: [client.userID] } };
+  //     const sort = [{ last_message_at: -1 }];
 
-      channels.map((channel) => {
-        console.log(channel);
-      });
-    };
+  //     const channels = await client.queryChannels(filter, sort, {
+  //       watch: true, // this is the default
+  //       state: true,
+  //     });
 
-    if (!loading && !children?.props?.children?.length) {
-      getChannels(client);
-    }
-  }, [loading]); // eslint-disable-line
+  //     channels.map((channel) => {
+  //       // console.log(channel);
+  //     });
+  //   };
+
+  //   if (!loading && !children?.props?.children?.length) {
+  //     getChannels(client);
+  //   }
+  // }, [loading]); // eslint-disable-line
 
   const ListHeaderWrapper = ({ children }) => {
     return (

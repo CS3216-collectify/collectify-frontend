@@ -8,12 +8,14 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { postItem } from "../../services/items";
 import UploadingGif from "../../assets/uploading.gif";
 import "./AddItem.scss";
+import useToastContext from "../../hooks/useToastContext";
 
 const AddItem = () => {
   const history = useHistory();
   const { collectionId } = useParams();
   // const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const setToast = useToastContext();
 
   const addCompleteHandler = async (item) => {
     try {
@@ -26,7 +28,7 @@ const AddItem = () => {
       });
     } catch (e) {
       setUploading(false);
-      console.log(e);
+      setToast({ message: "Failed to add item. Please try again later.", color: "danger" });
     } finally {
     }
   };

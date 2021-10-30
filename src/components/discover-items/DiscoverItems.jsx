@@ -3,10 +3,12 @@ import { useEffect, useState, useCallback } from "react";
 import "./DiscoverItems.scss";
 import ItemGrid from "../collection-items/ItemGrid";
 import { getDiscoverItems } from "../../services/search";
+import useToastContext from "../../hooks/useToastContext";
 
 const LIMIT = 18;
 
 const DiscoverItems = (props) => {
+  const setToast = useToastContext();
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
@@ -23,7 +25,7 @@ const DiscoverItems = (props) => {
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
   }, [hasMore, items, pages]);
 
@@ -36,7 +38,7 @@ const DiscoverItems = (props) => {
       setItems(retrievedItems);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
   }, []);
 

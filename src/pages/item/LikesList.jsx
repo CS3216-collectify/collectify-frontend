@@ -3,11 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
+import useToastContext from "../../hooks/useToastContext";
 import { getLikesByItemId } from "../../services/likes";
 
 const LIMIT = 18;
 
 const LikesList = (props) => {
+  const setToast = useToastContext();
   const { itemId } = useParams();
   const location = useLocation();
   const [users, setUsers] = useState([]);
@@ -28,10 +30,7 @@ const LikesList = (props) => {
       setHasMore(updatedHasMore);
       setUsers(updatedUsers);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Failed to load likes. Please try again later.", color: "danger" });
     }
   }, [itemId, hasMore, pages, users]);
 
@@ -45,8 +44,7 @@ const LikesList = (props) => {
       setHasMore(updatedHasMore);
       setUsers(fetchedUsers);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Failed to load likes. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }

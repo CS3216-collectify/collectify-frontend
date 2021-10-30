@@ -48,8 +48,7 @@ const Item = () => {
       setIsTradable(isTradable);
       setLoading(false);
     } catch (e) {
-      console.log(e);
-    } finally {
+      setToast({ message: "Failed to load item. Please try again later.", color: "danger" });
     }
   }, [collectionId, itemId]);
 
@@ -116,7 +115,6 @@ const Item = () => {
         ownerId: ownerId.toString(),
       },
     };
-    console.log(state);
     history.push({ pathname, state });
   };
 

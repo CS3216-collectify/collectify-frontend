@@ -3,11 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
+import useToastContext from "../../hooks/useToastContext";
 import { getFollowersByCollectionId } from "../../services/followers";
 
 const LIMIT = 18;
 
 const FollowersList = (props) => {
+  const setToast = useToastContext();
   const location = useLocation();
   const { collectionId } = useParams();
 
@@ -29,10 +31,7 @@ const FollowersList = (props) => {
       setHasMore(updatedHasMore);
       setUsers(updatedUsers);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Failed to load followers. Please try again later.", color: "danger" });
     }
   }, [collectionId, hasMore, pages, users]);
 
@@ -46,8 +45,7 @@ const FollowersList = (props) => {
       setHasMore(updatedHasMore);
       setUsers(fetchedUsers);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Failed to load followers. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }

@@ -36,7 +36,7 @@ const EditItem = () => {
       }
       setItem(currentItem);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load item information. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -44,10 +44,8 @@ const EditItem = () => {
 
   useEffect(() => {
     if (location.state) {
-      console.log("Loading form data from state...");
       setItem({ ...location.state.item });
     } else if (collectionId && itemId && location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}/edit`)) {
-      console.log("Fetching form data from server...");
       loadExistingData();
     }
   }, [collectionId, itemId, loadExistingData, location]);

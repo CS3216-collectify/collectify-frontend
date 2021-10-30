@@ -36,8 +36,6 @@ const ItemForm = (props) => {
   useEffect(() => {
     if (props.itemData) {
       const { itemName, itemDescription, images,isTradable } = props.itemData;
-      console.log(props.itemData);
-
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
@@ -105,7 +103,6 @@ const ItemForm = (props) => {
       deletedImageIds,
       isTradable,
     };
-    console.log(itemToSave);
     completeHandler(itemToSave);
   };
 

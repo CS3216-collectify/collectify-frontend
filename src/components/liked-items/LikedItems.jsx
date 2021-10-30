@@ -3,11 +3,13 @@ import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import ItemGrid from "../collection-items/ItemGrid";
 import { useLocation } from "react-router";
+import useToastContext from "../../hooks/useToastContext";
 
 const LIMIT = 18;
 
 const LikedItems = (props) => {
   const location = useLocation();
+  const setToast = useToastContext();
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [items, setItems] = useState([]);
@@ -26,10 +28,7 @@ const LikedItems = (props) => {
       setHasMore(updatedHasMore);
       setItems(updatedItems);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
   }, [hasMore, pages, items])
 
@@ -43,8 +42,7 @@ const LikedItems = (props) => {
       setHasMore(updatedHasMore);
       setItems(fetchedItems);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
