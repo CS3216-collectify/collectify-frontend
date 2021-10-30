@@ -14,7 +14,6 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const location = useLocation();
   const history = useHistory();
   const { client, setActiveChannel } = useChatContext();
-  const { chatClient } = useUserContext();
   const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
@@ -23,11 +22,11 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
       console.log("Processing recipient and chat...");
       const { recipient: recipientId } = location.state;
       console.log(recipientId);
-      if (chatClient.userID === recipientId) {
+      if (client.userID === recipientId) {
         return;
       }
-      const channel = chatClient.channel("messaging", {
-        members: [chatClient.userID, recipientId],
+      const channel = client.channel("messaging", {
+        members: [client.userID, recipientId],
       });
       await channel.watch().then((res) => {
         setActiveChannel(channel);
