@@ -120,7 +120,7 @@
 }
 
 .giphy-icon__text {
-  font-family: Helvetica Neue, sans-serif;
+  font-family: Nunito, sans-serif;
   font-weight: bold;
   font-size: 11px;
   line-height: 8px;
@@ -179,7 +179,7 @@ div.rta__autocomplete.str-chat__emojisearch {
 }
 
 .rta__list-header {
-  font-family: Helvetica Neue, sans-serif;
+  font-family: Nunito, sans-serif;
   font-size: 14px;
   line-height: 16px;
   color: rgba(0, 0, 0, 0.9);

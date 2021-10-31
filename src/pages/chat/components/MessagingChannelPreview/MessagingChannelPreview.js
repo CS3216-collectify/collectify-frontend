@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Avatar, ChatContext } from 'stream-chat-react';
+import React, { useContext } from "react";
+import { Avatar, ChatContext } from "stream-chat-react";
 import noProfileImage from "../../../../assets/no-profile-image.png";
-import { getCleanImage } from '../../assets';
-import './MessagingChannelPreview.css';
+import { getCleanImage } from "../../assets";
+import "./MessagingChannelPreview.css";
 
 const getAvatarGroup = (members) => {
   if (members.length === 0) {
@@ -14,22 +14,12 @@ const getAvatarGroup = (members) => {
 
   if (members.length === 2) {
     return (
-      <div className='channel-preview__avatars two'>
+      <div className="channel-preview__avatars two">
         <span>
-          <Avatar
-            image={getCleanImage(members[0])}
-            name={members[0].user?.id}
-            shape='square'
-            size={40}
-          />
+          <Avatar image={getCleanImage(members[0])} name={members[0].user?.id} shape="square" size={40} />
         </span>
         <span>
-          <Avatar
-            image={getCleanImage(members[1])}
-            name={members[1].user?.id}
-            shape='square'
-            size={40}
-          />
+          <Avatar image={getCleanImage(members[1])} name={members[1].user?.id} shape="square" size={40} />
         </span>
       </div>
     );
@@ -37,28 +27,13 @@ const getAvatarGroup = (members) => {
 
   if (members.length === 3) {
     return (
-      <div className='channel-preview__avatars three'>
+      <div className="channel-preview__avatars three">
         <span>
-          <Avatar
-            image={getCleanImage(members[0])}
-            name={members[0].user?.id}
-            shape='square'
-            size={40}
-          />
+          <Avatar image={getCleanImage(members[0])} name={members[0].user?.id} shape="square" size={40} />
         </span>
         <span>
-          <Avatar
-            image={getCleanImage(members[1])}
-            name={members[1].user?.id}
-            shape='square'
-            size={20}
-          />
-          <Avatar
-            image={getCleanImage(members[2])}
-            name={members[2].user?.id}
-            shape='square'
-            size={20}
-          />
+          <Avatar image={getCleanImage(members[1])} name={members[1].user?.id} shape="square" size={20} />
+          <Avatar image={getCleanImage(members[2])} name={members[2].user?.id} shape="square" size={20} />
         </span>
       </div>
     );
@@ -66,34 +41,14 @@ const getAvatarGroup = (members) => {
 
   if (members.length >= 4) {
     return (
-      <div className='channel-preview__avatars'>
+      <div className="channel-preview__avatars">
         <span>
-          <Avatar
-            image={getCleanImage(members[members.length - 1])}
-            name={members[0].user?.id}
-            shape='square'
-            size={20}
-          />
-          <Avatar
-            image={getCleanImage(members[members.length - 2])}
-            name={members[1].user?.id}
-            shape='square'
-            size={20}
-          />
+          <Avatar image={getCleanImage(members[members.length - 1])} name={members[0].user?.id} shape="square" size={20} />
+          <Avatar image={getCleanImage(members[members.length - 2])} name={members[1].user?.id} shape="square" size={20} />
         </span>
         <span>
-          <Avatar
-            image={getCleanImage(members[members.length - 3])}
-            name={members[2].user?.id}
-            shape='square'
-            size={20}
-          />
-          <Avatar
-            image={getCleanImage(members[members.length - 4])}
-            name={members[3].user?.id}
-            shape='square'
-            size={20}
-          />
+          <Avatar image={getCleanImage(members[members.length - 3])} name={members[2].user?.id} shape="square" size={20} />
+          <Avatar image={getCleanImage(members[members.length - 4])} name={members[3].user?.id} shape="square" size={20} />
         </span>
       </div>
     );
@@ -105,19 +60,19 @@ const getAvatarGroup = (members) => {
 const getTimeStamp = (channel) => {
   let lastHours = channel.state.last_message_at?.getHours();
   let lastMinutes = channel.state.last_message_at?.getMinutes();
-  let half = 'AM';
+  let half = "AM";
 
   if (lastHours === undefined || lastMinutes === undefined) {
-    return '';
+    return "";
   }
 
   if (lastHours > 12) {
     lastHours = lastHours - 12;
-    half = 'PM';
+    half = "PM";
   }
 
   if (lastHours === 0) lastHours = 12;
-  if (lastHours === 12) half = 'PM';
+  if (lastHours === 12) half = "PM";
 
   if (lastMinutes.toString().length === 1) {
     lastMinutes = `0${lastMinutes}`;
@@ -127,7 +82,7 @@ const getTimeStamp = (channel) => {
 };
 
 const getChannelName = (members) => {
-  const defaultName = 'Deleted User';
+  const defaultName = "Deleted User";
 
   if (!members.length || members.length === 1) {
     return members[0]?.user.name || defaultName;
@@ -137,10 +92,10 @@ const getChannelName = (members) => {
 };
 
 const getChannelUsername = (members) => {
-  const defaultName = '';
+  const defaultName = "";
 
   if (!members.length) {
-    return '';
+    return "";
   }
 
   if (!members.length || members.length === 1) {
@@ -155,22 +110,16 @@ const MessagingChannelPreview = (props) => {
 
   const { channel: activeChannel, client } = useContext(ChatContext);
 
-  const members = Object.values(channel.state.members).filter(
-    ({ user }) => user.id !== client.userID,
-  );
+  const members = Object.values(channel.state.members).filter(({ user }) => user.id !== client.userID);
 
   const messagePreview = latestMessage?.props?.source;
 
   let username = getChannelUsername(members);
-  username = username ? `@${username}` : '';
+  username = username ? `@${username}` : "";
 
   return (
     <div
-      className={
-        channel?.id === activeChannel?.id
-          ? 'channel-preview__container selected'
-          : 'channel-preview__container'
-      }
+      className={channel?.id === activeChannel?.id ? "channel-preview__container selected" : "channel-preview__container"}
       onClick={() => {
         // TODO: Uncomment if we don't allow attaching items to non-owners
         // if (members[0] && members[0]["user_id"] !== chatItem?.ownerId) {
@@ -183,14 +132,14 @@ const MessagingChannelPreview = (props) => {
       }}
     >
       {getAvatarGroup(members)}
-      <div className='channel-preview__content-wrapper'>
-        <div className='channel-preview__content-top'>
-          <p className='channel-preview__content-name'>
-            {channel.data.name || getChannelName(members)} <span className='channel-preview__content-username'>{username}</span>
+      <div className="channel-preview__content-wrapper">
+        <div className="channel-preview__content-top">
+          <p className="channel-preview__content-name">
+            {channel.data.name || getChannelName(members)} <span className="channel-preview__content-username">{username}</span>
           </p>
-          <p className='channel-preview__content-time'>{getTimeStamp(channel)}</p>
+          <p className="channel-preview__content-time">{getTimeStamp(channel)}</p>
         </div>
-        <p className='channel-preview__content-message'>{messagePreview || 'Empty chat'}</p>
+        <p className="channel-preview__content-message">{messagePreview || "Empty chat"}</p>
       </div>
     </div>
   );
