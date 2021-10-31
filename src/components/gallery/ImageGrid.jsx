@@ -39,7 +39,7 @@ const ImageGrid = (props) => {
         {groupsOfSix.map((grp, idx) => {
           var returnedHtml =
             grp.length === 6 ? (
-              <IonRow>
+              <IonRow key={idx}>
                 <IonCol className="clickable" key={0} size={8} onClick={grp[0].clickHandler}>
                   <FlexImage className={grp[0].isTradable ? "tradable-img" : ""} src={grp[0].url} />
                 </IonCol>
@@ -65,7 +65,7 @@ const ImageGrid = (props) => {
                 ))}
               </IonRow>
             ) : (
-              <IonRow>
+              <IonRow key={idx}>
                 {grp.map((img, idx) => (
                   <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
                     <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
