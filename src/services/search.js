@@ -52,7 +52,6 @@ export const getDiscoverItems = async (offset, limit, category, viewTradable) =>
   if (viewTradable) {
     params.is_tradable = viewTradable;
   }
-  console.log(params);
   const res = await server.get("/items", { params });
   return res.data;
 };
