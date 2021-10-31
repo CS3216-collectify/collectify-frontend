@@ -193,7 +193,7 @@ const Item = () => {
 
             {!isItemOwner && (
               <IonCol size={3}>
-                <IonButton size="small" onClick={() => openChatWithItem()}>
+                <IonButton size="small" onClick={() => openChatWithItem()} className="item-chat-button--container">
                   <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
                   <IonLabel>Chat</IonLabel>
                 </IonButton>
