@@ -195,7 +195,7 @@ const MessagingChannelHeader = (props) => {
 
   return (
     <div className='messaging__channel-header'>
-      <div id='mobile-nav-icon' className={`${props.theme}`} onClick={() => props.toggleMobile()}>
+      <div id='mobile-nav-icon' className={`${props.theme}`} onClick={() => props.openNav()}>
         <HamburgerIcon />
       </div>
       <span onClick={goToHistoryPage}>

@@ -113,6 +113,7 @@ const Item = () => {
         name: itemName,
         link: `/collections/${collectionId}/items/${itemId}`,
         imageUrl: images[0].imageUrl,
+        ownerId: ownerId.toString(),
       },
     };
     console.log(state);
