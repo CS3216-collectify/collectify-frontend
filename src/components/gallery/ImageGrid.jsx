@@ -16,7 +16,6 @@ const ImageGrid = (props) => {
   const { onScrollEnd: fetchNextPage, images = [], listEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
-  console.log(images);
 
   return (
     <IonGrid fixed className="image-grid">

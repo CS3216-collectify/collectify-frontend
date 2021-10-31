@@ -35,7 +35,6 @@ export const UserContextProvider = ({ children }) => {
 
     // Createa default chat channel with the collectify account
     if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
-      console.log(client);
       const channel = client.channel("messaging", {
         members: [client.userID, COLLECTIFY_STREAM_CHAT_ID],
       });
