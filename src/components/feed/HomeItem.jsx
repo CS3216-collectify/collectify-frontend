@@ -1,13 +1,16 @@
-import { IonButton, IonCol, IonGrid, IonLabel, IonRow } from "@ionic/react";
+import "./HomeItem.scss";
+
+import { IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonRow } from "@ionic/react";
+import { peopleOutline } from "ionicons/icons";
 import { useState } from "react";
 import { useHistory } from "react-router";
+
 import useToastContext from "../../hooks/useToastContext";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
 import { convertUTCtoLocal } from "../../utils/datetime";
 import LikeButton from "../button/LikeButton";
 import ImageCarousel from "../gallery/ImageCarousel";
 import Text from "../text/Text";
-import "./HomeItem.scss";
 
 const HomeItem = (props) => {
   const history = useHistory();
@@ -25,10 +28,12 @@ const HomeItem = (props) => {
     likesCount: initLikesCount,
     collectionName,
     itemCreationDate,
+    isTradable: initIsTradable,
   } = itemData;
 
   const [liked, setLiked] = useState(initLiked);
   const [likesCount, setLikesCount] = useState(initLikesCount);
+  const [isTradable, setIsTradable] = useState(initIsTradable);
 
   const setToast = useToastContext();
 
@@ -63,6 +68,10 @@ const HomeItem = (props) => {
     history.push(`/profile/${ownerUsername}`);
   };
 
+  const goToLikesPage = () => {
+    history.push(`/items/${itemId}/likes`);
+  };
+
   const goToCollectionPage = () => {
     history.push(`/collections/${collectionId}`);
   };
@@ -71,7 +80,9 @@ const HomeItem = (props) => {
       <IonGrid fixed className="ion-padding">
         <IonRow className="ion-justify-content-between">
           <IonCol>
-            <Text className="clickable" onClick={goToUserProfilePage}><b>@{ownerUsername}</b></Text>
+            <Text className="clickable" onClick={goToUserProfilePage}>
+              <b>@{ownerUsername}</b>
+            </Text>
           </IonCol>
           <IonButton size="small" onClick={goToCollectionPage} fill="outline">
             <IonLabel>View Collection</IonLabel>
@@ -85,27 +96,34 @@ const HomeItem = (props) => {
 
       <IonGrid fixed className="ion-padding">
         <IonRow>
-          <IonCol>
-            <IonRow className="ion-justify-content-between">
-              <div className="ion-no-padding" size={9}>
-                <Text className="clickable" size="l" onClick={goToItemPage}>
-                  <b>{itemName}</b>
+          <IonCol size={9}>
+            <Text className="clickable" size="l" onClick={goToItemPage}>
+              <b>{itemName}</b>
+            </Text>
+          </IonCol>
+
+          <IonCol size={3}>
+            <div className="like-button--container">
+              <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+              <Text className="clickable" onClick={goToLikesPage} color="default">{likesCount} likes</Text>
+            </div>
+          </IonCol>
+        </IonRow>
+
+        <IonRow>
+          <IonCol className="ion-align-items-center">
+            <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
+          </IonCol>
+          {isTradable && (
+            <IonCol className="ion-justify-content-end">
+              <div className="home-item-tradable--container">
+                <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
+                <Text size="s">
+                  <b>Tradable</b>
                 </Text>
               </div>
-
-              <div>
-                  <IonCol className="like-button--column" size={1}>
-                    <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-                  </IonCol>
-                  <IonCol size={3} onClick={() => history.push(`/items/${itemId}/likes`)}>
-                    <Text className="clickable" color="default">{likesCount} likes</Text>
-                  </IonCol>
-                </div>
-            </IonRow>
-            <IonRow className="home-item-date">
-              <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
-            </IonRow>
-          </IonCol>
+            </IonCol>
+          )}
         </IonRow>
       </IonGrid>
     </>

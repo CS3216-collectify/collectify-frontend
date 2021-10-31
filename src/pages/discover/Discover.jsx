@@ -20,8 +20,6 @@ const Discover = () => {
 
   return (
     <IonPage className="discover">
-      {/* Ion padding applies 16px  */}
-
       <HomeToolbar title="Discover" />
       <IonContent>
         <IonGrid fixed>

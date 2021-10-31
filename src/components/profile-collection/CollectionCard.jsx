@@ -26,7 +26,6 @@ const CollectionCard = (props) => {
       <div className="profile-collection--images">
         {coverImages.map((imgUrl, idx) => (
           <IonCol key={idx} size={4}>
-            {/* TODO: add default error one */}
             <FlexImage src={imgUrl} />
           </IonCol>
         ))}

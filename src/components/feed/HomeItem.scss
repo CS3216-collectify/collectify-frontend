@@ -1,12 +1,22 @@
+.like-button--container {
+  position: absolute;
+  right: 0;
+}
 .item-like-button {
-  vertical-align: top;
+  margin-right: 4px;
+  vertical-align: sub;
 }
-.like-button--column {
-  padding-right: 0;
-  ion-icon {
-    margin: auto;
-  }
-}
+
 .home-item-date {
   margin-top: 8px;
+}
+
+.home-item-tradable--container {
+  color: rgb(10, 51, 161);
+  position: absolute;
+  right: 0;
+
+  .item-tradable-icon {
+    vertical-align: middle;
+  }
 }

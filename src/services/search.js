@@ -8,10 +8,8 @@ export const searchCollections = async (keywords, offset, limit) => {
     keywords,
     offset,
     limit,
-  }
-  console.log("GET /collections... string-query:", params);
+  };
   const res = await server.get("/collections", { params });
-  console.log(res);
   return res.data;
 };
 
@@ -24,9 +22,7 @@ export const searchItems = async (keywords, offset, limit) => {
     offset,
     limit,
   };
-  console.log("GET /items... string query:", params);
   const res = await server.get("/items", { params });
-  console.log(res);
   return res.data;
 };
 
@@ -38,20 +34,24 @@ export const searchUsers = async (keywords, offset, limit) => {
     keywords,
     offset,
     limit,
-  }
-  console.log("GET /api/user/search... string query:", params);
+  };
   const res = await server.get("/api/user/search", { params });
-  console.log(res);
   return res.data;
 };
 
-export const getDiscoverItems = async (offset, limit) => {
+export const getDiscoverItems = async (offset, limit, category, viewTradable) => {
   const params = {
     offset,
     limit,
   };
-  console.log("GET /items... string query:", params);
+
+  if (category) {
+    params.category = category;
+  }
+
+  if (viewTradable) {
+    params.is_tradable = viewTradable;
+  }
   const res = await server.get("/items", { params });
-  console.log(res);
   return res.data;
 };

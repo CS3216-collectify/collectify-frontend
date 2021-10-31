@@ -1,6 +1,6 @@
 import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams, useLocation } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
 import "./Collection.scss";
@@ -51,7 +51,7 @@ const Collection = (props) => {
       setFollowed(isFollowed);
       setFollowersCount(followersCount);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load collection. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }

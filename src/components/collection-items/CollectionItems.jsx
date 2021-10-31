@@ -2,12 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import ItemGrid from "./ItemGrid";
 import { getItemsFromCollection } from "../../services/items";
+import useToastContext from "../../hooks/useToastContext";
 
 const LIMIT = 18;
 
 const CollectionItems = (props) => {
   const location = useLocation();
-
+  const setToast = useToastContext();
   const { collectionId = 1 } = props;
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -25,9 +26,7 @@ const CollectionItems = (props) => {
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
-    } finally {
-      // TODO
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
   }, [collectionId, hasMore, items, pages]);
 
@@ -40,9 +39,7 @@ const CollectionItems = (props) => {
       setItems(retrievedItems);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
-    } finally {
-      // TODO
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
   }, [collectionId]);
 
