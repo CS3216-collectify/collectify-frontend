@@ -106,7 +106,7 @@ const Item = () => {
 
   const goToLikesPage = () => {
     history.push(`/items/${itemId}/likes`);
-  }
+  };
 
   const openChatWithItem = () => {
     const pathname = "/chat";
@@ -163,8 +163,12 @@ const Item = () => {
             </IonCol>
 
             <IonCol size={3}>
-              <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-              <Text className="clickable" color="default" onClick={goToLikesPage}>{likesCount} likes</Text>
+              <div className="like-button--container">
+                <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+                <Text className="clickable" color="default" onClick={goToLikesPage}>
+                  {likesCount} likes
+                </Text>
+              </div>
             </IonCol>
           </IonRow>
 

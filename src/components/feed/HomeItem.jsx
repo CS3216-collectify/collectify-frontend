@@ -1,16 +1,16 @@
-import './HomeItem.scss';
+import "./HomeItem.scss";
 
-import { IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonRow } from '@ionic/react';
-import { peopleOutline } from 'ionicons/icons';
-import { useState } from 'react';
-import { useHistory } from 'react-router';
+import { IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonRow } from "@ionic/react";
+import { peopleOutline } from "ionicons/icons";
+import { useState } from "react";
+import { useHistory } from "react-router";
 
-import useToastContext from '../../hooks/useToastContext';
-import { likeByItemId, unlikeByItemId } from '../../services/likes';
-import { convertUTCtoLocal } from '../../utils/datetime';
-import LikeButton from '../button/LikeButton';
-import ImageCarousel from '../gallery/ImageCarousel';
-import Text from '../text/Text';
+import useToastContext from "../../hooks/useToastContext";
+import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import { convertUTCtoLocal } from "../../utils/datetime";
+import LikeButton from "../button/LikeButton";
+import ImageCarousel from "../gallery/ImageCarousel";
+import Text from "../text/Text";
 
 const HomeItem = (props) => {
   const history = useHistory();
@@ -70,7 +70,7 @@ const HomeItem = (props) => {
 
   const goToLikesPage = () => {
     history.push(`/items/${itemId}/likes`);
-  }
+  };
 
   const goToCollectionPage = () => {
     history.push(`/collections/${collectionId}`);
@@ -103,18 +103,20 @@ const HomeItem = (props) => {
           </IonCol>
 
           <IonCol size={3}>
-            <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-            <Text className="clickable" onClick={goToLikesPage} color="default">{likesCount} likes</Text>
+            <div className="like-button--container">
+              <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+              <Text className="clickable" onClick={goToLikesPage} color="default">{likesCount} likes</Text>
+            </div>
           </IonCol>
         </IonRow>
 
         <IonRow>
-          <IonCol className="ion-align-items-center" size={9}>
+          <IonCol className="ion-align-items-center">
             <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
           </IonCol>
           {isTradable && (
-            <IonCol size={3}>
-              <div className="tradable--container">
+            <IonCol className="ion-justify-content-end">
+              <div className="home-item-tradable--container">
                 <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
                 <Text size="s">
                   <b>Tradable</b>
