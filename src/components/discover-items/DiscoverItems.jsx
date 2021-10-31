@@ -102,7 +102,7 @@ const DiscoverItems = (props) => {
         </div>
       </div>
 
-      <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} />
+      <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} discover={true}/>
     </>
   );
 };

@@ -13,24 +13,73 @@ const groupElements = (arr, interval) => {
 };
 
 const ImageGrid = (props) => {
-  const { onScrollEnd: fetchNextPage, images = [], listEnded } = props;
+  const { onScrollEnd: fetchNextPage, images = [], listEnded, discover } = props;
+  console.log(discover);
+  if (!discover) {
+    const groupsOfThree = groupElements(images, 3);
 
-  const groupsOfThree = groupElements(images, 3);
+    return (
+      <IonGrid fixed className="image-grid">
+        {groupsOfThree.map((grp, idx) => (
+          <IonRow key={idx}>
+            {grp.map((img, idx) => (
+              <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
+                <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
+              </IonCol>
+            ))}
+          </IonRow>
+        ))}
+        <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
+      </IonGrid>
+    );
+  } else {
+    const groupsOfSix = groupElements(images, 6);
+    console.log(groupsOfSix);
+    return (
+      <IonGrid fixed className="image-grid">
+        {groupsOfSix.map((grp, idx) => {
+          var returnedHtml =
+            grp.length === 6 ? (
+              <IonRow>
+                <IonCol className="clickable" key={0} size={8} onClick={grp[0].clickHandler}>
+                  <FlexImage className={grp[0].isTradable ? "tradable-img" : ""} src={grp[0].url} />
+                </IonCol>
 
-  return (
-    <IonGrid fixed className="image-grid">
-      {groupsOfThree.map((grp, idx) => (
-        <IonRow key={idx}>
-          {grp.map((img, idx) => (
-            <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
-              <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
-            </IonCol>
-          ))}
-        </IonRow>
-      ))}
-      <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
-    </IonGrid>
-  );
+                {grp.length > 1 && (
+                  <IonCol key={1} size={4}>
+                    <IonRow className="big-tile-row--top clickable" onClick={grp[1].clickHandler}>
+                      <FlexImage className={grp[1].isTradable ? "tradable-img" : ""} src={grp[1].url} />
+                    </IonRow>
+
+                    {grp.length > 2 && (
+                      <IonRow className="big-tile-row--bottom clickable" onClick={grp[2].clickHandler}>
+                        <FlexImage className={grp[2].isTradable ? "tradable-img" : ""} src={grp[2].url} />
+                      </IonRow>
+                    )}
+                  </IonCol>
+                )}
+
+                {grp.slice(3).map((img, idx) => (
+                  <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
+                    <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
+                  </IonCol>
+                ))}
+              </IonRow>
+            ) : (
+              <IonRow>
+                {grp.map((img, idx) => (
+                  <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
+                    <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
+                  </IonCol>
+                ))}
+              </IonRow>
+            );
+          return returnedHtml;
+        })}
+        <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
+      </IonGrid>
+    );
+  }
 };
 
 export default ImageGrid;

@@ -10,7 +10,12 @@
   ion-img::part(image) {
     border-radius: 8px;
   }
-
+  .big-tile-row--top {
+    padding-bottom: 2px;
+  }
+  .big-tile-row--bottom {
+    padding-top: 2px;
+  }
 }
 
 .single-row-3 {
