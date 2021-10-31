@@ -9,6 +9,7 @@ const UserContext = createContext();
 export default UserContext;
 
 const STREAM_CHAT_TOKEN = process.env.REACT_APP_CHAT_API_KEY;
+const COLLECTIFY_STREAM_CHAT_ID = "28";
 
 export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(hasAccessTokenStored() || hasRefreshTokenStored());
@@ -32,10 +33,11 @@ export const UserContextProvider = ({ children }) => {
 
     setChatClient(client);
 
-    if (Number(client.userID) !== 28) {
+    // Createa default chat channel with the collectify account
+    if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
       console.log(client);
       const channel = client.channel("messaging", {
-        members: [client.userID, "28"],
+        members: [client.userID, COLLECTIFY_STREAM_CHAT_ID],
       });
       // Here, 'travel' will be the channel ID
       await channel.create();
