@@ -5,7 +5,7 @@ import Text from "../text/Text";
 
 const ItemGrid = (props) => {
   const history = useHistory();
-  const { items, onScrollEnd: fetchNextPage, listEnded, emptyMessage = "No items found!" } = props;
+  const { items, onScrollEnd: fetchNextPage, listEnded, emptyMessage = "No items found!", discover } = props;
 
   const goToItemPage = (collectionId, itemId) => {
     history.push(`/collections/${collectionId}/items/${itemId}`);
@@ -25,7 +25,7 @@ const ItemGrid = (props) => {
     );
   }
 
-  return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} listEnded={listEnded} />;
+  return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} listEnded={listEnded} discover={discover} />;
 };
 
 export default ItemGrid;
