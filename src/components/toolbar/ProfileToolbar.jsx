@@ -11,13 +11,15 @@ import {
   IonHeader,
   useIonPopover,
   IonText,
+  IonImg,
 } from "@ionic/react";
 import { search, homeOutline, personCircleOutline, settingsOutline, ellipsisVertical, addCircleOutline, chatbubblesOutline } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { logoutUser } from "../../utils/auth/actions";
-
+import Logo from "../../assets/favicon.png";
+import Text from "../text/Text";
 const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();
   const location = useLocation();
@@ -69,8 +71,10 @@ const ProfileToolbar = ({ username, showMenu }) => {
     <IonHeader>
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
-        <IonTitle>{username}</IonTitle>
-
+        <div className="toolbar-title--container">
+          <IonImg className="toolbar-logo" src={Logo} />
+          <Text size="xl"> {username}</Text>
+        </div>
         <IonButtons slot="end">
           {isUserAuthenticated && (
             <IonButton onClick={() => handleButtonClick("")}>
@@ -103,7 +107,11 @@ const ProfileToolbar = ({ username, showMenu }) => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <IonTitle>{username}</IonTitle>
+        <div className="toolbar-title--container">
+          <IonImg className="toolbar-logo" src={Logo} />
+          <Text size="xl"> {username}</Text>
+        </div>
+
         <IonButtons slot="start">
           {/* <IonBackButton defaultHref="home" /> */}
           <IonBackButton
