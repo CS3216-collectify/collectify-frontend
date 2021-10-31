@@ -94,6 +94,7 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
           </button>
         </div>
         {children}
+        <div id="empty-block"/>
       </div>
     );
   };
