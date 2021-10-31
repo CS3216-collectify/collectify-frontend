@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList, IonLoading, IonAvatar, IonImg, IonCol } from "@ionic/react";
+import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList, IonCol } from "@ionic/react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import "./EditProfile.scss";
@@ -125,7 +125,7 @@ const EditProfile = () => {
         ) : (
           <IonGrid fixed>
             <IonRow className="ion-justify-content-between ion-align-items-center">
-              <IonCol size="auto">
+              <IonCol size={4}>
                 <FlexImage className="profile--img" src={profilePicture} />
               </IonCol>
               <UploadButton label="Change Profile Photo" onChange={profilePhotoChangeHandler} />

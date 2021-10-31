@@ -1,18 +1,25 @@
 .flex-image {
-  display: flex;
-  align-items: center;
-  justify-items: center;
+  // display: flex;
+  // align-items: center;
+  // justify-items: center;
   pointer-events: none;
+  position: relative;
+  padding-top: 100%;
+
 
   .ion-spinner-container {
-    flex: 1;
+    // flex: 1;
     height: 100%;
     width: 100%;
     position: absolute;
     align-items: center;
     justify-items: center;
-    background-color: white;
+    background-color: transparent;
     padding: 40%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
 
     ion-spinner {
       height: 100%;
@@ -20,9 +27,17 @@
     }
   }
   ion-img {
-    flex: 1;
-    aspect-ratio: 1;
+    // flex: 1;
+    // aspect-ratio: 1;
     object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
   }
 
   .tradable-img {

@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonImg, IonItem, IonPage, IonRow } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import noProfileImage from "../../assets/no-profile-image.png";
@@ -133,7 +133,7 @@ const Profile = () => {
       <IonContent>
         <IonGrid fixed className="profile--grid ion-padding">
           <IonRow>
-            <IonCol size="auto">
+            <IonCol size={4}>
               <FlexImage className="profile--img" src={profileProfilePicture || noProfileImage} />
             </IonCol>
 
