@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
-import { Chat, Channel, ChannelList } from "stream-chat-react";
-import useUserContext from "../../hooks/useUserContext";
-
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
-
+import React, { useState } from "react";
+import { Channel, ChannelList, Chat } from "stream-chat-react";
 import "stream-chat-react/dist/css/index.css";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import useUserContext from "../../hooks/useUserContext";
+import "./Chat.scss";
 import { CreateChannel, CustomMessage, MessagingChannelList, MessagingChannelPreview, MessagingInput, MessagingThreadHeader } from "./components";
 import { ChannelInner } from "./components/ChannelInner/ChannelInner";
-import "./Chat.scss";
 
 const options = { state: true, watch: true, presence: true, limit: 8 };
 
@@ -47,11 +45,11 @@ const CollectifyChat = () => {
 
   const closeMobileNav = () => {
     setMobileNav(false);
-  }
+  };
   const openMobileNav = () => {
     setMobileNav(true);
-  }
-  
+  };
+
   return (
     <IonPage>
       <HomeToolbar title="Chat" />
@@ -62,8 +60,12 @@ const CollectifyChat = () => {
               filters={filters}
               sort={sort}
               options={options}
-              List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} closeNav={closeMobileNav} setChatItem={setChatItem} />}
-              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} setChatItem={setChatItem} chatItem={chatItem} />}
+              List={(props) => (
+                <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} closeNav={closeMobileNav} setChatItem={setChatItem} />
+              )}
+              Preview={(props) => (
+                <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} setChatItem={setChatItem} chatItem={chatItem} />
+              )}
             />
           </div>
           {isCreating && <CreateChannel openNav={openMobileNav} onClose={() => setIsCreating(false)} />}
@@ -76,7 +78,14 @@ const CollectifyChat = () => {
             TypingIndicator={() => null}
           >
             <GiphyContext.Provider value={giphyContextValue}>
-              <ChannelInner theme="light" closeNav={closeMobileNav} openNav={openMobileNav} isNavOpen={isMobileNavVisible} chatItem={chatItem} setChatItem={setChatItem} />
+              <ChannelInner
+                theme="light"
+                closeNav={closeMobileNav}
+                openNav={openMobileNav}
+                isNavOpen={isMobileNavVisible}
+                chatItem={chatItem}
+                setChatItem={setChatItem}
+              />
             </GiphyContext.Provider>
           </Channel>
         </Chat>

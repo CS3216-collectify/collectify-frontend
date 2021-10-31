@@ -1,18 +1,18 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonButton, IonLabel, IonIcon } from "@ionic/react";
-import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams, useLocation } from "react-router";
-import EditButton from "../../components/button/EditButton";
-import ImageCarousel from "../../components/gallery/ImageCarousel";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import { getItemFromCollection } from "../../services/items";
-import useUserContext from "../../hooks/useUserContext";
-import Text from "../../components/text/Text";
-import LikeButton from "../../components/button/LikeButton";
-import { convertUTCtoLocal } from "../../utils/datetime";
-import { likeByItemId, unlikeByItemId } from "../../services/likes";
-import useToastContext from "../../hooks/useToastContext";
-import "./Item.scss";
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow } from "@ionic/react";
 import { chatbubblesOutline, peopleOutline } from "ionicons/icons";
+import { useCallback, useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router";
+import EditButton from "../../components/button/EditButton";
+import LikeButton from "../../components/button/LikeButton";
+import ImageCarousel from "../../components/gallery/ImageCarousel";
+import Text from "../../components/text/Text";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
+import { getItemFromCollection } from "../../services/items";
+import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import { convertUTCtoLocal } from "../../utils/datetime";
+import "./Item.scss";
 
 const Item = () => {
   const history = useHistory();
@@ -50,7 +50,7 @@ const Item = () => {
     } catch (e) {
       setToast({ message: "Failed to load item. Please try again later.", color: "danger" });
     }
-  }, [collectionId, itemId]);
+  }, [collectionId, itemId, setToast]);
 
   useEffect(() => {
     if (location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}`)) {

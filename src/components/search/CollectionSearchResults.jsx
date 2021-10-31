@@ -1,4 +1,3 @@
-import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import useToastContext from "../../hooks/useToastContext";
 import { searchCollections } from "../../services/search";
@@ -29,7 +28,7 @@ const CollectionSearchResultDisplay = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     }
-  }, [searchText, hasMore, pages, collections]);
+  }, [hasMore, searchText, pages, collections, setToast]);
 
   const loadInitialPage = useCallback(async () => {
     if (!searchText) {
@@ -48,7 +47,7 @@ const CollectionSearchResultDisplay = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [searchText])
+  }, [searchText, setToast])
 
   useEffect(() => {
     if (props.searchText) {

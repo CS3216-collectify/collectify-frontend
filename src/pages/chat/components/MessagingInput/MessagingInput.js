@@ -1,11 +1,7 @@
 import React, { useCallback, useContext } from "react";
-import { ImageDropzone } from "react-file-utils";
-import { ChatAutoComplete, EmojiPicker, UploadsPreview, useChannelStateContext, useMessageInputContext } from "stream-chat-react";
-
-import { GiphyContext } from "../../Chat";
-
+import { ChatAutoComplete, EmojiPicker, useMessageInputContext } from "stream-chat-react";
 import { EmojiIcon, LightningBoltSmall, SendIcon } from "../../assets";
-
+import { GiphyContext } from "../../Chat";
 import "./MessagingInput.css";
 
 const GiphyIcon = () => (
@@ -17,7 +13,6 @@ const GiphyIcon = () => (
 
 const MessagingInput = () => {
   const { giphyState, setGiphyState } = useContext(GiphyContext);
-  const { acceptedFiles, maxNumberOfFiles, multipleUploads } = useChannelStateContext();
 
   const messageInput = useMessageInputContext();
 
@@ -60,21 +55,16 @@ const MessagingInput = () => {
           giphyState
         }
       > */}
-        <div className='messaging-input__input-wrapper'>
-          {giphyState && !messageInput.numberOfUploads && <GiphyIcon />}
-          {/* <UploadsPreview /> */}
-          <ChatAutoComplete onChange={onChange} rows={1} placeholder='Send a message' />
-        </div>
+      <div className="messaging-input__input-wrapper">
+        {giphyState && !messageInput.numberOfUploads && <GiphyIcon />}
+        {/* <UploadsPreview /> */}
+        <ChatAutoComplete onChange={onChange} rows={1} placeholder="Send a message" />
+      </div>
       {/* </ImageDropzone> */}
-      <div
-        className='messaging-input__button'
-        role='button'
-        aria-roledescription='button'
-        onClick={messageInput.handleSubmit}
-      >
+      <div className="messaging-input__button" role="button" aria-roledescription="button" onClick={messageInput.handleSubmit}>
         <SendIcon />
       </div>
-      <EmojiPicker small={true}/>
+      <EmojiPicker small={true} />
     </div>
   );
 };

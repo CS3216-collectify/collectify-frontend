@@ -1,15 +1,11 @@
+import { IonCol, IonRow } from '@ionic/react';
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router';
 import { Avatar, useChannelStateContext, useChatContext } from 'stream-chat-react';
 import noProfileImage from "../../../../assets/no-profile-image.png";
-
-import './MessagingChannelHeader.css';
-
-import { TypingIndicator } from '../TypingIndicator/TypingIndicator';
-
-import { ChannelInfoIcon, ChannelSaveIcon, getCleanImage, HamburgerIcon } from '../../assets';
-import { IonCol, IonRow } from '@ionic/react';
 import Text from '../../../../components/text/Text';
-import { useHistory } from 'react-router';
+import { getCleanImage, HamburgerIcon } from '../../assets';
+import './MessagingChannelHeader.css';
 
 const getAvatarGroup = (members) => {
   if (members.length === 0) {

@@ -2,7 +2,6 @@ import { IonGrid } from "@ionic/react";
 import { useHistory } from "react-router";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import Text from "../text/Text";
-import HorizontalLine from "../line/HorizontalLine";
 import CollectionCard from "./CollectionCard";
 
 const CollectionList = (props) => {

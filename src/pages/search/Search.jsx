@@ -1,13 +1,12 @@
-import { useState } from "react";
 import { IonGrid, IonRow } from "@ionic/react";
-
+import { useState } from "react";
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
-import Text from "../../components/text/Text";
 import "./Search.scss";
+
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;

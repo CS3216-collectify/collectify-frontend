@@ -1,12 +1,10 @@
+import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonToolbar } from "@ionic/react";
+import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, search, settingsOutline } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router";
-
-import { IonToolbar, IonButtons, IonButton, IonIcon, IonBackButton, IonHeader, IonImg, IonText } from "@ionic/react";
-import { search, homeOutline, addCircleOutline, chatbubblesOutline, personCircleOutline, settingsOutline, ellipsisVertical } from "ionicons/icons";
 import Logo from "../../assets/favicon.png";
-
-import "./Toolbar.scss";
-import useUserContext from "../../hooks/useUserContext";
 import Text from "../../components/text/Text";
+import useUserContext from "../../hooks/useUserContext";
+import "./Toolbar.scss";
 
 const HomeToolbar = ({ title }) => {
   const history = useHistory();

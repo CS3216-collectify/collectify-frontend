@@ -1,12 +1,10 @@
 import { IonCol, IonIcon, IonImg, IonItem, IonThumbnail } from "@ionic/react";
 import { close } from "ionicons/icons";
-import React, { useContext, useEffect } from "react";
-import { useHistory, useLocation } from "react-router";
+import React, { useContext } from "react";
+import { useHistory } from "react-router";
 import { logChatPromiseExecution } from "stream-chat";
 import { MessageInput, MessageList, Thread, useChannelActionContext, useChatContext, Window } from "stream-chat-react";
 import Text from "../../../../components/text/Text";
-import useToastContext from "../../../../hooks/useToastContext";
-import useUserContext from "../../../../hooks/useUserContext";
 import { GiphyContext } from "../../Chat";
 import { MessagingChannelHeader, MessagingInput } from "../../components";
 
@@ -15,7 +13,7 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
     return null;
   }
 
-  const { imageUrl, name, link } = chatItem;
+  const { imageUrl, name } = chatItem;
   return (
     <IonItem color="light">
       <IonCol className="clickable" size={2} onClick={onClick}>
@@ -33,8 +31,6 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
 
 export const ChannelInner = (props) => {
   const history = useHistory();
-  const location = useLocation();
-  const setToast = useToastContext();
   const { setActiveChannel, channel } = useChatContext();
   const { theme, closeNav, openNav, isNavOpen, chatItem, setChatItem } = props;
 

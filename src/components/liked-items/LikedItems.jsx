@@ -1,9 +1,8 @@
-import { getLikedItems } from "../../services/profile";
-import { IonLoading } from "@ionic/react";
-import { useCallback, useEffect, useState } from "react"
-import ItemGrid from "../collection-items/ItemGrid";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
+import { getLikedItems } from "../../services/profile";
+import ItemGrid from "../collection-items/ItemGrid";
 
 const LIMIT = 18;
 
@@ -30,7 +29,7 @@ const LikedItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, pages, items])
+  }, [hasMore, pages, items, setToast])
 
   const loadInitialPage = useCallback(async () => {
     try {
@@ -46,7 +45,7 @@ const LikedItems = (props) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setToast]);
 
   useEffect(() => {
     loadInitialPage();

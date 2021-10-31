@@ -4,7 +4,6 @@ import { useHistory, useLocation } from "react-router";
 import { Avatar, useChatContext } from "stream-chat-react";
 import noProfileImage from "../../../../assets/no-profile-image.png";
 import useToastContext from "../../../../hooks/useToastContext";
-import useUserContext from "../../../../hooks/useUserContext";
 import { CreateChannelIcon } from "../../assets";
 import streamLogo from "../../assets/stream.png";
 import "./MessagingChannelList.css";
@@ -17,37 +16,37 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
-  const loadRecipientChat = async () => {
-    if (!location.state?.recipient || !location.pathname.startsWith("/chat")) {
-      return;
-    }
-    const { recipient: recipientId } = location.state;
-    if (client.userID === recipientId) {
-      return;
-    }
-    const channel = client.channel("messaging", {
-      members: [client.userID, recipientId],
-    });
-    await channel
-      .watch()
-      .then((res) => {
-        setActiveChannel(channel);
-        if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
-          setChatItem(location.state?.chatItem);
-        }
-        closeNav();
-      })
-      .catch((e) => {
-        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-      });
-    history.replace({ ...history.location, state: {} });
-  };
-
   useEffect(() => {
+    const loadRecipientChat = async () => {
+      if (!location.state?.recipient || !location.pathname.startsWith("/chat")) {
+        return;
+      }
+      const { recipient: recipientId } = location.state;
+      if (client.userID === recipientId) {
+        return;
+      }
+      const channel = client.channel("messaging", {
+        members: [client.userID, recipientId],
+      });
+      await channel
+        .watch()
+        .then((res) => {
+          setActiveChannel(channel);
+          if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
+            setChatItem(location.state?.chatItem);
+          }
+          closeNav();
+        })
+        .catch((e) => {
+          setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+        });
+      history.replace({ ...history.location, state: {} });
+    };
+
     if (location.state?.recipient && location.pathname.startsWith("/chat")) {
       loadRecipientChat();
     }
-  }, [location]);
+  }, [client, closeNav, history, location, setActiveChannel, setChatItem, setToast]);
 
   // TODO: When I tested, this useEffect doesnt seem to do anything (as expected based on the code)
   // In any case, I commented out first so that we can easily revert
@@ -94,7 +93,7 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
           </button>
         </div>
         {children}
-        <div id="empty-block"/>
+        <div id="empty-block" />
       </div>
     );
   };

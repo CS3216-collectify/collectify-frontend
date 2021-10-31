@@ -1,4 +1,4 @@
-import { IonCol, IonIcon, IonChip, IonList, IonLabel, IonRow } from "@ionic/react";
+import { IonCol, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
 import { useHistory } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
@@ -43,11 +43,11 @@ const CollectionCard = (props) => {
       <div className="profile-collection-categories--container">
         {/* A collection only has a single category */}
         <div>
-          {categoryName &&
+          {categoryName && (
             <IonChip>
               <IonLabel>{categoryName}</IonLabel>
             </IonChip>
-          }
+          )}
         </div>
         <div
           className="profile-collection-followers--container clickable"

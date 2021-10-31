@@ -79,10 +79,6 @@
     padding: 20px;
   }
 
-  #mobile-channel-list {
-    // margin-bottom: 50px;
-  }
-
   /* Mobile View */
   @media screen and (max-width: 576px) {
     /*
@@ -133,7 +129,10 @@
   .str-chat__message-simple-name,
   .str-chat__message-simple-timestamp,
   .str-chat__textarea textarea,
-  .emoji-mart-category span,.str-chat *, .str-chat *::after, .str-chat *::before {
+  .emoji-mart-category span,
+  .str-chat *,
+  .str-chat *::after,
+  .str-chat *::before {
     font-family: Nunito, sans-serif;
   }
 }
