@@ -14,7 +14,7 @@ const groupElements = (arr, interval) => {
 
 const ImageGrid = (props) => {
   const { onScrollEnd: fetchNextPage, images = [], listEnded, discover } = props;
-  console.log(discover);
+
   if (!discover) {
     const groupsOfThree = groupElements(images, 3);
 
@@ -34,7 +34,6 @@ const ImageGrid = (props) => {
     );
   } else {
     const groupsOfSix = groupElements(images, 6);
-    console.log(groupsOfSix);
     return (
       <IonGrid fixed className="image-grid">
         {groupsOfSix.map((grp, idx) => {
