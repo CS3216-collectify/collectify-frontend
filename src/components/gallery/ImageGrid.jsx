@@ -41,18 +41,18 @@ const ImageGrid = (props) => {
           var returnedHtml =
             grp.length === 6 ? (
               <IonRow>
-                <IonCol className="clickable" key={0} size={8}>
+                <IonCol className="clickable" key={0} size={8} onClick={grp[0].clickHandler}>
                   <FlexImage className={grp[0].isTradable ? "tradable-img" : ""} src={grp[0].url} />
                 </IonCol>
 
                 {grp.length > 1 && (
                   <IonCol key={1} size={4}>
-                    <IonRow className="big-tile-row--top">
+                    <IonRow className="big-tile-row--top clickable" onClick={grp[1].clickHandler}>
                       <FlexImage className={grp[1].isTradable ? "tradable-img" : ""} src={grp[1].url} />
                     </IonRow>
 
                     {grp.length > 2 && (
-                      <IonRow className="big-tile-row--bottom">
+                      <IonRow className="big-tile-row--bottom clickable" onClick={grp[2].clickHandler}>
                         <FlexImage className={grp[2].isTradable ? "tradable-img" : ""} src={grp[2].url} />
                       </IonRow>
                     )}
