@@ -128,7 +128,7 @@ const Collection = (props) => {
           <IonRow className="ion-justify-content-between ion-margin-top">
             <IonCol>
               <Text size="s" className="collection-owner clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
-                <b>by @{ownerUsername}</b>
+                by <b>@{ownerUsername}</b>
               </Text>
             </IonCol>
             <IonCol className="ion-justify-content-end ion-text-end">
