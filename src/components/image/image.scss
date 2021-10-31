@@ -24,9 +24,7 @@
     aspect-ratio: 1;
     object-fit: cover;
   }
-  ion-img::part(image) {
-    border-radius: 8px;
-  }
+
   .tradable-img {
     outline: 4px solid #5F70FF;
     outline-offset: -4px;

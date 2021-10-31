@@ -1,14 +1,16 @@
-import { IonButton, IonCol, IonGrid, IonLabel, IonRow, IonIcon } from "@ionic/react";
-import { useState } from "react";
-import { useHistory } from "react-router";
-import useToastContext from "../../hooks/useToastContext";
-import { likeByItemId, unlikeByItemId } from "../../services/likes";
-import { convertUTCtoLocal } from "../../utils/datetime";
-import LikeButton from "../button/LikeButton";
-import ImageCarousel from "../gallery/ImageCarousel";
-import Text from "../text/Text";
-import "./HomeItem.scss";
-import { chatbubblesOutline, peopleOutline } from "ionicons/icons";
+import './HomeItem.scss';
+
+import { IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonRow } from '@ionic/react';
+import { peopleOutline } from 'ionicons/icons';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+
+import useToastContext from '../../hooks/useToastContext';
+import { likeByItemId, unlikeByItemId } from '../../services/likes';
+import { convertUTCtoLocal } from '../../utils/datetime';
+import LikeButton from '../button/LikeButton';
+import ImageCarousel from '../gallery/ImageCarousel';
+import Text from '../text/Text';
 
 const HomeItem = (props) => {
   const history = useHistory();

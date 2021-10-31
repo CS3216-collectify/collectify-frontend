@@ -166,25 +166,24 @@ const Item = () => {
           </IonRow>
 
           <IonRow>
-            <IonCol size={9}>
+            <IonCol>
               <Text>{itemDescription}</Text>
             </IonCol>
-            {isTradable && (
-              <IonCol size={3} className="item-tradable">
+          </IonRow>
+
+          <IonRow>
+            <IonCol className="zz" size={9}>
+              {isTradable && (
                 <div className="tradable--container">
                   <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
                   <Text size="s">
                     <b>Tradable</b>
                   </Text>
                 </div>
-              </IonCol>
-            )}
-          </IonRow>
-
-          <IonRow>
-            <IonCol className="ion-align-items-center" size={9}>
+              )}
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
+
             {!isItemOwner && (
               <IonCol size={3}>
                 <IonButton size="small" onClick={() => openChatWithItem()}>
