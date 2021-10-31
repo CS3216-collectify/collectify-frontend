@@ -30,20 +30,7 @@ const CollectifyChat = () => {
   const [loading, setLoading] = useState(false);
   const [chatItem, setChatItem] = useState(null);
 
-  // useEffect(() => {
-  //   const mobileChannelList = document.querySelector("#mobile-channel-list");
-  //   if (isMobileNavVisible && mobileChannelList) {
-  //     document.body.style.overflow = "hidden";
-  //   } else if (!isMobileNavVisible && mobileChannelList) {
-  //     document.body.style.overflow = "auto";
-  //   }
-  // }, [isMobileNavVisible]);
-
   const mobileChannelListClasses = isMobileNavVisible ? "show" : "";
-
-  // const toggleMobile = () => {
-  //   setMobileNav(!isMobileNavVisible);
-  // }
 
   const giphyContextValue = { giphyState, setGiphyState };
 
@@ -78,7 +65,7 @@ const CollectifyChat = () => {
               sort={sort}
               options={options}
               List={(props) => <MessagingChannelList {...props} onCreateChannel={() => setIsCreating(true)} closeNav={closeMobileNav} setChatItem={setChatItem} />}
-              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} />}
+              Preview={(props) => <MessagingChannelPreview {...props} {...{ setIsCreating }} closeNav={closeMobileNav} setChatItem={setChatItem} chatItem={chatItem} />}
             />
           </div>
           {isCreating && <CreateChannel openNav={openMobileNav} onClose={() => setIsCreating(false)} />}

@@ -106,7 +106,7 @@ const getChannelUsername = (members) => {
 };
 
 const MessagingChannelPreview = (props) => {
-  const { channel, latestMessage, setActiveChannel, setIsCreating, closeNav } = props;
+  const { channel, latestMessage, setActiveChannel, setIsCreating, closeNav, setChatItem, chatItem } = props;
 
   const { channel: activeChannel, client } = useContext(ChatContext);
 
@@ -121,6 +121,11 @@ const MessagingChannelPreview = (props) => {
     <div
       className={channel?.id === activeChannel?.id ? "channel-preview__container selected" : "channel-preview__container"}
       onClick={() => {
+        // TODO: Uncomment if we don't allow attaching items to non-owners
+        // if (members[0] && members[0]["user_id"] !== chatItem?.ownerId) {
+        //   console.log(members);
+        //   setChatItem(null);
+        // }
         setIsCreating(false);
         setActiveChannel(channel);
         closeNav();

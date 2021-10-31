@@ -51,22 +51,30 @@ const MessagingInput = () => {
       >
         <EmojiIcon />
       </div>
-      <ImageDropzone
+      {/* <ImageDropzone
         accept={acceptedFiles}
         handleFiles={messageInput.uploadNewFiles}
         multiple={multipleUploads}
-        disabled={(maxNumberOfFiles !== undefined && messageInput.numberOfUploads >= maxNumberOfFiles) || giphyState}
-      >
-        <div className="messaging-input__input-wrapper">
+        disabled={
+          (maxNumberOfFiles !== undefined && messageInput.numberOfUploads >= maxNumberOfFiles) ||
+          giphyState
+        }
+      > */}
+        <div className='messaging-input__input-wrapper'>
           {giphyState && !messageInput.numberOfUploads && <GiphyIcon />}
-          <UploadsPreview />
-          <ChatAutoComplete onChange={onChange} rows={1} placeholder="Send a message" />
+          {/* <UploadsPreview /> */}
+          <ChatAutoComplete onChange={onChange} rows={1} placeholder='Send a message' />
         </div>
-      </ImageDropzone>
-      <div className="messaging-input__button" role="button" aria-roledescription="button" onClick={messageInput.handleSubmit}>
+      {/* </ImageDropzone> */}
+      <div
+        className='messaging-input__button'
+        role='button'
+        aria-roledescription='button'
+        onClick={messageInput.handleSubmit}
+      >
         <SendIcon />
       </div>
-      <EmojiPicker small={true} />
+      <EmojiPicker small={true}/>
     </div>
   );
 };
