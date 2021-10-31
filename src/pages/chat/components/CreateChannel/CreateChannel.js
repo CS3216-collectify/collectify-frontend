@@ -33,7 +33,6 @@ const CreateChannel = ({ onClose, openNav }) => {
   const inputRef = useRef();
 
   const clearState = () => {
-    console.log("state cleared");
     setInputText('');
     setResultsOpen(false);
     setSearchEmpty(false);
@@ -75,9 +74,9 @@ const CreateChannel = ({ onClose, openNav }) => {
 
       setResultsOpen(true);
     } catch (error) {
-      console.log({ error });
+      setToast({ message: "Failed to load search results. Please try again later.", color: "danger" });
     }
-
+      
     setSearching(false);
   };
 
@@ -94,7 +93,6 @@ const CreateChannel = ({ onClose, openNav }) => {
 
   const createChannel = async (selectedUser) => {
     if (!selectedUser) return;
-    console.log("creating channel...");
     const selectedUserId = selectedUser.id;
 
     try {

@@ -17,62 +17,69 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
-  useEffect(() => {
-    const loadRecipientChat = async () => {
-      if (location.state?.recipient && location.pathname.startsWith("/chat")) {
-        console.log("Processing recipient and chat...");
-        const { recipient: recipientId } = location.state;
-        console.log(recipientId);
-        if (client.userID === recipientId) {
-          return;
-        }
-        const channel = client.channel("messaging", {
-          members: [client.userID, recipientId],
-        });
-        await channel
-          .watch()
-          .then((res) => {
-            setActiveChannel(channel);
-            if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
-              setChatItem(location.state?.chatItem);
-            }
-            closeNav();
-          })
-          .catch((e) => {
-            setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-          });
-        history.replace({ ...history.location, state: {} });
-      }
-    };
-    loadRecipientChat();
-  }, [client, closeNav, history, location, setActiveChannel, setChatItem, setToast]);
-
-  useEffect(() => {
-    const getChannels = async (client) => {
-      const filter = { type: "messaging", members: { $in: [client.userID] } };
-      const sort = [{ last_message_at: -1 }];
-
-      const channels = await client.queryChannels(filter, sort, {
-        watch: true, // this is the default
-        state: true,
-      });
-
-      channels.map((channel) => {
-        console.log(channel);
-      });
-    };
-
-    if (!loading && !children?.props?.children?.length) {
-      getChannels(client);
+  const loadRecipientChat = async () => {
+    if (!location.state?.recipient || !location.pathname.startsWith("/chat")) {
+      return;
     }
-  }, [loading]); // eslint-disable-line
+    const { recipient: recipientId } = location.state;
+    if (client.userID === recipientId) {
+      return;
+    }
+    const channel = client.channel("messaging", {
+      members: [client.userID, recipientId],
+    });
+    await channel
+      .watch()
+      .then((res) => {
+        setActiveChannel(channel);
+        if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
+          setChatItem(location.state?.chatItem);
+        }
+        closeNav();
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+      });
+    history.replace({ ...history.location, state: {} });
+  };
+
+  useEffect(() => {
+    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+      loadRecipientChat();
+    }
+  }, [location]);
+
+  // TODO: When I tested, this useEffect doesnt seem to do anything (as expected based on the code)
+  // In any case, I commented out first so that we can easily revert
+
+  // useEffect(() => {
+  //   const getChannels = async (client) => {
+  //     const filter = { type: "messaging", members: { $in: [client.userID] } };
+  //     const sort = [{ last_message_at: -1 }];
+
+  //     const channels = await client.queryChannels(filter, sort, {
+  //       watch: true, // this is the default
+  //       state: true,
+  //     });
+
+  //     channels.map((channel) => {
+  //       // console.log(channel);
+  //     });
+  //   };
+
+  //   if (!loading && !children?.props?.children?.length) {
+  //     getChannels(client);
+  //   }
+  // }, [loading]); // eslint-disable-line
 
   const ListHeaderWrapper = ({ children }) => {
     return (
       <div className="messaging__channel-list">
         <div className="messaging__channel-list__header">
-          <Avatar image={image || noProfileImage} name={name} size={40} />
-          <IonCol>
+          <span className="clickable">
+            <Avatar image={image || noProfileImage} name={name} size={40} onClick={() => history.push("/profile")} />
+          </span>
+          <IonCol className="clickable" onClick={() => history.push("/profile")}>
             <div className="messaging__channel-list__header__name">{name || id}</div>
             <div className="messaging__channel-list__header__username">@{username || id}</div>
           </IonCol>

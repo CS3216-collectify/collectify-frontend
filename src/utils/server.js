@@ -42,7 +42,6 @@ server.interceptors.response.use(
         return server
           .post(REFRESH_ENDPOINT, { refresh: refreshToken })
           .then((response) => {
-            console.log("Refresh successful");
             loginUser(response.data);
             originalRequest.headers["Authorization"] = "Bearer " + response.data.access;
 
@@ -52,7 +51,6 @@ server.interceptors.response.use(
             console.log(err);
           });
       } else {
-        console.log("Refresh token not available.");
         logoutUser();
         window.location.href = REACT_LOGIN_REL_URL;
       }

@@ -1,6 +1,7 @@
 import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
 import { useLocation } from "react-router";
+import useToastContext from "../../hooks/useToastContext";
 import { getFollowedCollections } from "../../services/profile";
 import CollectionList from "../profile-collection/CollectionList";
 
@@ -8,6 +9,7 @@ const LIMIT = 6;
 
 const FollowedCollections = (props) => {
   const location = useLocation();
+  const setToast = useToastContext();
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [collections, setCollections] = useState([]);
@@ -26,10 +28,7 @@ const FollowedCollections = (props) => {
       setHasMore(updatedHasMore);
       setCollections(updatedCollections);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
   }, [hasMore, pages, collections]);
 
@@ -43,8 +42,7 @@ const FollowedCollections = (props) => {
       setHasMore(updatedHasMore);
       setCollections(fetchedCollections);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }

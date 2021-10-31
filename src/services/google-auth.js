@@ -32,21 +32,16 @@ export const googleLogin = async () => {
       // success callback
       try {
         const tokenRes = await requestAccessToken(res.authentication.idToken);
-        console.log("successful auth");
-        console.log(tokenRes);
         
         if (tokenRes.isNew) {
           return GoogleAuthStatus.GOOGLE_AUTH_ONBOARD;
         }
         return GoogleAuthStatus.GOOGLE_AUTH_SUCCESS;
       } catch (error) {
-        console.log("error", error);
         return GoogleAuthStatus.GOOGLE_AUTH_FAILURE;
       }
     },
     (error) => {
-      // failure callback
-      console.log("error", error);
       return GoogleAuthStatus.GOOGLE_AUTH_FAILURE;
     }
   );

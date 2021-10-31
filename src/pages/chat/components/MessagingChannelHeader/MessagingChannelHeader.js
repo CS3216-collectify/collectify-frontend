@@ -21,7 +21,7 @@ const getAvatarGroup = (members) => {
   }
   if (members.length === 1) {
     return (
-      <div className='messaging__channel-header__avatars'>
+      <div className='clickable messaging__channel-header__avatars'>
         <Avatar image={members[0].user?.image || noProfileImage} name={members[0].user?.name || members[0].user?.id} size={40} />;
       </div>
     );
@@ -29,7 +29,7 @@ const getAvatarGroup = (members) => {
 
   if (members.length === 2) {
     return (
-      <div className='messaging__channel-header__avatars two'>
+      <div className='clickable messaging__channel-header__avatars two'>
         <span>
           <Avatar
             image={getCleanImage(members[0])}
@@ -198,16 +198,20 @@ const MessagingChannelHeader = (props) => {
       <div id='mobile-nav-icon' className={`${props.theme}`} onClick={() => props.openNav()}>
         <HamburgerIcon />
       </div>
-      <span onClick={goToHistoryPage}>
+      <span className={props.disabled ? "" : "clickable"} onClick={goToHistoryPage}>
         {getAvatarGroup(members)}
       </span>
-      <IonCol onClick={goToHistoryPage}>
+      <IonCol className={props.disabled ? "" : "clickable"} onClick={goToHistoryPage}>
         <IonRow>
           <Text size="l">
             <b>{title}</b>
           </Text>
         </IonRow>
-        <Text size="s">{username ? `@${username}` : ''}</Text>
+        <Text size="s">
+          <span className="messaging__channel-header__username">
+            {username ? `@${username}` : ''}
+          </span>
+        </Text>
       </IonCol>
     </div>
   );

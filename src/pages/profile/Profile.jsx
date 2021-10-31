@@ -15,6 +15,7 @@ import FollowedCollections from "../../components/followed-collections/FollowedC
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import Text from "../../components/text/Text";
 import noProfileImage from "../../assets/no-profile-image.png";
+import useToastContext from "../../hooks/useToastContext";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -43,6 +44,7 @@ const Profile = () => {
   // if not username and isLoggedIn, redirect to /profile/{username_from_local_storage}
   // if not username and not isLoggedIn, prompt log in
   let { username } = useParams();
+  const setToast = useToastContext();
 
   const [profileUserId, setProfileUserId] = useState(null);
   const [profileFirstName, setProfileFirstName] = useState("");
@@ -85,8 +87,7 @@ const Profile = () => {
         setCollectionsCount(res.collectionsCount);
       }
     } catch (e) {
-      console.log(e);
-      // user not found
+      setToast({ message: "Unable to load your profile. Please try again.", color: "danger" })
     } finally {
       setLoading(false);
     }

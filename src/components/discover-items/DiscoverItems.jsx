@@ -6,10 +6,12 @@ import ItemGrid from "../collection-items/ItemGrid";
 import { getDiscoverItems } from "../../services/search";
 import { getCategories } from "../../services/categories";
 import Text from "../text/Text";
+import useToastContext from "../../hooks/useToastContext";
 
 const LIMIT = 18;
 
 const DiscoverItems = (props) => {
+  const setToast = useToastContext();
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
@@ -29,9 +31,9 @@ const DiscoverItems = (props) => {
       setItems([...items, ...retrievedItems]);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, items, pages, selectedCategory, viewTradable]);
+  }, [hasMore, items, pages, selectedCategory, setToast, viewTradable]);
 
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
@@ -42,9 +44,9 @@ const DiscoverItems = (props) => {
       setItems(retrievedItems);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [selectedCategory, viewTradable]);
+  }, [selectedCategory, setToast, viewTradable]);
 
   const fetchNextPage = () => {
     loadItems();

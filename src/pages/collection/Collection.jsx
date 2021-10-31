@@ -51,7 +51,7 @@ const Collection = (props) => {
       setFollowed(isFollowed);
       setFollowersCount(followersCount);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load collection. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }

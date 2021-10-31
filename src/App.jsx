@@ -67,7 +67,7 @@ const App = () => {
                 <Route exact path="/profile" component={Profile} />
                 <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
                 <Route exact path="/profile/:username" component={Profile} />
-                <Route exact path="/settings" component={Settings} />
+                <ProtectedRoute exact path="/settings" component={Settings} />
                 <Route exact path="/collections/:collectionId" component={Collection} />
                 <ProtectedRoute exact path="/collections/:collectionId/edit" component={EditCollection} />
                 <ProtectedRoute exact path="/add-collections" component={AddCollection} />

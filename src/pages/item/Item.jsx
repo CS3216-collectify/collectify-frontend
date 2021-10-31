@@ -48,8 +48,7 @@ const Item = () => {
       setIsTradable(isTradable);
       setLoading(false);
     } catch (e) {
-      console.log(e);
-    } finally {
+      setToast({ message: "Failed to load item. Please try again later.", color: "danger" });
     }
   }, [collectionId, itemId]);
 
@@ -105,6 +104,10 @@ const Item = () => {
     history.push(`/collections/${collectionId}`);
   };
 
+  const goToLikesPage = () => {
+    history.push(`/items/${itemId}/likes`);
+  };
+
   const openChatWithItem = () => {
     const pathname = "/chat";
     const state = {
@@ -116,8 +119,7 @@ const Item = () => {
         ownerId: ownerId.toString(),
       },
     };
-    console.log(state);
-    history.push({ pathname: pathname, state: state });
+    history.push({ pathname, state });
   };
 
   return (
@@ -163,7 +165,9 @@ const Item = () => {
             <IonCol size={3}>
               <div className="like-button--container">
                 <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-                <Text color="default">{likesCount} likes</Text>
+                <Text className="clickable" color="default" onClick={goToLikesPage}>
+                  {likesCount} likes
+                </Text>
               </div>
             </IonCol>
           </IonRow>
