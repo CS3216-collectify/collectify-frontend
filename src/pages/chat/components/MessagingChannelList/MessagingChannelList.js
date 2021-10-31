@@ -17,33 +17,37 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
-  useEffect(() => {
-    const loadRecipientChat = async () => {
-      if (location.state?.recipient && location.pathname.startsWith("/chat")) {
-        const { recipient: recipientId } = location.state;
-        if (client.userID === recipientId) {
-          return;
+  const loadRecipientChat = async () => {
+    if (!location.state?.recipient || !location.pathname.startsWith("/chat")) {
+      return;
+    }
+    const { recipient: recipientId } = location.state;
+    if (client.userID === recipientId) {
+      return;
+    }
+    const channel = client.channel("messaging", {
+      members: [client.userID, recipientId],
+    });
+    await channel
+      .watch()
+      .then((res) => {
+        setActiveChannel(channel);
+        if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
+          setChatItem(location.state?.chatItem);
         }
-        const channel = client.channel("messaging", {
-          members: [client.userID, recipientId],
-        });
-        await channel
-          .watch()
-          .then((res) => {
-            setActiveChannel(channel);
-            if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
-              setChatItem(location.state?.chatItem);
-            }
-            closeNav();
-          })
-          .catch((e) => {
-            setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-          });
-        history.replace({ ...history.location, state: {} });
-      }
-    };
-    loadRecipientChat();
-  }, [client, closeNav, history, location, setActiveChannel, setChatItem, setToast]);
+        closeNav();
+      })
+      .catch((e) => {
+        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+      });
+    history.replace({ ...history.location, state: {} });
+  };
+
+  useEffect(() => {
+    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+      loadRecipientChat();
+    }
+  }, [location]);
 
   // TODO: When I tested, this useEffect doesnt seem to do anything (as expected based on the code)
   // In any case, I commented out first so that we can easily revert
