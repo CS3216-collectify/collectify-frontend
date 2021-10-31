@@ -24,7 +24,7 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
         </IonThumbnail>
       </IonCol>
       <IonCol className="clickable" onClick={onClick}>
-        <Text size="l">{name}</Text>
+        <Text size="s">{name}</Text>
       </IonCol>
       <IonIcon className="clickable" icon={close} onClick={closeHandler} />
     </IonItem>
