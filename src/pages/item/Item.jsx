@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonButton, IonLabel } from "@ionic/react";
+import { IonGrid, IonRow, IonCol, IonContent, IonPage, IonLoading, IonButton, IonLabel, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams, useLocation } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -12,6 +12,7 @@ import { convertUTCtoLocal } from "../../utils/datetime";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
 import useToastContext from "../../hooks/useToastContext";
 import "./Item.scss";
+import { chatbubblesOutline, peopleOutline } from "ionicons/icons";
 
 const Item = () => {
   const history = useHistory();
@@ -29,12 +30,13 @@ const Item = () => {
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [itemCreationDate, setItemCreationDate] = useState("");
+  const [isTradable, setIsTradable] = useState("");
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);
     try {
       const itemData = await getItemFromCollection(collectionId, itemId);
-      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked } = itemData;
+      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked, isTradable } = itemData;
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
@@ -43,10 +45,10 @@ const Item = () => {
       setItemCreationDate(itemCreationDate);
       setOwnerUsername(ownerUsername);
       setLiked(isLiked);
+      setIsTradable(isTradable);
       setLoading(false);
     } catch (e) {
-      console.log(e);
-    } finally {
+      setToast({ message: "Failed to load item. Please try again later.", color: "danger" });
     }
   }, [collectionId, itemId]);
 
@@ -55,7 +57,7 @@ const Item = () => {
       setLoading(true);
       fetchItemData();
     }
-  }, [fetchItemData, location]);
+  }, [collectionId, fetchItemData, itemId, location]);
 
   const likeHandler = () => {
     // api call to like, if user is authenticated
@@ -90,7 +92,7 @@ const Item = () => {
   const editPageRedirect = () => {
     const pathname = `/collections/${collectionId}/items/${itemId}/edit`;
     const _images = images.map((img) => ({ ...img })); // deep copy
-    const item = { itemName, itemDescription, images: _images };
+    const item = { itemName, itemDescription, images: _images, isTradable };
     const state = { item };
     history.push({
       pathname,
@@ -100,6 +102,24 @@ const Item = () => {
 
   const goToCollectionPage = () => {
     history.push(`/collections/${collectionId}`);
+  };
+
+  const goToLikesPage = () => {
+    history.push(`/items/${itemId}/likes`);
+  };
+
+  const openChatWithItem = () => {
+    const pathname = "/chat";
+    const state = {
+      recipient: ownerId.toString(),
+      chatItem: {
+        name: itemName,
+        link: `/collections/${collectionId}/items/${itemId}`,
+        imageUrl: images[0].imageUrl,
+        ownerId: ownerId.toString(),
+      },
+    };
+    history.push({ pathname, state });
   };
 
   return (
@@ -136,33 +156,49 @@ const Item = () => {
 
         <IonGrid fixed className="ion-padding">
           <IonRow>
-            <IonCol>
-              <IonRow className="item-title-likes--container">
-                <div>
-                  <Text size="l">
-                    <b>{itemName}</b>
-                  </Text>
-                </div>
-                <div>
-                  <IonCol className="like-button--column" size={1}>
-                    <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-                  </IonCol>
-                  <IonCol size={3} className="clickable" onClick={() => history.push(`/items/${itemId}/likes`)}>
-                    <Text color="default">{likesCount} likes</Text>
-                  </IonCol>
-                </div>
-              </IonRow>
+            <IonCol size={9}>
+              <Text size="l">
+                <b>{itemName}</b>
+              </Text>
+            </IonCol>
 
-              <IonRow>
-                <Text>{itemDescription}</Text>
-              </IonRow>
+            <IonCol size={3}>
+              <div className="like-button--container">
+                <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+                <Text className="clickable" color="default" onClick={goToLikesPage}>
+                  {likesCount} likes
+                </Text>
+              </div>
             </IonCol>
           </IonRow>
 
           <IonRow>
-            <IonCol className="ion-text-left">
+            <IonCol>
+              <Text>{itemDescription}</Text>
+            </IonCol>
+          </IonRow>
+
+          <IonRow>
+            <IonCol className="zz" size={9}>
+              {isTradable && (
+                <div className="tradable--container">
+                  <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
+                  <Text size="s">
+                    <b>Tradable</b>
+                  </Text>
+                </div>
+              )}
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
+
+            {!isItemOwner && (
+              <IonCol size={3}>
+                <IonButton size="small" onClick={() => openChatWithItem()} className="item-chat-button--container">
+                  <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
+                  <IonLabel>Chat</IonLabel>
+                </IonButton>
+              </IonCol>
+            )}
           </IonRow>
         </IonGrid>
       </IonContent>

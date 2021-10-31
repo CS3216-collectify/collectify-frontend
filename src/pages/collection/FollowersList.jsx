@@ -1,13 +1,15 @@
-import { IonContent, IonGrid, IonPage } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
+import useToastContext from "../../hooks/useToastContext";
 import { getFollowersByCollectionId } from "../../services/followers";
 
 const LIMIT = 18;
 
 const FollowersList = (props) => {
+  const setToast = useToastContext();
   const location = useLocation();
   const { collectionId } = useParams();
 
@@ -29,12 +31,9 @@ const FollowersList = (props) => {
       setHasMore(updatedHasMore);
       setUsers(updatedUsers);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Failed to load followers. Please try again later.", color: "danger" });
     }
-  }, [collectionId, hasMore, pages, users]);
+  }, [collectionId, hasMore, pages, setToast, users]);
 
   const loadInitialPage = useCallback(async () => {
     try {
@@ -46,12 +45,11 @@ const FollowersList = (props) => {
       setHasMore(updatedHasMore);
       setUsers(fetchedUsers);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Failed to load followers. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
-  }, [collectionId]);
+  }, [collectionId, setToast]);
 
   useEffect(() => {
     loadInitialPage();
@@ -61,7 +59,7 @@ const FollowersList = (props) => {
     <IonPage>
       <HomeToolbar title={`Followers`} />
       <IonContent>
-          <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one following this collection" />
+          <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one is following this collection" />
       </IonContent>
     </IonPage>
   );

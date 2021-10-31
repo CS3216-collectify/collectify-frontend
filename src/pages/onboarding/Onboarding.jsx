@@ -28,7 +28,7 @@ const Onboarding = () => {
           setInitialUsername(res.username);
           setUsername(res.username);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => setToast({ message: "Unable to load your user information. Please try again.", color: "danger" }));
     }
   }, [isUserAuthenticated]);
 
@@ -48,18 +48,13 @@ const Onboarding = () => {
       setToast({ message: "Username updated!", color: "success" });
       history.replace("/home");
     }).catch((e) => {
-      console.log(e);
-      setToast({ message: e.data.description[0], color: "danger" });
+      setToast({ message: "Unable to update your username. Please try again.", color: "danger" });
     });
   };
 
-  // TODO: check if the username is duplicated
   return (
     <IonPage>
-      {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
-        {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-
         <IonGrid fixed>
           <IonList lines="full">
             <Text size="l">Please provide a username so the community can identify you.</Text>

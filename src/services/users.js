@@ -1,16 +1,17 @@
 import server from "../utils/server";
 
 export const getCurrentUser = async () => {
-  console.log("Get user data of logged in user");
-  const response = await server.get(`api/user/`);
-  console.log(response);
+  const response = await server.get("api/user/");
+  return response.data;
+};
+
+export const getChatUserInfo = async () => {
+  const response = await server.post("/chat/");
   return response.data;
 };
 
 export const getUserByUsername = async (username) => {
-  console.log("Get user data of user" + username);
   const response = await server.get(`api/user/${username}/`);
-  console.log(response);
   return response.data;
 };
 
@@ -20,7 +21,7 @@ const blobToFile = (blob, fileName = "default-name", type = "image/png") => {
 };
 
 const loadImageFile = async (url) => {
-  const filename = "profile-picture.png"
+  const filename = "profile-picture.png";
   const file = await fetch(url)
     .then((res) => res.blob())
     .then((blob) => blobToFile(blob, filename));
@@ -28,7 +29,7 @@ const loadImageFile = async (url) => {
 };
 
 export const updateProfile = async (username, firstName, lastName, description, profilePictureUrl) => {
-  const body = new FormData()
+  const body = new FormData();
   body.append("username", username);
   body.append("firstName", firstName);
   body.append("lastName", lastName);
@@ -39,18 +40,14 @@ export const updateProfile = async (username, firstName, lastName, description, 
     body.append("pictureUrl", imageFile);
   }
 
-  console.log(...body);
   const response = await server.patch("api/user/", body);
-  console.log(response);
 };
 
 export const updateUsername = async (username) => {
   const body = {
     username,
   };
-  console.log("updating user info with req body...", body);
   const response = await server.patch("api/user/", body);
-  console.log(response);
 };
 
 export const deleteCurrentUser = async () => {

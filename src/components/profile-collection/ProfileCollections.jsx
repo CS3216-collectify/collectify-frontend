@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import useToastContext from "../../hooks/useToastContext";
 
 import { getCollections } from "../../services/collections";
 import CollectionList from "./CollectionList";
@@ -8,6 +9,7 @@ const LIMIT = 6;
 
 const ProfileCollections = (props) => {
   const location = useLocation();
+  const setToast = useToastContext();
   const [collections, setCollections] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
@@ -27,7 +29,7 @@ const ProfileCollections = (props) => {
       setCollections([...collections, ...retrievedCollections]);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
   }, [collections, hasMore, pages, profileUserId]);
 
@@ -43,7 +45,7 @@ const ProfileCollections = (props) => {
       setCollections(retrievedCollections);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
   }, [profileUserId]);
 

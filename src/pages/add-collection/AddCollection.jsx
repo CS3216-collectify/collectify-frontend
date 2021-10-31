@@ -8,10 +8,12 @@ import { getCategories } from "../../services/categories";
 import { postCollection } from "../../services/collections";
 import UploadingGif from "../../assets/uploading.gif";
 import FlexImage from "../../components/image/FlexImage";
+import useToastContext from "../../hooks/useToastContext";
 
 const AddCollection = () => {
   const history = useHistory();
   const location = useLocation();
+  const setToast = useToastContext();
   const [loading, setLoading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -31,8 +33,7 @@ const AddCollection = () => {
       });
     } catch (e) {
       setUploading(false);
-      console.log(e);
-    } finally {
+      setToast({ message: "Failed to add collection. Please try again later.", color: "danger" });
     }
   };
 
@@ -47,9 +48,7 @@ const AddCollection = () => {
       const options = await getCategories();
       setCategoryOptions(options);
     } catch (e) {
-      console.log(e);
-    } finally {
-      // setLoading(false);
+      setToast({ message: "Failed to add collection. Please try again later.", color: "danger" });
     }
   };
 

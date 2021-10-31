@@ -1,21 +1,16 @@
 import server from "../utils/server";
 
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
-  console.log("GET items from collection", collectionId);
   const params = { offset, limit };
   const response = await server.get(`collections/${collectionId}/items/`, {
     params,
   });
-  console.log(response);
 
   return response.data;
 };
 
 export const getItemFromCollection = async (collectionId, itemId) => {
-  console.log("Get Item with collectionId", collectionId, "and itemId", itemId);
   const response = await server.get(`collections/${collectionId}/items/${itemId}/`);
-  console.log(response);
-
   return response.data;
 };
 
@@ -33,36 +28,30 @@ const loadImageFile = async (url, idx) => {
 };
 
 export const postItem = async (collectionId, itemData) => {
-  console.log("Post Item for collectionId", collectionId);
-  const { itemName, itemDescription, images } = itemData;
+  const { itemName, itemDescription, images, isTradable } = itemData;
 
   const body = new FormData();
   body.append("itemName", itemName);
   body.append("itemDescription", itemDescription);
+  body.append("isTradable", isTradable);
 
   for (let i = 0; i < images.length; i++) {
     const { imageUrl } = images[i];
     const file = await loadImageFile(imageUrl, i);
     body.append("images", file);
   }
-  console.log(itemData);
 
-  console.log(...body);
   const response = await server.post(`collections/${collectionId}/items/`, body);
-  console.log(response);
-
   return response.data.itemId;
 };
 
 export const updateItem = async (collectionId, itemId, itemData) => {
-  console.log("Update Item with collectionId", collectionId, "and itemId", itemId);
-  console.log(itemData);
-
   const body = new FormData();
-  const { itemName, itemDescription, images, deletedImageIds } = itemData;
+  const { itemName, itemDescription, images, deletedImageIds, isTradable } = itemData;
   body.append("itemName", itemName);
   body.append("itemDescription", itemDescription);
-
+  body.append("isTradable", isTradable);
+  
   for (let i = 0; i < images.length; i++) {
     const { imageUrl, isNew } = images[i];
     if (!isNew) {
@@ -76,12 +65,9 @@ export const updateItem = async (collectionId, itemId, itemData) => {
     body.append("deletedImageIds", id);
   }
 
-  console.log(...body);
   await server.patch(`collections/${collectionId}/items/${itemId}/`, body);
 };
 
 export const deleteItem = async (collectionId, itemId) => {
-  console.log("Deleting collection with collectionId", collectionId, "and itemId", itemId);
   const response = await server.delete(`collections/${collectionId}/items/${itemId}/`);
-  console.log(response);
 };

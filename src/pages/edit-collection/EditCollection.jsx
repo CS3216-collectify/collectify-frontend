@@ -38,7 +38,7 @@ const EditCollection = (props) => {
       }
       setCollection(currentCollection);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load collection information. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ const EditCollection = (props) => {
       const options = await getCategories();
       setCategoryOptions(options);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load categories. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -58,10 +58,8 @@ const EditCollection = (props) => {
 
   useEffect(() => {
     if (location.state) {
-      console.log("Loading form data from state...");
       setCollection({ ...location.state.collection });
     } else if (collectionId && location.pathname.startsWith(`/collections/${collectionId}/edit`)) {
-      console.log("Fetching form data from server...");
       loadExistingData();
     }
     loadCategories();

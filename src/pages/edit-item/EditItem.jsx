@@ -36,21 +36,19 @@ const EditItem = () => {
       }
       setItem(currentItem);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load item information. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
-  }, [collectionId, itemId]);
+  }, [collectionId, history, isCurrentUser, itemId]);
 
   useEffect(() => {
     if (location.state) {
-      console.log("Loading form data from state...");
       setItem({ ...location.state.item });
     } else if (collectionId && itemId && location.pathname.startsWith(`/collections/${collectionId}/items/${itemId}/edit`)) {
-      console.log("Fetching form data from server...");
       loadExistingData();
     }
-  }, [loadExistingData, location]);
+  }, [collectionId, itemId, loadExistingData, location]);
 
   const editCompleteHandler = async (item) => {
     try {

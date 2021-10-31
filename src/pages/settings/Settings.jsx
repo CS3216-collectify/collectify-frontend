@@ -15,10 +15,7 @@ const Settings = () => {
   return (
     <IonPage className="settings">
       <HomeToolbar title="Settings" />
-      {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding ion-text-center">
-        {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-
         <IonGrid fixed>
           <Text size="l">Any feedback or suggestions? Please send us an email!</Text>
           <IonRow className="mail-to-button--container ion-margin-vertical">

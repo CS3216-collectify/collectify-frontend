@@ -1,5 +1,6 @@
 import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
+import useToastContext from "../../hooks/useToastContext";
 import { searchCollections } from "../../services/search";
 import CollectionList from "../profile-collection/CollectionList";
 
@@ -7,6 +8,7 @@ const LIMIT = 8;
 
 const CollectionSearchResultDisplay = (props) => {
   const { searchText } = props;
+  const setToast = useToastContext();
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [collections, setCollections] = useState([]);
@@ -25,10 +27,7 @@ const CollectionSearchResultDisplay = (props) => {
       setHasMore(updatedHasMore);
       setCollections(updatedCollections);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     }
   }, [searchText, hasMore, pages, collections]);
 
@@ -45,8 +44,7 @@ const CollectionSearchResultDisplay = (props) => {
       setHasMore(updatedHasMore);
       setCollections(fetchedCollections);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useParams, useLocation } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
 import "./Collection.scss";
@@ -51,7 +51,7 @@ const Collection = (props) => {
       setFollowed(isFollowed);
       setFollowersCount(followersCount);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Failed to load collection. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -123,17 +123,20 @@ const Collection = (props) => {
                   <b>{collectionName}</b>
                 </b>
               </Text>
-
+            </div>
+          </IonRow>
+          <IonRow className="ion-justify-content-between ion-margin-top">
+            <IonCol>
+              <Text size="s" className="collection-owner clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
+                by <b>@{ownerUsername}</b>
+              </Text>
+            </IonCol>
+            <IonCol className="ion-justify-content-end ion-text-end">
               <div className="collection-followers--container clickable" onClick={() => history.push(`/collections/${collectionId}/followers`)}>
                 <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
                 <Text size="xs">{followersCount} followers</Text>
               </div>
-            </div>
-          </IonRow>
-          <IonRow className="ion-justify-content-between">
-            <Text size="s" className="collection-owner clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
-              <b>by @{ownerUsername}</b>
-            </Text>
+            </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-start">
             <IonCol>{categoryName && <CategoryChip name={categoryName} />}</IonCol>

@@ -40,6 +40,7 @@ import Collection from "./pages/collection/Collection";
 import Settings from "./pages/settings/Settings";
 import Discover from "./pages/discover/Discover";
 import Onboarding from "./pages/onboarding/Onboarding";
+import CollectifyChat from "./pages/chat/Chat";
 import FollowersList from "./pages/collection/FollowersList";
 import LikesList from "./pages/item/LikesList";
 import { Redirect } from "react-router";
@@ -55,18 +56,16 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          {/* <Switch> */}
           <Route exact path="/" component={Login} />
           <ProtectedRoute exact path="/onboarding" component={Onboarding} />
           <Route>
             <IonTabs>
               <IonRouterOutlet>
-                {/* TODO: add redirects for guests */}
                 <ProtectedRoute exact path="/home" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
                 <Route exact path="/profile/:username" component={Profile} />
-                <Route exact path="/settings" component={Settings} />
+                <ProtectedRoute exact path="/settings" component={Settings} />
                 <Route exact path="/collections/:collectionId" component={Collection} />
                 <ProtectedRoute exact path="/collections/:collectionId/edit" component={EditCollection} />
                 <ProtectedRoute exact path="/add-collections" component={AddCollection} />
@@ -76,6 +75,7 @@ const App = () => {
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
+                <ProtectedRoute exact path="/chat" component={CollectifyChat} />
                 <Route exact path="/discover" component={Discover} />
                 <Route exact path="/not-found" component={NotFound} />
                 <Redirect to="/" />
@@ -98,12 +98,12 @@ const App = () => {
                     <IonText>Add</IonText>
                   </IonTabButton>
                 )}
-                {/* {isUserAuthenticated && (
-                    <IonTabButton tab="d" href="/d">
-                      <IonIcon icon={chatbubblesOutline} />
-                      <IonText>Chats</IonText>
-                    </IonTabButton>
-                  )} */}
+                {isUserAuthenticated && (
+                  <IonTabButton tab="d" href="/chat">
+                    <IonIcon icon={chatbubblesOutline} />
+                    <IonText>Chats</IonText>
+                  </IonTabButton>
+                )}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>
@@ -111,7 +111,6 @@ const App = () => {
               </IonTabBar>
             </IonTabs>
           </Route>
-          {/* </Switch> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

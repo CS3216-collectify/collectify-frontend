@@ -5,15 +5,29 @@
   .item-title-likes--container {
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 8px;
   }
+
   .item-like-button {
-    vertical-align: middle;
+    vertical-align: sub;
+    margin-right: 4px;
   }
 }
 .top-margin-s {
   margin-top: -20px;
 }
-.like-button--column {
-  padding-right: 0;
+.item-chat-icon {
+  margin-right: 4px;
+}
+
+.tradable--container {
+  color: rgb(10, 51, 161);
+
+  .item-tradable-icon {
+    vertical-align: middle;
+  }
+}
+
+.item-chat-button--container {
+  position: absolute;
+  right: 0;
 }

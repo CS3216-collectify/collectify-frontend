@@ -1,5 +1,6 @@
 import { IonLoading } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react"
+import useToastContext from "../../hooks/useToastContext";
 import { searchItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
 
@@ -11,6 +12,7 @@ const ItemSearchResultDisplay = (props) => {
   const [pages, setPages] = useState(-1);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const setToast = useToastContext();
 
   const loadNextPage = useCallback(async () => {
     if (!hasMore || !searchText) {
@@ -25,10 +27,7 @@ const ItemSearchResultDisplay = (props) => {
       setHasMore(updatedHasMore);
       setItems(updatedItems);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
-    } finally {
-      // TODO: ?
+      setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     }
   }, [searchText, hasMore, pages, items])
 
@@ -45,8 +44,7 @@ const ItemSearchResultDisplay = (props) => {
       setHasMore(updatedHasMore);
       setItems(fetchedItems);
     } catch (e) {
-      // TODO: Error handling
-      console.log(e);
+      setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     } finally {
       setLoading(false);
     }
