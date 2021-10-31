@@ -1,4 +1,4 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -32,7 +32,7 @@ const LikesList = (props) => {
     } catch (e) {
       setToast({ message: "Failed to load likes. Please try again later.", color: "danger" });
     }
-  }, [itemId, hasMore, pages, users]);
+  }, [hasMore, pages, itemId, users, setToast]);
 
   const loadInitialPage = useCallback(async () => {
     try {
@@ -48,7 +48,7 @@ const LikesList = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [itemId]);
+  }, [itemId, setToast]);
 
   useEffect(() => {
     loadInitialPage();

@@ -1,12 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
-import { IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
-
-import "./DiscoverItems.scss";
-import ItemGrid from "../collection-items/ItemGrid";
-import { getDiscoverItems } from "../../services/search";
-import { getCategories } from "../../services/categories";
-import Text from "../text/Text";
+import { IonButton, IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
+import { useCallback, useEffect, useState } from "react";
 import useToastContext from "../../hooks/useToastContext";
+import { getCategories } from "../../services/categories";
+import { getDiscoverItems } from "../../services/search";
+import ItemGrid from "../collection-items/ItemGrid";
+import Text from "../text/Text";
+import "./DiscoverItems.scss";
 
 const LIMIT = 18;
 
@@ -102,7 +101,13 @@ const DiscoverItems = (props) => {
         </div>
       </div>
 
-      <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} discover={true}/>
+      {items.length === 0 && (
+        <IonGrid className="ion-text-center ion-padding">
+          <Text size="xl">No items found</Text>
+        </IonGrid>
+      )}
+      
+      <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} discover={true} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { IonContent, IonGrid, IonPage } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
@@ -33,7 +33,7 @@ const FollowersList = (props) => {
     } catch (e) {
       setToast({ message: "Failed to load followers. Please try again later.", color: "danger" });
     }
-  }, [collectionId, hasMore, pages, users]);
+  }, [collectionId, hasMore, pages, setToast, users]);
 
   const loadInitialPage = useCallback(async () => {
     try {
@@ -49,7 +49,7 @@ const FollowersList = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [collectionId]);
+  }, [collectionId, setToast]);
 
   useEffect(() => {
     loadInitialPage();
@@ -59,7 +59,7 @@ const FollowersList = (props) => {
     <IonPage>
       <HomeToolbar title={`Followers`} />
       <IonContent>
-          <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one following this collection" />
+          <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one is following this collection" />
       </IonContent>
     </IonPage>
   );
