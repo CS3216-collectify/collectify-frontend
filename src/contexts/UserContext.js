@@ -16,33 +16,33 @@ export const UserContextProvider = ({ children }) => {
   const [currentUserId, setCurrentUserId] = useState(getUserId());
   const [chatClient, setChatClient] = useState(null);
 
-  const initChat = useCallback(async () => {
-    if (!currentUserId) {
-      return;
-    }
-    const chatUser = await getChatUserInfo();
-    const client = StreamChat.getInstance(STREAM_CHAT_TOKEN);
-    const { chatId, chatToken } = chatUser;
+  // const initChat = useCallback(async () => {
+  //   if (!currentUserId) {
+  //     return;
+  //   }
+  //   const chatUser = await getChatUserInfo();
+  //   const client = StreamChat.getInstance(STREAM_CHAT_TOKEN);
+  //   const { chatId, chatToken } = chatUser;
 
-    await client.connectUser(
-      {
-        id: chatId.toString(),
-      },
-      chatToken
-    );
+  //   await client.connectUser(
+  //     {
+  //       id: chatId.toString(),
+  //     },
+  //     chatToken
+  //   );
 
-    setChatClient(client);
+  //   setChatClient(client);
 
-    // Createa default chat channel with the collectify account
-    if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
-      console.log(client);
-      const channel = client.channel("messaging", {
-        members: [client.userID, COLLECTIFY_STREAM_CHAT_ID],
-      });
-      // Here, 'travel' will be the channel ID
-      await channel.create();
-    }
-  }, [currentUserId]);
+  //   // Createa default chat channel with the collectify account
+  //   if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
+  //     console.log(client);
+  //     const channel = client.channel("messaging", {
+  //       members: [client.userID, COLLECTIFY_STREAM_CHAT_ID],
+  //     });
+  //     // Here, 'travel' will be the channel ID
+  //     await channel.create();
+  //   }
+  // }, [currentUserId]);
 
   useEffect(() => {
     if (!currentUserId && isUserAuthenticated) {
@@ -68,13 +68,13 @@ export const UserContextProvider = ({ children }) => {
     return () => chatClient?.disconnectUser();
   }, [chatClient, currentUserId, isUserAuthenticated]);
 
-  useEffect(() => {
-    if (chatClient === null && currentUserId) {
-      initChat();
-    }
+  // useEffect(() => {
+  //   if (chatClient === null && currentUserId) {
+  //     initChat();
+  //   }
 
-    return () => chatClient?.disconnectUser();
-  }, [chatClient, currentUserId, initChat]);
+  //   return () => chatClient?.disconnectUser();
+  // }, [chatClient, currentUserId, initChat]);
 
   const isCurrentUser = (userId) => {
     return parseInt(currentUserId) === parseInt(userId);
