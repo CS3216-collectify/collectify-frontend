@@ -1,21 +1,21 @@
-import { useEffect, useState, useCallback } from "react";
-import { useParams, useLocation, useHistory } from "react-router-dom";
-import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonLoading, IonButton } from "@ionic/react";
-import "./Profile.scss";
-import useUserContext from "../../hooks/useUserContext";
-import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
-import EditProfileButton from "../../components/button/EditProfileButton";
+import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import { useCallback, useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import noProfileImage from "../../assets/no-profile-image.png";
 import AddButton from "../../components/button/AddButton";
-import { getCurrentUser, getUserByUsername } from "../../services/users";
-import FlexImage from "../../components/image/FlexImage";
-import ProfileCollections from "../../components/profile-collection/ProfileCollections";
-import Toggle from "../../components/toggle/Toggle";
-import LikedItems from "../../components/liked-items/LikedItems";
+import EditProfileButton from "../../components/button/EditProfileButton";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
+import FlexImage from "../../components/image/FlexImage";
+import LikedItems from "../../components/liked-items/LikedItems";
+import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Text from "../../components/text/Text";
-import noProfileImage from "../../assets/no-profile-image.png";
+import Toggle from "../../components/toggle/Toggle";
+import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
+import { getCurrentUser, getUserByUsername } from "../../services/users";
+import "./Profile.scss";
 
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
@@ -91,7 +91,7 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
-  }, [isUserAuthenticated, username]);
+  }, [isUserAuthenticated, setToast, username]);
 
   useEffect(() => {
     if ((username || isUserAuthenticated) && location.pathname.startsWith("/profile")) {
