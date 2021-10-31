@@ -46,11 +46,9 @@ const CollectifyChat = () => {
   }
 
   const closeMobileNav = () => {
-    console.log("closing mobile...");
     setMobileNav(false);
   }
   const openMobileNav = () => {
-    console.log("opening mobile...");
     setMobileNav(true);
   }
   

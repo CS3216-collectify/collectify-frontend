@@ -68,6 +68,10 @@ const HomeItem = (props) => {
     history.push(`/profile/${ownerUsername}`);
   };
 
+  const goToLikesPage = () => {
+    history.push(`/items/${itemId}/likes`);
+  }
+
   const goToCollectionPage = () => {
     history.push(`/collections/${collectionId}`);
   };
@@ -100,7 +104,7 @@ const HomeItem = (props) => {
 
           <IonCol size={3}>
             <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-            <Text color="default">{likesCount} likes</Text>
+            <Text className="clickable" onClick={goToLikesPage} color="default">{likesCount} likes</Text>
           </IonCol>
         </IonRow>
 

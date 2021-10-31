@@ -1,4 +1,4 @@
-import { IonCard, IonCardHeader, IonImg } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardSubtitle, IonImg } from '@ionic/react';
 import React from 'react';
 import { useHistory } from 'react-router';
 import Text from '../../../../components/text/Text';
@@ -14,10 +14,10 @@ const ChatItemCard = (props) => {
   const { imageUrl, link, name } = chatItem;
 
   return (
-    <IonCard onClick={() => history.push(link ? link : '/not-found' )}>
+    <IonCard className="clickable" onClick={() => history.push(link ? link : '/not-found' )}>
       <IonImg src={imageUrl} />
       <IonCardHeader>
-        <Text size="xs"><b>{name}</b></Text>
+        <Text size="s">{name}</Text>
       </IonCardHeader>
     </IonCard>
   );

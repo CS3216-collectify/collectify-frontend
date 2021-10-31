@@ -28,7 +28,7 @@ const Onboarding = () => {
           setInitialUsername(res.username);
           setUsername(res.username);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => setToast({ message: "Unable to load your user information. Please try again.", color: "danger" }));
     }
   }, [isUserAuthenticated]);
 
@@ -48,8 +48,7 @@ const Onboarding = () => {
       setToast({ message: "Username updated!", color: "success" });
       history.replace("/home");
     }).catch((e) => {
-      console.log(e);
-      setToast({ message: e.data.description[0], color: "danger" });
+      setToast({ message: "Unable to update your username. Please try again.", color: "danger" });
     });
   };
 

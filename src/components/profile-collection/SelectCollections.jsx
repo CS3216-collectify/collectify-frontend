@@ -1,6 +1,7 @@
 import { IonRow } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import useToastContext from "../../hooks/useToastContext";
 import { getCollections } from "../../services/collections";
 import Text from "../text/Text";
 import SelectCollectionList from "./SelectCollectionList";
@@ -10,6 +11,7 @@ const LIMIT = 6;
 
 const SelectCollections = (props) => {
   const location = useLocation();
+  const setToast = useToastContext();
   const [collections, setCollections] = useState([]);
   const [pages, setPages] = useState(-1);
   const [hasMore, setHasMore] = useState(true);
@@ -29,7 +31,7 @@ const SelectCollections = (props) => {
       setCollections([...collections, ...retrievedCollections]);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
   }, [collections, hasMore, pages, profileUserId]);
 
@@ -45,7 +47,7 @@ const SelectCollections = (props) => {
       setCollections(retrievedCollections);
       setPages(nextPage);
     } catch (e) {
-      console.log(e);
+      setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
   }, [profileUserId]);
 

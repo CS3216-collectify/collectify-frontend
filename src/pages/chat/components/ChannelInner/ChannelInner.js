@@ -18,15 +18,15 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
   const { imageUrl, name, link } = chatItem;
   return (
     <IonItem color="light">
-      <IonCol size={2} onClick={onClick}>
+      <IonCol className="clickable" size={2} onClick={onClick}>
         <IonThumbnail>
           <IonImg src={imageUrl} />
         </IonThumbnail>
       </IonCol>
-      <IonCol onClick={onClick}>
-        <Text size="l">{name}</Text>
+      <IonCol className="clickable" onClick={onClick}>
+        <Text size="s">{name}</Text>
       </IonCol>
-      <IonIcon icon={close} onClick={closeHandler} />
+      <IonIcon className="clickable" icon={close} onClick={closeHandler} />
     </IonItem>
   );
 };
@@ -42,7 +42,6 @@ export const ChannelInner = (props) => {
   const { sendMessage } = useChannelActionContext();
 
   const overrideSubmitHandler = (message) => {
-    console.log(message);
     let updatedMessage;
     let customData = {};
 

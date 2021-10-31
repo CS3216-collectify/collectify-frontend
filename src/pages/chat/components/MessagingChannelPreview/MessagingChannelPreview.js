@@ -123,7 +123,7 @@ const MessagingChannelPreview = (props) => {
       onClick={() => {
         // TODO: Uncomment if we don't allow attaching items to non-owners
         // if (members[0] && members[0]["user_id"] !== chatItem?.ownerId) {
-        //   console.log(members);
+        //   // console.log(members);
         //   setChatItem(null);
         // }
         setIsCreating(false);
@@ -139,7 +139,7 @@ const MessagingChannelPreview = (props) => {
           </p>
           <p className="channel-preview__content-time">{getTimeStamp(channel)}</p>
         </div>
-        <p className="channel-preview__content-message">{messagePreview || "Empty chat"}</p>
+        <p className="channel-preview__content-message">{messagePreview || ""}</p>
       </div>
     </div>
   );
