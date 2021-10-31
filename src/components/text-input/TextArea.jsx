@@ -4,7 +4,7 @@ const TextArea = ({ label, value, placeholder, onChange }) => {
   return (
     <>
       <IonLabel position="stacked">{label}</IonLabel>
-      {/* <IonTextarea autoGrow value={value} placeholder={placeholder} onIonChange={(e) => onChange(e.detail.value)} /> */}
+      {/* Can consider adding autoGrow, but there are bugs */}
       <IonTextarea value={value} placeholder={placeholder} onIonChange={(e) => onChange(e.detail.value)} />
     </>
   );

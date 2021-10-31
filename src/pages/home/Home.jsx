@@ -8,10 +8,7 @@ const Home = () => {
   return (
     <IonPage>
       <HomeToolbar title="collectify" />
-
-      {/* Ion padding applies 16px  */}
       <IonContent>
-        {/* IonGrid with fixed property does not allow width to stretch in desktop */}
         <Feed />
       </IonContent>
     </IonPage>

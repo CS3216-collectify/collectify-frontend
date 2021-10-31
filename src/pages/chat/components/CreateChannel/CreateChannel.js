@@ -184,11 +184,6 @@ const CreateChannel = ({ onClose, openNav }) => {
             }
           </div>
         </div>
-        {/* <IonRow className="ion-justify-content-right ion-margin-top">
-          <button className='create-channel-button' onClick={createChannel}>
-            Start Chat
-          </button>
-        </IonRow> */}
       </header>
       {inputText && (
         <main>

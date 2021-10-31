@@ -117,10 +117,7 @@ const EditProfile = () => {
   return (
     <IonPage>
       <HomeToolbar title="Edit Profile" />
-
-      {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
-        {/* IonGrid with fixed property does not allow width to stretch in desktop */}
         {uploading ? (
           <div className="uploading--container">
             <FlexImage src={SavingGif} />
