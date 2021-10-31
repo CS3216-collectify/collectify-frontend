@@ -207,7 +207,11 @@ const MessagingChannelHeader = (props) => {
             <b>{title}</b>
           </Text>
         </IonRow>
-        <Text size="s">{username ? `@${username}` : ''}</Text>
+        <Text size="s">
+          <span className="messaging__channel-header__username">
+            {username ? `@${username}` : ''}
+          </span>
+        </Text>
       </IonCol>
     </div>
   );

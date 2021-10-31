@@ -9,6 +9,10 @@
   min-height: 60px;
 }
 
+.messaging__channel-header__username {
+  color: #696969;
+}
+
 .messaging__channel-header .channel-header__name {
   flex: 1;
   font-weight: bold;
