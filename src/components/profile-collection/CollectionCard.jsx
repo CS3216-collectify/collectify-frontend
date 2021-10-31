@@ -1,4 +1,4 @@
-import { IonCol, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
+import { IonCol, IonIcon, IonChip, IonList, IonLabel, IonRow } from "@ionic/react";
 import { useHistory } from "react-router";
 import { peopleOutline } from "ionicons/icons";
 
@@ -22,16 +22,6 @@ const CollectionCard = (props) => {
         <Text className="profile-collection--title">
           <b>{collectionName}</b>
         </Text>
-        <div
-          className="profile-collection-followers--container clickable"
-          onClick={(e) => {
-            e.stopPropagation();
-            history.push(`/collections/${collectionId}/followers`);
-          }}
-        >
-          <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
-          <Text size="xs">{followersCount} followers</Text>
-        </div>
       </div>
       <div className="profile-collection--images">
         {coverImages.map((imgUrl, idx) => (
@@ -52,11 +42,23 @@ const CollectionCard = (props) => {
       </div>
       <div className="profile-collection-categories--container">
         {/* A collection only has a single category */}
-        {categoryName &&
-          <IonChip>
-            <IonLabel>{categoryName}</IonLabel>
-          </IonChip>
-        }
+        <div>
+          {categoryName &&
+            <IonChip>
+              <IonLabel>{categoryName}</IonLabel>
+            </IonChip>
+          }
+        </div>
+        <div
+          className="profile-collection-followers--container clickable"
+          onClick={(e) => {
+            e.stopPropagation();
+            history.push(`/collections/${collectionId}/followers`);
+          }}
+        >
+          <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
+          <Text size="xs">{followersCount} followers</Text>
+        </div>
       </div>
     </IonList>
   );
