@@ -161,8 +161,10 @@ const Item = () => {
             </IonCol>
 
             <IonCol size={3}>
-              <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-              <Text color="default">{likesCount} likes</Text>
+              <div className="like-button--container">
+                <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
+                <Text color="default">{likesCount} likes</Text>
+              </div>
             </IonCol>
           </IonRow>
 
