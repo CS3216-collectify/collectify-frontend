@@ -24,7 +24,7 @@
 }
 
 .custom-thread-header__left-title {
-  font-family: Helvetica Neue, sans-serif;
+  font-family: Nunito, sans-serif;
   font-weight: bold;
   font-size: 15px;
   line-height: 24px;
@@ -37,7 +37,7 @@
 }
 
 .custom-thread-header__left-count {
-  font-family: Helvetica, sans-serif;
+  font-family: Nunito, sans-serif;
   font-size: 14px;
   mix-blend-mode: normal;
   opacity: 0.5;

@@ -124,4 +124,16 @@
       transition: unset;
     }
   }
+
+  .messaging__channel-list__header__name,
+  .messaging__channel-list__header__username,
+  .str-chat__date-separator-date,
+  ion-text,
+  .str-chat__message-text-inner.str-chat__message-simple-text-inner p,
+  .str-chat__message-simple-name,
+  .str-chat__message-simple-timestamp,
+  .str-chat__textarea textarea,
+  .emoji-mart-category span,.str-chat *, .str-chat *::after, .str-chat *::before {
+    font-family: Nunito, sans-serif;
+  }
 }
