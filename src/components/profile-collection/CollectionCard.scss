@@ -7,17 +7,6 @@
   .profile-collection-title--container {
     display: flex;
     justify-content: space-between;
-
-    .profile-collection-followers--container {
-      font-size: var(--xs-font-size);
-      display: inline-block;
-      vertical-align: middle;
-
-      ion-icon {
-        vertical-align: middle;
-        margin-right: 4px;
-      }
-    }
   }
 
   .profile-collection--images {
@@ -54,6 +43,19 @@
       pointer-events: none;
       ion-label {
         font-size: 12px;
+      }
+    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .profile-collection-followers--container {
+      font-size: var(--xs-font-size);
+      display: inline-block;
+      vertical-align: middle;
+  
+      ion-icon {
+        vertical-align: middle;
+        margin-right: 4px;
       }
     }
   }
