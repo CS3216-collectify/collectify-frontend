@@ -22,7 +22,7 @@ const UploadButton = ({ onChange: changeHandler, label = "Add Photos" }) => {
       <input
         id="my-image-input"
         type="file"
-        accept="image/*"
+        accept="image/jpeg, image/png, image/gif"
         onChange={inputHandler}
         multiple={false}
         hidden={true}
