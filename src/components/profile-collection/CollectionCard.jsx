@@ -8,6 +8,7 @@ import Text from "../text/Text";
 
 const CollectionCard = (props) => {
   const { collection } = props;
+  console.log(props)
   const { collectionId, collectionName, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
   const history = useHistory();
 

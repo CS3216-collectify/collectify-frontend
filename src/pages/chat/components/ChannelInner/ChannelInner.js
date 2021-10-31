@@ -1,23 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { logChatPromiseExecution } from 'stream-chat';
-import {
-  MessageList,
-  MessageInput,
-  Thread,
-  Window,
-  useChannelActionContext,
-  useChatContext
-} from 'stream-chat-react';
-
-import { MessagingChannelHeader, MessagingInput } from '../../components';
-
-import { GiphyContext } from '../../Chat';
-import { useHistory, useLocation } from 'react-router';
-import useUserContext from '../../../../hooks/useUserContext';
-import useToastContext from '../../../../hooks/useToastContext';
-import { IonCol, IonIcon, IonImg, IonItem, IonList, IonThumbnail } from '@ionic/react';
-import Text from '../../../../components/text/Text';
-import { close } from 'ionicons/icons';
+import { IonCol, IonIcon, IonImg, IonItem, IonThumbnail } from "@ionic/react";
+import { close } from "ionicons/icons";
+import React, { useContext, useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
+import { logChatPromiseExecution } from "stream-chat";
+import { MessageInput, MessageList, Thread, useChannelActionContext, useChatContext, Window } from "stream-chat-react";
+import Text from "../../../../components/text/Text";
+import useToastContext from "../../../../hooks/useToastContext";
+import useUserContext from "../../../../hooks/useUserContext";
+import { GiphyContext } from "../../Chat";
+import { MessagingChannelHeader, MessagingInput } from "../../components";
 
 const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
   if (!chatItem) {
@@ -33,14 +24,12 @@ const ChatItem = ({ chatItem, onClose: closeHandler, onClick }) => {
         </IonThumbnail>
       </IonCol>
       <IonCol className="clickable" onClick={onClick}>
-        <Text size="l">
-          {name}
-        </Text>
+        <Text size="l">{name}</Text>
       </IonCol>
       <IonIcon className="clickable" icon={close} onClick={closeHandler} />
     </IonItem>
-  )
-}
+  );
+};
 
 export const ChannelInner = (props) => {
   const history = useHistory();
@@ -56,8 +45,8 @@ export const ChannelInner = (props) => {
     let updatedMessage;
     let customData = {};
 
-    if (message.attachments?.length && message.text?.startsWith('/giphy')) {
-      const updatedText = message.text.replace('/giphy', '');
+    if (message.attachments?.length && message.text?.startsWith("/giphy")) {
+      const updatedText = message.text.replace("/giphy", "");
       updatedMessage = { ...message, text: updatedText };
     }
 
@@ -88,23 +77,21 @@ export const ChannelInner = (props) => {
       };
 
       const sendMessagePromise = sendMessage(messageToSend, customData);
-      logChatPromiseExecution(sendMessagePromise, 'send message');
+      logChatPromiseExecution(sendMessagePromise, "send message");
     }
 
     setGiphyState(false);
   };
 
-  const actions = ['delete', 'edit', 'flag', 'mute', 'react', 'reply'];
+  const actions = ["delete", "edit", "flag", "mute", "react", "reply"];
 
   return (
     <>
       <Window>
         <MessagingChannelHeader theme={theme} openNav={openNav} disabled={channel?.data?.member_count < 2} />
         <MessageList messageActions={actions} />
-        <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)}/>
-        {channel?.data?.member_count >= 2 &&
-          <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} disableMentions />
-        }
+        <ChatItem onClose={() => setChatItem(null)} chatItem={chatItem} onClick={() => history.push(chatItem.link)} />
+        {channel?.data?.member_count >= 2 && <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />}
       </Window>
       <Thread Input={MessagingInput} />
     </>

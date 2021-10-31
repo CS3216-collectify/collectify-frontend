@@ -19,9 +19,6 @@ const ItemMessageFromMe = (props) => {
           <p>{text}</p>
         </div>
         <div className="str-chat__message-data str-chat__message-simple-data">
-          <span className="str-chat__message-simple-name">
-            {message.user?.name}
-          </span>
           <time className="str-chat__message-simple-timestamp">
             <MessageTimestamp calendar customClass="str-chat__message-simple-timestamp" />
           </time>

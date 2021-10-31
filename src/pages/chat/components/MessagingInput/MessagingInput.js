@@ -1,23 +1,17 @@
-import React, { useCallback, useContext } from 'react';
-import { ImageDropzone } from 'react-file-utils';
-import {
-  ChatAutoComplete,
-  EmojiPicker,
-  UploadsPreview,
-  useChannelStateContext,
-  useMessageInputContext,
-} from 'stream-chat-react';
+import React, { useCallback, useContext } from "react";
+import { ImageDropzone } from "react-file-utils";
+import { ChatAutoComplete, EmojiPicker, UploadsPreview, useChannelStateContext, useMessageInputContext } from "stream-chat-react";
 
-import { GiphyContext } from '../../Chat';
+import { GiphyContext } from "../../Chat";
 
-import { EmojiIcon, LightningBoltSmall, SendIcon } from '../../assets';
+import { EmojiIcon, LightningBoltSmall, SendIcon } from "../../assets";
 
-import './MessagingInput.css';
+import "./MessagingInput.css";
 
 const GiphyIcon = () => (
-  <div className='giphy-icon__wrapper'>
+  <div className="giphy-icon__wrapper">
     <LightningBoltSmall />
-    <p className='giphy-icon__text'>GIPHY</p>
+    <p className="giphy-icon__text">GIPHY</p>
   </div>
 );
 
@@ -30,28 +24,28 @@ const MessagingInput = () => {
   const onChange = useCallback(
     (event) => {
       const { value } = event.target;
-      const deletePressed = event.nativeEvent?.inputType === 'deleteContentBackward';
+      const deletePressed = event.nativeEvent?.inputType === "deleteContentBackward";
 
       if (messageInput.text.length === 1 && deletePressed) {
         setGiphyState(false);
       }
 
-      if (!giphyState && messageInput.text.startsWith('/giphy') && !messageInput.numberOfUploads) {
-        event.target.value = value.replace('/giphy', '');
+      if (!giphyState && messageInput.text.startsWith("/giphy") && !messageInput.numberOfUploads) {
+        event.target.value = value.replace("/giphy", "");
         setGiphyState(true);
       }
 
       messageInput.handleChange(event);
     },
-    [giphyState, messageInput.numberOfUploads, messageInput.text], // eslint-disable-line
+    [giphyState, messageInput.numberOfUploads, messageInput.text] // eslint-disable-line
   );
 
   return (
-    <div className='str-chat__messaging-input'>
+    <div className="str-chat__messaging-input">
       <div
-        className='messaging-input__button emoji-button'
-        role='button'
-        aria-roledescription='button'
+        className="messaging-input__button emoji-button"
+        role="button"
+        aria-roledescription="button"
         onClick={messageInput.openEmojiPicker}
         ref={messageInput.emojiPickerRef}
       >

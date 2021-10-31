@@ -17,27 +17,33 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
   const setToast = useToastContext();
   const { id, image = streamLogo, name = "Example User", username = "username" } = client.user || {};
 
-  useEffect(async () => {
-    if (location.state?.recipient && location.pathname.startsWith("/chat")) {
-      const { recipient: recipientId } = location.state;
-      if (client.userID === recipientId) {
-        return;
-      }
-      const channel = client.channel("messaging", {
-        members: [client.userID, recipientId],
-      });
-      await channel.watch().then((res) => {
-        setActiveChannel(channel);
-        if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
-          setChatItem(location.state?.chatItem);
+  useEffect(() => {
+    const loadRecipientChat = async () => {
+      if (location.state?.recipient && location.pathname.startsWith("/chat")) {
+        const { recipient: recipientId } = location.state;
+        if (client.userID === recipientId) {
+          return;
         }
-        closeNav();
-      }).catch((e) => {
-        setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
-      })
-      history.replace({...history.location, state: {}})
-    }
-  }, [location]);
+        const channel = client.channel("messaging", {
+          members: [client.userID, recipientId],
+        });
+        await channel
+          .watch()
+          .then((res) => {
+            setActiveChannel(channel);
+            if (location.state?.chatItem && location.pathname.startsWith("/chat")) {
+              setChatItem(location.state?.chatItem);
+            }
+            closeNav();
+          })
+          .catch((e) => {
+            setToast({ message: "Unable to open chat. Try again later.", color: "danger" });
+          });
+        history.replace({ ...history.location, state: {} });
+      }
+    };
+    loadRecipientChat();
+  }, [client, closeNav, history, location, setActiveChannel, setChatItem, setToast]);
 
   // TODO: When I tested, this useEffect doesnt seem to do anything (as expected based on the code)
   // In any case, I commented out first so that we can easily revert
@@ -73,10 +79,13 @@ const MessagingChannelList = ({ children, error = false, loading, onCreateChanne
             <div className="messaging__channel-list__header__name">{name || id}</div>
             <div className="messaging__channel-list__header__username">@{username || id}</div>
           </IonCol>
-          <button className="clickable messaging__channel-list__header__button" onClick={() => {
-            onCreateChannel();
-            closeNav();
-          }}>
+          <button
+            className="messaging__channel-list__header__button"
+            onClick={() => {
+              onCreateChannel();
+              closeNav();
+            }}
+          >
             <CreateChannelIcon />
           </button>
         </div>
