@@ -11,7 +11,6 @@ const NotFound = ({ category }) => {
 
   return (
     <IonPage className="login">
-      {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         <IonGrid fixed className="login--grid">
           <FlexImage src={NotFoundGif} />

@@ -180,6 +180,15 @@
   width: 16px;
 }
 
+.messaging-create-channel__user-result-offline {
+  position: relative;
+  right: 28px;
+  bottom: 14px;
+  border-radius: 8px;
+  height: 16px;
+  width: 16px;
+}
+
 .str-chat.dark .messaging-create-channel__user-result-online {
   border: 2px solid #282a2d;
   opacity: 1;
@@ -211,6 +220,7 @@
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
+  color: #696969;
 }
 
 /* modifiers dark theme */

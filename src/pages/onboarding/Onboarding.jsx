@@ -52,13 +52,9 @@ const Onboarding = () => {
     });
   };
 
-  // TODO: check if the username is duplicated
   return (
     <IonPage>
-      {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
-        {/* IonGrid with fixed property does not allow width to stretch in desktop */}
-
         <IonGrid fixed>
           <IonList lines="full">
             <Text size="l">Please provide a username so the community can identify you.</Text>

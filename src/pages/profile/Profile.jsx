@@ -130,14 +130,10 @@ const Profile = () => {
   return (
     <IonPage className="profile">
       <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
-
-      {/* Ion padding applies 16px  */}
       <IonContent>
-        {/* --ion-grid-width to modify the fixed width */}
         <IonGrid fixed className="profile--grid ion-padding">
           <IonRow>
             <IonCol size="auto">
-              {/* <Logo className="profile--img"/> */}
               <FlexImage className="profile--img" src={profileProfilePicture || noProfileImage} />
             </IonCol>
 

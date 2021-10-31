@@ -11,9 +11,10 @@ const UserResult = ({ user }) => (
   <li className='messaging-create-channel__user-result'>
     <Avatar image={user.image || noProfileImage} name={user.name || user.id} size={40} />
     {user.online && <div className='messaging-create-channel__user-result-online' />}
+    {!user.online && <div className='messaging-create-channel__user-result-offline' />}
     <div className='messaging-create-channel__user-result__details'>
       <span>{user.name}</span>
-      {/* <span className='messaging-create-channel__user-result__details__last-seen'>{user.online}</span> */}
+      <span className='messaging-create-channel__user-result__details__last-seen'>@{user.username ?? ''}</span>
     </div>
   </li>
 );
@@ -184,11 +185,6 @@ const CreateChannel = ({ onClose, openNav }) => {
             }
           </div>
         </div>
-        {/* <IonRow className="ion-justify-content-right ion-margin-top">
-          <button className='create-channel-button' onClick={createChannel}>
-            Start Chat
-          </button>
-        </IonRow> */}
       </header>
       {inputText && (
         <main>

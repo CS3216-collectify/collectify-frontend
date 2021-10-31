@@ -51,7 +51,6 @@ const Login = () => {
 
   return (
     <IonPage className="login">
-      {/* Ion padding applies 16px  */}
       <IonContent className="ion-padding">
         <IonGrid fixed className="login--grid">
           <IonRow className="ion-justify-content-center">

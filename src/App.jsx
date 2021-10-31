@@ -56,13 +56,11 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          {/* <Switch> */}
           <Route exact path="/" component={Login} />
           <ProtectedRoute exact path="/onboarding" component={Onboarding} />
           <Route>
             <IonTabs>
               <IonRouterOutlet>
-                {/* TODO: add redirects for guests */}
                 <ProtectedRoute exact path="/home" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
@@ -113,7 +111,6 @@ const App = () => {
               </IonTabBar>
             </IonTabs>
           </Route>
-          {/* </Switch> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
