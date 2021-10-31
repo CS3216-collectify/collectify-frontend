@@ -11,16 +11,18 @@ const ItemGrid = (props) => {
     history.push(`/collections/${collectionId}/items/${itemId}`);
   };
 
-  const gridImages = items.map((item) => ({ url: item.coverImage, clickHandler: () => goToItemPage(item.collectionId, item.itemId) }));
+  const gridImages = items.map((item) => ({
+    url: item.coverImage,
+    clickHandler: () => goToItemPage(item.collectionId, item.itemId),
+    isTradable: item.isTradable,
+  }));
 
   if (listEnded && items && items.length === 0 && emptyMessage) {
     return (
       <IonGrid className="ion-text-center">
-        <Text size="xl" >
-          {emptyMessage}
-        </Text>
+        <Text size="xl">{emptyMessage}</Text>
       </IonGrid>
-    )
+    );
   }
 
   return <ImageGrid onScrollEnd={fetchNextPage} images={gridImages} listEnded={listEnded} />;

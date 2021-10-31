@@ -16,6 +16,7 @@ const ImageGrid = (props) => {
   const { onScrollEnd: fetchNextPage, images = [], listEnded } = props;
 
   const groupsOfThree = groupElements(images, 3);
+  console.log(images);
 
   return (
     <IonGrid fixed className="image-grid">
@@ -23,7 +24,7 @@ const ImageGrid = (props) => {
         <IonRow key={idx}>
           {grp.map((img, idx) => (
             <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
-              <FlexImage src={img.url} />
+              <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
             </IonCol>
           ))}
         </IonRow>
