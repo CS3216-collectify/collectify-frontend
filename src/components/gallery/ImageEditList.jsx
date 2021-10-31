@@ -24,11 +24,13 @@ const ImageEditList = (props) => {
   return (
     <div className="image-grid">
       {groupsOfFour.map((grp, idx) => (
-        <IonRow className="ion-justify-content-left" key={idx}>
+        <IonRow className="ion-justify-content-left edit-item-images--container" key={idx}>
           {grp.map(({ imageUrl }, idx) => (
             <IonCol className="edit-item-images" size={3} key={idx}>
               <FlexImage src={imageUrl} />
-              <IonIcon size="large" color="danger" onClick={() => safeDeleteHandler(idx)} className="delete-icon clickable" icon={trashBin} />
+              <div className="delete-icon--container">
+                <IonIcon size="small" color="danger" onClick={() => safeDeleteHandler(idx)} className="delete-icon clickable" icon={trashBin} />
+              </div>
             </IonCol>
           ))}
         </IonRow>

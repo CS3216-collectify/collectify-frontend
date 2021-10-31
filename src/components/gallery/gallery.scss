@@ -58,13 +58,25 @@
     background-image: url("../../assets//blur.png");
   }
 }
-
-.edit-item-images {
-  flex-direction: row;
-
-  ion-icon {
-    position: absolute;
-    right: 4px;
-    bottom: 4px;
+.edit-item-images--container {
+  padding: 2px;
+  .edit-item-images {
+    flex-direction: row;
+    margin-bottom: 8px;
+    .delete-icon--container {
+      display: flex;
+      position: absolute;
+      height: 28px;
+      width: 28px;
+      right: 0px;
+      top: -8px;
+      background-color: #ffffffca;
+      box-shadow: 2px 2px rgba(167, 167, 167, 0.787);
+      // border: 1px solid black;
+      border-radius: 50%;
+      .delete-icon {
+        margin: auto;
+      }
+    }
   }
 }

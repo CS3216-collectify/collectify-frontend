@@ -1,15 +1,14 @@
-import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
-import { useEffect, useState, useCallback } from "react";
-import { useLocation } from "react-router";
-import { useHistory, useParams } from "react-router";
+import { IonContent, IonPage } from "@ionic/react";
+import { useCallback, useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router";
+import DeletingGif from "../../assets/deleting.gif";
+import SavingGif from "../../assets/saving.gif";
 import ItemForm from "../../components/form/ItemForm";
+import FlexImage from "../../components/image/FlexImage";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useToastContext from "../../hooks/useToastContext";
-import { deleteItem, getItemFromCollection, updateItem } from "../../services/items";
-import FlexImage from "../../components/image/FlexImage";
-import SavingGif from "../../assets/saving.gif";
-import DeletingGif from "../../assets/deleting.gif";
 import useUserContext from "../../hooks/useUserContext";
+import { deleteItem, getItemFromCollection, updateItem } from "../../services/items";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
@@ -40,7 +39,7 @@ const EditItem = () => {
     } finally {
       setLoading(false);
     }
-  }, [collectionId, history, isCurrentUser, itemId]);
+  }, [collectionId, history, isCurrentUser, itemId, setToast]);
 
   useEffect(() => {
     if (location.state) {
