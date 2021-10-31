@@ -139,7 +139,7 @@ const MessagingChannelPreview = (props) => {
           </p>
           <p className="channel-preview__content-time">{getTimeStamp(channel)}</p>
         </div>
-        <p className="channel-preview__content-message">{messagePreview || "Empty chat"}</p>
+        <p className="channel-preview__content-message">{messagePreview || ""}</p>
       </div>
     </div>
   );
