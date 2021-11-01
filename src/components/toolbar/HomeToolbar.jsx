@@ -56,7 +56,7 @@ const HomeToolbar = ({ title }) => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <div className="toolbar-title--container" slot="start">
+        <div className="toolbar-title--container">
           <IonImg className="toolbar-logo" src={Logo} />
           <Text size="xl"> {title}</Text>
         </div>
