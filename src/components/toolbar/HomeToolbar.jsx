@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonToolbar, IonBadge } from "@ionic/react";
 import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, search, settingsOutline } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router";
 import Logo from "../../assets/favicon.png";
@@ -39,6 +39,7 @@ const HomeToolbar = ({ title }) => {
           {isUserAuthenticated && (
             <IonButton onClick={() => handleButtonClick("chat")}>
               <IonIcon size="medium" slot="icon-only" icon={chatbubblesOutline} />
+              {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
             </IonButton>
           )}
           <IonButton onClick={() => handleButtonClick("profile")}>

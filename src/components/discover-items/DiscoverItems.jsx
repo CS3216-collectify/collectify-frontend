@@ -93,16 +93,18 @@ const DiscoverItems = (props) => {
             value={selectedCategory}
             placeholder="Select category"
             onIonChange={(e) => {
-              setSelectedCategory(e.detail.value);
+              setSelectedCategory(Number(e.detail.value));
             }}
           >
             <IonSelectOption value={null}>All</IonSelectOption>
 
-            {categoryOptions.map((opt, idx) => (
-              <IonSelectOption key={idx} value={opt.id}>
-                {opt.name}
-              </IonSelectOption>
-            ))}
+            {categoryOptions.map((opt, idx) => {
+              return (
+                <IonSelectOption key={idx} value={opt.categoryId}>
+                  {opt.name}
+                </IonSelectOption>
+              );
+            })}
             <IonButton>clear</IonButton>
           </IonSelect>
         </div>

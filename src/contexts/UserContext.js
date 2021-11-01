@@ -34,11 +34,10 @@ export const UserContextProvider = ({ children }) => {
     setChatClient(client);
 
     if (res) {
-      console.log(res.me.unread_count);
       setUnreadMessages(res.me.unread_count);
     }
 
-    // Createa default chat channel with the collectify account
+    // Create a default chat channel with the collectify account
     if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
       const channel = client.channel("messaging", {
         members: [client.userID, COLLECTIFY_STREAM_CHAT_ID],
@@ -52,13 +51,12 @@ export const UserContextProvider = ({ children }) => {
     if (chatClient) {
       chatClient.on((event) => {
         if (event.total_unread_count !== undefined) {
-          console.log(event.total_unread_count);
-          setUnreadMessages(unreadMessages + event.total_unread_count);
+          setUnreadMessages(event.total_unread_count);
         }
       });
     }
-  }, [chatClient, unreadMessages]);
-  
+  }, [chatClient]);
+
   useEffect(() => {
     if (!currentUserId && isUserAuthenticated) {
       const storedUserId = getUserId();
@@ -99,7 +97,16 @@ export const UserContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ isUserAuthenticated, isCurrentUser, setIsUserAuthenticated, getCurrentUserId, chatClient, setChatClient, unreadMessages }}
+      value={{
+        isUserAuthenticated,
+        isCurrentUser,
+        setIsUserAuthenticated,
+        getCurrentUserId,
+        chatClient,
+        setChatClient,
+        unreadMessages,
+        setUnreadMessages,
+      }}
     >
       {children}
     </UserContext.Provider>
