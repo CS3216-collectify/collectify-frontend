@@ -107,12 +107,12 @@ const EditProfile = () => {
       return;
     }
     if (newFile.size > MAX_FILE_SIZE) {
-      setToast({ message: "Image must not be more than 10MB.", color: "danger" })
+      setToast({ message: "Image must not be more than 10MB.", color: "danger" });
     }
     const newUrl = URL.createObjectURL(newFile);
     setProfilePicture(newUrl);
     setPictureWasUpdated(true);
-  }
+  };
 
   return (
     <IonPage>

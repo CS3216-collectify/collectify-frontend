@@ -8,6 +8,12 @@
   .flex-image {
     width: 200px;
     height: 200px;
+    padding-top: 0;
+
+    ion-img {
+      width: 200px;
+      height: 200px;
+    }
   }
 
   .loading:after {
