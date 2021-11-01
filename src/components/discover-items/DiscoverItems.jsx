@@ -24,7 +24,7 @@ const DiscoverItems = (props) => {
 
   useEffect(() => {
     if (location.state && location.state.category) {
-      console.log(location.state)
+      console.log(location.state);
       setSelectedCategory(location.state.category);
       history.replace({ ...history.location, state: {} });
     }

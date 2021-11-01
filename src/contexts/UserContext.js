@@ -31,7 +31,6 @@ export const UserContextProvider = ({ children }) => {
       },
       chatToken
     );
-
     setChatClient(client);
 
     if (res) {
@@ -47,13 +46,19 @@ export const UserContextProvider = ({ children }) => {
       // Here, 'travel' will be the channel ID
       await channel.create();
     }
-    client.on((event) => {
-      if (event.total_unread_count !== undefined) {
-        console.log(event.total_unread_count);
-        setUnreadMessages(event.total_unread_count);
-      }
-    });
   }, [currentUserId]);
+
+  useEffect(() => {
+    if (chatClient) {
+      chatClient.on((event) => {
+        if (event.total_unread_count !== undefined) {
+          console.log(event.total_unread_count);
+          setUnreadMessages(unreadMessages + event.total_unread_count);
+        }
+      });
+    }
+  }, [chatClient, unreadMessages]);
+  
   useEffect(() => {
     if (!currentUserId && isUserAuthenticated) {
       const storedUserId = getUserId();

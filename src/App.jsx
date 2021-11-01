@@ -91,10 +91,10 @@ const App = () => {
                   <IonText>Add</IonText>
                 </IonTabButton>
                 {isUserAuthenticated && (
-                  <IonTabButton tab="d" badge={3} href="/chat" >
-                    <IonIcon icon={chatbubblesOutline}  />
-                    {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
+                  <IonTabButton tab="d" href="/chat">
+                    <IonIcon icon={chatbubblesOutline} />
                     <IonText>Chats</IonText>
+                    <IonBadge color="primary">{Number(unreadMessages)}</IonBadge>
                   </IonTabButton>
                 )}
                 <IonTabButton tab="user-profile" href="/profile">
