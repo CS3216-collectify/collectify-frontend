@@ -44,7 +44,7 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, items, pages, setToast]);
+  }, [hasMore, items, pages, selectedCategory, setToast, viewTradable]);
 
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
@@ -84,8 +84,6 @@ const DiscoverItems = (props) => {
     console.log("loading items...")
     loadInitialItems();
   }, [loadInitialItems]);
-
-  console.log("categories", categoryOptions);
 
   return (
     <>
