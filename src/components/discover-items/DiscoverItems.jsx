@@ -50,7 +50,6 @@ const DiscoverItems = (props) => {
     const nextPage = 0;
     try {
       const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, selectedCategory, viewTradable);
-      console.log(retrievedItems)
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems(retrievedItems);
