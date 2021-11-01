@@ -7,7 +7,7 @@ import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
   const { collection } = props;
-  const { collectionId, collectionName, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
+  const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
   const history = useHistory();
 
   const collectionCardOnclick = () => {
@@ -24,7 +24,7 @@ const CollectionCard = (props) => {
 
   const goToDiscoverWithFilter = (e) => {
     e.stopPropagation();
-    history.push({ pathname: `/discover`, state: { category: categoryName } });
+    history.push({ pathname: `/discover`, state: { category: categoryId } });
   };
 
   return (

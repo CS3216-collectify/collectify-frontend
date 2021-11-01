@@ -113,7 +113,7 @@ const Collection = (props) => {
 
   const goToDiscoverWithFilter = (e) => {
     e.stopPropagation();
-    history.push({ pathname: `/discover`, state: { category: categoryName } });
+    history.push({ pathname: `/discover`, state: { category: categoryId } });
   };
 
   return (

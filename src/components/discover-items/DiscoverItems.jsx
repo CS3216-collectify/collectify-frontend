@@ -23,7 +23,7 @@ const DiscoverItems = (props) => {
   const [viewTradable, setViewTradable] = useState(false);
 
   useEffect(() => {
-    if (location.state && location.state.category) {
+    if (location.state && location.state.category && location.state.category !== selectedCategory) {
       console.log(location.state)
       setSelectedCategory(location.state.category);
       history.replace({ ...history.location, state: {} });
@@ -44,12 +44,13 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, items, pages, selectedCategory, setToast, viewTradable]);
+  }, [hasMore, items, pages, setToast]);
 
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
     try {
       const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, selectedCategory, viewTradable);
+      console.log(retrievedItems)
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems(retrievedItems);
@@ -80,8 +81,11 @@ const DiscoverItems = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log("loading items...")
     loadInitialItems();
   }, [loadInitialItems]);
+
+  console.log("categories", categoryOptions);
 
   return (
     <>
@@ -99,7 +103,7 @@ const DiscoverItems = (props) => {
             <IonSelectOption value={null}>All</IonSelectOption>
 
             {categoryOptions.map((opt, idx) => (
-              <IonSelectOption key={idx} value={opt.id}>
+              <IonSelectOption key={idx} value={opt.categoryId}>
                 {opt.name}
               </IonSelectOption>
             ))}
