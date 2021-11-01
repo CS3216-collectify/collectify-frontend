@@ -7,7 +7,6 @@ import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
 import "./Search.scss";
 
-
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
 const USERS_MODE = 2;
@@ -80,15 +79,23 @@ const Search = (props) => {
 
   return (
     <>
-      <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}>
-        {!inactive && (
-          <>
+      {!inactive ? (
+        <>
+          <div id="search">
+            <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
-            {searchText && <IonRow className="ion-justify-content-center ion-margin-top">Showing results for "{searchText}"</IonRow>}
-            <SearchResults mode={mode} searchText={searchText} />
-          </>
-        )}
-      </SearchBox>
+          </div>
+
+          {searchText && <IonRow className="ion-justify-content-center ion-margin-top">Showing results for "{searchText}"</IonRow>}
+          <SearchResults mode={mode} searchText={searchText} />
+        </>
+      ) : (
+        <>
+          <div id="search">
+            <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
+          </div>
+        </>
+      )}
     </>
   );
 };
