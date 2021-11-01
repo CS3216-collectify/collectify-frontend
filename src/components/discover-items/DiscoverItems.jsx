@@ -6,17 +6,28 @@ import { getDiscoverItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
-
+import { useLocation } from "react-router";
+import { useHistory } from "react-router";
 const LIMIT = 18;
 
 const DiscoverItems = (props) => {
   const setToast = useToastContext();
+  const location = useLocation();
+  const history = useHistory();
+
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
+
+  useEffect(() => {
+    if (location.state && location.state.category) {
+      setSelectedCategory(location.state.category);
+      history.replace({ ...history.location, state: {} });
+    }
+  }, [history, location, selectedCategory]);
 
   const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
@@ -106,7 +117,7 @@ const DiscoverItems = (props) => {
           <Text size="xl">No items found</Text>
         </IonGrid>
       )}
-      
+
       <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} discover={true} />
     </>
   );

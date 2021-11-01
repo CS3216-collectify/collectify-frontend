@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon, IonChip } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import { peopleOutline } from "ionicons/icons";
@@ -55,7 +55,7 @@ const Collection = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [collectionId]);
+  }, [collectionId, setToast]);
 
   useEffect(() => {
     if (location.pathname.startsWith("/collections/")) {
@@ -111,6 +111,11 @@ const Collection = (props) => {
     });
   };
 
+  const goToDiscoverWithFilter = (e) => {
+    e.stopPropagation();
+    history.push({ pathname: `/discover`, state: { category: categoryName } });
+  };
+
   return (
     <IonPage className="collection">
       <HomeToolbar title={`Collection`} />
@@ -139,7 +144,7 @@ const Collection = (props) => {
             </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-start">
-            <IonCol>{categoryName && <CategoryChip name={categoryName} />}</IonCol>
+            <IonCol>{categoryName && <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>{categoryName}</IonChip>}</IonCol>
           </IonRow>
           <IonRow>
             <IonCol>

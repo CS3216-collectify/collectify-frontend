@@ -1,10 +1,9 @@
-import { IonCol, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
-import { useHistory } from "react-router";
+import { IonChip, IonCol, IonIcon, IonLabel, IonList } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
-
-import "./CollectionCard.scss";
+import { useHistory } from "react-router";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
+import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
   const { collection } = props;
@@ -19,12 +18,13 @@ const CollectionCard = (props) => {
 
   const goToFollowersList = (e) => {
     e.stopPropagation();
+    console.log(e);
     history.push(`/collections/${collectionId}/followers`);
   };
-  
+
   const goToDiscoverWithFilter = (e) => {
     e.stopPropagation();
-
+    history.push({ pathname: `/discover`, state: { category: categoryName } });
   };
 
   return (
