@@ -1,14 +1,13 @@
-import { IonCol, IonIcon, IonChip, IonList, IonLabel } from "@ionic/react";
-import { useHistory } from "react-router";
+import { IonChip, IonCol, IonIcon, IonLabel, IonList } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
-
-import "./CollectionCard.scss";
+import { useHistory } from "react-router";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
+import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
-  const { collection } = props;
-  const { collectionId, collectionName, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
+  const { collection, disableChip = false } = props;
+  const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
 
   const collectionCardOnclick = () => {
@@ -16,6 +15,18 @@ const CollectionCard = (props) => {
       return props.onClick();
     }
   };
+
+  const goToFollowersList = (e) => {
+    e.stopPropagation();
+    console.log(e);
+    history.push(`/collections/${collectionId}/followers`);
+  };
+
+  const goToDiscoverWithFilter = (e) => {
+    e.stopPropagation();
+    history.push({ pathname: `/discover`, state: { category: categoryId } });
+  };
+
   return (
     <IonList className="profile-collection--container ion-margin-bottom clickable" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
@@ -44,18 +55,13 @@ const CollectionCard = (props) => {
         {/* A collection only has a single category */}
         <div>
           {categoryName && (
-            <IonChip>
+            // <IonChip className={`${disableChip ? 'no-pointer' : ''}`} onClick={(e) => goToDiscoverWithFilter(e)}>
+            <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>
               <IonLabel>{categoryName}</IonLabel>
             </IonChip>
           )}
         </div>
-        <div
-          className="profile-collection-followers--container clickable"
-          onClick={(e) => {
-            e.stopPropagation();
-            history.push(`/collections/${collectionId}/followers`);
-          }}
-        >
+        <div className="profile-collection-followers--container clickable" onClick={(e) => goToFollowersList(e)}>
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
           <Text size="xs">{followersCount} followers</Text>
         </div>

@@ -15,6 +15,7 @@ export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(hasAccessTokenStored() || hasRefreshTokenStored());
   const [currentUserId, setCurrentUserId] = useState(getUserId());
   const [chatClient, setChatClient] = useState(null);
+  const [unreadMessages, setUnreadMessages] = useState(0);
 
   const initChat = useCallback(async () => {
     if (!currentUserId) {
@@ -24,16 +25,19 @@ export const UserContextProvider = ({ children }) => {
     const client = StreamChat.getInstance(STREAM_CHAT_TOKEN);
     const { chatId, chatToken } = chatUser;
 
-    await client.connectUser(
+    const res = await client.connectUser(
       {
         id: chatId.toString(),
       },
       chatToken
     );
-
     setChatClient(client);
 
-    // Createa default chat channel with the collectify account
+    if (res) {
+      setUnreadMessages(res.me.unread_count);
+    }
+
+    // Create a default chat channel with the collectify account
     if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
       const channel = client.channel("messaging", {
         members: [client.userID, COLLECTIFY_STREAM_CHAT_ID],
@@ -42,6 +46,16 @@ export const UserContextProvider = ({ children }) => {
       await channel.create();
     }
   }, [currentUserId]);
+
+  useEffect(() => {
+    if (chatClient) {
+      chatClient.on((event) => {
+        if (event.total_unread_count !== undefined) {
+          setUnreadMessages(event.total_unread_count);
+        }
+      });
+    }
+  }, [chatClient]);
 
   useEffect(() => {
     if (!currentUserId && isUserAuthenticated) {
@@ -82,7 +96,18 @@ export const UserContextProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ isUserAuthenticated, isCurrentUser, setIsUserAuthenticated, getCurrentUserId, chatClient, setChatClient }}>
+    <UserContext.Provider
+      value={{
+        isUserAuthenticated,
+        isCurrentUser,
+        setIsUserAuthenticated,
+        getCurrentUserId,
+        chatClient,
+        setChatClient,
+        unreadMessages,
+        setUnreadMessages,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

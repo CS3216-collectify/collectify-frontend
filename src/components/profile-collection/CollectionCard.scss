@@ -40,7 +40,7 @@
   .profile-collection-categories--container {
     margin-top: 8px;
     ion-chip {
-      pointer-events: none;
+      // pointer-events: none;
       ion-label {
         font-size: 12px;
       }
@@ -59,4 +59,8 @@
       }
     }
   }
+}
+
+.no-pointer {
+  pointer-events: none;
 }
