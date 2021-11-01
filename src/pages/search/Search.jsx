@@ -65,6 +65,7 @@ const Search = (props) => {
       return;
     }
     setMode(newMode);
+    if (!inactive) document.getElementById("search-toggle").scrollIntoView({ behavior: "smooth" });
   };
 
   const initializeSearchState = () => {
@@ -81,8 +82,8 @@ const Search = (props) => {
     <>
       {!inactive ? (
         <>
-          <div id="search">
-            <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
+          <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
+          <div id="search-toggle">
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
           </div>
 
@@ -91,9 +92,7 @@ const Search = (props) => {
         </>
       ) : (
         <>
-          <div id="search">
-            <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
-          </div>
+          <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
         </>
       )}
     </>

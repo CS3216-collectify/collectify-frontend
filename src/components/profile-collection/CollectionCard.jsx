@@ -16,6 +16,17 @@ const CollectionCard = (props) => {
       return props.onClick();
     }
   };
+
+  const goToFollowersList = (e) => {
+    e.stopPropagation();
+    history.push(`/collections/${collectionId}/followers`);
+  };
+  
+  const goToDiscoverWithFilter = (e) => {
+    e.stopPropagation();
+
+  };
+
   return (
     <IonList className="profile-collection--container ion-margin-bottom clickable" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
@@ -44,18 +55,12 @@ const CollectionCard = (props) => {
         {/* A collection only has a single category */}
         <div>
           {categoryName && (
-            <IonChip>
+            <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>
               <IonLabel>{categoryName}</IonLabel>
             </IonChip>
           )}
         </div>
-        <div
-          className="profile-collection-followers--container clickable"
-          onClick={(e) => {
-            e.stopPropagation();
-            history.push(`/collections/${collectionId}/followers`);
-          }}
-        >
+        <div className="profile-collection-followers--container clickable" onClick={(e) => goToFollowersList(e)}>
           <IonIcon size="small" icon={peopleOutline} className="followers--icon" />
           <Text size="xs">{followersCount} followers</Text>
         </div>
