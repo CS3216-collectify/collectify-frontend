@@ -1,4 +1,3 @@
-import { IonGrid } from "@ionic/react";
 import SearchBar from "../text-input/SearchBar";
 
 const SearchBox = (props) => {

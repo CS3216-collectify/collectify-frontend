@@ -1,12 +1,13 @@
 import { IonGrid, IonRow } from "@ionic/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
+import { useHistory } from "react-router";
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
 import UserSearchResults from "../../components/search/UserSearchResults";
 import Toggle from "../../components/toggle/Toggle";
 import "./Search.scss";
-
 
 const ITEMS_MODE = 0;
 const COLLECTIONS_MODE = 1;
@@ -49,9 +50,18 @@ const SearchResults = (props) => {
 };
 
 const Search = (props) => {
+  const history = useHistory();
+  const location = useLocation();
+
   const { onFocus: focusHandler, onCancel, inactive } = props;
   const [mode, setMode] = useState(ITEMS_MODE);
   const [searchText, setSearchText] = useState("");
+
+  // useEffect(() => {
+  //   if (location.state && location.state.category) {
+  //     onCancel();
+  //   }
+  // }, [history, location, onCancel]);
 
   const searchHandler = (text) => {
     if (text === searchText) {
@@ -66,6 +76,7 @@ const Search = (props) => {
       return;
     }
     setMode(newMode);
+    if (!inactive) document.getElementById("search-toggle").scrollIntoView({ behavior: "smooth" });
   };
 
   const initializeSearchState = () => {
@@ -80,15 +91,21 @@ const Search = (props) => {
 
   return (
     <>
-      <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}>
-        {!inactive && (
-          <>
+      {!inactive ? (
+        <>
+          <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
+          <div id="search-toggle">
             <Toggle value={mode} options={SEARCH_MODE_TOGGLE_OPTIONS} onChange={modeChangeHandler} />
-            {searchText && <IonRow className="ion-justify-content-center ion-margin-top">Showing results for "{searchText}"</IonRow>}
-            <SearchResults mode={mode} searchText={searchText} />
-          </>
-        )}
-      </SearchBox>
+          </div>
+
+          {searchText && <IonRow className="ion-justify-content-center ion-margin-top">Showing results for "{searchText}"</IonRow>}
+          <SearchResults mode={mode} searchText={searchText} />
+        </>
+      ) : (
+        <>
+          <SearchBox onSubmit={searchHandler} onCancel={cancelHandler} onFocus={focusHandler} showCancel={!inactive}></SearchBox>
+        </>
+      )}
     </>
   );
 };

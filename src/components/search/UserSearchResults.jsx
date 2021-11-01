@@ -1,5 +1,4 @@
-import { IonLoading } from "@ionic/react";
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react";
 import useToastContext from "../../hooks/useToastContext";
 import { searchUsers } from "../../services/search";
 import UserList from "../user-list/UserList";
@@ -29,7 +28,7 @@ const UserSearchResultDisplay = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     }
-  }, [searchText, hasMore, pages, users]);
+  }, [hasMore, searchText, pages, users, setToast]);
 
   const loadInitialPage = useCallback(async () => {
     if (!searchText) {
@@ -46,7 +45,7 @@ const UserSearchResultDisplay = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     }
-  }, [searchText]);
+  }, [searchText, setToast]);
 
   useEffect(() => {
     if (props.searchText) {

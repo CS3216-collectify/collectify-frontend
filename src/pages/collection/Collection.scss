@@ -31,6 +31,10 @@
   }
 
   ion-chip {
-    pointer-events: none;
+    // pointer-events: none;
   }
+}
+
+.no-pointer {
+  pointer-events: none;
 }

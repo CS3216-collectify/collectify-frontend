@@ -62,6 +62,7 @@ const Profile = () => {
 
   const toggleMode = (mode) => {
     setMode(parseInt(mode));
+    document.getElementById("toggle").scrollIntoView({ behavior: "smooth" });
   };
 
   // TODO: add api call for username
@@ -87,7 +88,7 @@ const Profile = () => {
         setCollectionsCount(res.collectionsCount);
       }
     } catch (e) {
-      setToast({ message: "Unable to load your profile. Please try again.", color: "danger" })
+      setToast({ message: "Unable to load your profile. Please try again.", color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -111,9 +112,9 @@ const Profile = () => {
       return;
     }
     const pathname = "/chat";
-    const state = { recipient: profileUserId.toString() }
+    const state = { recipient: profileUserId.toString() };
     history.push({ pathname, state });
-  }
+  };
 
   if (!isUserAuthenticated && !username) {
     // is guest user
@@ -185,10 +186,12 @@ const Profile = () => {
         </IonGrid>
 
         {isOwnProfile && ( // Display my collections, liked items, and followed collections
-          <IonGrid fixed>
-            <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
+          <IonGrid fixed className="profile-info--grid">
+            <div id="toggle">
+              <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
+            </div>
 
-            <div className="ion-padding">
+            <div id="profile-toggle-content" className="ion-padding">
               {mode === LIKED_ITEMS_MODE && <LikedItems />}
               {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
               {mode === COLLECTIONS_MODE && (
@@ -203,11 +206,11 @@ const Profile = () => {
           </IonGrid>
         )}
 
-        <IonGrid fixed className="ion-padding">
-          {!isOwnProfile && ( // Just display collections
+        {!isOwnProfile && ( // Just display collections
+          <IonGrid fixed className="ion-padding">
             <ProfileCollections profileUserId={profileUserId} />
-          )}
-        </IonGrid>
+          </IonGrid>
+        )}
       </IonContent>
     </IonPage>
   );
