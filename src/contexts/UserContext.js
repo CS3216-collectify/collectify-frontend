@@ -41,6 +41,7 @@ export const UserContextProvider = ({ children }) => {
       // Here, 'travel' will be the channel ID
       await channel.create();
     }
+    console.log(client);
   }, [currentUserId]);
 
   useEffect(() => {

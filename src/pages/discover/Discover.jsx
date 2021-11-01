@@ -23,7 +23,7 @@ const Discover = () => {
       <HomeToolbar title="Discover" />
       <IonContent>
         <IonGrid fixed>
-            <Search inactive={!isSearchActive} onFocus={searchOpenHandler} onCancel={searchCloseHandler} />
+          <Search inactive={!isSearchActive} onFocus={searchOpenHandler} onCancel={searchCloseHandler} />
 
           {!isSearchActive && (
             // Ideally Discover component should have a "hidden" prop?

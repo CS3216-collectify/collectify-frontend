@@ -1,5 +1,7 @@
 import { IonGrid, IonRow } from "@ionic/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
+import { useHistory } from "react-router";
 import CollectionSearchResults from "../../components/search/CollectionSearchResults";
 import ItemSearchResults from "../../components/search/ItemSearchResults";
 import SearchBox from "../../components/search/SearchBox";
@@ -48,9 +50,18 @@ const SearchResults = (props) => {
 };
 
 const Search = (props) => {
+  const history = useHistory();
+  const location = useLocation();
+
   const { onFocus: focusHandler, onCancel, inactive } = props;
   const [mode, setMode] = useState(ITEMS_MODE);
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (location.state && location.state.category) {
+      onCancel();
+    }
+  }, [history, location, onCancel]);
 
   const searchHandler = (text) => {
     if (text === searchText) {
