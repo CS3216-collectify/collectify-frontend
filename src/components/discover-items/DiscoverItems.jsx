@@ -81,7 +81,6 @@ const DiscoverItems = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("loading items...")
     loadInitialItems();
   }, [loadInitialItems]);
 
