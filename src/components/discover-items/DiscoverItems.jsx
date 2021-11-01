@@ -23,8 +23,7 @@ const DiscoverItems = (props) => {
   const [viewTradable, setViewTradable] = useState(false);
 
   useEffect(() => {
-    if (location.state && location.state.category) {
-      console.log(location.state);
+    if (location.state && location.state.category && location.state.category !== selectedCategory) {
       setSelectedCategory(location.state.category);
       history.replace({ ...history.location, state: {} });
     }
@@ -98,13 +97,11 @@ const DiscoverItems = (props) => {
           >
             <IonSelectOption value={null}>All</IonSelectOption>
 
-            {categoryOptions.map((opt, idx) => {
-              return (
-                <IonSelectOption key={idx} value={opt.categoryId}>
-                  {opt.name}
-                </IonSelectOption>
-              );
-            })}
+            {categoryOptions.map((opt, idx) => (
+              <IonSelectOption key={idx} value={opt.categoryId}>
+                {opt.name}
+              </IonSelectOption>
+            ))}
             <IonButton>clear</IonButton>
           </IonSelect>
         </div>
