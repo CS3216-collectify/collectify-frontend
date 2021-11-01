@@ -1,56 +1,50 @@
-import { useEffect } from "react";
-import { Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, IonTabs, IonTabButton, IonIcon, IonText, IonTabBar } from "@ionic/react";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { IonApp, IonBadge, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonText } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { homeOutline, searchOutline, addCircleOutline, chatbubblesOutline, personCircleOutline } from "ionicons/icons";
-
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
-
+import "@ionic/react/css/display.css";
+import "@ionic/react/css/flex-utils.css";
+import "@ionic/react/css/float-elements.css";
 /* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
-import "@ionic/react/css/structure.css";
-import "@ionic/react/css/typography.css";
-
 /* Optional CSS utils that can be commented out */
 import "@ionic/react/css/padding.css";
-import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
-
+import "@ionic/react/css/typography.css";
+import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
+import { useEffect } from "react";
+import { Redirect } from "react-router";
+import { Route } from "react-router-dom";
+import "./App.scss";
+import ProtectedRoute from "./components/route/ProtectedRoute";
+import useUserContext from "./hooks/useUserContext";
+import AddCollection from "./pages/add-collection/AddCollection";
+import AddItem from "./pages/add-item/AddItem";
+import Add from "./pages/add/Add";
+import CollectifyChat from "./pages/chat/Chat";
+import Collection from "./pages/collection/Collection";
+import FollowersList from "./pages/collection/FollowersList";
+import Discover from "./pages/discover/Discover";
+import EditCollection from "./pages/edit-collection/EditCollection";
+import EditItem from "./pages/edit-item/EditItem";
+import EditProfile from "./pages/edit-profile/EditProfile";
+import Home from "./pages/home/Home";
+import Item from "./pages/item/Item";
+import LikesList from "./pages/item/LikesList";
+import Login from "./pages/login/Login";
+import NotFound from "./pages/not-found/NotFound";
+import Onboarding from "./pages/onboarding/Onboarding";
+import Profile from "./pages/profile/Profile";
+import Settings from "./pages/settings/Settings";
 /* Theme variables */
 import "./theme/variables.css";
-import "./App.scss";
-
-import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-
-import useUserContext from "./hooks/useUserContext";
-import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import Profile from "./pages/profile/Profile";
-import EditProfile from "./pages/edit-profile/EditProfile";
-import Item from "./pages/item/Item";
-import EditItem from "./pages/edit-item/EditItem";
-import AddItem from "./pages/add-item/AddItem";
-import AddCollection from "./pages/add-collection/AddCollection";
-import EditCollection from "./pages/edit-collection/EditCollection";
-import Collection from "./pages/collection/Collection";
-import Settings from "./pages/settings/Settings";
-import Discover from "./pages/discover/Discover";
-import Onboarding from "./pages/onboarding/Onboarding";
-import CollectifyChat from "./pages/chat/Chat";
-import FollowersList from "./pages/collection/FollowersList";
-import LikesList from "./pages/item/LikesList";
-import { Redirect } from "react-router";
-import ProtectedRoute from "./components/route/ProtectedRoute";
-import Add from "./pages/add/Add";
-import NotFound from "./pages/not-found/NotFound";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
-  const { isUserAuthenticated } = useUserContext();
+  const { isUserAuthenticated, unreadMessages } = useUserContext();
 
   return (
     <IonApp>
@@ -97,8 +91,9 @@ const App = () => {
                   <IonText>Add</IonText>
                 </IonTabButton>
                 {isUserAuthenticated && (
-                  <IonTabButton tab="d" href="/chat">
-                    <IonIcon icon={chatbubblesOutline} />
+                  <IonTabButton tab="d" badge={3} href="/chat" >
+                    <IonIcon icon={chatbubblesOutline}  />
+                    {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
                     <IonText>Chats</IonText>
                   </IonTabButton>
                 )}

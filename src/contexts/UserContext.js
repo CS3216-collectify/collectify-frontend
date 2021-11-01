@@ -15,6 +15,7 @@ export const UserContextProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(hasAccessTokenStored() || hasRefreshTokenStored());
   const [currentUserId, setCurrentUserId] = useState(getUserId());
   const [chatClient, setChatClient] = useState(null);
+  const [unreadMessages, setUnreadMessages] = useState(0);
 
   const initChat = useCallback(async () => {
     if (!currentUserId) {
@@ -24,7 +25,7 @@ export const UserContextProvider = ({ children }) => {
     const client = StreamChat.getInstance(STREAM_CHAT_TOKEN);
     const { chatId, chatToken } = chatUser;
 
-    await client.connectUser(
+    const res = await client.connectUser(
       {
         id: chatId.toString(),
       },
@@ -32,6 +33,11 @@ export const UserContextProvider = ({ children }) => {
     );
 
     setChatClient(client);
+
+    if (res) {
+      console.log(res.me.unread_count);
+      setUnreadMessages(res.me.unread_count);
+    }
 
     // Createa default chat channel with the collectify account
     if (Number(client.userID) !== Number(COLLECTIFY_STREAM_CHAT_ID)) {
@@ -41,9 +47,13 @@ export const UserContextProvider = ({ children }) => {
       // Here, 'travel' will be the channel ID
       await channel.create();
     }
-    console.log(client);
+    client.on((event) => {
+      if (event.total_unread_count !== undefined) {
+        console.log(event.total_unread_count);
+        setUnreadMessages(event.total_unread_count);
+      }
+    });
   }, [currentUserId]);
-
   useEffect(() => {
     if (!currentUserId && isUserAuthenticated) {
       const storedUserId = getUserId();
@@ -83,7 +93,9 @@ export const UserContextProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ isUserAuthenticated, isCurrentUser, setIsUserAuthenticated, getCurrentUserId, chatClient, setChatClient }}>
+    <UserContext.Provider
+      value={{ isUserAuthenticated, isCurrentUser, setIsUserAuthenticated, getCurrentUserId, chatClient, setChatClient, unreadMessages }}
+    >
       {children}
     </UserContext.Provider>
   );
