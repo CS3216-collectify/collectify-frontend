@@ -57,11 +57,11 @@ const Search = (props) => {
   const [mode, setMode] = useState(ITEMS_MODE);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    if (location.state && location.state.category) {
-      onCancel();
-    }
-  }, [history, location, onCancel]);
+  // useEffect(() => {
+  //   if (location.state && location.state.category) {
+  //     onCancel();
+  //   }
+  // }, [history, location, onCancel]);
 
   const searchHandler = (text) => {
     if (text === searchText) {

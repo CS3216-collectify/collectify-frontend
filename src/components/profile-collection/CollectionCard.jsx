@@ -6,7 +6,7 @@ import Text from "../text/Text";
 import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
-  const { collection } = props;
+  const { collection, disableChip = false } = props;
   const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
 
@@ -55,7 +55,8 @@ const CollectionCard = (props) => {
         {/* A collection only has a single category */}
         <div>
           {categoryName && (
-            <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>
+            // <IonChip className={`${disableChip ? 'no-pointer' : ''}`} onClick={(e) => goToDiscoverWithFilter(e)}>
+            <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>
               <IonLabel>{categoryName}</IonLabel>
             </IonChip>
           )}

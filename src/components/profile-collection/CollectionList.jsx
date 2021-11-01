@@ -6,7 +6,7 @@ import CollectionCard from "./CollectionCard";
 
 const CollectionList = (props) => {
   const history = useHistory();
-  const { collections, onScrollEnd: fetchNextPage, listEnded, emptyMessage = "No collections found!" } = props;
+  const { collections, onScrollEnd: fetchNextPage, listEnded, emptyMessage = "No collections found!", disableChip = false } = props;
 
   if (listEnded && collections && collections.length === 0 && emptyMessage) {
     return (
@@ -20,7 +20,7 @@ const CollectionList = (props) => {
     <>
       {collections.map((collection, index) => (
         <div key={index}>
-          <CollectionCard collection={collection} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
+          <CollectionCard disableChip={disableChip} collection={collection} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
         </div>
       ))}
       <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />

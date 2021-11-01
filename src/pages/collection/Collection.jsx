@@ -144,7 +144,7 @@ const Collection = (props) => {
             </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-start">
-            <IonCol>{categoryName && <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>{categoryName}</IonChip>}</IonCol>
+            <IonCol>{categoryName && <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>{categoryName}</IonChip>}</IonCol>
           </IonRow>
           <IonRow>
             <IonCol>

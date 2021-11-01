@@ -22,12 +22,12 @@ const DiscoverItems = (props) => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
 
-  useEffect(() => {
-    if (location.state && location.state.category && location.state.category !== selectedCategory) {
-      setSelectedCategory(location.state.category);
-      history.replace({ ...history.location, state: {} });
-    }
-  }, [history, location, selectedCategory]);
+  // useEffect(() => {
+  //   if (location.state && location.state.category) {
+  //     setSelectedCategory(location.state.category);
+  //     history.replace({ ...history.location, state: {} });
+  //   }
+  // }, [history, location, selectedCategory]);
 
   const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
