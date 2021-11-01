@@ -29,7 +29,7 @@ const ItemSearchResultDisplay = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load search results. Please try again later.", color: "danger" });
     }
-  }, [searchText, hasMore, pages, items])
+  }, [hasMore, searchText, pages, items, setToast])
 
   const loadInitialPage = useCallback(async () => {
     if (!searchText) {
@@ -48,7 +48,7 @@ const ItemSearchResultDisplay = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [searchText]);
+  }, [searchText, setToast]);
 
   useEffect(() => {
     if (props.searchText) {
