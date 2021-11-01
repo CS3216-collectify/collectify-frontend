@@ -1,5 +1,5 @@
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import { IonApp, IonBadge, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonText } from "@ionic/react";
+import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonText } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -44,7 +44,7 @@ import "./theme/variables.css";
 
 const App = () => {
   useEffect(() => GoogleAuth.init(), []);
-  const { isUserAuthenticated, unreadMessages } = useUserContext();
+  const { isUserAuthenticated } = useUserContext();
 
   return (
     <IonApp>
@@ -94,7 +94,7 @@ const App = () => {
                   <IonTabButton tab="d" href="/chat">
                     <IonIcon icon={chatbubblesOutline} />
                     <IonText>Chats</IonText>
-                    <IonBadge color="primary">{Number(unreadMessages)}</IonBadge>
+                    {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
                   </IonTabButton>
                 )}
                 <IonTabButton tab="user-profile" href="/profile">

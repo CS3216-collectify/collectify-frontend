@@ -92,7 +92,7 @@ const DiscoverItems = (props) => {
             value={selectedCategory}
             placeholder="Select category"
             onIonChange={(e) => {
-              setSelectedCategory(e.detail.value);
+              setSelectedCategory(Number(e.detail.value));
             }}
           >
             <IonSelectOption value={null}>All</IonSelectOption>
