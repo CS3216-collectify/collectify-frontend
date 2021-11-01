@@ -7,7 +7,7 @@ import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
   const { collection } = props;
-  const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount = 29 } = collection;
+  const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
 
   const collectionCardOnclick = () => {
