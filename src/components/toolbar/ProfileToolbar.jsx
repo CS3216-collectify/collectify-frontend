@@ -84,11 +84,9 @@ const ProfileToolbar = ({ username, showMenu }) => {
           <IonButton onClick={() => handleButtonClick("discover")}>
             <IonIcon size="medium" slot="icon-only" icon={search} />
           </IonButton>
-          {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("add")}>
-              <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
-            </IonButton>
-          )}
+          <IonButton onClick={() => handleButtonClick("add")}>
+            <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
+          </IonButton>
           {isUserAuthenticated && (
             <IonButton onClick={() => handleButtonClick("chat")}>
               <IonIcon size="medium" slot="icon-only" icon={chatbubblesOutline} />

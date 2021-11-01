@@ -71,7 +71,7 @@ const App = () => {
                 <ProtectedRoute exact path="/add-collections" component={AddCollection} />
                 <ProtectedRoute exact path="/collections/:collectionId/add" component={AddItem} />
                 <Route exact path="/collections/:collectionId/items/:itemId" component={Item} />
-                <ProtectedRoute exact path="/add" component={Add} />
+                <Route exact path="/add" component={Add} />
                 <Route exact path="/items/:itemId/likes" component={LikesList} />
                 <Route exact path="/collections/:collectionId/followers" component={FollowersList} />
                 <ProtectedRoute exact path="/collections/:collectionId/items/:itemId/edit" component={EditItem} />
@@ -92,12 +92,10 @@ const App = () => {
                   <IonIcon icon={searchOutline} />
                   <IonText>Discover</IonText>
                 </IonTabButton>
-                {isUserAuthenticated && (
-                  <IonTabButton tab="add" href="/add">
-                    <IonIcon icon={addCircleOutline} />
-                    <IonText>Add</IonText>
-                  </IonTabButton>
-                )}
+                <IonTabButton tab="add" href="/add">
+                  <IonIcon icon={addCircleOutline} />
+                  <IonText>Add</IonText>
+                </IonTabButton>
                 {isUserAuthenticated && (
                   <IonTabButton tab="d" href="/chat">
                     <IonIcon icon={chatbubblesOutline} />
