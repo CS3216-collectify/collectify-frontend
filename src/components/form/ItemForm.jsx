@@ -21,7 +21,7 @@ const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
 
 const getDefaultItemData = () => {
-  return { itemData: "", itemDescription: "", images: [] };
+  return { isNew: true, itemName: "", itemDescription: "", images: [] };
 };
 
 const ItemForm = (props) => {
@@ -35,7 +35,7 @@ const ItemForm = (props) => {
   const [deletedImageIds, setDeletedImageIds] = useState([]);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [isTradable, setIsTradable] = useState(itemData.isTradable);
-  const isEdit = props.itemData;
+  const isEdit = itemData.isNew;
   const [selectedCollectionId, setSelectedCollectionId] = useState(collectionId);
   const [collections, setCollections] = useState([]);
   const setToast = useToastContext();
@@ -179,14 +179,17 @@ const ItemForm = (props) => {
           <IonToggle slot="end" color="primary" checked={isTradable} onIonChange={(e) => setIsTradable(e.detail.checked)} />
         </IonItem>
 
-        <IonRow className="ion-justify-content-start">
-          <SelectButton onChange={setSelectedCollectionId} options={collections} buttonLabel="Select Collection" selectLabel="Collections" />
-          <IonCol>
-            {selectedCollectionId && (
-              <CategoryChip name={convertCollectionIdToName(selectedCollectionId)} onDelete={() => setSelectedCollectionId(null)} />
-            )}
-          </IonCol>
-        </IonRow>
+        {!isEdit && (
+          <IonRow className="ion-justify-content-start">
+            <SelectButton onChange={setSelectedCollectionId} options={collections} buttonLabel="Select Collection" selectLabel="Collections" />
+            <IonCol>
+              {selectedCollectionId && (
+                <CategoryChip name={convertCollectionIdToName(selectedCollectionId)} onDelete={() => setSelectedCollectionId(null)} />
+              )}
+            </IonCol>
+          </IonRow>
+        )}
+
         <IonRow className="ion-full-width"></IonRow>
         <IonRow className="ion-full-width save-delete-buttons--container">
           {onDelete && (
