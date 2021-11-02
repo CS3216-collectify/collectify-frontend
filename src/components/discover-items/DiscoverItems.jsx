@@ -1,8 +1,8 @@
-import { IonButton, IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
+import { IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
-import { getCategories } from "../../services/categories";
+import { getFilterCategories } from "../../services/categories";
 import { trackDiscoverFilterEvent, trackDiscoverTradableEvent } from "../../services/react-ga";
 import { getDiscoverItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
@@ -66,7 +66,7 @@ const DiscoverItems = (props) => {
     const loadCategoryOptions = async () => {
       // setLoading(true);
       try {
-        const options = await getCategories();
+        const options = await getFilterCategories();
         setCategoryOptions(options);
       } catch (e) {
         console.log(e);
@@ -106,7 +106,7 @@ const DiscoverItems = (props) => {
             <IonSelectOption value={null}>All</IonSelectOption>
 
             {categoryOptions.map((opt, idx) => (
-              <IonSelectOption key={idx} value={opt.categoryId}>
+              <IonSelectOption key={idx} value={opt.categoryId} disabled={opt.isEmpty}>
                 {opt.name}
               </IonSelectOption>
             ))}
