@@ -5,9 +5,15 @@ import Text from "../../components/text/Text";
 import NotFoundGif from "../../assets/not-found.gif";
 import FlexImage from "../../components/image/FlexImage";
 import { useHistory } from "react-router";
+import { trackPageView } from "../../services/react-ga";
+import { useEffect } from "react";
 
 const NotFound = ({ category }) => {
   const history = useHistory();
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   return (
     <IonPage className="not-found login">
@@ -20,11 +26,7 @@ const NotFound = ({ category }) => {
             The page was not found.
           </Text>
           <IonRow className="ion-margin-top">
-            <IonButton
-              onClick={() => history.push("/")}
-            >
-              Back to Home
-            </IonButton>
+            <IonButton onClick={() => history.push("/")}>Back to Home</IonButton>
           </IonRow>
         </IonGrid>
       </IonContent>

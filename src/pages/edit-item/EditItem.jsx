@@ -9,6 +9,7 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { deleteItem, getItemFromCollection, updateItem } from "../../services/items";
+import { trackPageView } from "../../services/react-ga";
 
 const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
@@ -24,6 +25,10 @@ const EditItem = () => {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const loadExistingData = useCallback(async () => {
     setLoading(true);

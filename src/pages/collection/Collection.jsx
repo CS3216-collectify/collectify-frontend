@@ -1,21 +1,20 @@
-import { IonCol, IonContent, IonGrid, IonLoading, IonPage, IonRow, IonIcon, IonChip } from "@ionic/react";
-import { useEffect, useState, useCallback } from "react";
-import { useHistory, useLocation, useParams } from "react-router";
+import { IonChip, IonCol, IonContent, IonGrid, IonIcon, IonPage, IonRow } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
-
-import "./Collection.scss";
-import useUserContext from "../../hooks/useUserContext";
+import { useCallback, useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router";
 import AddButton from "../../components/button/AddButton";
 import EditButton from "../../components/button/EditButton";
-import UnfollowButton from "../../components/button/UnfollowButton";
 import FollowButton from "../../components/button/FollowButton";
-import CategoryChip from "../../components/chip/CategoryChip";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import { getCollectionByCollectionId } from "../../services/collections";
+import UnfollowButton from "../../components/button/UnfollowButton";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
-import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
+import { getCollectionByCollectionId } from "../../services/collections";
+import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
+import { trackPageView } from "../../services/react-ga";
+import "./Collection.scss";
 
 const Collection = (props) => {
   const setToast = useToastContext();
@@ -35,6 +34,10 @@ const Collection = (props) => {
   const { isCurrentUser, isUserAuthenticated } = useUserContext();
 
   const isCollectionOwner = isCurrentUser(ownerId);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const loadCollectionData = useCallback(async () => {
     setLoading(true);
@@ -144,7 +147,13 @@ const Collection = (props) => {
             </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-start">
-            <IonCol>{categoryName && <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>{categoryName}</IonChip>}</IonCol>
+            <IonCol>
+              {categoryName && (
+                <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>
+                  {categoryName}
+                </IonChip>
+              )}
+            </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>

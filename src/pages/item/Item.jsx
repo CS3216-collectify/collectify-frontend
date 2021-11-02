@@ -11,6 +11,7 @@ import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getItemFromCollection } from "../../services/items";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import { trackPageView } from "../../services/react-ga";
 import { convertUTCtoLocal } from "../../utils/datetime";
 import "./Item.scss";
 
@@ -31,6 +32,10 @@ const Item = () => {
   const [likesCount, setLikesCount] = useState(0);
   const [itemCreationDate, setItemCreationDate] = useState("");
   const [isTradable, setIsTradable] = useState("");
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const fetchItemData = useCallback(async () => {
     setLoading(true);

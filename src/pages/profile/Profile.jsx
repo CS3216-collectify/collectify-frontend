@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonImg, IonItem, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import noProfileImage from "../../assets/no-profile-image.png";
@@ -14,6 +14,7 @@ import Toggle from "../../components/toggle/Toggle";
 import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
+import { trackPageView } from "../../services/react-ga";
 import { getCurrentUser, getUserByUsername } from "../../services/users";
 import "./Profile.scss";
 
@@ -57,6 +58,10 @@ const Profile = () => {
   const [likesCount, setLikesCount] = useState(0);
   const [itemsCount, setItemsCount] = useState(0);
   const [collectionsCount, setCollectionsCount] = useState(0);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const isOwnProfile = isCurrentUser(profileUserId);
 

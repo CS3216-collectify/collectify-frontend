@@ -1,16 +1,16 @@
-import { IonContent, IonLoading, IonPage, IonGrid } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
+import DeletingGif from "../../assets/deleting.gif";
+import SavingGif from "../../assets/saving.gif";
 import CollectionForm from "../../components/form/CollectionForm";
+import FlexImage from "../../components/image/FlexImage";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
 import { getCategories } from "../../services/categories";
 import { deleteCollection, getCollectionByCollectionId, updateCollection } from "../../services/collections";
-import FlexImage from "../../components/image/FlexImage";
-import SavingGif from "../../assets/saving.gif";
-import DeletingGif from "../../assets/deleting.gif";
-import useUserContext from "../../hooks/useUserContext";
+import { trackPageView } from "../../services/react-ga";
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -27,6 +27,10 @@ const EditCollection = (props) => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const loadExistingData = useCallback(async () => {
     setLoading(true);
@@ -101,7 +105,6 @@ const EditCollection = (props) => {
 
   return (
     <IonPage>
-
       <HomeToolbar title="Edit Collection" />
       <IonContent>
         {uploading ? (

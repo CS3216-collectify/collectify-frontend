@@ -1,22 +1,25 @@
+import { IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
-import { IonContent, IonPage, IonGrid, IonRow } from "@ionic/react";
-
-import "./Login.scss";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
+import GoogleLoginButton from "../../components/button/GoogleLoginButton";
+import GuestLoginButton from "../../components/button/GuestLoginButton";
+import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import GuestLoginButton from "../../components/button/GuestLoginButton";
-import GoogleLoginButton from "../../components/button/GoogleLoginButton";
-import GoogleAuthStatus from "../../enums/google-auth-status.enum";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
-import { isGuest, hasAccessTokenStored, hasRefreshTokenStored } from "../../utils/auth/store";
+import { trackPageView } from "../../services/react-ga";
 import { loginGuest } from "../../utils/auth/actions";
+import { hasAccessTokenStored, hasRefreshTokenStored, isGuest } from "../../utils/auth/store";
+import "./Login.scss";
 
 const Login = () => {
   const history = useHistory();
   const setToast = useToastContext();
   const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   useEffect(() => {
     if (hasAccessTokenStored() || hasRefreshTokenStored()) {
@@ -37,7 +40,7 @@ const Login = () => {
     } else if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_ONBOARD) {
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      history.replace('/onboarding');
+      history.replace("/onboarding");
     } else {
       // error
       setToast({ message: "Google authentication failed. Please try again.", color: "danger" });
@@ -54,7 +57,7 @@ const Login = () => {
       <IonContent className="ion-padding">
         <IonGrid fixed className="login--grid">
           <IonRow className="ion-justify-content-center">
-            <Logo className="logo"/>
+            <Logo className="logo" />
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
             <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />

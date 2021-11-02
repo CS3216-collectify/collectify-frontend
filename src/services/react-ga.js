@@ -7,7 +7,7 @@ export const initialiseGoogleAnalytics = () => {
 
 // Track page view
 export const trackPageView = (pathname) => {
-  ReactGA.pageview(pathname);
+  ReactGA.send({ hitType: "pageview", page: pathname });
 };
 
 // Track events

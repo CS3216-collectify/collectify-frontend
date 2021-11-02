@@ -5,6 +5,7 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
 import useToastContext from "../../hooks/useToastContext";
 import { getFollowersByCollectionId } from "../../services/followers";
+import { trackPageView } from "../../services/react-ga";
 
 const LIMIT = 18;
 
@@ -17,6 +18,10 @@ const FollowersList = (props) => {
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const loadNextPage = useCallback(async () => {
     if (!hasMore) {
@@ -59,7 +64,7 @@ const FollowersList = (props) => {
     <IonPage>
       <HomeToolbar title={`Followers`} />
       <IonContent>
-          <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one is following this collection" />
+        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one is following this collection" />
       </IonContent>
     </IonPage>
   );
