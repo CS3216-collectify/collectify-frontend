@@ -11,7 +11,14 @@ import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getItemFromCollection } from "../../services/items";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
-import { trackPageView } from "../../services/react-ga";
+import {
+  trackEditItemEvent,
+  trackItemChatEvent,
+  trackPageView,
+  trackViewCollectionEvent,
+  trackViewItemLikesEvent,
+  trackViewItemOwnerEvent
+} from "../../services/react-ga";
 import { convertUTCtoLocal } from "../../utils/datetime";
 import "./Item.scss";
 
@@ -99,6 +106,7 @@ const Item = () => {
     const _images = images.map((img) => ({ ...img })); // deep copy
     const item = { itemName, itemDescription, images: _images, isTradable };
     const state = { item };
+    trackEditItemEvent();
     history.push({
       pathname,
       state,
@@ -106,11 +114,18 @@ const Item = () => {
   };
 
   const goToCollectionPage = () => {
+    trackViewCollectionEvent();
     history.push(`/collections/${collectionId}`);
   };
 
   const goToLikesPage = () => {
+    trackViewItemLikesEvent();
     history.push(`/items/${itemId}/likes`);
+  };
+
+  const goToUserProfilePage = () => {
+    trackViewItemOwnerEvent();
+    history.push(`/profile/${ownerUsername}`);
   };
 
   const openChatWithItem = () => {
@@ -124,6 +139,7 @@ const Item = () => {
         ownerId: ownerId.toString(),
       },
     };
+    trackItemChatEvent();
     history.push({ pathname, state });
   };
 
@@ -134,7 +150,7 @@ const Item = () => {
         <IonGrid fixed className="ion-padding">
           <IonRow>
             <IonCol className="item-username">
-              <Text className="clickable" onClick={() => history.push(`/profile/${ownerUsername}`)}>
+              <Text className="clickable" onClick={() => goToUserProfilePage()}>
                 <b>@{ownerUsername}</b>
               </Text>
             </IonCol>

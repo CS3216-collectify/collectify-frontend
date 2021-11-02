@@ -1,13 +1,13 @@
 import { IonButton, IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 import { getCategories } from "../../services/categories";
+import { trackDiscoverFilterEvent, trackDiscoverTradableEvent } from "../../services/react-ga";
 import { getDiscoverItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
-import { useLocation } from "react-router";
-import { useHistory } from "react-router";
 const LIMIT = 18;
 
 const DiscoverItems = (props) => {
@@ -92,6 +92,7 @@ const DiscoverItems = (props) => {
             value={selectedCategory}
             placeholder="Select category"
             onIonChange={(e) => {
+              trackDiscoverFilterEvent();
               setSelectedCategory(Number(e.detail.value));
             }}
           >
@@ -108,7 +109,14 @@ const DiscoverItems = (props) => {
 
         <div className="discover-tradable--container">
           <Text size="s">Tradable items only</Text>
-          <IonToggle color="primary" checked={viewTradable} onIonChange={(e) => setViewTradable(e.detail.checked)} />
+          <IonToggle
+            color="primary"
+            checked={viewTradable}
+            onIonChange={(e) => {
+              trackDiscoverTradableEvent();
+              setViewTradable(e.detail.checked);
+            }}
+          />
         </div>
       </div>
 

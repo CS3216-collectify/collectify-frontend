@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
-import { IonGrid, IonRadioGroup, IonRadio, IonButton, IonRow } from "@ionic/react";
-import { useHistory } from "react-router";
+import { IonButton, IonRadio, IonRadioGroup, IonRow } from "@ionic/react";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router";
+import { trackAddCollectionEvent, trackAddItemEvent } from "../../services/react-ga";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
-import Text from "../text/Text";
-import HorizontalLine from "../line/HorizontalLine";
 import CollectionCard from "./CollectionCard";
 import "./SelectCollectionList.scss";
-import { useLocation } from "react-router";
 
 const SelectCollectionList = (props) => {
   const history = useHistory();
@@ -27,7 +25,10 @@ const SelectCollectionList = (props) => {
           <IonButton
             className="add-new-collection-button"
             fill="outline"
-            onClick={() => history.push({ pathname: "/add-collections", state: { redirectToAdd: true } })}
+            onClick={() => {
+              trackAddCollectionEvent();
+              history.push({ pathname: "/add-collections", state: { redirectToAdd: true } });
+            }}
           >
             + Add a new collection
           </IonButton>
@@ -42,7 +43,10 @@ const SelectCollectionList = (props) => {
         <IonButton
           className="add-new-item-button"
           fill="solid"
-          onClick={() => history.push(`/collections/${collectionId}/add`)}
+          onClick={() => {
+            trackAddItemEvent();
+            history.push(`/collections/${collectionId}/add`);
+          }}
           disabled={collectionId === null}
         >
           + Add a new item

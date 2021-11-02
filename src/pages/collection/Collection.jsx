@@ -13,7 +13,13 @@ import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getCollectionByCollectionId } from "../../services/collections";
 import { followByCollectionId, unfollowByCollectionId } from "../../services/followers";
-import { trackPageView } from "../../services/react-ga";
+import {
+  trackAddCollectionEvent,
+  trackEditCollectionEvent,
+  trackFollowCollectionEvent,
+  trackPageView,
+  trackUnfollowCollectionEvent,
+} from "../../services/react-ga";
 import "./Collection.scss";
 
 const Collection = (props) => {
@@ -77,6 +83,7 @@ const Collection = (props) => {
     }
     followByCollectionId(collectionId)
       .then(() => {
+        trackFollowCollectionEvent();
         setFollowersCount(followersCount + 1);
         setFollowed(true);
       })
@@ -96,6 +103,7 @@ const Collection = (props) => {
     }
     unfollowByCollectionId(collectionId)
       .then(() => {
+        trackUnfollowCollectionEvent();
         setFollowersCount(followersCount - 1);
         setFollowed(false);
       })
@@ -164,10 +172,24 @@ const Collection = (props) => {
           {isCollectionOwner && (
             <IonRow className="ion-justify-content-end">
               <IonCol>
-                <AddButton className="collection--button" label="Item" onClick={() => history.push(`/collections/${collectionId}/add`)} />
+                <AddButton
+                  className="collection--button"
+                  label="Item"
+                  onClick={() => {
+                    trackAddCollectionEvent();
+                    history.push(`/collections/${collectionId}/add`);
+                  }}
+                />
               </IonCol>
               <IonCol>
-                <EditButton className="collection--button" label="Collection" onClick={editPageRedirect} />
+                <EditButton
+                  className="collection--button"
+                  label="Collection"
+                  onClick={() => {
+                    trackEditCollectionEvent();
+                    editPageRedirect();
+                  }}
+                />
               </IonCol>
             </IonRow>
           )}

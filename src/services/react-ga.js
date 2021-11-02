@@ -138,10 +138,10 @@ export const trackSearchViewCollectionEvent = () => {
   });
 };
 
-export const trackSearchViewUserEvent = () => {
+export const trackViewUserEvent = () => {
   ReactGA.event({
-    category: "search",
-    action: "view_user_details_from_search",
+    category: "user",
+    action: "view_user_details",
   });
 };
 
@@ -177,6 +177,20 @@ export const trackDeleteCollectionEvent = () => {
   ReactGA.event({
     category: "collection",
     action: "delete_collection",
+  });
+};
+
+export const trackFollowCollectionEvent = () => {
+  ReactGA.event({
+    category: "collection",
+    action: "follow_collection",
+  });
+};
+
+export const trackUnfollowCollectionEvent = () => {
+  ReactGA.event({
+    category: "collection",
+    action: "unfollow_collection",
   });
 };
 
