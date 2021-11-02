@@ -82,6 +82,15 @@ const DiscoverItems = (props) => {
     loadInitialItems();
   }, [loadInitialItems]);
 
+  const changeCategory = (val) => {
+    trackDiscoverFilterEvent();
+    if (val === null) {
+      setSelectedCategory(null);
+      return;
+    }
+    setSelectedCategory(Number(val));
+  }
+
   return (
     <>
       <div className="discover-filter-tradable--container ion-padding">
@@ -91,10 +100,8 @@ const DiscoverItems = (props) => {
           <IonSelect
             value={selectedCategory}
             placeholder="Select category"
-            onIonChange={(e) => {
-              trackDiscoverFilterEvent();
-              setSelectedCategory(Number(e.detail.value));
-            }}
+            onIonChange={(e) => changeCategory(e.detail.value)}
+            interface="popover"
           >
             <IonSelectOption value={null}>All</IonSelectOption>
 
@@ -103,7 +110,7 @@ const DiscoverItems = (props) => {
                 {opt.name}
               </IonSelectOption>
             ))}
-            <IonButton>clear</IonButton>
+            {/* <IonButton>clear</IonButton> */}
           </IonSelect>
         </div>
 
