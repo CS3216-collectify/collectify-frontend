@@ -20,7 +20,7 @@ const HomeToolbar = ({ title }) => {
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
         <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
+          <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
           <Text size="xl"> {title}</Text>
         </div>
 
@@ -56,7 +56,7 @@ const HomeToolbar = ({ title }) => {
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
         <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
+          <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
           <Text size="xl"> {title}</Text>
         </div>
 
