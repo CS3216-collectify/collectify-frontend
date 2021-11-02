@@ -14,7 +14,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
+import { addCircleOutline, chatbubbleEllipsesOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
 import { useEffect } from "react";
 import { Redirect } from "react-router";
 import { Route } from "react-router-dom";
@@ -94,13 +94,6 @@ const App = () => {
                   <IonIcon icon={addCircleOutline} />
                   <IonText>Add</IonText>
                 </IonTabButton>
-                {isUserAuthenticated && (
-                  <IonTabButton tab="d" href="/chat">
-                    <IonIcon icon={chatbubblesOutline} />
-                    <IonText>Chats</IonText>
-                    {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
-                  </IonTabButton>
-                )}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>

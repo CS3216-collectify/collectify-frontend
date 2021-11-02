@@ -1,7 +1,7 @@
 .toolbar-title--container {
-    display: flex;
-    flex-direction: row;
-    flex:1;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
   .toolbar-logo {
     height: 40px;
     width: 40px;
@@ -10,5 +10,18 @@
   ion-text {
     padding-left: 12px;
     margin: auto 0;
+  }
+}
+
+.home-toolbar-chat-button {
+  .chat-unread {
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    border-radius: 6px;
+    background-color: red;
+    z-index: 1000;
+    top: -4px;
+    right: -2px;
   }
 }

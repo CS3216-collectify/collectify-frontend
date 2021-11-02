@@ -13,7 +13,15 @@ import {
   IonText,
   IonImg,
 } from "@ionic/react";
-import { search, homeOutline, personCircleOutline, settingsOutline, ellipsisVertical, addCircleOutline, chatbubblesOutline } from "ionicons/icons";
+import {
+  search,
+  homeOutline,
+  personCircleOutline,
+  settingsOutline,
+  ellipsisVertical,
+  addCircleOutline,
+  chatbubbleEllipsesOutline,
+} from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
@@ -25,7 +33,7 @@ const ProfileToolbar = ({ username, showMenu }) => {
   const location = useLocation();
 
   const setToast = useToastContext();
-  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated, unreadMessages } = useUserContext();
 
   const logoutHandler = () => {
     logoutUser();
@@ -88,8 +96,9 @@ const ProfileToolbar = ({ username, showMenu }) => {
             <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("chat")}>
-              <IonIcon size="medium" slot="icon-only" icon={chatbubblesOutline} />
+            <IonButton className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+              <IonIcon size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+              {unreadMessages > 0 && <div className="chat-unread" />}
             </IonButton>
           )}
           <IonButton onClick={() => handleButtonClick("profile")}>

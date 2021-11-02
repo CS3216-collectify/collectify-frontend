@@ -35,6 +35,7 @@ export const UserContextProvider = ({ children }) => {
 
     if (res) {
       setUnreadMessages(res.me.unread_count);
+      document.title = res.me.unread_count > 0 ? `(${res.me.unread_count}) collectify` : "collectify";
     }
 
     // Create a default chat channel with the collectify account
@@ -52,6 +53,7 @@ export const UserContextProvider = ({ children }) => {
       chatClient.on((event) => {
         if (event.total_unread_count !== undefined) {
           setUnreadMessages(event.total_unread_count);
+          document.title = event.total_unread_count > 0 ? `(${event.total_unread_count}) collectify` : "collectify";
         }
       });
     }
