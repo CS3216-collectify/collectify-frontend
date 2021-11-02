@@ -22,7 +22,7 @@ const ImageGrid = (props) => {
     } else {
       trackSearchViewItemEvent();
     }
-
+    console.log(img);
     img.clickHandler();
   };
 
@@ -34,7 +34,7 @@ const ImageGrid = (props) => {
         {groupsOfThree.map((grp, idx) => (
           <IonRow key={idx}>
             {grp.map((img, idx) => (
-              <IonCol className="clickable" key={idx} size={4} onClick={(img) => imgClickHandler(img)}>
+              <IonCol className="clickable" key={idx} size={4} onClick={() => imgClickHandler(img)}>
                 <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
               </IonCol>
             ))}
