@@ -79,7 +79,7 @@ const CollectionForm = (props) => {
         isOpen={deleteConfirm}
         onCancel={() => setDeleteConfirm(false)}
         onConfirm={deleteHandler}
-      />{" "}
+      />
       <IonGrid fixed>
         <IonItem>
           <TextInput label="Collection Title" value={collectionName} placeholder="Enter a title" onChange={setCollectionName} />

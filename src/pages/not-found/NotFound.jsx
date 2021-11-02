@@ -10,10 +10,10 @@ const NotFound = ({ category }) => {
   const history = useHistory();
 
   return (
-    <IonPage className="login">
+    <IonPage className="not-found login">
       <IonContent className="ion-padding">
         <IonGrid fixed className="login--grid">
-          <FlexImage src={NotFoundGif} />
+          <FlexImage className="not-found--img" src={NotFoundGif} />
           <Text size="xl" className="ion-text-center">
             Oops!
             <br />

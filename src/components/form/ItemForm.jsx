@@ -1,15 +1,18 @@
-import { IonGrid, IonItem, IonList, IonRow, IonCol, IonToggle } from "@ionic/react";
-import ImageEditList from "../gallery/ImageEditList";
-import { useEffect, useState } from "react";
+import { IonCol, IonGrid, IonItem, IonList, IonRow, IonToggle } from "@ionic/react";
+import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router";
-
+import useToastContext from "../../hooks/useToastContext";
+import useUserContext from "../../hooks/useUserContext";
+import { getCollections } from "../../services/collections";
+import ConfirmAlert from "../alert/ConfirmAlert";
+import DeleteButton from "../button/DeleteButton";
+import SaveButton from "../button/SaveButton";
+import SelectButton from "../button/SelectButton";
+import UploadButton from "../button/UploadButton";
+import CategoryChip from "../chip/CategoryChip";
+import ImageEditList from "../gallery/ImageEditList";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
-import UploadButton from "../button/UploadButton";
-import SaveButton from "../button/SaveButton";
-import DeleteButton from "../button/DeleteButton";
-import useToastContext from "../../hooks/useToastContext";
-import ConfirmAlert from "../alert/ConfirmAlert";
 import Text from "../text/Text";
 
 const MEDIA_LIMIT = 4; // can tweak
@@ -22,31 +25,49 @@ const getDefaultItemData = () => {
 
 const ItemForm = (props) => {
   const location = useLocation();
+  const { getCurrentUserId } = useUserContext();
 
-  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
+  const { itemData = getDefaultItemData(), collectionId, onComplete: completeHandler, onDelete } = props;
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
   const [deletedImageIds, setDeletedImageIds] = useState([]);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [isTradable, setIsTradable] = useState(itemData.isTradable);
-
+  const isEdit = props.itemData;
+  const [selectedCollectionId, setSelectedCollectionId] = useState(collectionId);
+  const [collections, setCollections] = useState([]);
   const setToast = useToastContext();
 
   useEffect(() => {
     if (props.itemData) {
-      const { itemName, itemDescription, images,isTradable } = props.itemData;
+      const { itemName, itemDescription, images, isTradable } = props.itemData;
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
-      setIsTradable(isTradable)
+      setIsTradable(isTradable);
     } else {
       setItemName("");
       setItemDescription("");
       setImages([]);
-      setIsTradable(false)
+      setIsTradable(false);
     }
   }, [props.itemData, location]);
+
+  const loadUserCollections = useCallback(async () => {
+    if (isEdit) {
+      var collections = await getCollections(null, getCurrentUserId(), 0, null);
+      setCollections(
+        collections.map((collection) => {
+          return { value: collection.collectionId, text: collection.collectionName };
+        })
+      );
+    }
+  }, [isEdit, getCurrentUserId]);
+
+  useEffect(() => {
+    loadUserCollections();
+  }, [loadUserCollections]);
 
   const newImageHandler = (newFile) => {
     if (!newFile) {
@@ -103,6 +124,14 @@ const ItemForm = (props) => {
       deletedImageIds,
       isTradable,
     };
+    if (isEdit) {
+      if (!selectedCollectionId) {
+        setToast({ message: "Please select a collection for your item.", color: "danger" });
+        return;
+      }
+      itemToSave.updatedCollection = selectedCollectionId;
+    }
+
     completeHandler(itemToSave);
   };
 
@@ -112,6 +141,9 @@ const ItemForm = (props) => {
     }
     onDelete().then(() => setDeleteConfirm(false));
   };
+
+  const convertCollectionIdToName = (selectedId) =>
+    collections.filter((col) => Number(col.value) === Number(selectedCollectionId))[0]?.text ?? "Unknown";
 
   return (
     <IonList className="item-form">
@@ -145,6 +177,15 @@ const ItemForm = (props) => {
           <IonToggle slot="end" color="primary" checked={isTradable} onIonChange={(e) => setIsTradable(e.detail.checked)} />
         </IonItem>
 
+        <IonRow className="ion-justify-content-start">
+          <SelectButton onChange={setSelectedCollectionId} options={collections} buttonLabel="Select Collection" selectLabel="Collections" />
+          <IonCol>
+            {selectedCollectionId && (
+              <CategoryChip name={convertCollectionIdToName(selectedCollectionId)} onDelete={() => setSelectedCollectionId(null)} />
+            )}
+          </IonCol>
+        </IonRow>
+        <IonRow className="ion-full-width"></IonRow>
         <IonRow className="ion-full-width save-delete-buttons--container">
           {onDelete && (
             <IonCol size={6}>
