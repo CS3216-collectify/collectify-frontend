@@ -1,5 +1,6 @@
 import { IonGrid } from "@ionic/react";
 import { useHistory } from "react-router";
+import { trackViewCollectionEvent } from "../../services/react-ga";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
 import Text from "../text/Text";
 import CollectionCard from "./CollectionCard";
@@ -20,7 +21,14 @@ const CollectionList = (props) => {
     <>
       {collections.map((collection, index) => (
         <div key={index}>
-          <CollectionCard disableChip={disableChip} collection={collection} onClick={() => history.push(`/collections/${collection.collectionId}`)} />
+          <CollectionCard
+            disableChip={disableChip}
+            collection={collection}
+            onClick={() => {
+              trackViewCollectionEvent();
+              history.push(`/collections/${collection.collectionId}`);
+            }}
+          />
         </div>
       ))}
       <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />

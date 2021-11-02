@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { IonContent, IonPage, IonGrid, IonRow, IonItem, IonList, IonCol } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonItem, IonList, IonPage, IonRow } from "@ionic/react";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-
-import "./EditProfile.scss";
-import useToastContext from "../../hooks/useToastContext";
-import TextInput from "../../components/text-input/TextInput";
-import TextArea from "../../components/text-input/TextArea";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import SavingGif from "../../assets/saving.gif";
 import SaveProfileButton from "../../components/button/SaveProfileButton";
 import UploadButton from "../../components/button/UploadButton";
-import { getCurrentUser, updateProfile } from "../../services/users";
-import SavingGif from "../../assets/saving.gif";
 import FlexImage from "../../components/image/FlexImage";
+import TextArea from "../../components/text-input/TextArea";
+import TextInput from "../../components/text-input/TextInput";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import useToastContext from "../../hooks/useToastContext";
+import { trackPageView } from "../../services/react-ga";
+import { getCurrentUser, updateProfile } from "../../services/users";
+import "./EditProfile.scss";
 
 const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
@@ -32,6 +32,10 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(false);
   const [pictureWasUpdated, setPictureWasUpdated] = useState(false);
   const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const validationErrorMessage = (msg) => {
     setToast({ message: msg, color: "danger" });

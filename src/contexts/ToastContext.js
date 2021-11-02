@@ -1,8 +1,8 @@
-import React, { useCallback, useState, createContext } from "react";
 import { IonToast } from "@ionic/react";
+import React, { createContext, useCallback, useState } from "react";
+import { trackDismissToastEvent } from "../services/react-ga";
 
 const ToastContext = createContext();
-
 export default ToastContext;
 
 export const ToastContextProvider = ({ children }) => {
@@ -29,7 +29,10 @@ export const ToastContextProvider = ({ children }) => {
       {children}
       <IonToast
         isOpen={showToast}
-        onDidDismiss={() => setShowToast(false)}
+        onDidDismiss={() => {
+          trackDismissToastEvent();
+          setShowToast(false);
+        }}
         message={toastMessage}
         position={"bottom"}
         duration={2000}

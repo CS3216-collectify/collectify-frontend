@@ -1,4 +1,5 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { trackDiscoverViewItemEvent, trackSearchViewItemEvent } from "../../services/react-ga";
 
 import FlexImage from "../image/FlexImage";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
@@ -15,6 +16,16 @@ const groupElements = (arr, interval) => {
 const ImageGrid = (props) => {
   const { onScrollEnd: fetchNextPage, images = [], listEnded, discover } = props;
 
+  const imgClickHandler = (img) => {
+    if (discover) {
+      trackDiscoverViewItemEvent();
+    } else {
+      trackSearchViewItemEvent();
+    }
+
+    img.clickHandler();
+  };
+
   if (!discover) {
     const groupsOfThree = groupElements(images, 3);
 
@@ -23,7 +34,7 @@ const ImageGrid = (props) => {
         {groupsOfThree.map((grp, idx) => (
           <IonRow key={idx}>
             {grp.map((img, idx) => (
-              <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
+              <IonCol className="clickable" key={idx} size={4} onClick={(img) => imgClickHandler(img)}>
                 <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
               </IonCol>
             ))}

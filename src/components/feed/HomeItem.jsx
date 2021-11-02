@@ -1,16 +1,15 @@
-import "./HomeItem.scss";
-
 import { IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonRow } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
 import { useState } from "react";
 import { useHistory } from "react-router";
-
 import useToastContext from "../../hooks/useToastContext";
 import { likeByItemId, unlikeByItemId } from "../../services/likes";
+import { trackViewCollectionEvent, trackViewItemDetailsEvent, trackViewItemLikesEvent, trackViewItemOwnerEvent } from "../../services/react-ga";
 import { convertUTCtoLocal } from "../../utils/datetime";
 import LikeButton from "../button/LikeButton";
 import ImageCarousel from "../gallery/ImageCarousel";
 import Text from "../text/Text";
+import "./HomeItem.scss";
 
 const HomeItem = (props) => {
   const history = useHistory();
@@ -61,20 +60,25 @@ const HomeItem = (props) => {
   };
 
   const goToItemPage = () => {
+    trackViewItemDetailsEvent();
     history.push(`/collections/${collectionId}/items/${itemId}`);
   };
 
   const goToUserProfilePage = () => {
+    trackViewItemOwnerEvent();
     history.push(`/profile/${ownerUsername}`);
   };
 
   const goToLikesPage = () => {
+    trackViewItemLikesEvent();
     history.push(`/items/${itemId}/likes`);
   };
 
   const goToCollectionPage = () => {
+    trackViewCollectionEvent();
     history.push(`/collections/${collectionId}`);
   };
+
   return (
     <>
       <IonGrid fixed className="ion-padding">
@@ -105,7 +109,9 @@ const HomeItem = (props) => {
           <IonCol size={3}>
             <div className="like-button--container">
               <LikeButton className="item-like-button" liked={liked} onClick={likeHandler} />
-              <Text className="clickable" onClick={goToLikesPage} color="default">{likesCount} likes</Text>
+              <Text className="clickable" onClick={goToLikesPage} color="default">
+                {likesCount} likes
+              </Text>
             </div>
           </IonCol>
         </IonRow>

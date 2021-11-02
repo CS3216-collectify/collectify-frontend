@@ -1,14 +1,14 @@
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
-import { useState } from "react";
-import { useLocation } from "react-router";
+import { IonContent, IonPage } from "@ionic/react";
+import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
+import UploadingGif from "../../assets/uploading.gif";
 import ItemForm from "../../components/form/ItemForm";
 import FlexImage from "../../components/image/FlexImage";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import { postItem } from "../../services/items";
-import UploadingGif from "../../assets/uploading.gif";
-import "./AddItem.scss";
 import useToastContext from "../../hooks/useToastContext";
+import { postItem } from "../../services/items";
+import { trackPageView } from "../../services/react-ga";
+import "./AddItem.scss";
 
 const AddItem = () => {
   const history = useHistory();
@@ -16,6 +16,10 @@ const AddItem = () => {
   // const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const setToast = useToastContext();
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const addCompleteHandler = async (item) => {
     try {

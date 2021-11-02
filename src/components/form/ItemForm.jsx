@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getCollections } from "../../services/collections";
+import { trackDeleteItemEvent } from "../../services/react-ga";
 import ConfirmAlert from "../alert/ConfirmAlert";
 import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
@@ -139,6 +140,7 @@ const ItemForm = (props) => {
     if (!onDelete) {
       return;
     }
+    trackDeleteItemEvent();
     onDelete().then(() => setDeleteConfirm(false));
   };
 

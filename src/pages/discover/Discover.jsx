@@ -1,14 +1,18 @@
-import { useState } from "react";
-
-import { IonContent, IonPage, IonGrid } from "@ionic/react";
-
-import "./Discover.scss";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
-import Search from "../search/Search";
+import { IonContent, IonGrid, IonPage } from "@ionic/react";
+import { useEffect, useState } from "react";
 import DiscoverItems from "../../components/discover-items/DiscoverItems";
+import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import { trackPageView } from "../../services/react-ga";
+import Search from "../search/Search";
+import "./Discover.scss";
 
 const Discover = () => {
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
+
 
   const searchOpenHandler = () => {
     setIsSearchActive(true);
@@ -17,6 +21,10 @@ const Discover = () => {
   const searchCloseHandler = () => {
     setIsSearchActive(false);
   };
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   return (
     <IonPage className="discover">

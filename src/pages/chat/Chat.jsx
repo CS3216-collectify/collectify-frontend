@@ -1,9 +1,10 @@
 import { IonContent, IonLoading, IonPage } from "@ionic/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Channel, ChannelList, Chat } from "stream-chat-react";
 import "stream-chat-react/dist/css/index.css";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useUserContext from "../../hooks/useUserContext";
+import { trackPageView } from "../../services/react-ga";
 import "./Chat.scss";
 import { CreateChannel, CustomMessage, MessagingChannelList, MessagingChannelPreview, MessagingInput, MessagingThreadHeader } from "./components";
 import { ChannelInner } from "./components/ChannelInner/ChannelInner";
@@ -27,6 +28,10 @@ const CollectifyChat = () => {
   const [isMobileNavVisible, setMobileNav] = useState(true);
   const [loading, setLoading] = useState(false);
   const [chatItem, setChatItem] = useState(null);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const mobileChannelListClasses = isMobileNavVisible ? "show" : "";
 
