@@ -38,7 +38,7 @@ const Feed = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, items, pages]);
+  }, [hasMore, items, pages, setToast]);
 
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
@@ -54,7 +54,7 @@ const Feed = (props) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setToast]);
 
   useEffect(() => {
     loadInitialItems();
@@ -66,6 +66,14 @@ const Feed = (props) => {
 
   return (
     <>
+      {items && items.length > 0 && (
+        <div className="home-top-text--container ion-text-center">
+          <Text size="m" className="home-top-text">
+            Recent items from collections you're following 👀
+          </Text>
+        </div>
+      )}
+
       {items &&
         items.length > 0 &&
         items.map((item, idx) => (
