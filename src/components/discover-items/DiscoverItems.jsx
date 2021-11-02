@@ -5,6 +5,7 @@ import useToastContext from "../../hooks/useToastContext";
 import { getFilterCategories } from "../../services/categories";
 import { trackDiscoverFilterEvent, trackDiscoverTradableEvent } from "../../services/react-ga";
 import { getDiscoverItems } from "../../services/search";
+import { getCategoryFilter, removeCategoryFilter, setCategoryFilter } from "../../utils/category";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
@@ -18,7 +19,8 @@ const DiscoverItems = (props) => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const storedCategoryId = parseInt(getCategoryFilter());
+  const [selectedCategory, setSelectedCategory] = useState(storedCategoryId);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
 
@@ -85,10 +87,12 @@ const DiscoverItems = (props) => {
   const changeCategory = (val) => {
     trackDiscoverFilterEvent();
     if (val === null) {
+      removeCategoryFilter();
       setSelectedCategory(null);
       return;
     }
-    setSelectedCategory(Number(val));
+    setCategoryFilter(parseInt(val));
+    setSelectedCategory(parseInt(val));
   }
 
   return (
