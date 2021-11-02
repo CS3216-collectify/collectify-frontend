@@ -56,7 +56,7 @@ const EditItem = () => {
         setTimeout(() => {
           setUploading(false);
           setToast({ message: "Item updated successfully", color: "success" });
-          history.goBack();
+          history.replace(`/collections/${item.updatedCollection}/items/${itemId}`);
         }, 1500);
       });
     } catch (e) {
@@ -95,7 +95,7 @@ const EditItem = () => {
             <FlexImage src={DeletingGif} />
           </div>
         ) : (
-          <ItemForm onComplete={editCompleteHandler} itemData={item} onDelete={deleteHandler} />
+          <ItemForm onComplete={editCompleteHandler} itemData={item} collectionId={collectionId} onDelete={deleteHandler} />
         )}
       </IonContent>
     </IonPage>

@@ -31,7 +31,7 @@ const ProfileCollections = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
-  }, [collections, hasMore, pages, profileUserId]);
+  }, [collections, hasMore, pages, profileUserId, setToast]);
 
   const loadInitialCollections = useCallback(async () => {
     if (!profileUserId) {

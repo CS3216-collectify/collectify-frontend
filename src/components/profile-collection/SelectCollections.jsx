@@ -33,7 +33,7 @@ const SelectCollections = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
-  }, [collections, hasMore, pages, profileUserId]);
+  }, [collections, hasMore, pages, profileUserId, setToast]);
 
   const loadInitialCollections = useCallback(async () => {
     if (!profileUserId) {
@@ -49,7 +49,7 @@ const SelectCollections = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load collections. Please try again later.", color: "danger" });
     }
-  }, [profileUserId]);
+  }, [profileUserId, setToast]);
 
   useEffect(() => {
     if (location.pathname === "/add") {

@@ -47,11 +47,12 @@ export const postItem = async (collectionId, itemData) => {
 
 export const updateItem = async (collectionId, itemId, itemData) => {
   const body = new FormData();
-  const { itemName, itemDescription, images, deletedImageIds, isTradable } = itemData;
+  const { itemName, itemDescription, images, deletedImageIds, isTradable, updatedCollection } = itemData;
   body.append("itemName", itemName);
   body.append("itemDescription", itemDescription);
   body.append("isTradable", isTradable);
-  
+  body.append("updatedCollection", updatedCollection);
+
   for (let i = 0; i < images.length; i++) {
     const { imageUrl, isNew } = images[i];
     if (!isNew) {
