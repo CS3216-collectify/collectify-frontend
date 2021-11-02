@@ -114,9 +114,11 @@ const ProfileToolbar = ({ username, showMenu }) => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
-          <Text size="xl"> {username}</Text>
+        <div className="toolbar--container">
+          <div className="toolbar-title--container">
+            <IonImg className="toolbar-logo" src={Logo} />
+            <Text size="xl"> {username}</Text>
+          </div>
         </div>
 
         <IonButtons slot="start">
@@ -129,8 +131,17 @@ const ProfileToolbar = ({ username, showMenu }) => {
             }
           />
         </IonButtons>
+
         {showMenu && (
           <IonButtons slot="end">
+            <div className="toolbar--container">
+              {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
+                <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+                  <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+                  {unreadMessages > 0 && <div className="chat-unread--mobile" />}
+                </IonButton>
+              )}
+            </div>
             <IonButton
               onClick={(e) =>
                 present({
