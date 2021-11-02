@@ -93,7 +93,7 @@ const CollectionForm = (props) => {
           <TextArea label="Summary" value={collectionDescription} placeholder="Enter collection summary" onChange={setCollectionDescription} />
         </IonItem>
         <IonItem>
-          <IonLabel>Category</IonLabel>
+          <IonLabel position="stacked">Category</IonLabel>
           <IonSelect
             value={categoryId}
             placeholder="Select category"
