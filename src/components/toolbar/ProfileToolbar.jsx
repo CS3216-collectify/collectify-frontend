@@ -116,43 +116,41 @@ const ProfileToolbar = ({ username, showMenu }) => {
       <IonToolbar className="ion-hide-sm-up">
         <div className="toolbar--container">
           <div className="toolbar-title--container">
+            <IonBackButton
+              slot="start"
+              className={
+                location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
+                  ? "ion-hide"
+                  : ""
+              }
+            />
             <IonImg className="toolbar-logo" src={Logo} />
             <Text size="xl"> {username}</Text>
           </div>
-        </div>
 
-        <IonButtons slot="start">
-          {/* <IonBackButton defaultHref="home" /> */}
-          <IonBackButton
-            className={
-              location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
-                ? "ion-hide"
-                : ""
-            }
-          />
-        </IonButtons>
+          <div className="toolbar-buttons" slot="end">
+          {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
+            <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+              <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+              {unreadMessages > 0 && <div className="chat-unread--mobile" />}
+            </IonButton>
+          )}
 
-        {showMenu && (
-          <IonButtons slot="end">
-            <div className="toolbar--container">
-              {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
-                <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
-                  <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
-                  {unreadMessages > 0 && <div className="chat-unread--mobile" />}
-                </IonButton>
-              )}
-            </div>
+          {showMenu && (
             <IonButton
               onClick={(e) =>
                 present({
                   event: e.nativeEvent,
                 })
               }
+              fill="clear"
+              color="medium"
             >
               <IonIcon size="medium" slot="icon-only" icon={ellipsisVertical} />
             </IonButton>
-          </IonButtons>
-        )}
+          )}
+          </div>
+        </div>
       </IonToolbar>
     </IonHeader>
   );

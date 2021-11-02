@@ -57,6 +57,14 @@ const HomeToolbar = ({ title }) => {
       <IonToolbar className="ion-hide-sm-up">
         <div className="toolbar--container">
           <div className="toolbar-title--container">
+            <IonBackButton
+              slot="start"
+              className={
+                location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
+                  ? "ion-hide"
+                  : ""
+              }
+            />
             <IonImg className="toolbar-logo" src={Logo} />
             <Text size="xl"> {title}</Text>
           </div>
@@ -68,17 +76,6 @@ const HomeToolbar = ({ title }) => {
             </IonButton>
           )}
         </div>
-
-        <IonButtons slot="start">
-          {/* <IonBackButton defaultHref="home" /> */}
-          <IonBackButton
-            className={
-              location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
-                ? "ion-hide"
-                : ""
-            }
-          />
-        </IonButtons>
       </IonToolbar>
     </IonHeader>
   );
