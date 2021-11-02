@@ -8,6 +8,7 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import { getCategories } from "../../services/categories";
 import { postCollection } from "../../services/collections";
+import { trackPageView } from "../../services/react-ga";
 
 const AddCollection = () => {
   const history = useHistory();
@@ -15,6 +16,10 @@ const AddCollection = () => {
   const setToast = useToastContext();
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
 
   const addCollectionHandler = async (collection) => {
     try {

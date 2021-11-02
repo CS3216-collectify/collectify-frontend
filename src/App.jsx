@@ -39,11 +39,15 @@ import NotFound from "./pages/not-found/NotFound";
 import Onboarding from "./pages/onboarding/Onboarding";
 import Profile from "./pages/profile/Profile";
 import Settings from "./pages/settings/Settings";
+import { initialiseGoogleAnalytics } from "./services/react-ga";
 /* Theme variables */
 import "./theme/variables.css";
 
 const App = () => {
-  useEffect(() => GoogleAuth.init(), []);
+  useEffect(() => {
+    GoogleAuth.init();
+    initialiseGoogleAnalytics();
+  }, []);
   const { isUserAuthenticated } = useUserContext();
 
   return (

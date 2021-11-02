@@ -1,13 +1,14 @@
 import { IonCol, IonGrid, IonItem, IonList, IonRow } from "@ionic/react";
 import { useEffect, useState } from "react";
-import CategoryChip from "../chip/CategoryChip";
+import useToastContext from "../../hooks/useToastContext";
+import { trackDeleteCollectionEvent } from "../../services/react-ga";
+import ConfirmAlert from "../alert/ConfirmAlert";
+import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
 import SelectButton from "../button/SelectButton";
+import CategoryChip from "../chip/CategoryChip";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
-import useToastContext from "../../hooks/useToastContext";
-import DeleteButton from "../button/DeleteButton";
-import ConfirmAlert from "../alert/ConfirmAlert";
 import "./Form.scss";
 
 const getDefaultCollectionData = () => {
@@ -68,6 +69,7 @@ const CollectionForm = (props) => {
     if (!onDelete) {
       return;
     }
+    trackDeleteCollectionEvent();
     onDelete().then(() => setDeleteConfirm(false));
   };
 

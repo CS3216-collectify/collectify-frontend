@@ -12,8 +12,6 @@ import { getCurrentUser } from "../../services/users";
 import { updateUsername } from "../../services/users";
 import Text from "../../components/text/Text";
 
-// TODO: add redirect?
-// TODO: handle length < 8 and duplciate
 const Onboarding = () => {
   const { isUserAuthenticated } = useUserContext();
   const setToast = useToastContext();

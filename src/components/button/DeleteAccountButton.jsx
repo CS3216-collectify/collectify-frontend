@@ -1,13 +1,13 @@
 import { IonButton } from "@ionic/react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import "./button.scss";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { logoutUser } from "../../utils/auth/actions";
+import { trackDeleteAccountEvent } from "../../services/react-ga";
 import { deleteCurrentUser } from "../../services/users";
+import { logoutUser } from "../../utils/auth/actions";
 import ConfirmAlert from "../alert/ConfirmAlert";
-import { useState } from "react";
+import "./button.scss";
 
 const DeleteAccountButton = () => {
   const history = useHistory();
@@ -18,6 +18,7 @@ const DeleteAccountButton = () => {
   const deleteHandler = async () => {
     try {
       await deleteCurrentUser();
+      trackDeleteAccountEvent();
       logoutUser();
       setToast({ message: "Account was successfully deleted.", color: "success" });
       history.replace("/");

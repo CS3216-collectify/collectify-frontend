@@ -1,6 +1,7 @@
 import { IonChip, IonCol, IonIcon, IonLabel, IonList } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
 import { useHistory } from "react-router";
+import { trackCollectionFollowersEvent } from "../../services/react-ga";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
 import "./CollectionCard.scss";
@@ -18,7 +19,7 @@ const CollectionCard = (props) => {
 
   const goToFollowersList = (e) => {
     e.stopPropagation();
-    console.log(e);
+    trackCollectionFollowersEvent();
     history.push(`/collections/${collectionId}/followers`);
   };
 

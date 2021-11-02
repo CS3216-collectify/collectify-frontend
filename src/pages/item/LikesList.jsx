@@ -5,6 +5,7 @@ import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import UserList from "../../components/user-list/UserList";
 import useToastContext from "../../hooks/useToastContext";
 import { getLikesByItemId } from "../../services/likes";
+import { trackPageView } from "../../services/react-ga";
 
 const LIMIT = 18;
 
@@ -17,6 +18,10 @@ const LikesList = (props) => {
   const [pages, setPages] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, []);
+
   const loadNextPage = useCallback(async () => {
     if (!hasMore) {
       return;
@@ -24,7 +29,7 @@ const LikesList = (props) => {
     try {
       const nextPage = pages + 1;
       const fetchedUsers = await getLikesByItemId(itemId, nextPage * LIMIT, LIMIT);
-      const updatedUsers = [...users, ...fetchedUsers] 
+      const updatedUsers = [...users, ...fetchedUsers];
       const updatedHasMore = fetchedUsers && fetchedUsers.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
@@ -58,15 +63,10 @@ const LikesList = (props) => {
     <IonPage>
       <HomeToolbar title={`Likes`} />
       <IonContent>
-        <UserList 
-          users={users} 
-          onScrollEnded={loadNextPage} 
-          listEnded={loadInitialPage} 
-          emptyMessage="Be the first one to like this item!"
-        />
+        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="Be the first one to like this item!" />
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
 export default LikesList;
