@@ -183,6 +183,7 @@ const ItemForm = (props) => {
           <IonItem>
             <IonLabel position="stacked">Collection</IonLabel>
             <IonSelect
+              className="ion-margin-top"
               value={selectedCollectionId}
               placeholder="Select category"
               onIonChange={(e) => {

@@ -95,6 +95,7 @@ const CollectionForm = (props) => {
         <IonItem>
           <IonLabel position="stacked">Category</IonLabel>
           <IonSelect
+            className="ion-margin-top"
             value={categoryId}
             placeholder="Select category"
             onIonChange={(e) => changeCategory(e.detail.value)}
