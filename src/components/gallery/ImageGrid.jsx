@@ -22,6 +22,7 @@ const ImageGrid = (props) => {
     } else {
       trackSearchViewItemEvent();
     }
+    console.log(img);
     img.clickHandler();
   };
 
