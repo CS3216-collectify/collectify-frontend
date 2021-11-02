@@ -115,7 +115,7 @@ const DiscoverItems = (props) => {
         </div>
 
         <div className="discover-tradable--container">
-          <Text size="s">Tradable items only</Text>
+          <Text size="s">Tradable</Text>
           <IonToggle
             color="primary"
             checked={viewTradable}
