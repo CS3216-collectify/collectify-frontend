@@ -176,12 +176,12 @@ const ItemForm = (props) => {
         </IonItem>
 
         <IonItem lines="full">
-          <IonLabel>Is this item tradable?</IonLabel>
+          <Text size="xs">Is this item tradable?</Text>
           <IonToggle slot="end" color="primary" checked={isTradable} onIonChange={(e) => setIsTradable(e.detail.checked)} />
         </IonItem>
         {isEdit &&
           <IonItem>
-            <IonLabel>Collection</IonLabel>
+            <IonLabel position="stacked">Collection</IonLabel>
             <IonSelect
               value={selectedCollectionId}
               placeholder="Select category"
