@@ -2,6 +2,7 @@ import { IonChip, IonCol, IonIcon, IonLabel, IonList } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
 import { useHistory } from "react-router";
 import { trackCollectionFollowersEvent } from "../../services/react-ga";
+import { setCategoryFilterStore } from "../../utils/store";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
 import "./CollectionCard.scss";
@@ -25,7 +26,8 @@ const CollectionCard = (props) => {
 
   const goToDiscoverWithFilter = (e) => {
     e.stopPropagation();
-    history.push({ pathname: `/discover`, state: { category: categoryId } });
+    setCategoryFilterStore(categoryId);
+    history.replace("/discover");
   };
 
   return (
@@ -53,11 +55,9 @@ const CollectionCard = (props) => {
         </Text>
       </div>
       <div className="profile-collection-categories--container">
-        {/* A collection only has a single category */}
         <div>
           {categoryName && (
-            // <IonChip className={`${disableChip ? 'no-pointer' : ''}`} onClick={(e) => goToDiscoverWithFilter(e)}>
-            <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>
+            <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>
               <IonLabel>{categoryName}</IonLabel>
             </IonChip>
           )}
