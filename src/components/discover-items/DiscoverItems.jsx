@@ -1,10 +1,11 @@
-import { IonButton, IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
+import { IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
-import { getCategories } from "../../services/categories";
+import { getFilterCategories } from "../../services/categories";
 import { trackDiscoverFilterEvent, trackDiscoverTradableEvent } from "../../services/react-ga";
 import { getDiscoverItems } from "../../services/search";
+import { getCategoryFilter, removeCategoryFilter, setCategoryFilter } from "../../utils/category";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
@@ -18,7 +19,8 @@ const DiscoverItems = (props) => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const storedCategoryId = parseInt(getCategoryFilter());
+  const [selectedCategory, setSelectedCategory] = useState(storedCategoryId);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
 
@@ -66,7 +68,7 @@ const DiscoverItems = (props) => {
     const loadCategoryOptions = async () => {
       // setLoading(true);
       try {
-        const options = await getCategories();
+        const options = await getFilterCategories();
         setCategoryOptions(options);
       } catch (e) {
         console.log(e);
@@ -82,6 +84,17 @@ const DiscoverItems = (props) => {
     loadInitialItems();
   }, [loadInitialItems]);
 
+  const changeCategory = (val) => {
+    trackDiscoverFilterEvent();
+    if (val === null) {
+      removeCategoryFilter();
+      setSelectedCategory(null);
+      return;
+    }
+    setCategoryFilter(parseInt(val));
+    setSelectedCategory(parseInt(val));
+  }
+
   return (
     <>
       <div className="discover-filter-tradable--container ion-padding">
@@ -91,24 +104,22 @@ const DiscoverItems = (props) => {
           <IonSelect
             value={selectedCategory}
             placeholder="Select category"
-            onIonChange={(e) => {
-              trackDiscoverFilterEvent();
-              setSelectedCategory(Number(e.detail.value));
-            }}
+            onIonChange={(e) => changeCategory(e.detail.value)}
+            interface="popover"
           >
             <IonSelectOption value={null}>All</IonSelectOption>
 
             {categoryOptions.map((opt, idx) => (
-              <IonSelectOption key={idx} value={opt.categoryId}>
+              <IonSelectOption key={idx} value={opt.categoryId} disabled={opt.isEmpty}>
                 {opt.name}
               </IonSelectOption>
             ))}
-            <IonButton>clear</IonButton>
+            {/* <IonButton>clear</IonButton> */}
           </IonSelect>
         </div>
 
         <div className="discover-tradable--container">
-          <Text size="s">Tradable items only</Text>
+          <Text size="s">Tradable</Text>
           <IonToggle
             color="primary"
             checked={viewTradable}

@@ -1,31 +1,27 @@
+import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonItem, IonList, IonText, IonToolbar, useIonPopover } from "@ionic/react";
 import {
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonItem,
-  IonListHeader,
-  IonList,
-  IonBackButton,
-  IonHeader,
-  useIonPopover,
-  IonText,
-  IonImg,
-} from "@ionic/react";
-import { search, homeOutline, personCircleOutline, settingsOutline, ellipsisVertical, addCircleOutline, chatbubblesOutline } from "ionicons/icons";
+  addCircleOutline,
+  bookmarkOutline,
+  chatbubbleEllipsesOutline,
+  ellipsisVertical,
+  homeOutline,
+  personCircleOutline,
+  search,
+  settingsOutline,
+} from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
+import Logo from "../../assets/favicon.png";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { logoutUser } from "../../utils/auth/actions";
-import Logo from "../../assets/favicon.png";
 import Text from "../text/Text";
+
 const ProfileToolbar = ({ username, showMenu }) => {
   const history = useHistory();
   const location = useLocation();
 
   const setToast = useToastContext();
-  const { isUserAuthenticated, setIsUserAuthenticated } = useUserContext();
+  const { isUserAuthenticated, setIsUserAuthenticated, unreadMessages } = useUserContext();
 
   const logoutHandler = () => {
     logoutUser();
@@ -89,8 +85,14 @@ const ProfileToolbar = ({ username, showMenu }) => {
             <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("chat")}>
-              <IonIcon size="medium" slot="icon-only" icon={chatbubblesOutline} />
+            <IonButton className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+              <IonIcon size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+              {unreadMessages > 0 && <div className="chat-unread" />}
+            </IonButton>
+          )}
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("bookmarks")}>
+              <IonIcon size="medium" slot="icon-only" icon={bookmarkOutline} />
             </IonButton>
           )}
           <IonButton onClick={() => handleButtonClick("profile")}>
@@ -106,34 +108,43 @@ const ProfileToolbar = ({ username, showMenu }) => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
-          <Text size="xl"> {username}</Text>
-        </div>
-
-        <IonButtons slot="start">
-          {/* <IonBackButton defaultHref="home" /> */}
-          <IonBackButton
-            className={
-              location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
-                ? "ion-hide"
-                : ""
-            }
-          />
-        </IonButtons>
-        {showMenu && (
-          <IonButtons slot="end">
-            <IonButton
-              onClick={(e) =>
-                present({
-                  event: e.nativeEvent,
-                })
+        <div className="toolbar--container">
+          <div className="toolbar-title--container">
+            <IonBackButton
+              slot="start"
+              className={
+                location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
+                  ? "ion-hide"
+                  : ""
               }
-            >
-              <IonIcon size="medium" slot="icon-only" icon={ellipsisVertical} />
-            </IonButton>
-          </IonButtons>
-        )}
+            />
+            <IonImg className="toolbar-logo" src={Logo} />
+            <Text size="xl"> {username}</Text>
+          </div>
+
+          <div className="toolbar-buttons" slot="end">
+            {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
+              <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+                <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+                {unreadMessages > 0 && <div className="chat-unread--mobile" />}
+              </IonButton>
+            )}
+
+            {showMenu && (
+              <IonButton
+                onClick={(e) =>
+                  present({
+                    event: e.nativeEvent,
+                  })
+                }
+                fill="clear"
+                color="medium"
+              >
+                <IonIcon size="medium" slot="icon-only" icon={ellipsisVertical} />
+              </IonButton>
+            )}
+          </div>
+        </div>
       </IonToolbar>
     </IonHeader>
   );
