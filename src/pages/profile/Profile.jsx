@@ -190,32 +190,14 @@ const Profile = () => {
           </IonRow>
         </IonGrid>
 
-        {isOwnProfile && ( // Display my collections, liked items, and followed collections
-          <IonGrid fixed className="profile-info--grid">
-            <div id="toggle">
-              <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
-            </div>
-
-            <div id="profile-toggle-content" className="ion-padding">
-              {mode === LIKED_ITEMS_MODE && <LikedItems />}
-              {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
-              {mode === COLLECTIONS_MODE && (
-                <>
-                  <IonRow className="add-collection--container ion-justify-content-end">
-                    <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
-                  </IonRow>
-                  <ProfileCollections profileUserId={profileUserId} />
-                </>
-              )}
-            </div>
-          </IonGrid>
-        )}
-
-        {!isOwnProfile && ( // Just display collections
-          <IonGrid fixed className="ion-padding">
-            <ProfileCollections profileUserId={profileUserId} />
-          </IonGrid>
-        )}
+        <IonGrid fixed className="ion-padding">
+          {isOwnProfile &&
+            <IonRow className="add-collection--container ion-justify-content-end">
+              <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
+            </IonRow>
+          }
+          <ProfileCollections profileUserId={profileUserId} />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
