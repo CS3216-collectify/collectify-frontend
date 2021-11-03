@@ -71,7 +71,6 @@ const SelectCollectionList = (props) => {
             trackAddItemEvent();
             history.push(`/collections/${collection.collectionId}/add`);
           }}
-          isSelect={true}
         />
       ))}
       <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
