@@ -16,7 +16,7 @@ const CATEGORY_COMPARATOR = (curr, compar) => {
 }
 
 const DiscoverItems = (props) => {
-  const { catFilter: selectedCategory, setCatFilter: setSelectedCategory } = props;
+  const { catFilter: categoryFilter, setCatFilter: setCategoryFilter } = props;
   const setToast = useToastContext();
 
   const [items, setItems] = useState([]);
@@ -31,7 +31,7 @@ const DiscoverItems = (props) => {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, selectedCategory, viewTradable);
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, categoryFilter, viewTradable);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);
@@ -39,12 +39,12 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, items, pages, selectedCategory, setToast, viewTradable]);
+  }, [hasMore, items, pages, categoryFilter, setToast, viewTradable]);
 
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
     try {
-      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, selectedCategory, viewTradable);
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, categoryFilter, viewTradable);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems(retrievedItems);
@@ -52,7 +52,7 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [selectedCategory, setToast, viewTradable]);
+  }, [categoryFilter, setToast, viewTradable]);
 
   const fetchNextPage = () => {
     loadItems();
@@ -87,9 +87,9 @@ const DiscoverItems = (props) => {
           <IonSelect
             // Ref: https://github.com/ionic-team/ionic-framework/issues/19324#issuecomment-711472305
             compareWith={CATEGORY_COMPARATOR}
-            value={{ categoryId: selectedCategory }}
+            value={{ categoryId: categoryFilter }}
             placeholder="Select category"
-            onIonChange={(e) => setSelectedCategory(e.detail.value.categoryId)}
+            onIonChange={(e) => setCategoryFilter(e.detail.value.categoryId)}
             interface="popover"
           >
             <IonSelectOption value={{ categoryId: null }}>All</IonSelectOption>
