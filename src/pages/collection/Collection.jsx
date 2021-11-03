@@ -8,7 +8,7 @@ import FollowButton from "../../components/button/FollowButton";
 import UnfollowButton from "../../components/button/UnfollowButton";
 import CollectionItems from "../../components/collection-items/CollectionItems";
 import Text from "../../components/text/Text";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getCollectionByCollectionId } from "../../services/collections";
@@ -129,7 +129,7 @@ const Collection = (props) => {
 
   return (
     <IonPage className="collection">
-      <HomeToolbar title={`Collection`} />
+      <AppToolbar title={`Collection`} />
       <IonContent className="ion-padding">
         <IonGrid fixed>
           <IonRow>

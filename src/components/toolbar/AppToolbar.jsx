@@ -9,19 +9,23 @@ import {
   search,
   settingsOutline,
 } from "ionicons/icons";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router";
 import Logo from "../../assets/favicon.png";
+import Text from "../../components/text/Text";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { logoutUser } from "../../utils/auth/actions";
-import Text from "../text/Text";
+import "./Toolbar.scss";
 
-const ProfileToolbar = ({ username, showMenu }) => {
+const AppToolbar = ({ title, showMenu = false }) => {
   const history = useHistory();
   const location = useLocation();
-
   const setToast = useToastContext();
-  const { isUserAuthenticated, setIsUserAuthenticated, unreadMessages } = useUserContext();
+  const { isUserAuthenticated, unreadMessages, setIsUserAuthenticated } = useUserContext();
+
+  const handleButtonClick = (path) => {
+    history.push(`/${path}`);
+  };
 
   const logoutHandler = () => {
     logoutUser();
@@ -38,7 +42,7 @@ const ProfileToolbar = ({ username, showMenu }) => {
         button
         onClick={() => {
           onHide();
-          history.push("Settings");
+          history.push("/settings");
         }}
       >
         Settings
@@ -59,17 +63,13 @@ const ProfileToolbar = ({ username, showMenu }) => {
 
   const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
-  const handleButtonClick = (path) => {
-    history.push(`/${path}`);
-  };
-
   return (
     <IonHeader>
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
         <div className="toolbar-title--container">
           <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
-          <Text size="xl"> {username}</Text>
+          <Text size="xl"> {title}</Text>
         </div>
 
         <IonButtons slot="end">
@@ -119,17 +119,16 @@ const ProfileToolbar = ({ username, showMenu }) => {
               }
             />
             <IonImg className="toolbar-logo" src={Logo} />
-            <Text size="l"> {username}</Text>
+            <Text size="l"> {title}</Text>
           </div>
 
-          <div className="toolbar-buttons" slot="end">
-            {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
+          <div className={`toolbar-buttons__${showMenu ? "show-menu" : "hide-menu"}`} slot="end">
+            {isUserAuthenticated && !location.pathname.startsWith("/chat") && !location.pathname.startsWith("/settings") && (
               <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
                 <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
                 {unreadMessages > 0 && <div className="chat-unread--mobile" />}
               </IonButton>
             )}
-
             {showMenu && (
               <IonButton
                 onClick={(e) =>
@@ -150,4 +149,4 @@ const ProfileToolbar = ({ username, showMenu }) => {
   );
 };
 
-export default ProfileToolbar;
+export default AppToolbar;

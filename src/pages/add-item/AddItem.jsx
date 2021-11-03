@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 import UploadingGif from "../../assets/uploading.gif";
 import ItemForm from "../../components/form/ItemForm";
 import FlexImage from "../../components/image/FlexImage";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import { postItem } from "../../services/items";
 import { trackPageView } from "../../services/react-ga";
@@ -39,7 +39,7 @@ const AddItem = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Add Item" />
+      <AppToolbar title="Add Item" />
       <IonContent>
         {uploading ? (
           <div className="uploading--container">
