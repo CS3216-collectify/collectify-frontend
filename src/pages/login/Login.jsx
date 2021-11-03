@@ -1,4 +1,4 @@
-import { IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonImg, IonPage, IonRow } from "@ionic/react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
@@ -12,7 +12,9 @@ import { loginGuest } from "../../utils/auth/actions";
 import { hasAccessTokenStored, hasRefreshTokenStored, isGuest } from "../../utils/auth/store";
 import "./Login.scss";
 import LogoGif from "../../assets/logo.gif";
+import LogoTextGif from "../../assets/logo-text.png"
 import FlexImage from "../../components/image/FlexImage";
+import Text from "../../components/text/Text";
 
 const Login = () => {
   const history = useHistory();
@@ -60,6 +62,12 @@ const Login = () => {
         <IonGrid fixed className="login--grid">
           <IonRow className="ion-justify-content-center">
             <FlexImage className="logo" src={LogoGif} />
+          </IonRow>
+          <IonRow className="ion-justify-content-center">
+            <IonImg className="logo-text" src={LogoTextGif} />
+          </IonRow>
+          <IonRow className="ion-justify-content-center ion-margin-top">
+            <Text size="xl">No fluff. Only collections.</Text>
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
             <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
