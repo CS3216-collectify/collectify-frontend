@@ -1,5 +1,13 @@
 import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonToolbar } from "@ionic/react";
-import { addCircleOutline, chatbubbleEllipsesOutline, homeOutline, personCircleOutline, search, settingsOutline } from "ionicons/icons";
+import {
+  addCircleOutline,
+  bookmarkOutline,
+  chatbubbleEllipsesOutline,
+  homeOutline,
+  personCircleOutline,
+  search,
+  settingsOutline,
+} from "ionicons/icons";
 import { useHistory, useLocation } from "react-router";
 import Logo from "../../assets/favicon.png";
 import Text from "../../components/text/Text";
@@ -40,6 +48,11 @@ const HomeToolbar = ({ title }) => {
             <IonButton className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
               <IonIcon size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
               {unreadMessages > 0 && <div className="chat-unread" />}
+            </IonButton>
+          )}
+          {isUserAuthenticated && (
+            <IonButton onClick={() => handleButtonClick("bookmarks")}>
+              <IonIcon size="medium" slot="icon-only" icon={bookmarkOutline} />
             </IonButton>
           )}
           <IonButton onClick={() => handleButtonClick("profile")}>

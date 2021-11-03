@@ -96,10 +96,12 @@ const App = () => {
                   <IonIcon icon={addCircleOutline} />
                   <IonText>Add</IonText>
                 </IonTabButton>
-                <IonTabButton tab="add" href="/add">
-                  <IonIcon icon={bookmarkOutline} />
-                  <IonText>Bookmarks</IonText>
-                </IonTabButton>bookmarkOutline
+                {isUserAuthenticated && (
+                  <IonTabButton tab="add" href="/bookmarks">
+                    <IonIcon icon={bookmarkOutline} />
+                    <IonText>Bookmarks</IonText>
+                  </IonTabButton>
+                )}
                 <IonTabButton tab="user-profile" href="/profile">
                   <IonIcon icon={personCircleOutline} />
                   <IonText>Profile</IonText>
