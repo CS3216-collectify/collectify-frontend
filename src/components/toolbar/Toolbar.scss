@@ -1,5 +1,3 @@
-
-
 .toolbar--container {
   display: flex;
   height: 100%;
@@ -43,5 +41,12 @@
     z-index: 1000;
     top: -4px;
     right: -2px;
+  }
+}
+
+.toolbar-buttons {
+  ion-button {
+    --padding-end: 2px;
+    --padding-start: 2px;
   }
 }

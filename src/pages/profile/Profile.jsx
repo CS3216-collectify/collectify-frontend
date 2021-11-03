@@ -125,8 +125,8 @@ const Profile = () => {
     // is guest user
     return (
       <IonPage className="profile">
-        <IonContent>
-          <ProfileToolbar showMenu={false} username="Guest User" />
+        <ProfileToolbar showMenu={false} username="Guest User" />
+        <IonContent className="ion-padding">
           <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -191,11 +191,11 @@ const Profile = () => {
         </IonGrid>
 
         <IonGrid fixed className="ion-padding">
-          {isOwnProfile &&
+          {isOwnProfile && (
             <IonRow className="add-collection--container ion-justify-content-end">
               <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
-          }
+          )}
           <ProfileCollections profileUserId={profileUserId} />
         </IonGrid>
       </IonContent>

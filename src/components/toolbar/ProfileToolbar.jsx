@@ -119,7 +119,7 @@ const ProfileToolbar = ({ username, showMenu }) => {
               }
             />
             <IonImg className="toolbar-logo" src={Logo} />
-            <Text size="xl"> {username}</Text>
+            <Text size="l"> {username}</Text>
           </div>
 
           <div className="toolbar-buttons" slot="end">

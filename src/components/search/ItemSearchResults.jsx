@@ -62,7 +62,7 @@ const ItemSearchResultDisplay = (props) => {
         listEnded={!hasMore} 
         onScrollEnd={loadNextPage} 
         items={items} 
-        emptyMessage="No matching items found. Try other keywords!"
+        emptyMessage="😵‍💫 No matching items found. Try other keywords!"
       />
     </>
   )

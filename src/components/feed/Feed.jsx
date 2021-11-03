@@ -12,6 +12,7 @@ import { ReactComponent as FollowCollections } from "../../assets/follow-collect
 import DiscoverGif from "../../assets/discover.gif";
 import FlexImage from "../image/FlexImage";
 import useToastContext from "../../hooks/useToastContext";
+import TextBackground from "../text-background/TextBackground";
 
 const LIMIT = 6;
 
@@ -67,10 +68,8 @@ const Feed = (props) => {
   return (
     <>
       {items && items.length > 0 && (
-        <IonGrid fixed className="home-top-text--container ion-text-center">
-          <Text size="m" className="home-top-text">
-            Recent items from collections you're following 👀
-          </Text>
+        <IonGrid fixed className="ion-text-center">
+          <TextBackground size="m" text="Recent items from collections you're following 👀" />
         </IonGrid>
       )}
 
@@ -84,9 +83,9 @@ const Feed = (props) => {
         ))}
       {((items && items.length === 0) || !items) && !hasMore && (
         <div className="ion-text-center ion-padding">
-          <Text size="xl">Start following some collections to stay updated!</Text>
+          <TextBackground size="m" text="Start following some collections to stay updated! 🆕" />
           <IonGrid fixed>
-            <IonRow className="ion-justify-content-center ion-margin-top">
+            <IonRow className="ion-justify-content-center">
               <IonButton size="small" fill="solid" className="discover-button" onClick={() => history.push("/discover")}>
                 <IonLabel>Discover collections</IonLabel>
               </IonButton>

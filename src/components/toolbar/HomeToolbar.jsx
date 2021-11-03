@@ -79,7 +79,7 @@ const HomeToolbar = ({ title }) => {
               }
             />
             <IonImg className="toolbar-logo" src={Logo} />
-            <Text size="xl"> {title}</Text>
+            <Text size="l"> {title}</Text>
           </div>
 
           {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
