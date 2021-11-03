@@ -34,32 +34,32 @@ const HomeToolbar = ({ title }) => {
 
         <IonButtons slot="end">
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("")}>
+            <IonButton title="Home" onClick={() => handleButtonClick("")}>
               <IonIcon size="medium" slot="icon-only" icon={homeOutline} />
             </IonButton>
           )}
-          <IonButton onClick={() => handleButtonClick("discover")}>
+          <IonButton title="Discover" onClick={() => handleButtonClick("discover")}>
             <IonIcon size="medium" slot="icon-only" icon={search} />
           </IonButton>
-          <IonButton onClick={() => handleButtonClick("add")}>
+          <IonButton title="Add Item" onClick={() => handleButtonClick("add")}>
             <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
-            <IonButton className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+            <IonButton title="Chat" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
               <IonIcon size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
               {unreadMessages > 0 && <div className="chat-unread" />}
             </IonButton>
           )}
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("bookmarks")}>
+            <IonButton title="Bookmarks" onClick={() => handleButtonClick("bookmarks")}>
               <IonIcon size="medium" slot="icon-only" icon={bookmarkOutline} />
             </IonButton>
           )}
-          <IonButton onClick={() => handleButtonClick("profile")}>
+          <IonButton title="Profile" onClick={() => handleButtonClick("profile")}>
             <IonIcon size="medium" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("settings")}>
+            <IonButton title="Settings" onClick={() => handleButtonClick("settings")}>
               <IonIcon size="medium" slot="icon-only" icon={settingsOutline} />
             </IonButton>
           )}
