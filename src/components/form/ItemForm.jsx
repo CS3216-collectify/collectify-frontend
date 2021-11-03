@@ -9,7 +9,6 @@ import { trackDeleteItemEvent } from "../../services/react-ga";
 import ConfirmAlert from "../alert/ConfirmAlert";
 import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
-import SelectButton from "../button/SelectButton";
 import UploadButton from "../button/UploadButton";
 import CategoryChip from "../chip/CategoryChip";
 import ImageEditList from "../gallery/ImageEditList";

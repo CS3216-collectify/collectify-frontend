@@ -5,8 +5,6 @@ import { trackDeleteCollectionEvent } from "../../services/react-ga";
 import ConfirmAlert from "../alert/ConfirmAlert";
 import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
-import SelectButton from "../button/SelectButton";
-import CategoryChip from "../chip/CategoryChip";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import Text from "../text/Text";
