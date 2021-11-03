@@ -22,7 +22,12 @@ const Discover = () => {
       if (isSearchActive) {
         setIsSearchActive(false);
       }
-      setCategoryFilter(getCategoryFilterStore());
+      const storedFilter = getCategoryFilterStore();
+      if (storedFilter === categoryFilter) {
+        return;
+      }
+      trackDiscoverFilterEvent();
+      setCategoryFilter(storedFilter);
     }
   }, [location]);
 
