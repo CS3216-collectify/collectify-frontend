@@ -24,6 +24,7 @@ import useUserContext from "./hooks/useUserContext";
 import AddCollection from "./pages/add-collection/AddCollection";
 import AddItem from "./pages/add-item/AddItem";
 import Add from "./pages/add/Add";
+import Bookmarks from "./pages/bookmarks/Bookmarks";
 import CollectifyChat from "./pages/chat/Chat";
 import Collection from "./pages/collection/Collection";
 import FollowersList from "./pages/collection/FollowersList";
@@ -76,6 +77,7 @@ const App = () => {
                 <ProtectedRoute exact path="/chat" component={CollectifyChat} />
                 <Route exact path="/discover" component={Discover} />
                 <Route exact path="/not-found" component={NotFound} />
+                <ProtectedRoute exact path="/bookmarks" component={Bookmarks} />
                 <Redirect to="/" />
               </IonRouterOutlet>
 
