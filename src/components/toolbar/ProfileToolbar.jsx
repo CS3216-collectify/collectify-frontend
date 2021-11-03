@@ -68,9 +68,10 @@ const ProfileToolbar = ({ username, showMenu }) => {
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
         <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
+          <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
           <Text size="xl"> {username}</Text>
         </div>
+
         <IonButtons slot="end">
           {isUserAuthenticated && (
             <IonButton onClick={() => handleButtonClick("")}>
@@ -118,7 +119,7 @@ const ProfileToolbar = ({ username, showMenu }) => {
               }
             />
             <IonImg className="toolbar-logo" src={Logo} />
-            <Text size="xl"> {username}</Text>
+            <Text size="l"> {username}</Text>
           </div>
 
           <div className="toolbar-buttons" slot="end">

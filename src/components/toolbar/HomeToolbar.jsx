@@ -28,8 +28,8 @@ const HomeToolbar = ({ title }) => {
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
         <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
-          <Text size="xl">{title}</Text>
+          <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
+          <Text size="xl"> {title}</Text>
         </div>
 
         <IonButtons slot="end">
@@ -79,7 +79,7 @@ const HomeToolbar = ({ title }) => {
               }
             />
             <IonImg className="toolbar-logo" src={Logo} />
-            <Text size="xl"> {title}</Text>
+            <Text size="l"> {title}</Text>
           </div>
 
           {isUserAuthenticated && !location.pathname.startsWith("/chat") && (

@@ -81,7 +81,7 @@ const HomeItem = (props) => {
 
   return (
     <>
-      <IonGrid fixed className="ion-padding">
+      <IonGrid fixed className="home-item-padding">
         <IonRow className="ion-justify-content-between">
           <IonCol>
             <Text className="clickable" onClick={goToUserProfilePage}>
@@ -98,7 +98,7 @@ const HomeItem = (props) => {
         <ImageCarousel imageUrls={images.map((i) => i.imageUrl)} />
       </IonGrid>
 
-      <IonGrid fixed className="ion-padding">
+      <IonGrid fixed className="home-item-padding">
         <IonRow>
           <IonCol size={9}>
             <Text className="clickable" size="l" onClick={goToItemPage}>

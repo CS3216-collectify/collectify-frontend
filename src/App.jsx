@@ -97,7 +97,7 @@ const App = () => {
                   <IonText>Add</IonText>
                 </IonTabButton>
                 {isUserAuthenticated && (
-                  <IonTabButton tab="add" href="/bookmarks">
+                  <IonTabButton tab="bookmars" href="/bookmarks">
                     <IonIcon icon={bookmarkOutline} />
                     <IonText>Bookmarks</IonText>
                   </IonTabButton>

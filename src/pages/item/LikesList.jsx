@@ -63,7 +63,7 @@ const LikesList = (props) => {
     <IonPage>
       <HomeToolbar title={`Likes`} />
       <IonContent>
-        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="Be the first one to like this item!" />
+        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="Be the first one to like this item! 😍" />
       </IonContent>
     </IonPage>
   );
