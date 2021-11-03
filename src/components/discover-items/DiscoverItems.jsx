@@ -5,7 +5,7 @@ import useToastContext from "../../hooks/useToastContext";
 import { getFilterCategories } from "../../services/categories";
 import { trackDiscoverFilterEvent, trackDiscoverTradableEvent } from "../../services/react-ga";
 import { getDiscoverItems } from "../../services/search";
-import { getCategoryFilter, removeCategoryFilter, setCategoryFilter } from "../../utils/category";
+import { getCategoryFilterStore, removeCategoryFilterStore, setCategoryFilterStore } from "../../utils/store";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
@@ -16,10 +16,14 @@ const DiscoverItems = (props) => {
   const location = useLocation();
   const history = useHistory();
 
+  let storedCategoryId = getCategoryFilterStore();
+  if (storedCategoryId) {
+    storedCategoryId = parseInt(storedCategoryId);
+  }
+
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
-  const storedCategoryId = parseInt(getCategoryFilter());
   const [selectedCategory, setSelectedCategory] = useState(storedCategoryId);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
@@ -87,11 +91,11 @@ const DiscoverItems = (props) => {
   const changeCategory = (val) => {
     trackDiscoverFilterEvent();
     if (val === null) {
-      removeCategoryFilter();
+      removeCategoryFilterStore();
       setSelectedCategory(null);
       return;
     }
-    setCategoryFilter(parseInt(val));
+    setCategoryFilterStore(parseInt(val));
     setSelectedCategory(parseInt(val));
   }
 
