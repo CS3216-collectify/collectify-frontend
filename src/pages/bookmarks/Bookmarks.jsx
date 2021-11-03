@@ -1,10 +1,11 @@
-import { IonContent, IonGrid, IonItemDivider, IonList, IonPage } from "@ionic/react";
+import { IonContent, IonGrid, IonItem, IonItemDivider, IonList, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import LikedItems from "../../components/liked-items/LikedItems";
 import Toggle from "../../components/toggle/Toggle";
 import HomeToolbar from "../../components/toolbar/HomeToolbar";
 import { trackPageView } from "../../services/react-ga";
+import "./Bookmarks.css"
 
 const LIKED_ITEMS_MODE = 1;
 const FOLLOWING_COLLECTIONS_MODE = 2;
@@ -35,9 +36,9 @@ const Bookmarks = () => {
     <IonPage>
       <HomeToolbar title="Bookmarks" />
       <IonContent>
-        <IonGrid fixed>
-          <IonList lines="none">
-            <IonItemDivider sticky>
+        <IonGrid className="bookmarks-wrapper" fixed>
+          <IonList className="ion-no-padding" lines="none">
+            <IonItemDivider className="ion-no-padding" sticky>
               <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
             </IonItemDivider>
             <div className="ion-padding">
