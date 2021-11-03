@@ -67,11 +67,11 @@ const Feed = (props) => {
   return (
     <>
       {items && items.length > 0 && (
-        <div className="home-top-text--container ion-text-center">
+        <IonGrid fixed className="home-top-text--container ion-text-center">
           <Text size="m" className="home-top-text">
             Recent items from collections you're following 👀
           </Text>
-        </div>
+        </IonGrid>
       )}
 
       {items &&
