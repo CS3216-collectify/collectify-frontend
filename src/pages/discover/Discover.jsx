@@ -1,7 +1,7 @@
 import { IonContent, IonGrid, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
 import DiscoverItems from "../../components/discover-items/DiscoverItems";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import { trackPageView } from "../../services/react-ga";
 import Search from "../search/Search";
 import "./Discover.scss";
@@ -28,7 +28,7 @@ const Discover = () => {
 
   return (
     <IonPage className="discover">
-      <HomeToolbar title="Discover" />
+      <AppToolbar title="Discover" />
       <IonContent>
         <IonGrid fixed>
           <Search inactive={!isSearchActive} onFocus={searchOpenHandler} onCancel={searchCloseHandler} />

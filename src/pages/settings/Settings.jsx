@@ -3,7 +3,7 @@ import GoogleLoginButton from "../../components/button/GoogleLoginButton";
 import LogoutButton from "../../components/button/LogoutButton";
 import DeleteAccountButton from "../../components/button/DeleteAccountButton";
 import Text from "../../components/text/Text";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useUserContext from "../../hooks/useUserContext";
 import "./Settings.scss";
 
@@ -14,7 +14,7 @@ const Settings = () => {
 
   return (
     <IonPage className="settings">
-      <HomeToolbar title="Settings" />
+      <AppToolbar title="Settings" />
       <IonContent className="ion-padding ion-text-center">
         <IonGrid fixed>
           <Text size="l">Any feedback or suggestions? Please send us an email!</Text>

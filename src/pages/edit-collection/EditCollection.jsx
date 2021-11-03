@@ -5,7 +5,7 @@ import DeletingGif from "../../assets/deleting.gif";
 import SavingGif from "../../assets/saving.gif";
 import CollectionForm from "../../components/form/CollectionForm";
 import FlexImage from "../../components/image/FlexImage";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getCategories } from "../../services/categories";
@@ -105,7 +105,7 @@ const EditCollection = (props) => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Edit Collection" />
+      <AppToolbar title="Edit Collection" />
       <IonContent>
         {uploading ? (
           <div className="uploading--container">

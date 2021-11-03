@@ -44,9 +44,15 @@
   }
 }
 
-.toolbar-buttons {
+.toolbar-buttons__show-menu {
   ion-button {
     --padding-end: 2px;
+    --padding-start: 2px;
+  }
+}
+.toolbar-buttons__hide-menu {
+  ion-button {
+    --padding-end: 16px;
     --padding-start: 2px;
   }
 }
