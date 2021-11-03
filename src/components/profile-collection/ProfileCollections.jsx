@@ -50,7 +50,7 @@ const ProfileCollections = (props) => {
   }, [profileUserId]);
 
   useEffect(() => {
-    if (location.pathname.startsWith("/profile")) {
+    if (location.pathname.startsWith("/profile") || location.pathname.startsWith("/my-profile")) {
       loadInitialCollections();
     }
   }, [props.profileUserId, location, loadInitialCollections]);

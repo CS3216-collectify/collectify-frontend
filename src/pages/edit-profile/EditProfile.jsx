@@ -67,7 +67,7 @@ const EditProfile = () => {
         setTimeout(() => {
           setUploading(false);
           setToast({ message: "Profile saved!", color: "success" });
-          history.replace("/profile");
+          history.replace("/my-profile");
         }, 1500);
       })
       .catch((e) => {

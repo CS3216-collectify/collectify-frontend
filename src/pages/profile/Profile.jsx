@@ -77,6 +77,7 @@ const Profile = () => {
       setLoading(true);
       if (username) {
         res = await getUserByUsername(username);
+        console.log(res);
       } else if (isUserAuthenticated) {
         res = await getCurrentUser();
       }
@@ -100,7 +101,7 @@ const Profile = () => {
   }, [isUserAuthenticated, setToast, username]);
 
   useEffect(() => {
-    if ((username || isUserAuthenticated) && location.pathname.startsWith("/profile")) {
+    if ((username && location.pathname.startsWith("/profile")) || (isUserAuthenticated &&location.pathname.startsWith("/my-profile"))) {
       getUserInformation();
     }
   }, [isUserAuthenticated, username, location, getUserInformation]);

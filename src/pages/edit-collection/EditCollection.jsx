@@ -93,7 +93,7 @@ const EditCollection = (props) => {
         setTimeout(() => {
           setDeleting(false);
           setToast({ message: "Successfully deleted collection.", color: "success" });
-          history.replace("/profile");
+          history.replace("/my-profile");
         }, 2400);
       });
     } catch (e) {
