@@ -7,7 +7,7 @@ export const getCategories = async () => {
 
 export const getFilterCategories = async () => {
   const params = {
-    getEmpty: true
+    indicateEmpty: true
   }
   const response = await server.get(`/categories/`, { params });
   return response.data;
