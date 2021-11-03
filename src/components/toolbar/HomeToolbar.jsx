@@ -1,5 +1,13 @@
-import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonToolbar, IonBadge } from "@ionic/react";
-import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, search, settingsOutline } from "ionicons/icons";
+import { IonBackButton, IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonToolbar } from "@ionic/react";
+import {
+  addCircleOutline,
+  bookmarkOutline,
+  chatbubbleEllipsesOutline,
+  homeOutline,
+  personCircleOutline,
+  search,
+  settingsOutline,
+} from "ionicons/icons";
 import { useHistory, useLocation } from "react-router";
 import Logo from "../../assets/favicon.png";
 import Text from "../../components/text/Text";
@@ -9,7 +17,7 @@ import "./Toolbar.scss";
 const HomeToolbar = ({ title }) => {
   const history = useHistory();
   const location = useLocation();
-  const { isUserAuthenticated } = useUserContext();
+  const { isUserAuthenticated, unreadMessages } = useUserContext();
 
   const handleButtonClick = (path) => {
     history.push(`/${path}`);
@@ -20,33 +28,38 @@ const HomeToolbar = ({ title }) => {
       {/* Toolbar shown for desktop view */}
       <IonToolbar className="ion-hide-sm-down">
         <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
+          <IonImg className="toolbar-logo" src={Logo} onClick={() => handleButtonClick("")} />
           <Text size="xl"> {title}</Text>
         </div>
 
         <IonButtons slot="end">
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("")}>
+            <IonButton title="Home" onClick={() => handleButtonClick("")}>
               <IonIcon size="medium" slot="icon-only" icon={homeOutline} />
             </IonButton>
           )}
-          <IonButton onClick={() => handleButtonClick("discover")}>
+          <IonButton title="Discover" onClick={() => handleButtonClick("discover")}>
             <IonIcon size="medium" slot="icon-only" icon={search} />
           </IonButton>
-          <IonButton onClick={() => handleButtonClick("add")}>
+          <IonButton title="Add Item" onClick={() => handleButtonClick("add")}>
             <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("chat")}>
-              <IonIcon size="medium" slot="icon-only" icon={chatbubblesOutline} />
-              {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
+            <IonButton title="Chat" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+              <IonIcon size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+              {unreadMessages > 0 && <div className="chat-unread" />}
             </IonButton>
           )}
-          <IonButton onClick={() => handleButtonClick("profile")}>
+          {isUserAuthenticated && (
+            <IonButton title="Bookmarks" onClick={() => handleButtonClick("bookmarks")}>
+              <IonIcon size="medium" slot="icon-only" icon={bookmarkOutline} />
+            </IonButton>
+          )}
+          <IonButton title="Profile" onClick={() => handleButtonClick("profile")}>
             <IonIcon size="medium" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
-            <IonButton onClick={() => handleButtonClick("settings")}>
+            <IonButton title="Settings" onClick={() => handleButtonClick("settings")}>
               <IonIcon size="medium" slot="icon-only" icon={settingsOutline} />
             </IonButton>
           )}
@@ -55,21 +68,27 @@ const HomeToolbar = ({ title }) => {
 
       {/* Toolbar shown for mobile view */}
       <IonToolbar className="ion-hide-sm-up">
-        <div className="toolbar-title--container">
-          <IonImg className="toolbar-logo" src={Logo} />
-          <Text size="xl"> {title}</Text>
-        </div>
+        <div className="toolbar--container">
+          <div className="toolbar-title--container">
+            <IonBackButton
+              slot="start"
+              className={
+                location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
+                  ? "ion-hide"
+                  : ""
+              }
+            />
+            <IonImg className="toolbar-logo" src={Logo} />
+            <Text size="l"> {title}</Text>
+          </div>
 
-        <IonButtons slot="start">
-          {/* <IonBackButton defaultHref="home" /> */}
-          <IonBackButton
-            className={
-              location.pathname === "/home" || location.pathname === "/discover" || location.pathname === "/profile" || location.pathname === "chat"
-                ? "ion-hide"
-                : ""
-            }
-          />
-        </IonButtons>
+          {isUserAuthenticated && !location.pathname.startsWith("/chat") && (
+            <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
+              <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+              {unreadMessages > 0 && <div className="chat-unread--mobile" />}
+            </IonButton>
+          )}
+        </div>
       </IonToolbar>
     </IonHeader>
   );

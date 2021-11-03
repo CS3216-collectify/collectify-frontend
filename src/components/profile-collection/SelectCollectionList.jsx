@@ -39,7 +39,7 @@ const SelectCollectionList = (props) => {
 
   return (
     <>
-      <IonRow>
+      {/* <IonRow>
         <IonButton
           className="add-new-item-button"
           fill="solid"
@@ -51,7 +51,7 @@ const SelectCollectionList = (props) => {
         >
           + Add a new item
         </IonButton>
-      </IonRow>
+      </IonRow> */}
 
       <IonRow>
         <IonButton
@@ -63,17 +63,17 @@ const SelectCollectionList = (props) => {
         </IonButton>
       </IonRow>
 
-      <IonRadioGroup className="select-collection-list" value={collectionId} onIonChange={(e) => setCollectionId(e.detail.value)}>
-        {collections.map((collection, index) => (
-          <div className="radio-collection--container" key={index}>
-            <div className="radio-collection">
-              <IonRadio mode="md" className="collection-radio" value={collection.collectionId} />
-              <CollectionCard collection={collection} />
-            </div>
-          </div>
-        ))}
-        <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
-      </IonRadioGroup>
+      {collections.map((collection, index) => (
+        <CollectionCard
+          collection={collection}
+          key={index}
+          onClick={() => {
+            trackAddItemEvent();
+            history.push(`/collections/${collection.collectionId}/add`);
+          }}
+        />
+      ))}
+      <InfiniteScroll onScrollEnd={fetchNextPage} listEnded={listEnded} />
     </>
   );
 };

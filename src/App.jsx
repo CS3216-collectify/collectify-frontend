@@ -14,7 +14,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
+import { addCircleOutline, bookmarkOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
 import { useEffect } from "react";
 import { Redirect } from "react-router";
 import { Route } from "react-router-dom";
@@ -24,6 +24,7 @@ import useUserContext from "./hooks/useUserContext";
 import AddCollection from "./pages/add-collection/AddCollection";
 import AddItem from "./pages/add-item/AddItem";
 import Add from "./pages/add/Add";
+import Bookmarks from "./pages/bookmarks/Bookmarks";
 import CollectifyChat from "./pages/chat/Chat";
 import Collection from "./pages/collection/Collection";
 import FollowersList from "./pages/collection/FollowersList";
@@ -76,6 +77,7 @@ const App = () => {
                 <ProtectedRoute exact path="/chat" component={CollectifyChat} />
                 <Route exact path="/discover" component={Discover} />
                 <Route exact path="/not-found" component={NotFound} />
+                <ProtectedRoute exact path="/bookmarks" component={Bookmarks} />
                 <Redirect to="/" />
               </IonRouterOutlet>
 
@@ -95,10 +97,9 @@ const App = () => {
                   <IonText>Add</IonText>
                 </IonTabButton>
                 {isUserAuthenticated && (
-                  <IonTabButton tab="d" href="/chat">
-                    <IonIcon icon={chatbubblesOutline} />
-                    <IonText>Chats</IonText>
-                    {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
+                  <IonTabButton tab="bookmarks" href="/bookmarks">
+                    <IonIcon icon={bookmarkOutline} />
+                    <IonText>Bookmarks</IonText>
                   </IonTabButton>
                 )}
                 <IonTabButton tab="user-profile" href="/profile">

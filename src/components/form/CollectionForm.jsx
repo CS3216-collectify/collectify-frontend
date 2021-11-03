@@ -1,4 +1,4 @@
-import { IonCol, IonGrid, IonItem, IonList, IonRow } from "@ionic/react";
+import { IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow, IonSelect, IonSelectOption } from "@ionic/react";
 import { useEffect, useState } from "react";
 import useToastContext from "../../hooks/useToastContext";
 import { trackDeleteCollectionEvent } from "../../services/react-ga";
@@ -9,6 +9,7 @@ import SelectButton from "../button/SelectButton";
 import CategoryChip from "../chip/CategoryChip";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
+import Text from "../text/Text";
 import "./Form.scss";
 
 const getDefaultCollectionData = () => {
@@ -25,7 +26,7 @@ const CollectionForm = (props) => {
 
   useEffect(() => {
     if (props.collectionData) {
-      const { collectionName, collectionDescription, categoryId } = props.collectionData;
+      const { collectionName, collectionDescription, categoryId = null } = props.collectionData;
       setCollectionName(collectionName);
       setCollectionDescription(collectionDescription);
       setCategory(categoryId);
@@ -73,6 +74,8 @@ const CollectionForm = (props) => {
     onDelete().then(() => setDeleteConfirm(false));
   };
 
+  const changeCategory = (val) => setCategory(val === null ? null : parseInt(val));
+
   return (
     <IonList className="collection-form">
       <ConfirmAlert
@@ -89,11 +92,25 @@ const CollectionForm = (props) => {
         <IonItem>
           <TextArea label="Summary" value={collectionDescription} placeholder="Enter collection summary" onChange={setCollectionDescription} />
         </IonItem>
+        <IonItem>
+          <IonLabel position="stacked">Category</IonLabel>
+          <IonSelect
+            className="ion-margin-top"
+            value={categoryId}
+            placeholder="Select category"
+            onIonChange={(e) => changeCategory(e.detail.value)}
+            interface="popover"
+          >
+            <IonSelectOption value={null}>None</IonSelectOption>
+            {categoryOptions.map((opt, idx) => (
+              <IonSelectOption key={idx} value={opt.categoryId}>
+                {opt.name}
+              </IonSelectOption>
+            ))}
+            {/* <IonButton>clear</IonButton> */}
+          </IonSelect>
+        </IonItem>
 
-        <IonRow className="ion-justify-content-start">
-          <SelectButton onChange={setCategory} options={selectOptions} buttonLabel="Select Category" selectLabel="Categories" />
-          <IonCol>{categoryId && <CategoryChip name={convertCategoryIdToName(categoryId)} onDelete={() => setCategory(null)} />}</IonCol>
-        </IonRow>
         <IonRow className="ion-full-width"></IonRow>
 
         <IonRow className="ion-full-width save-delete-buttons--container">

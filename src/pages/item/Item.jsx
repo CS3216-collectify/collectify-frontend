@@ -1,5 +1,5 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow } from "@ionic/react";
-import { chatbubblesOutline, peopleOutline } from "ionicons/icons";
+import { chatbubbleEllipsesOutline, peopleOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import EditButton from "../../components/button/EditButton";
@@ -215,7 +215,7 @@ const Item = () => {
             {!isItemOwner && (
               <IonCol size={3}>
                 <IonButton size="small" onClick={() => openChatWithItem()} className="item-chat-button--container">
-                  <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
+                  <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
                   <IonLabel>Chat</IonLabel>
                 </IonButton>
               </IonCol>

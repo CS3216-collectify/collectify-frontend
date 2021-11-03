@@ -7,10 +7,6 @@
   vertical-align: sub;
 }
 
-.home-item-date {
-  margin-top: 8px;
-}
-
 .home-item-tradable--container {
   color: rgb(10, 51, 161);
   position: absolute;
@@ -19,4 +15,7 @@
   .item-tradable-icon {
     vertical-align: middle;
   }
+}
+.home-item-padding {
+  padding: 8px 16px 8px 16px;
 }
