@@ -65,7 +65,7 @@ const SelectCollections = (props) => {
     <>
       <IonRow className="ion-justify-content-center">
         <Text className="ion-text-center" size="xl">
-          Please select an existing collection or create a new collection to add your item to.
+          Add a collection or tap on a collection to add an item to it
         </Text>
       </IonRow>
       <SelectCollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="Start adding new collections!" />
