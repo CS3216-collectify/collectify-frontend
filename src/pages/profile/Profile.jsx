@@ -77,7 +77,6 @@ const Profile = () => {
       setLoading(true);
       if (username) {
         res = await getUserByUsername(username);
-        console.log(res);
       } else if (isUserAuthenticated) {
         res = await getCurrentUser();
       }

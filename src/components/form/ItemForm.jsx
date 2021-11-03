@@ -58,7 +58,6 @@ const ItemForm = (props) => {
   const loadUserCollections = useCallback(async () => {
     if (isEdit) {
       var collections = await getCollections(null, getCurrentUserId(), 0, null);
-      console.log(collections)
       setCollections(
         collections.map((collection) => {
           return { value: collection.collectionId, text: collection.collectionName };
@@ -187,7 +186,6 @@ const ItemForm = (props) => {
               value={selectedCollectionId}
               placeholder="Select category"
               onIonChange={(e) => {
-                console.log(e.detail.value);
                 setSelectedCollectionId(parseInt(e.detail.value))}}
               interface="popover"
             >
