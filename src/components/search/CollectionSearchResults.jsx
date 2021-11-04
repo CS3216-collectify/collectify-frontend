@@ -62,7 +62,6 @@ const CollectionSearchResultDisplay = (props) => {
         onScrollEnd={loadNextPage} 
         collections={collections} 
         emptyMessage="😵‍💫 No matching collections found. Try other keywords!"
-        disableChip={true}
       />
     </>
   )

@@ -8,7 +8,7 @@ import Text from "../text/Text";
 import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
-  const { collection, disableChip = false } = props;
+  const { collection } = props;
   const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
 
