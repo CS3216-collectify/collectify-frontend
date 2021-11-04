@@ -13,8 +13,10 @@
 
   .big-tile-row--top {
     padding-bottom: 2px;
+    position: relative;
   }
   .big-tile-row--bottom {
+    position: relative;
     padding-top: 2px;
   }
 }
@@ -68,6 +70,7 @@
   height: 40px;
   border-radius: 8px;
   box-shadow: 4px 4px 5px #0000005e;
+  z-index: 20;
 }
 
 .tradable-gif {
@@ -78,4 +81,5 @@
   height: 40px;
   border-radius: 8px;
   box-shadow: 4px 4px 5px #0000005e;
+  z-index: 20;
 }

@@ -58,19 +58,19 @@ const ImageGrid = (props) => {
               <IonCol className="clickable" size={8} onClick={grp[0].clickHandler}>
                 <FlexImage className={grp[0].isTradable ? "tradable-img" : ""} src={grp[0].url} />
                 {grp[0].isTradable && <IonImg className="tradable-gif" src={TradableGif} />}
-                <IonImg className="popular-gif" src={PopularGif} />
+                {grp[0].isPopular && <IonImg className="popular-gif" src={PopularGif} />}
               </IonCol>
 
               <IonCol className="clickable" size={4}>
                 <div className="big-tile-row--top clickable" onClick={grp[1].clickHandler}>
                   <FlexImage className={`${grp[1].isTradable ? "tradable-img" : ""} clickable`} src={grp[1].url} />
                   {grp[1].isTradable && <IonImg className="tradable-gif" src={TradableGif} />}
-                  <IonImg className="popular-gif" src={PopularGif} />
+                  {grp[1].isPopular && <IonImg className="popular-gif" src={PopularGif} />}
                 </div>
                 <div className="big-tile-row--bottom clickable" onClick={grp[2].clickHandler}>
                   <FlexImage className={`${grp[2].isTradable ? "tradable-img" : ""} clickable`} src={grp[2].url} />
                   {grp[2].isTradable && <IonImg className="tradable-gif" src={TradableGif} />}
-                  <IonImg className="popular-gif" src={PopularGif} />
+                  {grp[2].isPopular && <IonImg className="popular-gif" src={PopularGif} />}
                 </div>
               </IonCol>
 
@@ -78,6 +78,7 @@ const ImageGrid = (props) => {
                 <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
                   {img.isTradable && <IonImg className="tradable-gif" src={TradableGif} />}
                   <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
+                  {img.isPopular && <IonImg className="popular-gif" src={PopularGif} />}
                 </IonCol>
               ))}
             </IonRow>
@@ -87,6 +88,7 @@ const ImageGrid = (props) => {
                 <IonCol className="clickable" key={idx} size={4} onClick={img.clickHandler}>
                   {img.isTradable && <IonImg className="tradable-gif" src={TradableGif} />}
                   <FlexImage className={img.isTradable ? "tradable-img" : ""} src={img.url} />
+                  {img.isPopular && <IonImg className="popular-gif" src={PopularGif} />}
                 </IonCol>
               ))}
             </IonRow>
