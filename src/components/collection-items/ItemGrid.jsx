@@ -15,6 +15,7 @@ const ItemGrid = (props) => {
     url: item.coverImage,
     clickHandler: () => goToItemPage(item.collectionId, item.itemId),
     isTradable: item.isTradable,
+    isPopular: item.isPopular,
   }));
 
   if (listEnded && items && items.length === 0 && emptyMessage) {
