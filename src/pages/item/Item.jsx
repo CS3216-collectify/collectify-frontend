@@ -39,6 +39,7 @@ const Item = () => {
   const [likesCount, setLikesCount] = useState(0);
   const [itemCreationDate, setItemCreationDate] = useState("");
   const [isTradable, setIsTradable] = useState("");
+  const [collectionName, setCollectionName] = useState("");
 
   useEffect(() => {
     trackPageView(window.location.pathname);
@@ -48,7 +49,19 @@ const Item = () => {
     setLoading(true);
     try {
       const itemData = await getItemFromCollection(collectionId, itemId);
-      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked, isTradable } = itemData;
+      const { 
+        itemName, 
+        itemDescription, 
+        images, 
+        ownerId, 
+        likesCount, 
+        itemCreationDate, 
+        ownerUsername, 
+        isLiked, 
+        isTradable, 
+        collectionName 
+      } = itemData;
+      setCollectionName(collectionName);
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
@@ -173,6 +186,11 @@ const Item = () => {
 
         <IonGrid fixed className="ion-no-padding">
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
+          <div className="collection-name-wrapper" onClick={goToCollectionPage}>
+            <div className="collection-name">
+              <Text size="xs">{collectionName}</Text>
+            </div>
+          </div>
         </IonGrid>
 
         <IonGrid fixed className="ion-padding">

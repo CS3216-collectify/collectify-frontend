@@ -8,6 +8,7 @@ import { trackViewCollectionEvent, trackViewItemDetailsEvent, trackViewItemLikes
 import { convertUTCtoLocal } from "../../utils/datetime";
 import LikeButton from "../button/LikeButton";
 import ImageCarousel from "../gallery/ImageCarousel";
+import TextBackground from "../text-background/TextBackground";
 import Text from "../text/Text";
 import "./HomeItem.scss";
 
@@ -96,6 +97,11 @@ const HomeItem = (props) => {
 
       <IonGrid fixed className="ion-no-padding">
         <ImageCarousel imageUrls={images.map((i) => i.imageUrl)} />
+        <div className="collection-name-wrapper" onClick={goToCollectionPage}>
+          <div className="collection-name">
+            <Text size="xs">{collectionName}</Text>
+          </div>
+        </div>
       </IonGrid>
 
       <IonGrid fixed className="home-item-padding">
