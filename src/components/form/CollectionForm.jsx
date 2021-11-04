@@ -5,12 +5,16 @@ import { trackDeleteCollectionEvent } from "../../services/react-ga";
 import ConfirmAlert from "../alert/ConfirmAlert";
 import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
-import SelectButton from "../button/SelectButton";
-import CategoryChip from "../chip/CategoryChip";
 import TextArea from "../text-input/TextArea";
 import TextInput from "../text-input/TextInput";
 import Text from "../text/Text";
 import "./Form.scss";
+
+const CATEGORY_COMPARATOR = (curr, compar) => {
+  return curr && compar 
+    ? curr.categoryId === compar.categoryId 
+    : curr === compar;
+}
 
 const getDefaultCollectionData = () => {
   return { collectionName: "", collectionDescription: "", categoryId: null };
@@ -37,8 +41,6 @@ const CollectionForm = (props) => {
     value: cat.categoryId,
     text: cat.name,
   }));
-
-  const convertCategoryIdToName = (selectedId) => categoryOptions.filter((cat) => cat.categoryId === selectedId)[0]?.name ?? "Unknown";
 
   const setToast = useToastContext();
 
@@ -95,15 +97,16 @@ const CollectionForm = (props) => {
         <IonItem>
           <IonLabel position="stacked">Category</IonLabel>
           <IonSelect
+            compareWith={CATEGORY_COMPARATOR}
             className="ion-margin-top"
-            value={categoryId}
+            value={{ categoryId: categoryId }}
             placeholder="Select category"
-            onIonChange={(e) => changeCategory(e.detail.value)}
+            onIonChange={(e) => changeCategory(e.detail.value.categoryId)}
             interface="popover"
           >
-            <IonSelectOption value={null}>None</IonSelectOption>
+            <IonSelectOption value={{ categoryId: null }}>None</IonSelectOption>
             {categoryOptions.map((opt, idx) => (
-              <IonSelectOption key={idx} value={opt.categoryId}>
+              <IonSelectOption key={idx} value={opt}>
                 {opt.name}
               </IonSelectOption>
             ))}

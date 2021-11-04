@@ -20,6 +20,7 @@ import {
   trackPageView,
   trackUnfollowCollectionEvent,
 } from "../../services/react-ga";
+import { setCategoryFilterStore } from "../../utils/store";
 import "./Collection.scss";
 
 const Collection = (props) => {
@@ -124,7 +125,8 @@ const Collection = (props) => {
 
   const goToDiscoverWithFilter = (e) => {
     e.stopPropagation();
-    history.push({ pathname: `/discover`, state: { category: categoryId } });
+    setCategoryFilterStore(categoryId);
+    history.replace("/discover");
   };
 
   return (
@@ -157,7 +159,7 @@ const Collection = (props) => {
           <IonRow className="ion-justify-content-start">
             <IonCol>
               {categoryName && (
-                <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>
+                <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>
                   {categoryName}
                 </IonChip>
               )}
