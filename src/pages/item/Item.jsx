@@ -6,7 +6,7 @@ import EditButton from "../../components/button/EditButton";
 import LikeButton from "../../components/button/LikeButton";
 import ImageCarousel from "../../components/gallery/ImageCarousel";
 import Text from "../../components/text/Text";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getItemFromCollection } from "../../services/items";
@@ -145,7 +145,7 @@ const Item = () => {
 
   return (
     <IonPage className="item">
-      <HomeToolbar title={`Item`} />
+      <AppToolbar title={`Item`} />
       <IonContent>
         <IonGrid fixed className="ion-padding">
           <IonRow>

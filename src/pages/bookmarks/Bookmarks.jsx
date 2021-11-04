@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import LikedItems from "../../components/liked-items/LikedItems";
 import Toggle from "../../components/toggle/Toggle";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import { trackPageView } from "../../services/react-ga";
 import "./Bookmarks.css"
 
@@ -34,7 +34,7 @@ const Bookmarks = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Bookmarks" />
+      <AppToolbar title="Bookmarks" />
       <IonContent>
         <IonGrid className="bookmarks-wrapper" fixed>
           <IonList className="ion-no-padding" lines="none">

@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router";
 import UploadingGif from "../../assets/uploading.gif";
 import CollectionForm from "../../components/form/CollectionForm";
 import FlexImage from "../../components/image/FlexImage";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import { getCategories } from "../../services/categories";
 import { postCollection } from "../../services/collections";
@@ -57,7 +57,7 @@ const AddCollection = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Add Collection" />
+      <AppToolbar title="Add Collection" />
       <IonContent>
         {uploading ? (
           <div className="uploading--container">

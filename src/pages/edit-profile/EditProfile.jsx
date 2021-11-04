@@ -7,7 +7,7 @@ import UploadButton from "../../components/button/UploadButton";
 import FlexImage from "../../components/image/FlexImage";
 import TextArea from "../../components/text-input/TextArea";
 import TextInput from "../../components/text-input/TextInput";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import { trackPageView } from "../../services/react-ga";
 import { getCurrentUser, updateProfile } from "../../services/users";
@@ -67,7 +67,7 @@ const EditProfile = () => {
         setTimeout(() => {
           setUploading(false);
           setToast({ message: "Profile saved!", color: "success" });
-          history.replace("/profile");
+          history.replace("/my-profile");
         }, 1500);
       })
       .catch((e) => {
@@ -120,7 +120,7 @@ const EditProfile = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Edit Profile" />
+      <AppToolbar title="Edit Profile" />
       <IonContent className="ion-padding">
         {uploading ? (
           <div className="uploading--container">

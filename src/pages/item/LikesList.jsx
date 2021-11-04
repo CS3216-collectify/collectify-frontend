@@ -1,7 +1,7 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import UserList from "../../components/user-list/UserList";
 import useToastContext from "../../hooks/useToastContext";
 import { getLikesByItemId } from "../../services/likes";
@@ -61,7 +61,7 @@ const LikesList = (props) => {
 
   return (
     <IonPage>
-      <HomeToolbar title={`Likes`} />
+      <AppToolbar title={`Likes`} />
       <IonContent>
         <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="Be the first one to like this item! 😍" />
       </IonContent>

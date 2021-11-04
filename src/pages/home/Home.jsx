@@ -1,7 +1,7 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useEffect } from "react";
 import Feed from "../../components/feed/Feed";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import { trackPageView } from "../../services/react-ga";
 import "./Home.scss";
 
@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="collectify" />
+      <AppToolbar title="collectify" />
       <IonContent>
         <Feed />
       </IonContent>
