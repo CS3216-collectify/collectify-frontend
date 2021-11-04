@@ -1,5 +1,5 @@
 import { IonBadge, IonIcon, IonTabButton, IonText } from "@ionic/react";
-import { chatbubblesOutline } from "ionicons/icons";
+import { chatbubbleEllipsesOutline } from "ionicons/icons";
 import useUserContext from "../../../hooks/useUserContext";
 
 const ChatTabButton = () => {
@@ -7,7 +7,7 @@ const ChatTabButton = () => {
 
   return (
     <IonTabButton tab="d" href="/chat">
-      <IonIcon icon={chatbubblesOutline} />
+      <IonIcon icon={chatbubbleEllipsesOutline} />
       <IonBadge color="primary">{Number(unreadMessages)}</IonBadge>
       <IonText>Chats</IonText>
     </IonTabButton>

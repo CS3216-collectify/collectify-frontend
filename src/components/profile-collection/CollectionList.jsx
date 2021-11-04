@@ -2,7 +2,7 @@ import { IonGrid } from "@ionic/react";
 import { useHistory } from "react-router";
 import { trackViewCollectionEvent } from "../../services/react-ga";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
-import Text from "../text/Text";
+import TextBackground from "../text-background/TextBackground";
 import CollectionCard from "./CollectionCard";
 
 const CollectionList = (props) => {
@@ -12,7 +12,7 @@ const CollectionList = (props) => {
   if (listEnded && collections && collections.length === 0 && emptyMessage) {
     return (
       <IonGrid className="ion-text-center">
-        <Text size="xl">{emptyMessage}</Text>
+        <TextBackground size="l" text={emptyMessage} />
       </IonGrid>
     );
   }

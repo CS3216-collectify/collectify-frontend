@@ -1,7 +1,7 @@
 import { IonGrid } from "@ionic/react";
 import { useHistory } from "react-router";
 import ImageGrid from "../gallery/ImageGrid";
-import Text from "../text/Text";
+import TextBackground from "../text-background/TextBackground";
 
 const ItemGrid = (props) => {
   const history = useHistory();
@@ -15,12 +15,13 @@ const ItemGrid = (props) => {
     url: item.coverImage,
     clickHandler: () => goToItemPage(item.collectionId, item.itemId),
     isTradable: item.isTradable,
+    isPopular: item.isPopular,
   }));
 
   if (listEnded && items && items.length === 0 && emptyMessage) {
     return (
       <IonGrid className="ion-text-center">
-        <Text size="xl">{emptyMessage}</Text>
+        <TextBackground size="l" text={emptyMessage} />
       </IonGrid>
     );
   }

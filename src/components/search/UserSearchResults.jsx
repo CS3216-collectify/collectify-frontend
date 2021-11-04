@@ -20,7 +20,7 @@ const UserSearchResultDisplay = (props) => {
     try {
       const nextPage = pages + 1;
       const fetchedUsers = await searchUsers(searchText, nextPage * LIMIT, LIMIT);
-      const updatedUsers = [...users, ...fetchedUsers] 
+      const updatedUsers = [...users, ...fetchedUsers];
       const updatedHasMore = fetchedUsers && fetchedUsers.length >= LIMIT;
       setPages(nextPage);
       setHasMore(updatedHasMore);
@@ -55,14 +55,9 @@ const UserSearchResultDisplay = (props) => {
 
   return (
     <>
-      <UserList 
-        listEnded={!hasMore} 
-        onScrollEnd={loadNextPage} 
-        users={users} 
-        emptyMessage="No matching users found. Try another keyword!"
-      />
+      <UserList listEnded={!hasMore} onScrollEnd={loadNextPage} users={users} emptyMessage="😵‍💫 No matching users found. Try another keyword!" />
     </>
-  )
-}
+  );
+};
 
 export default UserSearchResultDisplay;

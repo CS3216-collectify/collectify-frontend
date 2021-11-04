@@ -1,5 +1,6 @@
-import { IonCol, IonGrid, IonItem, IonList, IonRow, IonToggle } from "@ionic/react";
+import { IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
 import { useEffect, useState, useCallback } from "react";
+import { useParams } from "react-router";
 import { useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
@@ -8,7 +9,6 @@ import { trackDeleteItemEvent } from "../../services/react-ga";
 import ConfirmAlert from "../alert/ConfirmAlert";
 import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
-import SelectButton from "../button/SelectButton";
 import UploadButton from "../button/UploadButton";
 import CategoryChip from "../chip/CategoryChip";
 import ImageEditList from "../gallery/ImageEditList";
@@ -24,11 +24,17 @@ const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
 };
 
+const COLLECTION_COMPARATOR = (curr, compar) => {
+  return curr && compar 
+    ? curr.collectionId === compar.collectionId 
+    : curr === compar;
+}
+
 const ItemForm = (props) => {
   const location = useLocation();
   const { getCurrentUserId } = useUserContext();
-
-  const { itemData = getDefaultItemData(), collectionId, onComplete: completeHandler, onDelete } = props;
+  const { collectionId } = useParams()
+  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
@@ -36,7 +42,7 @@ const ItemForm = (props) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [isTradable, setIsTradable] = useState(itemData.isTradable);
   const isEdit = props.itemData;
-  const [selectedCollectionId, setSelectedCollectionId] = useState(collectionId);
+  const [selectedCollectionId, setSelectedCollectionId] = useState(parseInt(collectionId));
   const [collections, setCollections] = useState([]);
   const setToast = useToastContext();
 
@@ -57,12 +63,9 @@ const ItemForm = (props) => {
 
   const loadUserCollections = useCallback(async () => {
     if (isEdit) {
-      var collections = await getCollections(null, getCurrentUserId(), 0, null);
-      setCollections(
-        collections.map((collection) => {
-          return { value: collection.collectionId, text: collection.collectionName };
-        })
-      );
+      // TODO: Need a lightweight endpoint
+      const collections = await getCollections(null, getCurrentUserId(), 0, null);
+      setCollections(collections);
     }
   }, [isEdit, getCurrentUserId]);
 
@@ -164,7 +167,7 @@ const ItemForm = (props) => {
           <TextArea label="Description" value={itemDescription} placeholder="Enter item description" onChange={setItemDescription} />
         </IonItem>
 
-        <IonItem>
+        <IonItem lines="full">
           <div className="add-photos--container">
             <Text size="xs">Photos</Text>
             <ImageEditList images={images} onDelete={deleteImageHandler} />
@@ -174,21 +177,30 @@ const ItemForm = (props) => {
           </div>
         </IonItem>
 
-        <IonItem>
+        <IonItem lines="full">
           <Text size="xs">Is this item tradable?</Text>
           <IonToggle slot="end" color="primary" checked={isTradable} onIonChange={(e) => setIsTradable(e.detail.checked)} />
         </IonItem>
-
-        <IonRow className="ion-justify-content-start">
-          <SelectButton onChange={setSelectedCollectionId} options={collections} buttonLabel="Select Collection" selectLabel="Collections" />
-          <IonCol>
-            {selectedCollectionId && (
-              <CategoryChip name={convertCollectionIdToName(selectedCollectionId)} onDelete={() => setSelectedCollectionId(null)} />
-            )}
-          </IonCol>
-        </IonRow>
-        <IonRow className="ion-full-width"></IonRow>
-        <IonRow className="ion-full-width save-delete-buttons--container">
+        {isEdit &&
+          <IonItem>
+            <IonLabel position="stacked">Collection</IonLabel>
+            <IonSelect
+              compareWith={COLLECTION_COMPARATOR}
+              className="ion-margin-top"
+              value={{ collectionId: selectedCollectionId }}
+              placeholder="Select collection"
+              onIonChange={(e) => setSelectedCollectionId(e.detail.value.collectionId)}
+              interface="popover"
+            >
+              {collections.map((opt, idx) => (
+                <IonSelectOption key={idx} value={opt}>
+                  {opt.collectionName}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
+          </IonItem>
+        }
+        <IonRow className="ion-margin-top ion-full-width save-delete-buttons--container">
           {onDelete && (
             <IonCol size={6}>
               <DeleteButton onClick={() => setDeleteConfirm(true)} />

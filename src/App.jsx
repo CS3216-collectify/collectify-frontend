@@ -14,7 +14,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-import { addCircleOutline, chatbubblesOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
+import { addCircleOutline, bookmarkOutline, homeOutline, personCircleOutline, searchOutline } from "ionicons/icons";
 import { useEffect } from "react";
 import { Redirect } from "react-router";
 import { Route } from "react-router-dom";
@@ -24,6 +24,7 @@ import useUserContext from "./hooks/useUserContext";
 import AddCollection from "./pages/add-collection/AddCollection";
 import AddItem from "./pages/add-item/AddItem";
 import Add from "./pages/add/Add";
+import Bookmarks from "./pages/bookmarks/Bookmarks";
 import CollectifyChat from "./pages/chat/Chat";
 import Collection from "./pages/collection/Collection";
 import FollowersList from "./pages/collection/FollowersList";
@@ -60,7 +61,7 @@ const App = () => {
             <IonTabs>
               <IonRouterOutlet>
                 <ProtectedRoute exact path="/home" component={Home} />
-                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/my-profile" component={Profile} />
                 <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
                 <Route exact path="/profile/:username" component={Profile} />
                 <ProtectedRoute exact path="/settings" component={Settings} />
@@ -76,34 +77,34 @@ const App = () => {
                 <ProtectedRoute exact path="/chat" component={CollectifyChat} />
                 <Route exact path="/discover" component={Discover} />
                 <Route exact path="/not-found" component={NotFound} />
+                <ProtectedRoute exact path="/bookmarks" component={Bookmarks} />
                 <Redirect to="/" />
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom" className={`ion-hide-sm-up`}>
                 {isUserAuthenticated && (
                   <IonTabButton tab="home" href="/home">
-                    <IonIcon icon={homeOutline} />
-                    <IonText>Home</IonText>
+                    <IonIcon size="large" icon={homeOutline} />
+                    {/* <IonText>Home</IonText> */}
                   </IonTabButton>
                 )}
                 <IonTabButton tab="discover" href="/discover">
-                  <IonIcon icon={searchOutline} />
-                  <IonText>Discover</IonText>
+                  <IonIcon size="large" icon={searchOutline} />
+                  {/* <IonText>Discover</IonText> */}
                 </IonTabButton>
                 <IonTabButton tab="add" href="/add">
-                  <IonIcon icon={addCircleOutline} />
-                  <IonText>Add</IonText>
+                  <IonIcon size="large" icon={addCircleOutline} />
+                  {/* <IonText>Add</IonText> */}
                 </IonTabButton>
                 {isUserAuthenticated && (
-                  <IonTabButton tab="d" href="/chat">
-                    <IonIcon icon={chatbubblesOutline} />
-                    <IonText>Chats</IonText>
-                    {/* <IonBadge color="primary">{Number(unreadMessages)}</IonBadge> */}
+                  <IonTabButton tab="bookmarks" href="/bookmarks">
+                    <IonIcon size="large" icon={bookmarkOutline} />
+                    {/* <IonText>Bookmarks</IonText> */}
                   </IonTabButton>
                 )}
-                <IonTabButton tab="user-profile" href="/profile">
-                  <IonIcon icon={personCircleOutline} />
-                  <IonText>Profile</IonText>
+                <IonTabButton tab="user-profile" href="/my-profile">
+                  <IonIcon size="large" icon={personCircleOutline} />
+                  {/* <IonText>Profile</IonText> */}
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>

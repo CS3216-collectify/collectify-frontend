@@ -11,7 +11,7 @@ import LikedItems from "../../components/liked-items/LikedItems";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Text from "../../components/text/Text";
 import Toggle from "../../components/toggle/Toggle";
-import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { trackPageView } from "../../services/react-ga";
@@ -100,7 +100,7 @@ const Profile = () => {
   }, [isUserAuthenticated, setToast, username]);
 
   useEffect(() => {
-    if ((username || isUserAuthenticated) && location.pathname.startsWith("/profile")) {
+    if ((username && location.pathname.startsWith("/profile")) || (isUserAuthenticated &&location.pathname.startsWith("/my-profile"))) {
       getUserInformation();
     }
   }, [isUserAuthenticated, username, location, getUserInformation]);
@@ -125,8 +125,8 @@ const Profile = () => {
     // is guest user
     return (
       <IonPage className="profile">
-        <IonContent>
-          <ProfileToolbar showMenu={false} username="Guest User" />
+        <AppToolbar title="Guest User" />
+        <IonContent className="ion-padding">
           <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -135,7 +135,7 @@ const Profile = () => {
 
   return (
     <IonPage className="profile">
-      <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
+      <AppToolbar showMenu={isOwnProfile} title={profileUsername} />
       <IonContent>
         <IonGrid fixed className="profile--grid ion-padding">
           <IonRow>
@@ -190,32 +190,14 @@ const Profile = () => {
           </IonRow>
         </IonGrid>
 
-        {isOwnProfile && ( // Display my collections, liked items, and followed collections
-          <IonGrid fixed className="profile-info--grid">
-            <div id="toggle">
-              <Toggle value={mode} options={MODE_SELECT_OPTIONS} onChange={toggleMode} />
-            </div>
-
-            <div id="profile-toggle-content" className="ion-padding">
-              {mode === LIKED_ITEMS_MODE && <LikedItems />}
-              {mode === FOLLOWING_COLLECTIONS_MODE && <FollowedCollections />}
-              {mode === COLLECTIONS_MODE && (
-                <>
-                  <IonRow className="add-collection--container ion-justify-content-end">
-                    <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
-                  </IonRow>
-                  <ProfileCollections profileUserId={profileUserId} />
-                </>
-              )}
-            </div>
-          </IonGrid>
-        )}
-
-        {!isOwnProfile && ( // Just display collections
-          <IonGrid fixed className="ion-padding">
-            <ProfileCollections profileUserId={profileUserId} />
-          </IonGrid>
-        )}
+        <IonGrid fixed className="ion-padding">
+          {isOwnProfile && (
+            <IonRow className="add-collection--container ion-justify-content-end">
+              <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
+            </IonRow>
+          )}
+          <ProfileCollections profileUserId={profileUserId} />
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
