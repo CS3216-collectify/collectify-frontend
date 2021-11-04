@@ -9,7 +9,7 @@ import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
   const { collection } = props;
-  const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
+  const { collectionId, ownerUsername, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
 
   const collectionCardOnclick = () => {
@@ -33,9 +33,16 @@ const CollectionCard = (props) => {
   return (
     <IonList className="profile-collection--container ion-margin-bottom clickable" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
-        <Text className="profile-collection--title">
+        <div className="profile-collection--title">
+        <Text>
           <b>{collectionName}</b>
         </Text>
+        </div>
+        <div className="profile-collection--owner">
+          <Text size="xs">
+            by @{ownerUsername}
+          </Text>
+        </div>
       </div>
       <div className="profile-collection--images">
         {coverImages.map((imgUrl, idx) => (
