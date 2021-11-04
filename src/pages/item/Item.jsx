@@ -232,7 +232,7 @@ const Item = () => {
 
             {!isItemOwner && (
               <IonCol size={3}>
-                <IonButton size="small" onClick={() => openChatWithItem()} className="item-chat-button--container">
+                <IonButton onClick={() => openChatWithItem()} className="item-chat-button--container">
                   <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
                   <IonLabel>Chat</IonLabel>
                 </IonButton>
