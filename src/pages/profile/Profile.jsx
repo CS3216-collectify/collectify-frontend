@@ -1,4 +1,5 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow } from "@ionic/react";
+import { chatbubbleEllipsesOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import noProfileImage from "../../assets/no-profile-image.png";
@@ -175,8 +176,9 @@ const Profile = () => {
                 </IonRow>
               )}
               {!isOwnProfile && (
-                <IonButton fill="outline" onClick={chatHandler}>
-                  Chat
+                <IonButton onClick={chatHandler}>
+                  <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
+                  <IonLabel>Chat</IonLabel>
                 </IonButton>
               )}
             </IonCol>
