@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration.ts";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration.js";
 import reportWebVitals from "./reportWebVitals";
 
 import { ToastContextProvider } from "./contexts/ToastContext";
