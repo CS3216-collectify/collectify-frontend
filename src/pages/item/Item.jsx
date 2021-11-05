@@ -1,12 +1,12 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow } from "@ionic/react";
-import { chatbubblesOutline, peopleOutline } from "ionicons/icons";
+import { chatbubbleEllipsesOutline, peopleOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import EditButton from "../../components/button/EditButton";
 import LikeButton from "../../components/button/LikeButton";
 import ImageCarousel from "../../components/gallery/ImageCarousel";
 import Text from "../../components/text/Text";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { getItemFromCollection } from "../../services/items";
@@ -39,6 +39,7 @@ const Item = () => {
   const [likesCount, setLikesCount] = useState(0);
   const [itemCreationDate, setItemCreationDate] = useState("");
   const [isTradable, setIsTradable] = useState("");
+  const [collectionName, setCollectionName] = useState("");
 
   useEffect(() => {
     trackPageView(window.location.pathname);
@@ -48,7 +49,19 @@ const Item = () => {
     setLoading(true);
     try {
       const itemData = await getItemFromCollection(collectionId, itemId);
-      const { itemName, itemDescription, images, ownerId, likesCount, itemCreationDate, ownerUsername, isLiked, isTradable } = itemData;
+      const { 
+        itemName, 
+        itemDescription, 
+        images, 
+        ownerId, 
+        likesCount, 
+        itemCreationDate, 
+        ownerUsername, 
+        isLiked, 
+        isTradable, 
+        collectionName 
+      } = itemData;
+      setCollectionName(collectionName);
       setItemName(itemName);
       setItemDescription(itemDescription);
       setImages(images);
@@ -145,7 +158,7 @@ const Item = () => {
 
   return (
     <IonPage className="item">
-      <HomeToolbar title={`Item`} />
+      <AppToolbar title={`Item`} />
       <IonContent>
         <IonGrid fixed className="ion-padding">
           <IonRow>
@@ -173,6 +186,11 @@ const Item = () => {
 
         <IonGrid fixed className="ion-no-padding">
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
+          <div className="collection-name-wrapper" onClick={goToCollectionPage}>
+            <div className="collection-name">
+              <Text size="xs">{collectionName}</Text>
+            </div>
+          </div>
         </IonGrid>
 
         <IonGrid fixed className="ion-padding">
@@ -214,8 +232,8 @@ const Item = () => {
 
             {!isItemOwner && (
               <IonCol size={3}>
-                <IonButton size="small" onClick={() => openChatWithItem()} className="item-chat-button--container">
-                  <IonIcon icon={chatbubblesOutline} className="item-chat-icon" />
+                <IonButton onClick={() => openChatWithItem()} className="item-chat-button--container">
+                  <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
                   <IonLabel>Chat</IonLabel>
                 </IonButton>
               </IonCol>

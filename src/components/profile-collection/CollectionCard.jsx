@@ -2,13 +2,14 @@ import { IonChip, IonCol, IonIcon, IonLabel, IonList } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
 import { useHistory } from "react-router";
 import { trackCollectionFollowersEvent } from "../../services/react-ga";
+import { setCategoryFilterStore } from "../../utils/store";
 import FlexImage from "../image/FlexImage";
 import Text from "../text/Text";
 import "./CollectionCard.scss";
 
 const CollectionCard = (props) => {
-  const { collection, disableChip = false } = props;
-  const { collectionId, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
+  const { collection } = props;
+  const { collectionId, ownerUsername, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
 
   const collectionCardOnclick = () => {
@@ -25,15 +26,23 @@ const CollectionCard = (props) => {
 
   const goToDiscoverWithFilter = (e) => {
     e.stopPropagation();
-    history.push({ pathname: `/discover`, state: { category: categoryId } });
+    setCategoryFilterStore(categoryId);
+    history.replace("/discover");
   };
 
   return (
     <IonList className="profile-collection--container ion-margin-bottom clickable" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
-        <Text className="profile-collection--title">
+        <div className="profile-collection--title">
+        <Text>
           <b>{collectionName}</b>
         </Text>
+        </div>
+        <div className="profile-collection--owner">
+          <Text size="xs">
+            by @{ownerUsername}
+          </Text>
+        </div>
       </div>
       <div className="profile-collection--images">
         {coverImages.map((imgUrl, idx) => (
@@ -53,11 +62,9 @@ const CollectionCard = (props) => {
         </Text>
       </div>
       <div className="profile-collection-categories--container">
-        {/* A collection only has a single category */}
         <div>
           {categoryName && (
-            // <IonChip className={`${disableChip ? 'no-pointer' : ''}`} onClick={(e) => goToDiscoverWithFilter(e)}>
-            <IonChip className="no-pointer" onClick={(e) => goToDiscoverWithFilter(e)}>
+            <IonChip onClick={(e) => goToDiscoverWithFilter(e)}>
               <IonLabel>{categoryName}</IonLabel>
             </IonChip>
           )}

@@ -1,35 +1,29 @@
 import { IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 import { getFilterCategories } from "../../services/categories";
-import { trackDiscoverFilterEvent, trackDiscoverTradableEvent } from "../../services/react-ga";
+import { trackDiscoverTradableEvent } from "../../services/react-ga";
 import { getDiscoverItems } from "../../services/search";
-import { getCategoryFilter, removeCategoryFilter, setCategoryFilter } from "../../utils/category";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
 const LIMIT = 18;
 
+const CATEGORY_COMPARATOR = (curr, compar) => {
+  return curr && compar 
+    ? curr.categoryId === compar.categoryId 
+    : curr === compar;
+}
+
 const DiscoverItems = (props) => {
+  const { catFilter: categoryFilter, setCatFilter: setCategoryFilter } = props;
   const setToast = useToastContext();
-  const location = useLocation();
-  const history = useHistory();
 
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
-  const storedCategoryId = parseInt(getCategoryFilter());
-  const [selectedCategory, setSelectedCategory] = useState(storedCategoryId);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
-
-  // useEffect(() => {
-  //   if (location.state && location.state.category) {
-  //     setSelectedCategory(location.state.category);
-  //     history.replace({ ...history.location, state: {} });
-  //   }
-  // }, [history, location, selectedCategory]);
 
   const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
@@ -37,7 +31,7 @@ const DiscoverItems = (props) => {
       if (!hasMore) {
         return;
       }
-      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, selectedCategory, viewTradable);
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, categoryFilter, viewTradable);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems([...items, ...retrievedItems]);
@@ -45,12 +39,12 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [hasMore, items, pages, selectedCategory, setToast, viewTradable]);
+  }, [hasMore, items, pages, categoryFilter, setToast, viewTradable]);
 
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
     try {
-      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, selectedCategory, viewTradable);
+      const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, categoryFilter, viewTradable);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
       setItems(retrievedItems);
@@ -58,7 +52,7 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [selectedCategory, setToast, viewTradable]);
+  }, [categoryFilter, setToast, viewTradable]);
 
   const fetchNextPage = () => {
     loadItems();
@@ -84,17 +78,6 @@ const DiscoverItems = (props) => {
     loadInitialItems();
   }, [loadInitialItems]);
 
-  const changeCategory = (val) => {
-    trackDiscoverFilterEvent();
-    if (val === null) {
-      removeCategoryFilter();
-      setSelectedCategory(null);
-      return;
-    }
-    setCategoryFilter(parseInt(val));
-    setSelectedCategory(parseInt(val));
-  }
-
   return (
     <>
       <div className="discover-filter-tradable--container ion-padding">
@@ -102,19 +85,19 @@ const DiscoverItems = (props) => {
           <Text size="s">Filter by category</Text>
 
           <IonSelect
-            value={selectedCategory}
+            // Ref: https://github.com/ionic-team/ionic-framework/issues/19324#issuecomment-711472305
+            compareWith={CATEGORY_COMPARATOR}
+            value={{ categoryId: categoryFilter }}
             placeholder="Select category"
-            onIonChange={(e) => changeCategory(e.detail.value)}
+            onIonChange={(e) => setCategoryFilter(e.detail.value.categoryId)}
             interface="popover"
           >
-            <IonSelectOption value={null}>All</IonSelectOption>
-
+            <IonSelectOption value={{ categoryId: null }}>All</IonSelectOption>
             {categoryOptions.map((opt, idx) => (
-              <IonSelectOption key={idx} value={opt.categoryId} disabled={opt.isEmpty}>
+              <IonSelectOption key={idx} value={opt} disabled={opt.isEmpty}>
                 {opt.name}
               </IonSelectOption>
             ))}
-            {/* <IonButton>clear</IonButton> */}
           </IonSelect>
         </div>
 

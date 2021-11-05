@@ -1,7 +1,7 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import UserList from "../../components/user-list/UserList";
 import useToastContext from "../../hooks/useToastContext";
 import { getFollowersByCollectionId } from "../../services/followers";
@@ -62,9 +62,9 @@ const FollowersList = (props) => {
 
   return (
     <IonPage>
-      <HomeToolbar title={`Followers`} />
+      <AppToolbar title={`Followers`} />
       <IonContent>
-        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one is following this collection" />
+        <UserList users={users} onScrollEnded={loadNextPage} listEnded={loadInitialPage} emptyMessage="No one is following this collection 🤕" />
       </IonContent>
     </IonPage>
   );

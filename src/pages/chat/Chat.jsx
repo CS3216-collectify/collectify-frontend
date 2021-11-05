@@ -2,7 +2,7 @@ import { IonContent, IonLoading, IonPage } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { Channel, ChannelList, Chat } from "stream-chat-react";
 import "stream-chat-react/dist/css/index.css";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useUserContext from "../../hooks/useUserContext";
 import { trackPageView } from "../../services/react-ga";
 import "./Chat.scss";
@@ -40,7 +40,7 @@ const CollectifyChat = () => {
   if (!chatClient || loading) {
     return (
       <IonPage>
-        <HomeToolbar title="Chat" />
+        <AppToolbar title="Chat" />
         <IonContent class="chat-content">
           <IonLoading isOpen={true} />
         </IonContent>
@@ -57,7 +57,7 @@ const CollectifyChat = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Chat" />
+      <AppToolbar title="Chat" />
       <IonContent class="chat-content">
         <Chat client={chatClient} theme="messaging light">
           <div id="mobile-channel-list" className={mobileChannelListClasses}>

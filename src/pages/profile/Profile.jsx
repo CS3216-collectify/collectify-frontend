@@ -1,4 +1,5 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow } from "@ionic/react";
+import { chatbubbleEllipsesOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import noProfileImage from "../../assets/no-profile-image.png";
@@ -11,7 +12,7 @@ import LikedItems from "../../components/liked-items/LikedItems";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Text from "../../components/text/Text";
 import Toggle from "../../components/toggle/Toggle";
-import ProfileToolbar from "../../components/toolbar/ProfileToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { trackPageView } from "../../services/react-ga";
@@ -65,11 +66,6 @@ const Profile = () => {
 
   const isOwnProfile = isCurrentUser(profileUserId);
 
-  const toggleMode = (mode) => {
-    setMode(parseInt(mode));
-    document.getElementById("toggle").scrollIntoView({ behavior: "smooth" });
-  };
-
   // TODO: add api call for username
   const getUserInformation = useCallback(async () => {
     try {
@@ -100,7 +96,7 @@ const Profile = () => {
   }, [isUserAuthenticated, setToast, username]);
 
   useEffect(() => {
-    if ((username || isUserAuthenticated) && location.pathname.startsWith("/profile")) {
+    if ((username && location.pathname.startsWith("/profile")) || (isUserAuthenticated &&location.pathname.startsWith("/my-profile"))) {
       getUserInformation();
     }
   }, [isUserAuthenticated, username, location, getUserInformation]);
@@ -125,8 +121,8 @@ const Profile = () => {
     // is guest user
     return (
       <IonPage className="profile">
-        <IonContent>
-          <ProfileToolbar showMenu={false} username="Guest User" />
+        <AppToolbar title="Guest User" />
+        <IonContent className="ion-padding">
           <GuestLoginPrompt />
         </IonContent>
       </IonPage>
@@ -135,7 +131,7 @@ const Profile = () => {
 
   return (
     <IonPage className="profile">
-      <ProfileToolbar showMenu={isOwnProfile} username={profileUsername} />
+      <AppToolbar showMenu={isOwnProfile} title={profileUsername} />
       <IonContent>
         <IonGrid fixed className="profile--grid ion-padding">
           <IonRow>
@@ -175,8 +171,9 @@ const Profile = () => {
                 </IonRow>
               )}
               {!isOwnProfile && (
-                <IonButton fill="outline" onClick={chatHandler}>
-                  Chat
+                <IonButton onClick={chatHandler}>
+                  <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
+                  <IonLabel>Chat</IonLabel>
                 </IonButton>
               )}
             </IonCol>
@@ -191,11 +188,11 @@ const Profile = () => {
         </IonGrid>
 
         <IonGrid fixed className="ion-padding">
-          {isOwnProfile &&
+          {/* {isOwnProfile && (
             <IonRow className="add-collection--container ion-justify-content-end">
               <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
-          }
+          )} */}
           <ProfileCollections profileUserId={profileUserId} />
         </IonGrid>
       </IonContent>

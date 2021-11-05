@@ -9,7 +9,6 @@ import { trackDeleteItemEvent } from "../../services/react-ga";
 import ConfirmAlert from "../alert/ConfirmAlert";
 import DeleteButton from "../button/DeleteButton";
 import SaveButton from "../button/SaveButton";
-import SelectButton from "../button/SelectButton";
 import UploadButton from "../button/UploadButton";
 import CategoryChip from "../chip/CategoryChip";
 import ImageEditList from "../gallery/ImageEditList";
@@ -25,10 +24,17 @@ const getDefaultItemData = () => {
   return { itemData: "", itemDescription: "", images: [] };
 };
 
+const COLLECTION_COMPARATOR = (curr, compar) => {
+  return curr && compar 
+    ? curr.collectionId === compar.collectionId 
+    : curr === compar;
+}
+
 const ItemForm = (props) => {
   const location = useLocation();
   const { getCurrentUserId } = useUserContext();
-  const { itemData = getDefaultItemData(), collectionId, onComplete: completeHandler, onDelete } = props;
+  const { collectionId } = useParams()
+  const { itemData = getDefaultItemData(), onComplete: completeHandler, onDelete } = props;
   const [itemName, setItemName] = useState(itemData.itemName);
   const [itemDescription, setItemDescription] = useState(itemData.itemDescription);
   const [images, setImages] = useState(itemData.images);
@@ -57,13 +63,9 @@ const ItemForm = (props) => {
 
   const loadUserCollections = useCallback(async () => {
     if (isEdit) {
-      var collections = await getCollections(null, getCurrentUserId(), 0, null);
-      console.log(collections)
-      setCollections(
-        collections.map((collection) => {
-          return { value: collection.collectionId, text: collection.collectionName };
-        })
-      );
+      // TODO: Need a lightweight endpoint
+      const collections = await getCollections(null, getCurrentUserId(), 0, null);
+      setCollections(collections);
     }
   }, [isEdit, getCurrentUserId]);
 
@@ -183,17 +185,16 @@ const ItemForm = (props) => {
           <IonItem>
             <IonLabel position="stacked">Collection</IonLabel>
             <IonSelect
+              compareWith={COLLECTION_COMPARATOR}
               className="ion-margin-top"
-              value={selectedCollectionId}
-              placeholder="Select category"
-              onIonChange={(e) => {
-                console.log(e.detail.value);
-                setSelectedCollectionId(parseInt(e.detail.value))}}
+              value={{ collectionId: selectedCollectionId }}
+              placeholder="Select collection"
+              onIonChange={(e) => setSelectedCollectionId(e.detail.value.collectionId)}
               interface="popover"
             >
               {collections.map((opt, idx) => (
-                <IonSelectOption key={idx} value={opt.value}>
-                  {opt.text}
+                <IonSelectOption key={idx} value={opt}>
+                  {opt.collectionName}
                 </IonSelectOption>
               ))}
             </IonSelect>

@@ -5,7 +5,7 @@ import DeletingGif from "../../assets/deleting.gif";
 import SavingGif from "../../assets/saving.gif";
 import ItemForm from "../../components/form/ItemForm";
 import FlexImage from "../../components/image/FlexImage";
-import HomeToolbar from "../../components/toolbar/HomeToolbar";
+import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
 import { deleteItem, getItemFromCollection, updateItem } from "../../services/items";
@@ -89,7 +89,7 @@ const EditItem = () => {
 
   return (
     <IonPage>
-      <HomeToolbar title="Edit Item" />
+      <AppToolbar title="Edit Item" />
       <IonContent>
         {uploading ? (
           <div className="uploading--container">
