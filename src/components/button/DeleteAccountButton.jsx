@@ -21,12 +21,12 @@ const DeleteAccountButton = () => {
       trackDeleteAccountEvent();
       logoutUser();
       setToast({ message: "Account was successfully deleted.", color: "success" });
-      history.replace("/");
       setIsUserAuthenticated(false);
-    } catch (e) {
-      setToast({ message: "Account deletion failed. Please try again later.", color: "danger" });
-    } finally {
       setDeleteConfirm(false);
+      history.replace("/");
+    } catch (e) {
+      setDeleteConfirm(false);
+      setToast({ message: "Account deletion failed. Please try again later.", color: "danger" });
     }
   };
 
