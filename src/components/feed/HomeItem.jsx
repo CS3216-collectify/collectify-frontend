@@ -97,7 +97,7 @@ const HomeItem = (props) => {
 
       <IonGrid fixed className="ion-no-padding">
         <ImageCarousel imageUrls={images.map((i) => i.imageUrl)} />
-        <div className="collection-name-wrapper" onClick={goToCollectionPage}>
+        <div className="collection-name-wrapper">
           <div className="collection-name">
             <Text size="xs">{collectionName}</Text>
           </div>
