@@ -95,7 +95,7 @@ const AppToolbar = ({ title, showMenu = false }) => {
               <IonIcon size="large" slot="icon-only" icon={bookmarkOutline} />
             </IonButton>
           )}
-          <IonButton title="Profile" onClick={() => handleButtonClick("profile")}>
+          <IonButton title="Profile" onClick={() => handleButtonClick("my-profile")}>
             <IonIcon size="large" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
