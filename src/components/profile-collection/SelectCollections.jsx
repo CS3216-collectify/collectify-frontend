@@ -1,4 +1,5 @@
-import { IonButton, IonRow } from "@ionic/react";
+import { IonButton, IonIcon, IonRow } from "@ionic/react";
+import { addOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
@@ -69,7 +70,8 @@ const SelectCollections = (props) => {
           fill="outline"
           onClick={() => history.push({ pathname: "/add-collections", state: { redirectToAdd: true } })}
         >
-          + New Collection
+          <IonIcon className="add-icon" icon={addOutline} />
+          New Collection
         </IonButton>
       </IonRow>
       <SelectCollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="Start adding new collections!" />
