@@ -7,6 +7,26 @@
   vertical-align: sub;
 }
 
+.collection-name-wrapper {
+  position: relative;
+}
+
+.collection-name {
+  position: absolute;
+  z-index: 30;
+  bottom: 20px;
+  right: 8px;
+  border-radius: 8px;
+  max-width: 50%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  background-color: rgba(231, 233, 255, 0.7);
+  padding: 0 5px;
+  border-radius: 6px;
+}
+
 .home-item-tradable--container {
   color: rgb(10, 51, 161);
   position: absolute;

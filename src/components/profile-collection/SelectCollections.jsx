@@ -1,15 +1,16 @@
-import { IonRow } from "@ionic/react";
+import { IonButton, IonIcon, IonRow } from "@ionic/react";
+import { addOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 import { getCollections } from "../../services/collections";
-import Text from "../text/Text";
 import SelectCollectionList from "./SelectCollectionList";
-
+import "./SelectCollections.scss";
 
 const LIMIT = 6;
 
 const SelectCollections = (props) => {
+  const history = useHistory();
   const location = useLocation();
   const setToast = useToastContext();
   const [collections, setCollections] = useState([]);
@@ -63,10 +64,15 @@ const SelectCollections = (props) => {
 
   return (
     <>
-      <IonRow className="ion-justify-content-center">
-        <Text className="ion-text-center" size="xl">
-          Add a collection or tap on a collection to add an item to it
-        </Text>
+      <IonRow>
+        <IonButton
+          className="add-new-collection-button"
+          fill="outline"
+          onClick={() => history.push({ pathname: "/add-collections", state: { redirectToAdd: true } })}
+        >
+          <IonIcon className="add-icon" icon={addOutline} />
+          New Collection
+        </IonButton>
       </IonRow>
       <SelectCollectionList onScrollEnd={fetchNextPage} listEnded={!hasMore} collections={collections} emptyMessage="Start adding new collections!" />
     </>

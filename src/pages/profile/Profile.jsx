@@ -1,4 +1,5 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonPage, IonRow } from "@ionic/react";
+import { chatbubbleEllipsesOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import noProfileImage from "../../assets/no-profile-image.png";
@@ -64,11 +65,6 @@ const Profile = () => {
   }, []);
 
   const isOwnProfile = isCurrentUser(profileUserId);
-
-  const toggleMode = (mode) => {
-    setMode(parseInt(mode));
-    document.getElementById("toggle").scrollIntoView({ behavior: "smooth" });
-  };
 
   // TODO: add api call for username
   const getUserInformation = useCallback(async () => {
@@ -175,8 +171,9 @@ const Profile = () => {
                 </IonRow>
               )}
               {!isOwnProfile && (
-                <IonButton fill="outline" onClick={chatHandler}>
-                  Chat
+                <IonButton onClick={chatHandler}>
+                  <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
+                  <IonLabel>Chat</IonLabel>
                 </IonButton>
               )}
             </IonCol>
@@ -191,11 +188,11 @@ const Profile = () => {
         </IonGrid>
 
         <IonGrid fixed className="ion-padding">
-          {isOwnProfile && (
+          {/* {isOwnProfile && (
             <IonRow className="add-collection--container ion-justify-content-end">
               <AddButton className="add-collection-button" label="Collection" onClick={() => history.push("/add-collections")} />
             </IonRow>
-          )}
+          )} */}
           <ProfileCollections profileUserId={profileUserId} />
         </IonGrid>
       </IonContent>
