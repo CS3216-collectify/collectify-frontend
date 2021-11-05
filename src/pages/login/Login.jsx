@@ -44,7 +44,6 @@ const Login = () => {
     } else if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_ONBOARD) {
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
-      history.replace("/onboarding");
     } else {
       // error
       setToast({ message: "Google authentication failed. Please try again.", color: "danger" });
@@ -67,7 +66,7 @@ const Login = () => {
             <IonImg className="logo-text" src={LogoTextGif} />
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
-            <Text size="xl">No fluff. Only collections.</Text>
+            <Text size="xl">no fluff, only collections.</Text>
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
             <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
