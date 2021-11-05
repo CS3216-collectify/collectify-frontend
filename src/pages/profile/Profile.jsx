@@ -114,7 +114,7 @@ const Profile = () => {
       <AppToolbar showMenu={isOwnProfile} title={profileUsername} />
       <IonContent>
         <IonGrid fixed className="profile--grid ion-padding">
-          <IonRow className="ion-justify-content-evenly">
+          <IonRow className="ion-justify-content-evenly ion-margin-bottom">
             <IonCol size={4}>
               <FlexImage className="profile--img" src={profileProfilePicture || noProfileImage} />
             </IonCol>
