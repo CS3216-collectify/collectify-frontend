@@ -66,8 +66,10 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 40px;
-  height: 40px;
+  width: 20%;
+  height: 20%;
+  max-width: 34px;
+  max-height: 34px;
   border-radius: 8px;
   box-shadow: 4px 4px 5px #0000005e;
   z-index: 20;
@@ -77,8 +79,12 @@
   position: absolute;
   bottom: 8px;
   left: 8px;
-  width: 40px;
-  height: 40px;
+  padding: 4px;
+  background-color: #D5DEFF;
+  width: 20%;
+  height: 20%;
+  max-width: 34px;
+  max-height: 34px;
   border-radius: 8px;
   box-shadow: 4px 4px 5px #0000005e;
   z-index: 20;
