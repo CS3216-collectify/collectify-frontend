@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { trackAddCollectionEvent, trackAddItemEvent } from "../../services/react-ga";
 import InfiniteScroll from "../infinite-scroll/InfiniteScroll";
+import TextBackground from "../text-background/TextBackground";
+import Text from "../text/Text";
 import CollectionCard from "./CollectionCard";
 import "./SelectCollectionList.scss";
 
@@ -21,17 +23,8 @@ const SelectCollectionList = (props) => {
   if (listEnded && collections && collections.length === 0 && emptyMessage) {
     return (
       <>
-        <IonRow>
-          <IonButton
-            className="add-new-collection-button"
-            fill="outline"
-            onClick={() => {
-              trackAddCollectionEvent();
-              history.push({ pathname: "/add-collections", state: { redirectToAdd: true } });
-            }}
-          >
-            + Add a new collection
-          </IonButton>
+        <IonRow className="ion-justify-content-center add-new-collection-text">
+          <TextBackground text="You have no collections yet 🥺" size="l" />
         </IonRow>
       </>
     );
@@ -39,28 +32,10 @@ const SelectCollectionList = (props) => {
 
   return (
     <>
-      {/* <IonRow>
-        <IonButton
-          className="add-new-item-button"
-          fill="solid"
-          onClick={() => {
-            trackAddItemEvent();
-            history.push(`/collections/${collectionId}/add`);
-          }}
-          disabled={collectionId === null}
-        >
-          + Add a new item
-        </IonButton>
-      </IonRow> */}
-
-      <IonRow>
-        <IonButton
-          className="add-new-collection-button"
-          fill="outline"
-          onClick={() => history.push({ pathname: "/add-collections", state: { redirectToAdd: true } })}
-        >
-          + Add a new collection
-        </IonButton>
+      <IonRow className="ion-justify-content-center add-new-collection-text">
+        <Text className="ion-text-center" size="l">
+          Tap on a collection to add an item:
+        </Text>
       </IonRow>
 
       {collections.map((collection, index) => (

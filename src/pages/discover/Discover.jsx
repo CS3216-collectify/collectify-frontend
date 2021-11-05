@@ -39,6 +39,10 @@ const Discover = () => {
     setIsSearchActive(false);
   };
 
+  useEffect(() => {
+    setTimeout(() => document.getElementById("discover-content").scrollToTop(900), 100);
+  }, [categoryFilter]);
+
   const changeCategory = (val) => {
     if (val === categoryFilter) {
       return;
@@ -55,7 +59,7 @@ const Discover = () => {
   return (
     <IonPage className="discover">
       <AppToolbar title="Discover" />
-      <IonContent>
+      <IonContent id="discover-content">
         <IonGrid fixed>
           <Search inactive={!isSearchActive} onFocus={searchOpenHandler} onCancel={searchCloseHandler} />
 
