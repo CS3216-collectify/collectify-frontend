@@ -44,6 +44,7 @@ const Login = () => {
     } else if (googleAuthStatus === GoogleAuthStatus.GOOGLE_AUTH_ONBOARD) {
       setToast({ message: "Google authentication successful!", color: "success" });
       setIsUserAuthenticated(true);
+      history.replace("/onboarding");
     } else {
       // error
       setToast({ message: "Google authentication failed. Please try again.", color: "danger" });
