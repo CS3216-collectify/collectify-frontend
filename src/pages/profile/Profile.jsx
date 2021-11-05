@@ -3,15 +3,11 @@ import { chatbubbleEllipsesOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import noProfileImage from "../../assets/no-profile-image.png";
-import AddButton from "../../components/button/AddButton";
 import EditProfileButton from "../../components/button/EditProfileButton";
-import FollowedCollections from "../../components/followed-collections/FollowedCollections";
 import GuestLoginPrompt from "../../components/guest-login-prompt/GuestLoginPrompt";
 import FlexImage from "../../components/image/FlexImage";
-import LikedItems from "../../components/liked-items/LikedItems";
 import ProfileCollections from "../../components/profile-collection/ProfileCollections";
 import Text from "../../components/text/Text";
-import Toggle from "../../components/toggle/Toggle";
 import AppToolbar from "../../components/toolbar/AppToolbar";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
@@ -22,21 +18,6 @@ import "./Profile.scss";
 const COLLECTIONS_MODE = 0;
 const LIKED_ITEMS_MODE = 1;
 const FOLLOWING_COLLECTIONS_MODE = 2;
-
-const MODE_SELECT_OPTIONS = [
-  {
-    value: COLLECTIONS_MODE,
-    label: "My Collections",
-  },
-  {
-    value: FOLLOWING_COLLECTIONS_MODE,
-    label: "Following",
-  },
-  {
-    value: LIKED_ITEMS_MODE,
-    label: "Liked",
-  },
-];
 
 const Profile = () => {
   const history = useHistory();
@@ -54,7 +35,6 @@ const Profile = () => {
   const [profileUsername, setProfileUsername] = useState("");
   const [profileDescription, setProfileDescription] = useState("");
   const [profileProfilePicture, setProfileProfilePicture] = useState(null);
-  const [mode, setMode] = useState(COLLECTIONS_MODE);
   const [loading, setLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [itemsCount, setItemsCount] = useState(0);
@@ -134,7 +114,7 @@ const Profile = () => {
       <AppToolbar showMenu={isOwnProfile} title={profileUsername} />
       <IonContent>
         <IonGrid fixed className="profile--grid ion-padding">
-          <IonRow>
+          <IonRow className="ion-justify-content-evenly">
             <IonCol size={4}>
               <FlexImage className="profile--img" src={profileProfilePicture || noProfileImage} />
             </IonCol>
@@ -166,7 +146,7 @@ const Profile = () => {
 
               {isOwnProfile && ( // can edit profile
                 // <IonRow className="ion-align-items-center ion-justify-content-center ion-margin-top">
-                <IonRow>
+                <IonRow className="edit-profile-button--container">
                   <EditProfileButton onClick={editProfileHandler} />
                 </IonRow>
               )}
