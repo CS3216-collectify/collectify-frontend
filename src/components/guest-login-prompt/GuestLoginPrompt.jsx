@@ -1,11 +1,9 @@
-import { IonGrid, IonRow, IonText } from "@ionic/react";
+import { IonGrid, IonRow } from "@ionic/react";
 import { useHistory } from "react-router";
 import GoogleLoginButton from "../button/GoogleLoginButton";
 import GoogleAuthStatus from "../../enums/google-auth-status.enum";
 import useToastContext from "../../hooks/useToastContext";
 import useUserContext from "../../hooks/useUserContext";
-import { getUserId } from "../../utils/auth/store";
-import Text from "../text/Text";
 import TextBackground from "../text-background/TextBackground";
 
 const GuestLoginPrompt = (props) => {
@@ -27,7 +25,9 @@ const GuestLoginPrompt = (props) => {
 
   return (
     <IonGrid fixed className="ion-padding">
-      <TextBackground size="l" text="Log in to collectify to begin showcasing your collectables to the world! 🌍" />
+      <IonRow className="ion-justify-content-center ion-margin-top ion-text-center">
+        <TextBackground size="l" text="Log in to start showcasing your collectibles! 😎" />
+      </IonRow>
       <IonRow className="ion-justify-content-center ion-margin-top">
         <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
       </IonRow>
