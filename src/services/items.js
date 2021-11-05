@@ -1,3 +1,4 @@
+import { convertImageUrlToFile } from "../utils/image";
 import server from "../utils/server";
 
 export const getItemsFromCollection = async (collectionId, offset, limit) => {
@@ -14,19 +15,6 @@ export const getItemFromCollection = async (collectionId, itemId) => {
   return response.data;
 };
 
-const blobToFile = (blob, fileName = "default-name", type = "image/png") => {
-  const file = new File([blob], fileName, { type });
-  return file;
-};
-
-const loadImageFile = async (url, idx) => {
-  const filename = `im-${idx}`;
-  const file = await fetch(url)
-    .then((res) => res.blob())
-    .then((blob) => blobToFile(blob, filename));
-  return file;
-};
-
 export const postItem = async (collectionId, itemData) => {
   const { itemName, itemDescription, images, isTradable } = itemData;
 
@@ -37,7 +25,7 @@ export const postItem = async (collectionId, itemData) => {
 
   for (let i = 0; i < images.length; i++) {
     const { imageUrl } = images[i];
-    const file = await loadImageFile(imageUrl, i);
+    const file = await convertImageUrlToFile(imageUrl, i);
     body.append("images", file);
   }
 
@@ -58,7 +46,7 @@ export const updateItem = async (collectionId, itemId, itemData) => {
     if (!isNew) {
       continue;
     }
-    const file = await loadImageFile(imageUrl, i);
+    const file = await convertImageUrlToFile(imageUrl, i);
     body.append("newImages", file);
   }
 

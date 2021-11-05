@@ -1,3 +1,4 @@
+import { convertImageUrlToFile } from "../utils/image";
 import server from "../utils/server";
 
 export const getCurrentUser = async () => {
@@ -15,19 +16,6 @@ export const getUserByUsername = async (username) => {
   return response.data;
 };
 
-const blobToFile = (blob, fileName = "default-name", type = "image/png") => {
-  const file = new File([blob], fileName, { type });
-  return file;
-};
-
-const loadImageFile = async (url) => {
-  const filename = "profile-picture.png";
-  const file = await fetch(url)
-    .then((res) => res.blob())
-    .then((blob) => blobToFile(blob, filename));
-  return file;
-};
-
 export const updateProfile = async (username, firstName, lastName, description, profilePictureUrl) => {
   const body = new FormData();
   body.append("username", username);
@@ -36,7 +24,7 @@ export const updateProfile = async (username, firstName, lastName, description, 
   body.append("description", description);
 
   if (profilePictureUrl) {
-    const imageFile = await loadImageFile(profilePictureUrl);
+    const imageFile = await convertImageUrlToFile(profilePictureUrl);
     body.append("pictureUrl", imageFile);
   }
 
