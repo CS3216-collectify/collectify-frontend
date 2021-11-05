@@ -74,7 +74,7 @@ const AppToolbar = ({ title, showMenu = false }) => {
 
         <IonButtons slot="end">
           {isUserAuthenticated && (
-            <IonButton title="Home" onClick={() => handleButtonClick("")}>
+            <IonButton title="Home" onClick={() => handleButtonClick("home")}>
               <IonIcon size="large" slot="icon-only" icon={homeOutline} />
             </IonButton>
           )}
