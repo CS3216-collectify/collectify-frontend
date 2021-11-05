@@ -186,7 +186,7 @@ const Item = () => {
 
         <IonGrid fixed className="ion-no-padding">
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
-          <div className="collection-name-wrapper" onClick={goToCollectionPage}>
+          <div className="collection-name-wrapper">
             <div className="collection-name">
               <Text size="xs">{collectionName}</Text>
             </div>
