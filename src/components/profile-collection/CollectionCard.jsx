@@ -1,5 +1,6 @@
 import { IonChip, IonCol, IonIcon, IonLabel, IonList } from "@ionic/react";
 import { peopleOutline } from "ionicons/icons";
+import { useLocation } from "react-router";
 import { useHistory } from "react-router";
 import { trackCollectionFollowersEvent } from "../../services/react-ga";
 import { setCategoryFilterStore } from "../../utils/store";
@@ -11,6 +12,7 @@ const CollectionCard = (props) => {
   const { collection } = props;
   const { collectionId, ownerUsername, collectionName, categoryId, collectionDescription, categoryName, coverImages, followersCount } = collection;
   const history = useHistory();
+  const location = useLocation();
 
   const collectionCardOnclick = () => {
     if (props.onClick) {
@@ -30,6 +32,14 @@ const CollectionCard = (props) => {
     history.replace("/discover");
   };
 
+  const goToProfilePage = (e) => {
+    if (location.pathname.startsWith("/profile") || location.pathname.startsWith("/my-profile")) {
+      return;
+    }
+    e.stopPropagation();
+    history.push(`/profile/${ownerUsername}`);
+  };
+
   return (
     <IonList className="profile-collection--container ion-margin-bottom clickable" onClick={() => collectionCardOnclick()}>
       <div className="profile-collection-title--container">
@@ -37,11 +47,6 @@ const CollectionCard = (props) => {
         <Text>
           <b>{collectionName}</b>
         </Text>
-        </div>
-        <div className="profile-collection--owner">
-          <Text size="xs">
-            by @{ownerUsername}
-          </Text>
         </div>
       </div>
       <div className="profile-collection--images">
@@ -58,7 +63,9 @@ const CollectionCard = (props) => {
       </div>
       <div>
         <Text size="s" className="profile-collection--desc">
-          {collectionDescription}
+          <b onClick={goToProfilePage}>
+            @{ownerUsername}
+          </b> {collectionDescription}
         </Text>
       </div>
       <div className="profile-collection-categories--container">
