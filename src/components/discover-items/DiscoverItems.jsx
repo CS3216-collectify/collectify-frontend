@@ -10,19 +10,19 @@ import "./DiscoverItems.scss";
 const LIMIT = 12;
 
 const CATEGORY_COMPARATOR = (curr, compar) => {
-  return curr && compar ? curr.categoryId === compar.categoryId : curr === compar;
-};
+  return curr && compar 
+    ? curr.categoryId === compar.categoryId 
+    : curr === compar;
+}
 
 const DiscoverItems = (props) => {
   const { catFilter: categoryFilter, setCatFilter: setCategoryFilter } = props;
   const setToast = useToastContext();
-
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
-  const [itemGrid, setItemGrid] = useState(<></>);
 
   const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
@@ -40,24 +40,22 @@ const DiscoverItems = (props) => {
     }
   }, [hasMore, items, pages, categoryFilter, setToast, viewTradable]);
 
-  const fetchNextPage = useCallback(() => {
-    loadItems();
-  }, [loadItems]);
-
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
     try {
       const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, categoryFilter, viewTradable);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
-      setPages(nextPage);
       setItems(retrievedItems);
-
-      setItemGrid(<ItemGrid onScrollEnd={fetchNextPage} items={retrievedItems} scrollEnded={!hasMore} discover={true} />);
+      setPages(nextPage);
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [categoryFilter, fetchNextPage, hasMore, setToast, viewTradable]);
+  }, [categoryFilter, setToast, viewTradable]);
+
+  const fetchNextPage = () => {
+    loadItems();
+  };
 
   useEffect(() => {
     const loadCategoryOptions = async () => {
@@ -71,10 +69,8 @@ const DiscoverItems = (props) => {
         // setLoading(false);
       }
     };
-
     loadCategoryOptions();
   }, []);
-
   useEffect(() => {
     loadInitialItems();
   }, [loadInitialItems]);
@@ -84,7 +80,6 @@ const DiscoverItems = (props) => {
       <div className="discover-filter-tradable--container ion-padding">
         <div className="discover-filter--container">
           <Text size="s">Filter by category</Text>
-
           <IonSelect
             // Ref: https://github.com/ionic-team/ionic-framework/issues/19324#issuecomment-711472305
             compareWith={CATEGORY_COMPARATOR}
@@ -101,7 +96,6 @@ const DiscoverItems = (props) => {
             ))}
           </IonSelect>
         </div>
-
         <div className="discover-tradable--container">
           <Text size="s">Tradable</Text>
           <IonToggle
@@ -114,14 +108,13 @@ const DiscoverItems = (props) => {
           />
         </div>
       </div>
-
       {items.length === 0 && (
         <IonGrid className="ion-text-center ion-padding">
           <Text size="xl">No items found</Text>
         </IonGrid>
       )}
 
-      {itemGrid}
+      <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} discover={true} />
     </>
   );
 };
