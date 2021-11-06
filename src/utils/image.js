@@ -14,21 +14,19 @@ const loadImageFile = async (url) => {
 };
 
 const SIZE_LIMIT = 4194304; // 4mb
-const MAX_LENGTH = 540;
+const MAX_LENGTH = 540; //540px
 
 const resizeImageFile = (file) => {
-  // console.log("original file size", file.size);
-  // console.log("compress should", file?.size ? Math.min(SIZE_LIMIT, file.size) * 100 / file.size : 0);
   return new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      MAX_LENGTH, // ratio preserved
-      MAX_LENGTH, // ratio preserved
-      "JPEG",
-      file?.size ? Math.min(SIZE_LIMIT, file.size) * 100 / file.size : 0,
+      MAX_LENGTH, // max-height, ratio preserved
+      MAX_LENGTH, // max-width, ratio preserved
+      "JPEG", // or "PNG"
+      file?.size ? Math.min(SIZE_LIMIT, file.size) * 100 / file.size : 0, // compression quality if "JPEG"
       0,
       (uri) => resolve(uri),
-      "blob"
+      "blob" // or "base64"
     );
   });
 }
