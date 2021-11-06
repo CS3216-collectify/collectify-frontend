@@ -7,7 +7,7 @@ import { getDiscoverItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
-const LIMIT = 18;
+const LIMIT = 12;
 
 const CATEGORY_COMPARATOR = (curr, compar) => {
   return curr && compar 
