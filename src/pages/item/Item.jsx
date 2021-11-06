@@ -186,7 +186,7 @@ const Item = () => {
 
         <IonGrid fixed className="ion-no-padding">
           <ImageCarousel imageUrls={images.map((img) => img.imageUrl)} />
-          <div className="collection-name-wrapper" onClick={goToCollectionPage}>
+          <div className="collection-name-wrapper">
             <div className="collection-name">
               <Text size="xs">{collectionName}</Text>
             </div>
@@ -217,16 +217,19 @@ const Item = () => {
             </IonCol>
           </IonRow>
 
-          <IonRow>
-            <IonCol className="zz" size={9}>
-              {isTradable && (
-                <div className="tradable--container">
-                  <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
-                  <Text size="s">
-                    <b>Tradable</b>
-                  </Text>
-                </div>
-              )}
+          <IonRow className="ion-padding-bottom">
+            <IonCol size={9}>
+              <div className="tradable--container">
+                {isTradable && (
+                  <>
+                    <IonIcon size="small" icon={peopleOutline} className="item-tradable-icon" />
+                    <Text size="s">
+                      <b>Tradable</b>
+                    </Text>
+                  </>
+                )}
+                {!isTradable && <br />}
+              </div>
               <Text size="xs">{convertUTCtoLocal(itemCreationDate)}</Text>
             </IonCol>
 

@@ -23,12 +23,6 @@ const Settings = () => {
               Contact us
             </IonButton>
           </IonRow>
-
-          {!isUserAuthenticated && (
-            <Text>
-              <h1>Log in to collectify to begin showcasing your collectables to the world!</h1>
-            </Text>
-          )}
           <IonRow className="ion-margin-vertical">{isUserAuthenticated ? <LogoutButton /> : <GoogleLoginButton />}</IonRow>
           <IonRow className="ion-margin-vertical">{isUserAuthenticated && <DeleteAccountButton />}</IonRow>
         </IonGrid>

@@ -4,7 +4,7 @@ import "./button.scss";
 
 const EditProfileButton = ({ onClick }) => {
   return (
-    <IonButton fill="outline" size="medium" expand="block" onClick={onClick} className="follow-button">
+    <IonButton fill="outline" size="medium" expand="block" onClick={onClick} className="edit-profile-button">
       <IonLabel>Edit Profile</IonLabel>
     </IonButton>
   );

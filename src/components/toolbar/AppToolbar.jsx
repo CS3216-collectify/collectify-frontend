@@ -74,33 +74,33 @@ const AppToolbar = ({ title, showMenu = false }) => {
 
         <IonButtons slot="end">
           {isUserAuthenticated && (
-            <IonButton title="Home" onClick={() => handleButtonClick("")}>
-              <IonIcon size="medium" slot="icon-only" icon={homeOutline} />
+            <IonButton title="Home" onClick={() => handleButtonClick("home")}>
+              <IonIcon size="large" slot="icon-only" icon={homeOutline} />
             </IonButton>
           )}
           <IonButton title="Discover" onClick={() => handleButtonClick("discover")}>
-            <IonIcon size="medium" slot="icon-only" icon={search} />
+            <IonIcon size="large" slot="icon-only" icon={search} />
           </IonButton>
           <IonButton title="Add Item" onClick={() => handleButtonClick("add")}>
-            <IonIcon size="medium" slot="icon-only" icon={addCircleOutline} />
+            <IonIcon size="large" slot="icon-only" icon={addCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
             <IonButton title="Chat" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
-              <IonIcon size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+              <IonIcon size="large" slot="icon-only" icon={chatbubbleEllipsesOutline} />
               {unreadMessages > 0 && <div className="chat-unread" />}
             </IonButton>
           )}
           {isUserAuthenticated && (
             <IonButton title="Bookmarks" onClick={() => handleButtonClick("bookmarks")}>
-              <IonIcon size="medium" slot="icon-only" icon={bookmarkOutline} />
+              <IonIcon size="large" slot="icon-only" icon={bookmarkOutline} />
             </IonButton>
           )}
-          <IonButton title="Profile" onClick={() => handleButtonClick("profile")}>
-            <IonIcon size="medium" slot="icon-only" icon={personCircleOutline} />
+          <IonButton title="Profile" onClick={() => handleButtonClick("my-profile")}>
+            <IonIcon size="large" slot="icon-only" icon={personCircleOutline} />
           </IonButton>
           {isUserAuthenticated && (
             <IonButton title="Settings" onClick={() => handleButtonClick("settings")}>
-              <IonIcon size="medium" slot="icon-only" icon={settingsOutline} />
+              <IonIcon size="large" slot="icon-only" icon={settingsOutline} />
             </IonButton>
           )}
         </IonButtons>
@@ -125,7 +125,7 @@ const AppToolbar = ({ title, showMenu = false }) => {
           <div className={`toolbar-buttons__${showMenu ? "show-menu" : "hide-menu"}`} slot="end">
             {isUserAuthenticated && !location.pathname.startsWith("/chat") && !location.pathname.startsWith("/settings") && (
               <IonButton fill="clear" className="home-toolbar-chat-button" onClick={() => handleButtonClick("chat")}>
-                <IonIcon color="medium" size="medium" slot="icon-only" icon={chatbubbleEllipsesOutline} />
+                <IonIcon color="medium" size="large" slot="icon-only" icon={chatbubbleEllipsesOutline} />
                 {unreadMessages > 0 && <div className="chat-unread--mobile" />}
               </IonButton>
             )}
@@ -139,7 +139,7 @@ const AppToolbar = ({ title, showMenu = false }) => {
                 fill="clear"
                 color="medium"
               >
-                <IonIcon size="medium" slot="icon-only" icon={ellipsisVertical} />
+                <IonIcon size="large" slot="icon-only" icon={ellipsisVertical} />
               </IonButton>
             )}
           </div>

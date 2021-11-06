@@ -67,7 +67,7 @@ const Login = () => {
             <IonImg className="logo-text" src={LogoTextGif} />
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
-            <Text size="xl">No fluff. Only collections.</Text>
+            <Text size="xl">no fluff, only collections.</Text>
           </IonRow>
           <IonRow className="ion-justify-content-center ion-margin-top">
             <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
