@@ -14,9 +14,9 @@ const LogoutButton = () => {
   const logoutHandler = () => {
     logoutUser();
     trackGoogleSignOutEvent();
-    history.replace("/");
     setToast({ message: "Logged out successfully.", color: "success" });
     setIsUserAuthenticated(false);
+    history.replace("/");
   };
 
   return (
