@@ -142,6 +142,10 @@ const Item = () => {
   };
 
   const openChatWithItem = () => {
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to chat with the collector.", color: "danger" });
+      return;
+    }
     const pathname = "/chat";
     const state = {
       recipient: ownerId.toString(),
@@ -235,7 +239,7 @@ const Item = () => {
 
             {!isItemOwner && (
               <IonCol size={3}>
-                <IonButton onClick={() => openChatWithItem()} className="item-chat-button--container">
+                <IonButton onClick={openChatWithItem} className="item-chat-button--container">
                   <IonIcon icon={chatbubbleEllipsesOutline} className="item-chat-icon" />
                   <IonLabel>Chat</IonLabel>
                 </IonButton>

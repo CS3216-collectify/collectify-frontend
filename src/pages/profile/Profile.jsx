@@ -92,6 +92,10 @@ const Profile = () => {
     if (isOwnProfile) {
       return;
     }
+    if (!isUserAuthenticated) {
+      setToast({ message: "Please log in to chat with the collector.", color: "danger" });
+      return;
+    }
     const pathname = "/chat";
     const state = { recipient: profileUserId.toString() };
     history.push({ pathname, state });
