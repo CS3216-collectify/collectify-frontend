@@ -10,10 +10,8 @@ import "./DiscoverItems.scss";
 const LIMIT = 12;
 
 const CATEGORY_COMPARATOR = (curr, compar) => {
-  return curr && compar 
-    ? curr.categoryId === compar.categoryId 
-    : curr === compar;
-}
+  return curr && compar ? curr.categoryId === compar.categoryId : curr === compar;
+};
 
 const DiscoverItems = (props) => {
   const { catFilter: categoryFilter, setCatFilter: setCategoryFilter } = props;
@@ -24,6 +22,7 @@ const DiscoverItems = (props) => {
   const [pages, setPages] = useState(-1);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [viewTradable, setViewTradable] = useState(false);
+  const [itemGrid, setItemGrid] = useState(<></>);
 
   const loadItems = useCallback(async () => {
     const nextPage = pages + 1;
@@ -41,22 +40,24 @@ const DiscoverItems = (props) => {
     }
   }, [hasMore, items, pages, categoryFilter, setToast, viewTradable]);
 
+  const fetchNextPage = useCallback(() => {
+    loadItems();
+  }, [loadItems]);
+
   const loadInitialItems = useCallback(async () => {
     const nextPage = 0;
     try {
       const retrievedItems = await getDiscoverItems(nextPage * LIMIT, LIMIT, categoryFilter, viewTradable);
       const updatedHasMore = retrievedItems && retrievedItems.length >= LIMIT;
       setHasMore(updatedHasMore);
-      setItems(retrievedItems);
       setPages(nextPage);
+      setItems(retrievedItems);
+
+      setItemGrid(<ItemGrid onScrollEnd={fetchNextPage} items={retrievedItems} scrollEnded={!hasMore} discover={true} />);
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [categoryFilter, setToast, viewTradable]);
-
-  const fetchNextPage = () => {
-    loadItems();
-  };
+  }, [categoryFilter, fetchNextPage, hasMore, setToast, viewTradable]);
 
   useEffect(() => {
     const loadCategoryOptions = async () => {
@@ -120,7 +121,7 @@ const DiscoverItems = (props) => {
         </IonGrid>
       )}
 
-      <ItemGrid onScrollEnd={fetchNextPage} items={items} scrollEnded={!hasMore} discover={true} />
+      {itemGrid}
     </>
   );
 };
