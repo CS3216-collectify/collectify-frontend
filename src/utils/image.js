@@ -14,7 +14,7 @@ const loadImageFile = async (url) => {
 };
 
 const SIZE_LIMIT = 4194304; // 4mb
-const MAX_LENGTH = 3000;
+const MAX_LENGTH = 540;
 
 const resizeImageFile = (file) => {
   // console.log("original file size", file.size);
