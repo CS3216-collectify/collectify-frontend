@@ -1,5 +1,6 @@
 import { IonGrid, IonSelect, IonSelectOption, IonToggle } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import useToastContext from "../../hooks/useToastContext";
 import { getFilterCategories } from "../../services/categories";
 import { trackDiscoverTradableEvent } from "../../services/react-ga";
@@ -10,14 +11,14 @@ import "./DiscoverItems.scss";
 const LIMIT = 12;
 
 const CATEGORY_COMPARATOR = (curr, compar) => {
-  return curr && compar 
-    ? curr.categoryId === compar.categoryId 
-    : curr === compar;
-}
+  return curr && compar ? curr.categoryId === compar.categoryId : curr === compar;
+};
 
 const DiscoverItems = (props) => {
   const { catFilter: categoryFilter, setCatFilter: setCategoryFilter } = props;
   const setToast = useToastContext();
+  const location = useLocation();
+
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [pages, setPages] = useState(-1);
@@ -51,7 +52,7 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [categoryFilter, setToast, viewTradable]);
+  }, [categoryFilter, setToast, viewTradable, location]);
 
   const fetchNextPage = () => {
     loadItems();
