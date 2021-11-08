@@ -56,7 +56,7 @@ const Onboarding = () => {
         history.replace("/home");
       })
       .catch((e) => {
-        setToast({ message: e.data.description[0], color: "danger" });
+        setToast({ message: e.response.data.username[0], color: "danger" });
       });
   };
 
