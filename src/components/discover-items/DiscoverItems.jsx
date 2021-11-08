@@ -52,7 +52,7 @@ const DiscoverItems = (props) => {
     } catch (e) {
       setToast({ message: "Unable to load items. Please try again later.", color: "danger" });
     }
-  }, [categoryFilter, setToast, viewTradable, location]);
+  }, [categoryFilter, setToast, viewTradable]);
 
   const fetchNextPage = () => {
     loadItems();
@@ -72,9 +72,10 @@ const DiscoverItems = (props) => {
     };
     loadCategoryOptions();
   }, []);
+
   useEffect(() => {
     loadInitialItems();
-  }, [loadInitialItems]);
+  }, [loadInitialItems, location]);
 
   return (
     <>
