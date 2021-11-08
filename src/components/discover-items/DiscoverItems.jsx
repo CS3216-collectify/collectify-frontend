@@ -8,7 +8,8 @@ import { getDiscoverItems } from "../../services/search";
 import ItemGrid from "../collection-items/ItemGrid";
 import Text from "../text/Text";
 import "./DiscoverItems.scss";
-const LIMIT = 12;
+
+const LIMIT = 18;
 
 const CATEGORY_COMPARATOR = (curr, compar) => {
   return curr && compar ? curr.categoryId === compar.categoryId : curr === compar;
