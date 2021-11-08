@@ -56,7 +56,7 @@ const Onboarding = () => {
         history.replace("/home");
       })
       .catch((e) => {
-        setToast({ message: "Unable to update your username. Please try again.", color: "danger" });
+        setToast({ message: e.data.description[0], color: "danger" });
       });
   };
 

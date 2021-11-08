@@ -22,7 +22,6 @@ server.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     console.log(error.response);
-    console.log(originalRequest.url);
 
     // Direct back to login page.
     if (error.response.status === 401 && originalRequest.url === REFRESH_ENDPOINT) {
