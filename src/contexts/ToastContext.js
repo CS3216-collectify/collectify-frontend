@@ -20,7 +20,8 @@ export const ToastContextProvider = ({ children }) => {
   );
 
   const dismissBtn = {
-    text: "Okay",
+    icon: "close",
+    // text: "OK",
     role: "cancel",
   };
 
