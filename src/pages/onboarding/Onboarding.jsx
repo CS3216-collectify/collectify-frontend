@@ -28,7 +28,7 @@ const Onboarding = () => {
         })
         .catch((e) => setToast({ message: "Unable to load your user information. Please try again.", color: "danger" }));
     }
-  }, [isUserAuthenticated]);
+  }, [isUserAuthenticated, setToast]);
 
   useEffect(() => {
     if (isUserAuthenticated) {
@@ -36,18 +36,28 @@ const Onboarding = () => {
     }
   }, [isUserAuthenticated, getUserInformation, initialUsername]);
 
+  const validationErrorMessage = (msg) => {
+    setToast({ message: msg, color: "danger" });
+  };
+
   const handleUpdateUsername = () => {
     const trimmedUsername = username.trim();
     if (!trimmedUsername) {
       setToast("Username cannot be empty.");
       return;
     }
-    updateUsername(trimmedUsername).then((res) => {
-      setToast({ message: "Username updated!", color: "success" });
-      history.replace("/home");
-    }).catch((e) => {
-      setToast({ message: "Unable to update your username. Please try again.", color: "danger" });
-    });
+    if (!trimmedUsername || trimmedUsername.length < 8 || trimmedUsername.length > 15) {
+      validationErrorMessage("Your new username must be between 8 to 15 characters!");
+      return;
+    }
+    updateUsername(trimmedUsername)
+      .then((res) => {
+        setToast({ message: "Username updated!", color: "success" });
+        history.replace("/home");
+      })
+      .catch((e) => {
+        setToast({ message: e.response?.data?.username[0] ?? "Unable to update your profile", color: "danger" });
+      });
   };
 
   return (
