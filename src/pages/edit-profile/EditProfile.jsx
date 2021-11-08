@@ -72,7 +72,7 @@ const EditProfile = () => {
       })
       .catch((e) => {
         setUploading(false);
-        setToast({ message: e.data.description[0], color: "danger" });
+        setToast({ message: e.response?.data?.username[0] ?? "Unable to update your profile", color: "danger" });
       });
   };
 
