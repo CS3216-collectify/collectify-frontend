@@ -19,9 +19,7 @@ const Discover = () => {
 
   useEffect(() => {
     if (location.pathname.startsWith("/discover")) {
-      if (isSearchActive) {
-        setIsSearchActive(false);
-      }
+      setIsSearchActive(false);
       const storedFilter = getCategoryFilterStore();
       if (storedFilter === categoryFilter) {
         return;
@@ -29,7 +27,7 @@ const Discover = () => {
       trackDiscoverFilterEvent();
       setCategoryFilter(storedFilter);
     }
-  }, [location]);
+  }, [categoryFilter, location]);
 
   const searchOpenHandler = () => {
     setIsSearchActive(true);
