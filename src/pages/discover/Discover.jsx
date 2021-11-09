@@ -29,7 +29,7 @@ const Discover = () => {
       trackDiscoverFilterEvent();
       setCategoryFilter(storedFilter);
     }
-  }, [categoryFilter, isSearchActive, location]);
+  }, [location]);
 
   const searchOpenHandler = () => {
     setIsSearchActive(true);
